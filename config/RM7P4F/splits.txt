@@ -11,4 +11,4 @@ Sections:
 	.sdata      type:data align:32
 	.sbss       type:bss align:8
 	.sdata2     type:rodata align:32
-	.sbss       type:bss align:4
+	.sbss2      type:bss align:4
