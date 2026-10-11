@@ -127,3 +127,33 @@ functions, with the same result. GC 2.0, 2.0p1, 2.5, 2.6, 2.7 tested; GC 1.x not
 - The other flags (`-O4,p`, `-inline auto`, `-str reuse`…) are **compatible** with
   the 6 functions, but not proven unique.
 - The SDK compiler has not been tested.
+
+### Telling the GC 3.0 versions apart (2026-10-11)
+
+- **Fuzzing**: 240 random C functions (int/float arithmetic, loops, switches, arrays,
+  calls) compiled with the 7 versions under `-O4,p`, `-O4,s`, `-O2` and
+  `-inline deferred`. Result: only **two classes** exist, {3.0a5.2} and {3.0a3,
+  3.0a3p1, 3.0a3.2, 3.0a3.3, 3.0a3.4, 3.0a5} (identical to each other in every
+  case). No difference at all at `-O2`.
+- **The 3.0a5.2 change**: better elimination of int→float conversions whose result
+  is dead. Minimal case:
+  `int d1(S* p) { float u = p->f * (p->f > (float)garr[3] ? (float)garr[3] : p->f); return gi; }`
+  - 3.0a3…3.0a5: `fcmpo` + conditional branch over two dead conversion stores
+    (`stw` to 0x10/0x14), 0x20 stack frame;
+  - 3.0a5.2: dead `fcmpo` with no branch and no stores, 0x10 stack frame.
+  The other differences found by fuzzing are minor scheduling changes in functions
+  that also contain such conversions.
+- **Game scan**: neither signature (branch over dead conversion stores, or unused
+  `fcmpo` result) appears anywhere in the DOL. The 5 game functions with dead
+  conversion stores (`fn_80147800`, `fn_802D8844`, `fn_800EAF14`, `fn_800EB860`,
+  `fn_801F6290`) are not this pattern: `fn_80147800` (dead `(short)` conversion)
+  matches with **all 7** versions; `fn_802D8844` contains unreachable code and was
+  not used as a test.
+- **Conclusion**: with the evidence found so far, the game code cannot tell
+  {3.0a5.2} from {3.0a3…3.0a5}. Every function tested matches equally with both
+  classes. A function that matches with only one class would settle it; to be
+  watched for during decompilation.
+
+| Function | Content | GC 3.0a3 → 3.0a5 | GC 3.0a5.2 | Wii 1.0 | GC 2.7 |
+|---|---|---|---|---|---|
+| `fn_80147800` | type-tagged value decode, dead `(short)` conversion | ✓ | ✓ | ✗ | ✗ |

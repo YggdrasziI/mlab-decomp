@@ -15,7 +15,9 @@
 
 ## In progress
 
-- Step 2: tell apart the 7 GC 3.0 versions (identical code on every probe).
+- Step 2: tell apart the GC 3.0 versions. Fuzzing reduced them to two classes,
+  {3.0a5.2} vs {3.0a3…3.0a5}; the only known differing pattern (dead int→float
+  conversions) does not occur in the game. Undecidable so far.
 
 ## Blocked
 
