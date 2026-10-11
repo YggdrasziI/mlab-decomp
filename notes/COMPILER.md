@@ -65,16 +65,65 @@ SDK : `OSReset.c`, `OSStateTM.c`, `OSPlayTime.c`, `OSLaunch.c`, `OS.c`, `vi.c`, 
 Autres chaînes : `eidos`, `backbone` (offset 0x35c4f1) ; format d'assertion
 `Assert: File - "%s", Function "%s", Line: %d, …` (offset 0x371ffa).
 
-## Hypothèses à tester (non prouvées)
+## Valeurs du template non vérifiées
 
-- Le code du jeu est compilé avec un mwcc **Wii** (`Wii/1.0RC1` à `Wii/1.7`) ou
-  `GC/3.0a5.2`.
-- `GC/3.0a5.2` est « Ver 4.1, build 60831 » dans `build/compilers/info.txt` : même
-  nombre que le tag SDK `0x4199_60831`. Piste pour le compilateur du SDK, pas une
-  preuve.
 - `mw_comment_version: 11` dans `config.yml` et `linker_version = "GC/1.3.2"` dans
-  `configure.py` sont les valeurs par défaut du template, **non vérifiées**.
+  `configure.py` sont les valeurs par défaut du template (voir les résultats
+  ci-dessous : 11 ne correspond à aucun candidat restant).
 
-## Tests de compilateur
+## Tests de compilateur (2026-10-11)
 
-À remplir : tableau compilateur × fonction, avec le diff.
+### Méthode
+
+Fonctions du jeu réécrites en C, compilées avec chaque `mwcceppc.exe` de
+`build/compilers/` (compilers_20251118), puis `.text` comparé octet par octet au DOL.
+Les champs relogés (`R_PPC_REL24`, `ADDR16_HA/LO`, `EMB_SDA21`) sont masqués. Le script
+de comparaison et les sources de test étaient dans le scratchpad de session (non
+versionnés).
+
+Flags de base : `-nodefaults -proc gekko -align powerpc -enum int -fp hardware
+-Cpp_exceptions off -O4,p -inline auto -nosyspath -RTTI off -fp_contract off
+-str reuse -multibyte` (Wii : `-func_align 4` ajouté pour les sondes).
+
+### Résultats
+
+| Fonction | Contenu | GC 2.0–2.7 | GC 3.0a3 → 3.0a5.2 (7 versions) | Wii 1.0RC1 → 1.7 |
+|---|---|---|---|---|
+| `fn_8018E8D8` | test de nullité, appel | ✗ | ✓ | ✓ |
+| `fn_8018EE3C` | 2 appels, 3 registres sauvés | ✗ | ✓ | ✓ |
+| `fn_8018EF9C` | appels variadiques (`crclr`) | ✗ | ✓ | ✓ |
+| `fn_8007DD7C` | norme 3D, `frsqrte` inline | ✗ | ✓ | ✓ |
+| `fn_800E2DF4` | moyenne pondérée flottante | ✗ | ✓ | ✓ |
+| `fn_80207D40` | `switch` de 7 `case` (0-6), table de saut | ✗ | ✓ | ✗ |
+
+(✓ = identique au DOL, ✗ = différent. Les 8 Wii testés sur les 6 fonctions, même
+résultat pour tous. GC 2.0, 2.0p1, 2.5, 2.6, 2.7 testés ; GC 1.x non testés.)
+
+### Ce qui est prouvé
+
+- **`-fp_contract off`** : avec `on`, `fn_8007DD7C` et `fn_800E2DF4` produisent des
+  `fmadds`/`fnmsub` absents de l'original, avec tous les compilateurs. Avec `off`,
+  correspondance.
+- **Pas un compilateur Wii (1.0RC1 à 1.7)** : leur seuil de table de saut est de
+  8 valeurs de `case` (vérifié en `-O1`, `-O2`, `-O3`, `-O4,p`, `-O4,s`, `-inline off`,
+  `-opt nopeephole` ; seul `-O0` descend à 4). Le jeu contient 20 tables de 7 entrées
+  dans du code optimisé (`fn_80207D40`, `fn_8019914C` zone UI, `fn_801353C0`…). Wii
+  génère une chaîne `cmpwi`/`beq` pour `fn_80207D40`, GC 3.0 la table exacte.
+- **Pas GC 2.x** : `cmplwi` au lieu de `cmpwi` sur les pointeurs, `mr.` fusionné
+  (`fn_8018E8D8`, `fn_8018EE3C`, `fn_8018EF9C`).
+- GC 3.0a5.2 produit le `psq_st f31` de prologue vu dans `fn_80207DCC`.
+
+### Ce qui reste indéterminé
+
+- **Version exacte parmi GC 3.0a3, 3.0a3p1, 3.0a3.2, 3.0a3.3, 3.0a3.4, 3.0a5,
+  3.0a5.2** : code identique sur toutes les sondes (`probe.cpp`, `probe2.cpp` :
+  classes, virtuelles, exceptions on/off, templates, `long long`, champs de bits,
+  conversions ; `-O2`, `-O4,s`, `-O4,p`).
+- Indice non probant : le tag SDK `0x4199_60831` correspond au numéro de build de
+  GC 3.0a5.2 (« Ver 4.1, build 60831 » dans `info.txt`).
+- `mw_comment_version` : 3.0a3 écrit **14**, 3.0a5 et 3.0a5.2 écrivent **15**
+  (octet 0xB de `.comment`, relevé sur un objet compilé). La valeur actuelle **11**
+  (GC 2.7) est donc fausse pour tous les candidats, mais 14 ou 15 dépend de la version.
+- Les autres flags (`-O4,p`, `-inline auto`, `-str reuse`…) sont **compatibles**
+  avec les 6 fonctions, mais pas prouvés uniques.
+- Le compilateur du SDK n'a pas été testé.
