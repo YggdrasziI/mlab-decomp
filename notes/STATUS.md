@@ -1,30 +1,29 @@
-# État du projet
+# Project status
 
-## Fait
+## Done
 
-- Mise en place du template pour `RM7P4F` ; le build reconstruit un `main.dol`
-  identique (`build.sha1` OK).
-- `splits.txt` / `symbols.txt` : la seconde section `.sbss` renommée en `.sbss2` ;
-  `fn_802E5A08` fusionnée dans `fn_802E50F0` (bloc des `case` du switch, table
+- Template set up for `RM7P4F`; the build rebuilds an identical `main.dol`
+  (`build.sha1` OK).
+- `splits.txt` / `symbols.txt`: the second `.sbss` section renamed to `.sbss2`;
+  `fn_802E5A08` merged into `fn_802E50F0` (the `case` blocks of its switch, table at
   0x803AD338).
-- Dépôt privé GitHub créé (`origin`), le template est conservé en `upstream`.
-- Informations du jeu remplies dans `CLAUDE.md` (preuves dans `notes/COMPILER.md`).
+- Private GitHub repository created (`origin`); the template is kept as `upstream`.
+- Game information filled in `CLAUDE.md` (evidence in `notes/COMPILER.md`).
+- Step 2 (partial): game code is compiled with a **GC 3.0** mwcc (3.0a3 to 3.0a5.2),
+  `-fp_contract off` proven; Wii 1.x and GC 2.x ruled out (details in
+  `notes/COMPILER.md`).
 
-- Étape 2 (partielle) : code du jeu compilé avec un mwcc **GC 3.0** (3.0a3 à
-  3.0a5.2), `-fp_contract off` prouvé ; Wii 1.x et GC 2.x exclus
-  (détails dans `notes/COMPILER.md`).
+## In progress
 
-## En cours
+- Step 2: tell apart the 7 GC 3.0 versions (identical code on every probe).
 
-- Étape 2 : départager les 7 versions GC 3.0 (code identique sur toutes les sondes).
+## Blocked
 
-## Bloqué
+- Choice of the exact compiler version: pending decision (see `notes/COMPILER.md`).
 
-- Choix de la version exacte du compilateur : à décider (voir `notes/COMPILER.md`).
+## To do
 
-## À faire
-
-- Fixer `mw_version`, `linker_version` et `mw_comment_version` (14 pour 3.0a3, 15 pour
-  3.0a5+) et passer `-fp_contract off` dans `configure.py`.
-- Étape 3 : découper SDK, runtime et jeu dans `splits.txt`.
-- Étape 4 : objdiff, CI GitHub Actions, decomp.dev.
+- Set `mw_version`, `linker_version` and `mw_comment_version` (14 for 3.0a3, 15 for
+  3.0a5+) and switch to `-fp_contract off` in `configure.py`.
+- Step 3: split SDK, runtime and game code in `splits.txt`.
+- Step 4: objdiff, GitHub Actions CI, decomp.dev.

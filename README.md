@@ -1,88 +1,86 @@
 Monster Lab (Wii)
 =================
 
-Décompilation par correspondance (*matching decompilation*) de Monster Lab sur Wii,
-en cours.
+A work-in-progress matching decompilation of Monster Lab for the Wii.
 
-Ce dépôt ne contient **aucun** asset ni assembleur du jeu. Il faut une copie du jeu.
+This repository does **not** contain any game assets or assembly whatsoever. An existing
+copy of the game is required.
 
-Version supportée :
+Supported versions:
 
-- `RM7P4F` : révision 0 (Europe)
+- `RM7P4F`: Rev 0 (Europe)
 
-Dépendances
-===========
+Dependencies
+============
 
 Windows
 -------
 
-Sous Windows, il est **fortement recommandé** d'utiliser les outils natifs. WSL et
-msys2 ne sont **pas** nécessaires. Sous WSL, [objdiff](#comparaison) ne reçoit pas
-les notifications du système de fichiers pour les rebuilds automatiques.
+On Windows, it's **highly recommended** to use native tooling. WSL or msys2 are **not**
+required. When running under WSL, [objdiff](#diffing) is unable to get filesystem
+notifications for automatic rebuilds.
 
-- Installer [Python](https://www.python.org/downloads/) et l'ajouter au `%PATH%`.
-- Télécharger [ninja](https://github.com/ninja-build/ninja/releases) et l'ajouter au
-  `%PATH%`.
-  - Installation rapide via pip : `pip install ninja`
+- Install [Python](https://www.python.org/downloads/) and add it to `%PATH%`.
+- Download [ninja](https://github.com/ninja-build/ninja/releases) and add it to `%PATH%`.
+  - Quick install via pip: `pip install ninja`
 
 macOS
 -----
 
-- Installer [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages) :
+- Install [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages):
 
   ```sh
   brew install ninja
   ```
 
-[wibo](https://github.com/decompals/wibo), un wrapper minimal de binaires Windows
-32 bits, est téléchargé et utilisé automatiquement.
+[wibo](https://github.com/decompals/wibo), a minimal 32-bit Windows binary wrapper, will
+be automatically downloaded and used.
 
 Linux
 -----
 
-- Installer [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages).
+- Install [ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages).
 
-[wibo](https://github.com/decompals/wibo) est téléchargé et utilisé automatiquement.
+[wibo](https://github.com/decompals/wibo) will be automatically downloaded and used.
 
-Build
-=====
+Building
+========
 
-- Cloner le dépôt :
+- Clone the repository:
 
   ```sh
   git clone https://github.com/YggdrasziI/mlab-decomp.git
   ```
 
-- Copier l'image disque du jeu dans `orig/RM7P4F`.
-  - Formats supportés : ISO (GCM), RVZ, WIA, WBFS, CISO, NFS, GCZ, TGC
-  - Après le premier build, l'image disque peut être supprimée.
+- Copy your game's disc image to `orig/RM7P4F`.
+  - Supported formats: ISO (GCM), RVZ, WIA, WBFS, CISO, NFS, GCZ, TGC
+  - After the initial build, the disc image can be deleted to save space.
 
-- Configurer :
+- Configure:
 
   ```sh
   python configure.py
   ```
 
-- Construire :
+- Build:
 
   ```sh
   ninja
   ```
 
-Comparaison
-===========
+Diffing
+=======
 
-Une fois le premier build réussi, un fichier `objdiff.json` existe à la racine du
-projet.
+Once the initial build succeeds, an `objdiff.json` should exist in the project root.
 
-Télécharger la dernière version de [encounter/objdiff](https://github.com/encounter/objdiff).
-Dans les paramètres du projet, renseigner `Project directory` : la configuration est
-chargée automatiquement.
+Download the latest release from [encounter/objdiff](https://github.com/encounter/objdiff).
+Under project settings, set `Project directory`. The configuration should be loaded
+automatically.
 
-Choisir un objet dans la barre latérale pour lancer la comparaison. Le projet est
-reconstruit automatiquement quand les sources, les en-têtes, `configure.py`,
-`splits.txt` ou `symbols.txt` changent.
+Select an object from the left sidebar to begin diffing. Changes to the project will
+rebuild automatically: changes to source files, headers, `configure.py`, `splits.txt` or
+`symbols.txt`.
 
 ![](assets/objdiff.png)
 
-Basé sur [encounter/dtk-template](https://github.com/encounter/dtk-template).
+Based on [encounter/dtk-template](https://github.com/encounter/dtk-template).

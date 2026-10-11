@@ -1,21 +1,21 @@
-# Compilateur, SDK et runtime — preuves
+# Compiler, SDK and runtime — evidence
 
-Toutes les adresses « offset » sont des offsets **fichier** dans `orig/RM7P4F/sys/main.dol`
+All "offset" values are **file** offsets in `orig/RM7P4F/sys/main.dol`
 (SHA-1 `50f6e9b94dbe4df6f663541493106d19e0a40c72`).
 
-## Disque
+## Disc
 
-| Info | Valeur | Preuve |
+| Info | Value | Evidence |
 |---|---|---|
-| ID | `RM7P4F` | `disc/header.bin` octets 0-5 |
-| Région | PAL / Europe | 4e caractère de l'ID `P` |
-| Révision | 0 | `disc/header.bin` octet 7 = `0x00` |
-| RELs | aucun | aucun `.rel` dans `files/` |
-| `.map` / `.elf` | aucun | aucun `.map`, `.elf`, `.sym` dans `files/` |
+| ID | `RM7P4F` | `disc/header.bin` bytes 0-5 |
+| Region | PAL / Europe | 4th character of the ID is `P` |
+| Revision | 0 | `disc/header.bin` byte 7 = `0x00` |
+| RELs | none | no `.rel` in `files/` |
+| `.map` / `.elf` | none | no `.map`, `.elf` or `.sym` in `files/` |
 
-## SDK Wii (chaînes `<< RVL_SDK - … >>`)
+## Wii SDK (`<< RVL_SDK - … >>` strings)
 
-| Offset | Bibliothèque | Build | Tag |
+| Offset | Library | Build | Tag |
 |---|---|---|---|
 | 0x385628 | OS | Jan 30 2008 01:38:43 | 0x4199_60831 |
 | 0x3933b8 | EXI | Aug  8 2007 01:59:22 | 0x4199_60831 |
@@ -39,91 +39,91 @@ Toutes les adresses « offset » sont des offsets **fichier** dans `orig/RM7P4F/
 | 0x3b0520 | NHTTP | Oct 11 2007 20:49:15 | 0x4199_60726 |
 | 0x3b0a20 | SSL | Nov  6 2007 23:10:08 | 0x4199_60726 |
 
-Également : `<< REX-PPC 2.1.255.1 (RevoEX-2.1plus) REL 080313085908 >>` (offset 0x3b0820).
+Also: `<< REX-PPC 2.1.255.1 (RevoEX-2.1plus) REL 080313085908 >>` (offset 0x3b0820).
 
-## Runtime et indices CodeWarrior
+## Runtime and CodeWarrior hints
 
-- `Metrowerks Target Resident Kernel for PowerPC` (offset 0x5c0) : MetroTRK.
+- `Metrowerks Target Resident Kernel for PowerPC` (offset 0x5c0): MetroTRK.
 - `Metrowerks CW runtime library initializing default heap` (offset 0x34e356).
-- Sections `extab` / `extabindex` non vides et symboles `__init_cpp_exceptions`
+- Non-empty `extab` / `extabindex` sections and symbols `__init_cpp_exceptions`
   (0x8032FCAC), `__fini_cpp_exceptions` (0x8032FCE8),
   `__init_cpp_exceptions_reference` (.ctors 0x80345AE0),
   `__destroy_global_chain_reference` (.dtors 0x80345FA0),
-  `__fini_cpp_exceptions_reference` (.dtors 0x80345FA4), `fragmentID` (.sdata 0x805FAE28) :
-  disposition « GC 2.7+ et Wii linkers » du template (deux entrées `.dtors`).
+  `__fini_cpp_exceptions_reference` (.dtors 0x80345FA4), `fragmentID` (.sdata 0x805FAE28):
+  the template's "GC 2.7+ and Wii linkers" layout (two `.dtors` entries).
 
-## Fichiers source cités dans le DOL
+## Source file names found in the DOL
 
-Jeu / moteur : `GCN_Mem_Alloc.c` (0x34e320), `UIHashTree.cpp` (0x37d510), `UIFont.cpp`,
+Game / engine: `GCN_Mem_Alloc.c` (0x34e320), `UIHashTree.cpp` (0x37d510), `UIFont.cpp`,
 `UIReapFont.cpp`, `UIFont.h`, `UIScreenSet.cpp`, `UIAssetMgr.cpp`, `UIElement.cpp`,
 `UIText.cpp`, `UIImage.cpp`, `UISlideshow.cpp`, `UIModel.cpp`, `UIEntity.cpp`, `UIGrid.cpp`,
 `UIParticleEffect.cpp`.
-SDK : `OSReset.c`, `OSStateTM.c`, `OSPlayTime.c`, `OSLaunch.c`, `OS.c`, `vi.c`, `dvdfs.c`,
+SDK: `OSReset.c`, `OSStateTM.c`, `OSPlayTime.c`, `OSLaunch.c`, `OS.c`, `vi.c`, `dvdfs.c`,
 `dvd.c`, `arc.c`, `WUD.c`, `TPL.c`, `dwc_auth_interface.c`, `dwci_nd.c`, `ncdsystem.c`,
 `NHTTP_bgnend.c`, `NHTTP_os_RVL.c`, `d_nhttp.c`.
 
-Autres chaînes : `eidos`, `backbone` (offset 0x35c4f1) ; format d'assertion
+Other strings: `eidos`, `backbone` (offset 0x35c4f1); assertion format
 `Assert: File - "%s", Function "%s", Line: %d, …` (offset 0x371ffa).
 
-## Valeurs du template non vérifiées
+## Unverified template defaults
 
-- `mw_comment_version: 11` dans `config.yml` et `linker_version = "GC/1.3.2"` dans
-  `configure.py` sont les valeurs par défaut du template (voir les résultats
-  ci-dessous : 11 ne correspond à aucun candidat restant).
+- `mw_comment_version: 11` in `config.yml` and `linker_version = "GC/1.3.2"` in
+  `configure.py` are template defaults (see results below: 11 matches none of the
+  remaining candidates).
 
-## Tests de compilateur (2026-10-11)
+## Compiler tests (2026-10-11)
 
-### Méthode
+### Method
 
-Fonctions du jeu réécrites en C, compilées avec chaque `mwcceppc.exe` de
-`build/compilers/` (compilers_20251118), puis `.text` comparé octet par octet au DOL.
-Les champs relogés (`R_PPC_REL24`, `ADDR16_HA/LO`, `EMB_SDA21`) sont masqués. Le script
-de comparaison et les sources de test étaient dans le scratchpad de session (non
-versionnés).
+Game functions were rewritten in C, compiled with every `mwcceppc.exe` in
+`build/compilers/` (compilers_20251118), and their `.text` compared byte by byte with
+the DOL. Relocated fields (`R_PPC_REL24`, `ADDR16_HA/LO`, `EMB_SDA21`) are masked. The
+comparison script and test sources lived in the session scratchpad (not versioned).
 
-Flags de base : `-nodefaults -proc gekko -align powerpc -enum int -fp hardware
+Base flags: `-nodefaults -proc gekko -align powerpc -enum int -fp hardware
 -Cpp_exceptions off -O4,p -inline auto -nosyspath -RTTI off -fp_contract off
--str reuse -multibyte` (Wii : `-func_align 4` ajouté pour les sondes).
+-str reuse -multibyte` (Wii: `-func_align 4` added for the probes).
 
-### Résultats
+### Results
 
-| Fonction | Contenu | GC 2.0–2.7 | GC 3.0a3 → 3.0a5.2 (7 versions) | Wii 1.0RC1 → 1.7 |
+| Function | Content | GC 2.0–2.7 | GC 3.0a3 → 3.0a5.2 (7 versions) | Wii 1.0RC1 → 1.7 |
 |---|---|---|---|---|
-| `fn_8018E8D8` | test de nullité, appel | ✗ | ✓ | ✓ |
-| `fn_8018EE3C` | 2 appels, 3 registres sauvés | ✗ | ✓ | ✓ |
-| `fn_8018EF9C` | appels variadiques (`crclr`) | ✗ | ✓ | ✓ |
-| `fn_8007DD7C` | norme 3D, `frsqrte` inline | ✗ | ✓ | ✓ |
-| `fn_800E2DF4` | moyenne pondérée flottante | ✗ | ✓ | ✓ |
-| `fn_80207D40` | `switch` de 7 `case` (0-6), table de saut | ✗ | ✓ | ✗ |
+| `fn_8018E8D8` | null check, call | ✗ | ✓ | ✓ |
+| `fn_8018EE3C` | 2 calls, 3 saved registers | ✗ | ✓ | ✓ |
+| `fn_8018EF9C` | variadic calls (`crclr`) | ✗ | ✓ | ✓ |
+| `fn_8007DD7C` | 3D vector length, inline `frsqrte` | ✗ | ✓ | ✓ |
+| `fn_800E2DF4` | weighted float average | ✗ | ✓ | ✓ |
+| `fn_80207D40` | `switch` with 7 `case`s (0-6), jump table | ✗ | ✓ | ✗ |
 
-(✓ = identique au DOL, ✗ = différent. Les 8 Wii testés sur les 6 fonctions, même
-résultat pour tous. GC 2.0, 2.0p1, 2.5, 2.6, 2.7 testés ; GC 1.x non testés.)
+(✓ = identical to the DOL, ✗ = different. All 8 Wii compilers were tested on the 6
+functions, with the same result. GC 2.0, 2.0p1, 2.5, 2.6, 2.7 tested; GC 1.x not tested.)
 
-### Ce qui est prouvé
+### Proven
 
-- **`-fp_contract off`** : avec `on`, `fn_8007DD7C` et `fn_800E2DF4` produisent des
-  `fmadds`/`fnmsub` absents de l'original, avec tous les compilateurs. Avec `off`,
-  correspondance.
-- **Pas un compilateur Wii (1.0RC1 à 1.7)** : leur seuil de table de saut est de
-  8 valeurs de `case` (vérifié en `-O1`, `-O2`, `-O3`, `-O4,p`, `-O4,s`, `-inline off`,
-  `-opt nopeephole` ; seul `-O0` descend à 4). Le jeu contient 20 tables de 7 entrées
-  dans du code optimisé (`fn_80207D40`, `fn_8019914C` zone UI, `fn_801353C0`…). Wii
-  génère une chaîne `cmpwi`/`beq` pour `fn_80207D40`, GC 3.0 la table exacte.
-- **Pas GC 2.x** : `cmplwi` au lieu de `cmpwi` sur les pointeurs, `mr.` fusionné
+- **`-fp_contract off`**: with `on`, `fn_8007DD7C` and `fn_800E2DF4` produce
+  `fmadds`/`fnmsub` instructions absent from the original, with every compiler. With
+  `off`, they match.
+- **Not a Wii compiler (1.0RC1 to 1.7)**: their jump table threshold is 8 `case`
+  values (checked with `-O1`, `-O2`, `-O3`, `-O4,p`, `-O4,s`, `-inline off`,
+  `-opt nopeephole`; only `-O0` goes down to 4). The game has 20 jump tables with 7
+  entries in optimized code (`fn_80207D40`, `fn_8019914C` in the UI area,
+  `fn_801353C0`…). Wii emits a `cmpwi`/`beq` chain for `fn_80207D40`, GC 3.0 the exact
+  table.
+- **Not GC 2.x**: `cmplwi` instead of `cmpwi` on pointers, merged `mr.`
   (`fn_8018E8D8`, `fn_8018EE3C`, `fn_8018EF9C`).
-- GC 3.0a5.2 produit le `psq_st f31` de prologue vu dans `fn_80207DCC`.
+- GC 3.0a5.2 emits the `psq_st f31` prologue seen in `fn_80207DCC`.
 
-### Ce qui reste indéterminé
+### Still undetermined
 
-- **Version exacte parmi GC 3.0a3, 3.0a3p1, 3.0a3.2, 3.0a3.3, 3.0a3.4, 3.0a5,
-  3.0a5.2** : code identique sur toutes les sondes (`probe.cpp`, `probe2.cpp` :
-  classes, virtuelles, exceptions on/off, templates, `long long`, champs de bits,
-  conversions ; `-O2`, `-O4,s`, `-O4,p`).
-- Indice non probant : le tag SDK `0x4199_60831` correspond au numéro de build de
-  GC 3.0a5.2 (« Ver 4.1, build 60831 » dans `info.txt`).
-- `mw_comment_version` : 3.0a3 écrit **14**, 3.0a5 et 3.0a5.2 écrivent **15**
-  (octet 0xB de `.comment`, relevé sur un objet compilé). La valeur actuelle **11**
-  (GC 2.7) est donc fausse pour tous les candidats, mais 14 ou 15 dépend de la version.
-- Les autres flags (`-O4,p`, `-inline auto`, `-str reuse`…) sont **compatibles**
-  avec les 6 fonctions, mais pas prouvés uniques.
-- Le compilateur du SDK n'a pas été testé.
+- **Exact version among GC 3.0a3, 3.0a3p1, 3.0a3.2, 3.0a3.3, 3.0a3.4, 3.0a5,
+  3.0a5.2**: identical code on every probe (`probe.cpp`, `probe2.cpp`: classes,
+  virtuals, exceptions on/off, templates, `long long`, bit fields, conversions;
+  `-O2`, `-O4,s`, `-O4,p`).
+- Non-conclusive hint: the SDK tag `0x4199_60831` matches the build number of
+  GC 3.0a5.2 ("Ver 4.1, build 60831" in `info.txt`).
+- `mw_comment_version`: 3.0a3 writes **14**, 3.0a5 and 3.0a5.2 write **15**
+  (byte 0xB of `.comment`, read from a compiled object). The current value **11**
+  (GC 2.7) is therefore wrong for every candidate, but 14 vs 15 depends on the version.
+- The other flags (`-O4,p`, `-inline auto`, `-str reuse`…) are **compatible** with
+  the 6 functions, but not proven unique.
+- The SDK compiler has not been tested.
