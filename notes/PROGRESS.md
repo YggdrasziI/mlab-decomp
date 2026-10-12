@@ -7,7 +7,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | Date | Commit | Matched code | Matched functions | Units (split / total) | Milestone |
 |---|---|---|---|---|---|
 | 2026-10-12 | 053a96b | 0 / 3412916 bytes (0 %) | 0 / 12580 | 274 library units / 983 | Steps 1-4 done: setup, compiler (GC/3.0a5.2 working hypothesis), library splits (Runtime 9, MSL_C 59, MetroTRK 29, RVL_SDK 177), CI checking `main.dol` |
-| 2026-10-12 | (this commit) | 4416 / 3412916 bytes (0.13 %) | 34 / 12580 | 9 matching / 983 | Step 5 pilot: Runtime.PPCEABI.H fully matching and linked (code reused from mscharged-decomp and TP, CC0; see `notes/PROVENANCE.md`) |
+| 2026-10-12 | e94a2ee | 4416 / 3412916 bytes (0.13 %) | 34 / 12580 | 9 matching / 983 | Step 5 pilot: Runtime.PPCEABI.H fully matching and linked (code reused from mscharged-decomp and TP, CC0; see `notes/PROVENANCE.md`) |
 
 Notes:
 
