@@ -279,7 +279,8 @@ RVL_SDK/dvd/dvd_broadway.c:
 	.sbss       start:0x805FBF78 end:0x805FBFA0
 
 RVL_SDK/ax/AXCL.c:
-	.text       start:0x80259418 end:0x80259448
+	.text       start:0x802589E0 end:0x80259458
+	.bss        start:0x80566B80 end:0x80566C80
 	.sbss       start:0x805FC038 end:0x805FC058
 
 RVL_SDK/ax/AXVPB.c:
