@@ -285,15 +285,10 @@ s32 NANDPrivateCreateDirAsync(const char* path, u8 perm, u8 attr,
 
 static s32 nandMove(const char* from, const char* to, NANDCommandBlock* block,
                     BOOL async, BOOL priv) {
-    char absPathFrom[64];
-    char absPathTo[64];
-    char relativeName[13];
-
-    MEMCLR(&absPathFrom);
-    MEMCLR(&absPathTo);
-    MEMCLR(&relativeName);
-
-    relativeName[12] = '\0';
+    // String initializers in this SDK build (as in DarkRTA/rb3).
+    char absPathFrom[64] = "";
+    char absPathTo[64] = "";
+    char relativeName[13] = "";
 
     nandGenerateAbsPath(absPathFrom, from);
     nandGetRelativeName(relativeName, absPathFrom);
@@ -509,6 +504,15 @@ s32 NANDGetStatus(const char* path, NANDStatus* status) {
 
     return nandConvertErrorCode(
         nandGetStatus(path, status, NULL, FALSE, FALSE));
+}
+
+// From zeldaret/tp libs/revolution/src/nand/nand.c (CC0-1.0, commit c8fa8c9e).
+s32 NANDPrivateGetStatus(const char* path, NANDStatus* stat) {
+    if (!nandIsInitialized()) {
+        return NAND_RESULT_FATAL_ERROR;
+    }
+
+    return nandConvertErrorCode(nandGetStatus(path, stat, NULL, FALSE, TRUE));
 }
 
 s32 NANDPrivateGetStatusAsync(const char* path, NANDStatus* status,
