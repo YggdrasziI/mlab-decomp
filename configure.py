@@ -211,6 +211,9 @@ cflags_base = [
     "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
     "-i include",
     f"-i build/{config.version}/include",
+    "-i libs/Runtime/include",
+    "-i libs/MSL_C/include",
+    "-i libs/RVL_SDK/include",
     f"-DBUILD_VERSION={version_num}",
     f"-DVERSION_{config.version}",
 ]
@@ -479,15 +482,15 @@ config.libs = [
         "cflags": cflags_runtime,
         "progress_category": "sdk",  # str | List[str]
         "objects": [
-            Object(NonMatching, "Runtime.PPCEABI.H/__mem.c"),
-            Object(NonMatching, "Runtime.PPCEABI.H/__va_arg.c"),
-            Object(NonMatching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
-            Object(NonMatching, "Runtime.PPCEABI.H/NMWException.cpp"),
-            Object(NonMatching, "Runtime.PPCEABI.H/ptmf.c"),
-            Object(NonMatching, "Runtime.PPCEABI.H/runtime.c"),
-            Object(NonMatching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
-            Object(NonMatching, "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp"),
-            Object(NonMatching, "Runtime.PPCEABI.H/GCN_mem_alloc.c"),
+            Object(Matching, "Runtime.PPCEABI.H/__mem.c"),
+            Object(Matching, "Runtime.PPCEABI.H/__va_arg.c"),
+            Object(Matching, "Runtime.PPCEABI.H/global_destructor_chain.c"),
+            Object(Matching, "Runtime.PPCEABI.H/NMWException.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "Runtime.PPCEABI.H/ptmf.c"),
+            Object(Matching, "Runtime.PPCEABI.H/runtime.c"),
+            Object(Matching, "Runtime.PPCEABI.H/__init_cpp_exceptions.cpp"),
+            Object(Matching, "Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp"),
+            Object(Matching, "Runtime.PPCEABI.H/GCN_mem_alloc.c"),
         ],
     },
     {

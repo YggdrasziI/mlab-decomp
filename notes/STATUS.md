@@ -23,6 +23,9 @@
   `ghcr.io/yggdraszii/mlab-decomp-build:main` (repository `YggdrasziI/mlab-decomp-build`,
   holds `orig/RM7P4F/sys/main.dol`; Actions access: build repo Write, main repo Read).
 
+- Step 5 (started): **Runtime.PPCEABI.H matches** (9/9 units, 100 % code and data,
+  linked), from mscharged-decomp / TP code (CC0), provenance in `notes/PROVENANCE.md`.
+
 ## In progress
 
 - Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units), MSL_C
