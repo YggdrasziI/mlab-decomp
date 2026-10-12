@@ -157,6 +157,7 @@ RVL_SDK/exi/EXIUart.c:
 
 RVL_SDK/exi/EXICommon.c:
 	.text       start:0x80242358 end:0x802424E4
+	.sdata2     start:0x806006B8 end:0x806006C0
 
 RVL_SDK/si/SIBios.c:
 	.text       start:0x802424E4 end:0x802434EC

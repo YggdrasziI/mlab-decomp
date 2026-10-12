@@ -402,7 +402,7 @@ config.libs = [
             Object(NonMatching, "RVL_SDK/os/__ppc_eabi_init.cpp"),
             Object(NonMatching, "RVL_SDK/exi/EXIBios.c", extra_cflags=["-schedule off"]),
             Object(Matching, "RVL_SDK/exi/EXIUart.c"),
-            Object(NonMatching, "RVL_SDK/exi/EXICommon.c"),
+            Object(Matching, "RVL_SDK/exi/EXICommon.c"),
             Object(NonMatching, "RVL_SDK/si/SIBios.c"),
             Object(Matching, "RVL_SDK/si/SISamplingRate.c"),
             Object(Matching, "RVL_SDK/db/db.c"),
