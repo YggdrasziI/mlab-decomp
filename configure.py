@@ -544,7 +544,7 @@ config.libs = [
             Object(NonMatching, "RVL_SDK/gamespy/natneg/natneg.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/serverbrowsing/sb_crypt.c", cflags=cflags_rvl_spy),
             Object(NonMatching, "RVL_SDK/gamespy/serverbrowsing/sb_queryengine.c", cflags=cflags_rvl_spy),
-            Object(NonMatching, "RVL_SDK/gamespy/serverbrowsing/sb_server.c", cflags=cflags_rvl_spy),
+            Object(Matching, "RVL_SDK/gamespy/serverbrowsing/sb_server.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/serverbrowsing/sb_serverbrowsing.c", cflags=cflags_rvl_spy),
         ],
     },

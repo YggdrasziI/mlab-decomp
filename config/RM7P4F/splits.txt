@@ -800,6 +800,8 @@ RVL_SDK/gamespy/serverbrowsing/sb_queryengine.c:
 RVL_SDK/gamespy/serverbrowsing/sb_server.c:
 	.text       start:0x8031B9CC end:0x8031C6AC
 	.data       start:0x803B3AA0 end:0x803B3AB0
+	.sdata      start:0x805FAD28 end:0x805FAD58
+	.sbss       start:0x805FC480 end:0x805FC490
 	.sdata2     start:0x80600B20 end:0x80600B28
 
 RVL_SDK/gamespy/serverbrowsing/sb_serverbrowsing.c:
