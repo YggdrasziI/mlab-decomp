@@ -41,6 +41,7 @@ RVL_SDK/os/OSAudioSystem.c:
 
 RVL_SDK/os/OSCache.c:
 	.text       start:0x802350A0 end:0x80235498
+	.data       start:0x803899A8 end:0x80389BE0
 
 RVL_SDK/os/OSContext.c:
 	.text       start:0x80235498 end:0x80235D20
@@ -419,6 +420,7 @@ RVL_SDK/bte/gki_time.c:
 
 RVL_SDK/bte/gki_ppc.c:
 	.text       start:0x80288150 end:0x802883E0
+	.bss        start:0x805900E8 end:0x805B8BC8
 
 RVL_SDK/bte/hcisu_h2.c:
 	.text       start:0x802883E0 end:0x80288A7C
