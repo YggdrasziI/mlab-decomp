@@ -20,7 +20,8 @@
 
 ## In progress
 
-- Step 3: TU-level splits (only `__init_cpp_exceptions.cpp` so far).
+- Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units, hypotheses from Petari /
+  mscharged-decomp checked against the DOL). Next: MetroTRK, MSL_C, then the SDK.
 - Watch for a game function that matches with only {3.0a5.2} or only {3.0a3…3.0a5};
   it would settle the exact compiler version.
 
@@ -30,6 +31,7 @@
 
 ## To do
 
-- Step 3: TU-level splits. The build cannot prove TU boundaries (any consistent
-  split matches); decide how to source TU hypotheses (see `notes/SPLITS.md`).
+- Step 3: continue TU splits with the same method (reference projects for names and
+  order, verified on this DOL by sizes and referenced data). The build alone cannot
+  prove TU boundaries (see `notes/SPLITS.md`).
 - Step 4: objdiff, GitHub Actions CI, decomp.dev.
