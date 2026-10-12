@@ -227,7 +227,12 @@ void OSFatal(GXColor textColor, GXColor bgColor, const char* msg) {
     GXAbortFrame();
 
     OSSetArenaLo((void*)0x81400000);
-    OSSetArenaHi(bootInfo->fstStart);
+    // This SDK build falls back to the MEM1 end when there is no FST
+    // (as in DarkRTA/rb3 and zeldaret/tp).
+    if (bootInfo->fstStart == NULL)
+        OSSetArenaHi(*(void**)OSPhysicalToCached(0x3110));
+    else
+        OSSetArenaHi(bootInfo->fstStart);
 
     FatalParam.textColor = textColor;
     FatalParam.bgColor = bgColor;

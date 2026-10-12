@@ -379,7 +379,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/os/OSContext.c"),
             Object(Matching, "RVL_SDK/os/OSError.c"),
             Object(NonMatching, "RVL_SDK/os/OSExec.c"),
-            Object(NonMatching, "RVL_SDK/os/OSFatal.c"),
+            Object(Matching, "RVL_SDK/os/OSFatal.c"),
             Object(Matching, "RVL_SDK/os/OSFont.c"),
             Object(Matching, "RVL_SDK/os/OSInterrupt.c"),
             Object(Matching, "RVL_SDK/os/OSLink.c"),
