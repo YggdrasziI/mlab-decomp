@@ -31,7 +31,7 @@
 
 - Step 5: **MetroTRK matches** (29/29 units, mscharged-decomp code, CC0, GC/2.7).
 
-- Step 5: **RVL_SDK 121/177 units match** (mscharged-decomp code, CC0); data
+- Step 5: **RVL_SDK 146/177 units match** (mscharged-decomp code, CC0); data
   sections placed by relocation pairing and verified byte by byte, then the 22
   byte-identical units that failed to link were fixed one by one (see
   `notes/PROVENANCE.md`, "Unit-by-unit data review").
@@ -52,9 +52,15 @@
 ## To do
 
 - Step 5: `alloc.c` (MSL_C): `realloc` and `fn_80330B20` to decompile from the DOL.
-- Step 5: RVL_SDK: the 51 units whose code differs from mscharged in some functions,
-  the 5 units without a source, the debugger driver block (0x80344FD4-0x80345AD8) and
-  the unsplit SDK regions.
+- Step 5: RVL_SDK, 31 units left (NonMatching): OS, OSExec, OSReset, OSPlayRecord
+  (bss layout: FileInfo and Block seem to share one aggregate, not proven),
+  OSPlayTime, __ppc_eabi_init, vi, GXFifo, dvd, dvderror, dvdDeviceError,
+  dvd_broadway, AXVPB (split to redo, like AXCL), mem_list (split covers more than
+  the unit), NANDCore, NANDLogging, scsystem, scapi, ipcclt, WPAD, WPADHIDParser,
+  usb, WUD, WUDHidHost, uusb_ppc and the GameSpy units gpiInfo, gpiUtility,
+  gt2Message, NATify, natneg, sb_queryengine (newer/older code than the sources;
+  needs hand decompilation). Then the debugger driver block (0x80344FD4-0x80345AD8)
+  and the unsplit SDK regions.
 
 - Step 3: continue TU splits with the same method (reference projects for names and
   order, verified on this DOL by sizes and referenced data). The build alone cannot

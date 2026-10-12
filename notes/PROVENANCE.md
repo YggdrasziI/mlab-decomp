@@ -179,7 +179,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (121 of 177 units Matching so far)
+## RVL_SDK (146 of 177 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -272,3 +272,45 @@ unknown, marked in the code):
 
 rb3's `NANDCheck.c` was checked and does not contain `fn_8026829C`; no rb3 code was
 used.
+
+### Second pass: units whose code differed from mscharged
+
+Method: list, per unit, the DOL functions whose code differs from the compiled
+mscharged source; try the same function from zeldaret/tp
+(`libs/revolution/src`, commit `c8fa8c9e`), SMGCommunity/Petari (commit
+`6804bd31`) and DarkRTA/rb3 (commit `b9dfa78b`) in a temporary copy of the unit
+(a few TP type names provided only for the trial build); keep a version only if
+it compiles byte-identical. Every reuse is marked by a comment in the code.
+
+Functions taken as they are (absent from mscharged or different there):
+
+| Unit | Function | Source |
+|---|---|---|
+| `os/OSMutex.c` | `OSWaitCond` | TP (assertions dropped) |
+| `os/OSReboot.c` | whole file (`__OSNextPartitionType` update) | Petari |
+| `os/OSReset.c` | `OSResetSystem`, `OSReturnToMenu` | Petari |
+| `os/OSReset.c` | `__OSShutdownDevices` | TP |
+| `os/OS.c` | `OSGetAppGamename` | Petari |
+| `gx/GXTexture.c` | `GXInitTexObjFilter` | TP (register macro adapted) |
+| `ipc/ipcMain.c` | `IPCReInit` | TP |
+| `nand/nand.c` | `NANDPrivateGetStatus` | TP |
+| `nand/NANDSecret.c` | `NANDSecretGetUsage` (new unit) | rb3 (no license file, allowed by the owner) |
+| `dvd/dvdFatal.c` | message tables and `__DVDShowFatalMessage` | Petari (RMGK01 branch dropped) |
+| `dvd/dvd.c` | `stateCoverClosed_CMD` | TP |
+| `vi/vi.c` | `getTiming` | TP |
+
+Small edits made to match this SDK build, each one also found in the references:
+`vi3in1.c` (overdrive level `VI_ODV_L1`), `OSFatal.c` (MEM1-end fallback when there
+is no FST), `OSNet.c` (`__OSInIPL` test, `NWC24iSynchronizeRtcCounter(FALSE)`),
+`GXInit.c` (`__GXSetGenMode` call), `fs.c` (`__fsInitialized`, file-stats callback,
+`ISFS_GetFileStats` through an IPC block), `nand.c` (`nandMove` buffers initialized
+with `""`). `sc.h` declares `SCGetProductGameRegion` as returning `s8`
+(the DOL sign-extends its result).
+
+GameSpy (no reference project has it): `gt2Socket.c` (bind error check inside the
+protocol test), `sb_server.c` (server keys filtered by the qr2 function at
+`0x803156EC`, real name unknown), receive buffer size 4096 (`gt2Main.h`).
+
+Names corrected on the way (earlier size-alignment errors, proven by code):
+`gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
+
