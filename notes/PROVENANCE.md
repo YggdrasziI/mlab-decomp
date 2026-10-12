@@ -152,3 +152,28 @@ from this DOL:
   `scanf.c`), `__ieee754_fmod`, `__ieee754_log`, `__ieee754_log10`, `asin`, `fmod`,
   `log`, `log10` (byte-identical), `__ieee754_asin` (0x8033B5D8, branch target of
   `asin`).
+
+## MetroTRK (28 of 29 units Matching)
+
+Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
+commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: the 29 `src/MetroTRK/*`
+files (28 C files and `__exception.s`) copied to `src/MetroTRK/`, plus the headers they
+need. Library compiler `GC/2.7` and flags as in mscharged (`cflags_metrotrk`: base flags
+without `-enc SJIS`, with `-fp_contract on -str reuse,readonly -use_lmw_stmw on
+-inline on,deferred -func_align 4 -sdata 0 -sdata2 0`; `cflags_metrotrk_deferred_auto`
+for 9 files; `-sdata 8` for `cc_gdev.c` and `serpoll.c`).
+
+Every function present in this DOL is byte-identical, except `InitMetroTRK`
+(`dolphin_trk.c`, 0x94 here vs 0x98 in mscharged); `dolphin_trk.c` stays NonMatching.
+The sources also define functions absent from this DOL (`TRKStandardACK`,
+`TRKSendACK`, `TRKReadBuffer1_*`, `GetThreadInfo`, …): they are inlined where used and
+their stand-alone copies are dead-stripped by the linker, so the sources are kept as
+they are. One change: `__close_console` in `mslsupp.c` is disabled with `#if 0`, since
+this DOL's `__close_console` is the MSL_C one (0x8033B08C).
+
+Symbols: 85 functions renamed after byte-identical matches, and by call position:
+`TRK_memset` (0x8000446C), `TRK_memcpy` (0x8000449C), `__TRK_reset` (0x800063F4), and
+`DBInitComm`, `DBInitInterrupts`, `DBQueryData`, `DBRead`, `DBWrite`, `DBOpen`,
+`DBClose` (0x80345110-0x80345388). The latter identify the unknown block after
+MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
+function sizes differ from Petari's and TP's versions.

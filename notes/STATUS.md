@@ -29,6 +29,9 @@
   remaining unit (`alloc.c`) needs two functions decompiled
   from this DOL; see `notes/PROVENANCE.md`.
 
+- Step 5: **MetroTRK 28/29 units match** (mscharged-decomp code, CC0, GC/2.7); only
+  `dolphin_trk.c` (`InitMetroTRK` differs) remains.
+
 ## In progress
 
 - Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units), MSL_C

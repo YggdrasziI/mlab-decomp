@@ -22,7 +22,7 @@ unit (TU). A TU boundary is only proven once the TU is decompiled and matches.
 | Runtime.PPCEABI.H | 0x8032EEE4 | 0x8032FEF0 | see "Runtime.PPCEABI.H units" below |
 | MSL_C (including its math library) | 0x8032FEF0 | 0x8033F460 | see "MSL_C units" below; the 43 unnamed functions after `fwide` are MSL math (`e_pow.c` … `w_sqrt.c`) |
 | MetroTRK | 0x8033F460 | 0x80344FD4 | see "MetroTRK units" below |
-| Debugger communication driver (EXI2), variant unidentified | 0x80344FD4 | 0x80345AD8 | 31 functions; installs an interrupt handler (interrupt 0x19) and masks/unmasks interrupts. Same role as `DebuggerDriver.c`/`exi2.c`, but its function sizes match neither Petari's `NDEV` nor TP's `NdevExi2A`. **Unidentified** |
+| Debugger communication driver (EXI2) | 0x80344FD4 | 0x80345AD8 | 31 functions; MetroTRK calls `DBInitComm`, `DBInitInterrupts`, `DBQueryData`, `DBRead`, `DBWrite`, `DBOpen`, `DBClose` here (0x80345110-0x80345388), the `DebuggerDriver.c` API. Function sizes match neither Petari's `NDEV` nor TP's `NdevExi2A`; exact library variant unknown, not split yet |
 
 `strlen` (0x8032EEE4, weak) belongs to the runtime's `__mem.c` (see below).
 
