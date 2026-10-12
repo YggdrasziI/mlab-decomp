@@ -457,6 +457,7 @@ RVL_SDK/bte/btu_task1.c:
 
 RVL_SDK/bte/bd.c:
 	.text       start:0x80289E64 end:0x80289F38
+	.sbss2      start:0x80601110 end:0x80601118
 
 RVL_SDK/bte/bta_sys_conn.c:
 	.text       start:0x80289F38 end:0x8028A18C
@@ -560,6 +561,7 @@ RVL_SDK/bte/btu_hcif.c:
 
 RVL_SDK/bte/btu_init.c:
 	.text       start:0x8029B3DC end:0x8029B454
+	.sdata2     start:0x80600A48 end:0x80600A50
 
 RVL_SDK/bte/wbt_ext.c:
 	.text       start:0x8029B454 end:0x8029B534
