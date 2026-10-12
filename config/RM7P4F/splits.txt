@@ -220,6 +220,7 @@ RVL_SDK/gx/GXGeometry.c:
 
 RVL_SDK/gx/GXTexture.c:
 	.text       start:0x8024C3B8 end:0x8024D0BC
+	.data       start:0x80398498 end:0x803984D8
 	.sdata      start:0x805FA208 end:0x805FA248
 	.sdata2     start:0x80600708 end:0x80600730
 

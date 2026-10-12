@@ -414,7 +414,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/gx/GXAttr.c"),
             Object(Matching, "RVL_SDK/gx/GXMisc.c"),
             Object(Matching, "RVL_SDK/gx/GXGeometry.c"),
-            Object(NonMatching, "RVL_SDK/gx/GXTexture.c"),
+            Object(Matching, "RVL_SDK/gx/GXTexture.c"),
             Object(Matching, "RVL_SDK/gx/GXBump.c"),
             Object(Matching, "RVL_SDK/gx/GXTev.c"),
             Object(Matching, "RVL_SDK/gx/GXPixel.c"),

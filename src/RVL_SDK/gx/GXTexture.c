@@ -317,6 +317,16 @@ void GXInitTexObjTlut(const GXTexObj* obj, u32 tlut_name)
     t->tlutName = tlut_name;
 }
 
+// From zeldaret/tp libs/revolution/src/gx/GXTexture.c (CC0-1.0, commit c8fa8c9e),
+// assertions dropped and SET_REG_FIELD adapted to this file's macro.
+void GXInitTexObjFilter(GXTexObj* obj, GXTexFilter min_filt, GXTexFilter mag_filt)
+{
+    __GXTexObjInt* t = (__GXTexObjInt*)obj;
+
+    SET_REG_FIELD(t->mode0, 1, 4, mag_filt == 1 ? 1 : 0);
+    SET_REG_FIELD(t->mode0, 3, 5, GX2HWFiltConv[min_filt]);
+}
+
 void GXInitTexObjUserData(const GXTexObj* obj, void* user_data)
 {
     __GXTexObjInt* t = (__GXTexObjInt*)obj;
