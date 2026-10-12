@@ -22,8 +22,8 @@ unit (TU). A TU boundary is only proven once the TU is decompiled and matches.
 | Runtime.PPCEABI.H | 0x8032EEE4 | 0x8032FEF0 | see "Runtime.PPCEABI.H units" below |
 | MSL_C | 0x8032FEF0 | 0x8033AFB4? | `__close_all`, `__prep_buffer`, `__flush_buffer`, `__fwrite`, `_fseek`, `wcstombs`, `memmove`, `memchr`, `parse_format`, `long2str`, `float2str`, `__pformatter`, `vprintf`, `vsnprintf`, `sprintf`, `strcpy`, `strchr`, `fwide` 0x8033AF30 |
 | Unknown block (43 unnamed functions) | 0x8033AFB4 | 0x8033F460 | references a large `.sdata2` block (floating point constants); possibly MSL math. **Unproven** |
-| MetroTRK | 0x8033F460 | 0x80344CC8 | `TRKNubMainLoop` … `gdev_cc_initialize` |
-| Unknown block (39 unnamed functions) | 0x80344CC8 | 0x80345AD8 | after the last TRK communication functions. **Unproven** |
+| MetroTRK | 0x8033F460 | 0x80344FD4 | see "MetroTRK units" below |
+| Debugger communication driver (EXI2), variant unidentified | 0x80344FD4 | 0x80345AD8 | 31 functions; installs an interrupt handler (interrupt 0x19) and masks/unmasks interrupts. Same role as `DebuggerDriver.c`/`exi2.c`, but its function sizes match neither Petari's `NDEV` nor TP's `NdevExi2A`. **Unidentified** |
 
 `strlen` (0x8032EEE4, weak) belongs to the runtime's `__mem.c` (see below).
 
@@ -115,9 +115,39 @@ data its functions reference:
 
 All units are `NonMatching` (nothing decompiled yet); the build still matches.
 
+## MetroTRK units
+
+Names, order and sections come from
+[yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
+`config/R4QE01/splits.txt` (CC0-1.0); Petari (`config/RMGP01`) and
+[zeldaret/tp](https://github.com/zeldaret/tp) (`config/RZDP01`, CC0-1.0) have the same
+unit list. Read on 2026-10-12; only split boundaries were used, no code.
+
+Check against this DOL: function sizes were aligned with mscharged (sequence alignment
+of size lists). 151 of 152 functions match in size and order, from `mainloop.c` to
+`MWCriticalSection_gc.c`; every unit's `.text` size is identical to the reference,
+except:
+
+- `mslsupp.c`: 0x5BC instead of 0x640; the missing 0x84 is `__close_console`, absent
+  here (dead-stripped, hypothesis);
+- `InitMetroTRK`: 0x94 instead of 0x98 (version difference), compensated inside
+  `dolphin_trk.c` (unit size still 0x31C).
+
+Data was assigned from the objects each unit's functions reference, and every range
+size was compared with the reference (e.g. `dispatch.c` `.data` 0x6C, `msghndlr.c` two
+0x1C jump tables, `targimpl.c` `.rodata` 0x88, `cc_gdev.c` `.bss` 0x500 + 0x1C,
+`dolphin_trk_glue.c` `.rodata` 0x108 starting at `EndofProgramInstruction`).
+`.init` parts: `mem_TRK.c` (`TRK_memset`/`TRK_memcpy` sizes 0x30/0x24),
+`__exception.s` (`gTRKInterruptVectorTable` … `gTRKInterruptVectorTableEnd`,
+0x1F34 as in the reference), `dolphin_trk.c` (`fn_800063F4`, 0x2C).
+Small differences: `targimpl.c` `.bss` is 0x580 here (0x57C in the reference), and a
+few ranges end on dtk symbol sizes (padding included) where dtk sized a symbol larger
+than the reference.
+
 ## Splits in `splits.txt`
 
 | Unit | Status |
 |---|---|
-| `Runtime.PPCEABI.H/*` (9 units above) | Split, NonMatching |
+| `Runtime.PPCEABI.H/*` (9 units) | Split, NonMatching |
+| `MetroTRK/*` (29 units) | Split, NonMatching |
 | Everything else | dtk `auto_*` objects (gap-based, not TU-accurate) |

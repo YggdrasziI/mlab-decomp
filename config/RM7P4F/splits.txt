@@ -50,3 +50,115 @@ Runtime.PPCEABI.H/Gecko_ExceptionPPC.cpp:
 Runtime.PPCEABI.H/GCN_mem_alloc.c:
 	.text       start:0x8032FD80 end:0x8032FEF0
 	.rodata     start:0x80352220 end:0x80352290
+
+MetroTRK/mainloop.c:
+	.text       start:0x8033F460 end:0x8033F558
+
+MetroTRK/nubevent.c:
+	.text       start:0x8033F558 end:0x8033F780
+	.bss        start:0x805F5CD0 end:0x805F5CF8
+
+MetroTRK/nubinit.c:
+	.text       start:0x8033F780 end:0x8033F904
+	.rodata     start:0x80353248 end:0x80353268
+	.bss        start:0x805F5CF8 end:0x805F5CFC
+
+MetroTRK/msg.c:
+	.text       start:0x8033F904 end:0x8033F930
+
+MetroTRK/msgbuf.c:
+	.text       start:0x8033F930 end:0x8034016C
+	.rodata     start:0x80353268 end:0x80353288
+	.bss        start:0x805F5D00 end:0x805F76B0
+
+MetroTRK/serpoll.c:
+	.text       start:0x8034016C end:0x80340318
+	.bss        start:0x805F76B0 end:0x805F76C8
+	.sbss       start:0x805FC5A8 end:0x805FC5B0
+
+MetroTRK/usr_put.c:
+	.text       start:0x80340318 end:0x803403A4
+
+MetroTRK/dispatch.c:
+	.text       start:0x803403A4 end:0x803404EC
+	.data       start:0x803B5210 end:0x803B527C
+
+MetroTRK/msghndlr.c:
+	.text       start:0x803404EC end:0x803415C8
+	.rodata     start:0x80353288 end:0x803532C0
+	.data       start:0x803B5280 end:0x803B52B8
+	.bss        start:0x805F76C8 end:0x805F76D0
+
+MetroTRK/support.c:
+	.text       start:0x803415C8 end:0x80341C7C
+
+MetroTRK/mutex_TRK.c:
+	.text       start:0x80341C7C end:0x80341C94
+
+MetroTRK/notify.c:
+	.text       start:0x80341C94 end:0x80341D2C
+
+MetroTRK/flush_cache.c:
+	.text       start:0x80341D2C end:0x80341D64
+
+MetroTRK/mem_TRK.c:
+	.init       start:0x8000446C end:0x800044C0
+	.text       start:0x80341D64 end:0x80341E1C
+
+MetroTRK/string_TRK.c:
+	.text       start:0x80341E1C end:0x80341E38
+
+MetroTRK/targimpl.c:
+	.text       start:0x80341E38 end:0x80343850
+	.rodata     start:0x803532C0 end:0x80353348
+	.data       start:0x803B52B8 end:0x803B52E8
+	.bss        start:0x805F76D0 end:0x805F7C50
+
+MetroTRK/targsupp.c:
+	.text       start:0x80343850 end:0x80343870
+
+MetroTRK/mpc_7xx_603e.c:
+	.text       start:0x80343870 end:0x80343BE0
+
+MetroTRK/mslsupp.c:
+	.text       start:0x80343BE0 end:0x8034419C
+
+MetroTRK/__exception.s:
+	.init       start:0x800044C0 end:0x800063F4
+
+MetroTRK/dolphin_trk.c:
+	.init       start:0x800063F4 end:0x80006420
+	.text       start:0x8034419C end:0x803444B8
+	.data       start:0x803B52E8 end:0x803B5328
+	.bss        start:0x805F7C50 end:0x805F7C58
+
+MetroTRK/main_TRK.c:
+	.text       start:0x803444B8 end:0x803444FC
+	.bss        start:0x805F7C58 end:0x805F7C60
+
+MetroTRK/dolphin_trk_glue.c:
+	.text       start:0x803444FC end:0x803449BC
+	.rodata     start:0x80353348 end:0x80353450
+	.data       start:0x803B5328 end:0x803B5350
+	.bss        start:0x805F7C60 end:0x805F7C68
+
+MetroTRK/targcont.c:
+	.text       start:0x803449BC end:0x803449F0
+
+MetroTRK/target_options.c:
+	.text       start:0x803449F0 end:0x80344A0C
+	.bss        start:0x805F7C68 end:0x805F7C70
+
+MetroTRK/UDP_Stubs.c:
+	.text       start:0x80344A0C end:0x80344A54
+
+MetroTRK/cc_gdev.c:
+	.text       start:0x80344A54 end:0x80344D14
+	.bss        start:0x805F7C70 end:0x805F818C
+	.sbss       start:0x805FC5B0 end:0x805FC5B8
+
+MetroTRK/CircleBuffer.c:
+	.text       start:0x80344D14 end:0x80344F7C
+
+MetroTRK/MWCriticalSection_gc.c:
+	.text       start:0x80344F7C end:0x80344FD4
