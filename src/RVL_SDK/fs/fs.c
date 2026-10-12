@@ -134,6 +134,9 @@ typedef struct FSCommandBlock {
 } FSCommandBlock;
 
 static s32 __fsFd = -1;
+// This SDK build keeps the init flag at file scope (as in zeldaret/tp,
+// Petari and DarkRTA/rb3).
+static BOOL __fsInitialized = FALSE;
 static char* __devfs = NULL;
 static u32 _asynCnt = 0;
 static s32 hId;
@@ -148,21 +151,20 @@ static s32 _FSGetFileStatsCb(s32 result, FSCommandBlock* block);
 size_t strnlen(const char* str, size_t maxlen);
 
 s32 ISFS_OpenLib(void) {
-    static BOOL firstFl = TRUE;
     static void* lo;
     static void* hi;
 
     s32 ret = IPC_RESULT_OK;
     u8* base;
 
-    if (firstFl) {
+    if (!__fsInitialized) {
         lo = IPCGetBufferLo();
         hi = IPCGetBufferHi();
     }
 
     __devfs = (char*)ROUND_UP_PTR(lo, 32);
 
-    if (firstFl && __devfs + FS_MAX_PATH > (char*)hi) {
+    if (!__fsInitialized && __devfs + FS_MAX_PATH > (char*)hi) {
         OSReport("APP ERROR: Not enough IPC arena\n");
         ret = IPC_RESULT_ALLOC_FAILED;
         goto end;
@@ -178,15 +180,15 @@ s32 ISFS_OpenLib(void) {
 
     base = (u8*)__devfs;
 
-    if (firstFl && base + FS_MAX_PATH + FS_HEAP_SIZE > (u8*)hi) {
+    if (!__fsInitialized && base + FS_MAX_PATH + FS_HEAP_SIZE > (u8*)hi) {
         OSReport("APP ERROR: Not enough IPC arena\n");
         ret = IPC_RESULT_ALLOC_FAILED;
         goto end;
     }
 
-    if (firstFl) {
+    if (!__fsInitialized) {
         IPCSetBufferLo(base + FS_MAX_PATH + FS_HEAP_SIZE);
-        firstFl = FALSE;
+        __fsInitialized = TRUE;
     }
 
     hId = iosCreateHeap(base, FS_MAX_PATH + FS_HEAP_SIZE);
@@ -196,6 +198,15 @@ s32 ISFS_OpenLib(void) {
 
 end:
     return ret;
+}
+
+static s32 _FSGetFileStatsCb(s32 result, FSCommandBlock* block) {
+    if (result == IPC_RESULT_OK) {
+        memcpy(block->getFileStatsCtx.statsOut, block->ioctlWork,
+               sizeof(FSFileStats));
+    }
+
+    return IPC_RESULT_OK;
 }
 
 static s32 _isfsFuncCb(s32 result, void* arg) {
@@ -220,6 +231,11 @@ static s32 _isfsFuncCb(s32 result, void* arg) {
 
         case CB_STATE_GET_USAGE: {
             _FSGetUsageCb(result, block);
+            break;
+        }
+
+        case CB_STATE_GET_FILE_STATS: {
+            _FSGetFileStatsCb(result, block);
             break;
         }
 
@@ -940,13 +956,36 @@ s32 ISFS_OpenAsync(const char* path, IPCOpenMode mode, FSAsyncCallback callback,
                          block);
 }
 
+// This SDK build reads the stats through an IPC block (as in DarkRTA/rb3).
 s32 ISFS_GetFileStats(s32 fd, FSFileStats* statsOut) {
+    s32 ret = IPC_RESULT_OK;
+    FSCommandBlock* block = NULL;
+
     if (statsOut == NULL || (u32)statsOut % 32 != 0) {
-        return IPC_RESULT_INVALID;
+        ret = IPC_RESULT_INVALID;
+        goto end;
     }
 
-    return IOS_Ioctl(fd, FS_IOCTL_GET_FILE_STATS, NULL, 0, statsOut,
-                     sizeof(FSFileStats));
+    block = (FSCommandBlock*)iosAllocAligned(hId, sizeof(FSCommandBlock), 32);
+    if (block == NULL) {
+        ret = IPC_RESULT_ALLOC_FAILED;
+        goto end;
+    }
+
+    ret = IOS_Ioctl(fd, FS_IOCTL_GET_FILE_STATS, NULL, 0, block->ioctlWork,
+                    sizeof(FSFileStats));
+    if (ret != IPC_RESULT_OK) {
+        goto end;
+    }
+
+    memcpy(statsOut, block->ioctlWork, sizeof(FSFileStats));
+
+end:
+    if (block != NULL) {
+        FS_DELETE(block);
+    }
+
+    return ret;
 }
 
 s32 ISFS_GetFileStatsAsync(s32 fd, FSFileStats* statsOut,
