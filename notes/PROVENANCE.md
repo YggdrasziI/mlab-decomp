@@ -56,3 +56,44 @@ the source and dead-stripped by the linker (the build matches).
   (`operator delete[]`, 0x801D4340, game code), `OSInitAlloc`, `OSCreateHeap`,
   `OSSetCurrentHeap`, `OSAllocFromHeap`, `OSFreeToHeap`, `OSSetArenaLo`,
   `__OSCurrHeap`, and `@stringBase0` (0x80352220, `GCN_mem_alloc.c` string pool).
+
+## MSL_C (29 of 59 units Matching so far)
+
+Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
+same commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, license **CC0-1.0**: the 50
+`src/MSL/*.c` files that exist for our units, copied unchanged to `src/MSL_C/`, plus the
+headers they need (`libs/MSL_C/include/**`, more of `libs/RVL_SDK/include/revolution/**`,
+`libs/MetroTRK/include/MetroTRK/trkenum.h`, `include/types.h`). Library flags and
+per-file flags are the ones mscharged uses (`cflags_msl` = base flags + `-inline auto
+-ipa file`; per-file `-Cpp_exceptions on`, `-use_lmw_stmw on`, `-rostr`,
+`-str reuse,pool,readonly`, `-D_IEEE_LIBM`; `math_sun.c` with the runtime flags).
+
+The units linked are those marked `Matching` in `configure.py` (all their sections
+are byte-identical and the build matches).
+
+Not Matching yet, with the reason:
+
+- compiled source has functions this DOL does not have (kept by their exception
+  tables): `char_io.c`, `FILE_POS.c`, `mbstring.c`, `math_api.c`, `string.c`;
+- small data/size differences: `rand.c` (`.sdata`), `strtold.c` (`.rodata`),
+  `direct_io.c` (4 bytes of `.text`);
+- version differences in some functions: `alloc.c`, `ansi_fp.c`, `arith.c`,
+  `printf.c`, `scanf.c`, `strtoul.c`, `wstring.c`, `uart_console_io_gcn.c`, `extras.c`,
+  `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c`;
+- no mscharged source: `signal.c`, `e_asin.c`, `e_fmod.c`, `e_log.c`, `e_log10.c`,
+  `w_asin.c`, `w_fmod.c`, `w_log.c`, `w_log10.c`.
+
+### Symbols renamed for MSL_C
+
+- 105 functions renamed after the mscharged names; each one is **byte-identical** to the
+  compiled source (relocated fields masked) after size alignment inside its unit. One
+  name was skipped because it would clash (`parse_format` of `scanf.c` vs `printf.c`).
+- External names used by the matching code, mapped by reference position in
+  byte-identical functions or in the `__files` data table: `__dec2num`,
+  `__ieee754_pow`, `__ieee754_rem_pio2`, `__kernel_tan`, `atan`, `raise`,
+  `__open_file`, `__close_file`, `__read_file`, `__write_file`, `__position_file`,
+  `__read_console` (these six are in MetroTRK's `mslsupp.c`), `__close_console`
+  (0x8033B08C; the references aligned it by size with the next function, the `__files`
+  pointers prove it), `__double_huge`, `__float_huge`, `__float_nan`,
+  `_current_locale` (0x803B4DD0), `__lconv`, `errno` (0x805FC580), `__aborting`,
+  `stdin_buff`, `stdout_buff`, `stderr_buff`.
