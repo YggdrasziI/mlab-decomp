@@ -178,3 +178,40 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 `DBClose` (0x80345110-0x80345388). The latter identify the unknown block after
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
+
+## RVL_SDK (86 of 177 units Matching so far)
+
+Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
+commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
+files matching our unit paths (5 of our units have no mscharged source), plus the
+headers they need. Compilers and flags per object as in mscharged: `GC/3.0a5.2` with
+`cflags_rvl_sdk` (base + `-inline auto -ipa file`) by default, the Broadcom BTE stack
+with `GC/3.0a5` and `cflags_rvl_bte`, plus `cflags_rvl_spy` (GameSpy), `_wud`, `_wpad`,
+`_dwc` where mscharged uses them. Sources are unchanged.
+
+Function check: 121 of the 172 units are byte-identical function by function (the
+others have version differences in some functions). 1492 functions were renamed after
+byte-identical matches, plus 111 data/function names mapped by reference position.
+
+Data placement (new method): for each byte-identical function, every relocation of
+the compiled object (symbol + addend) is paired with the reference of the original
+instruction at the same offset; this gives the DOL address where each data section of
+the unit starts. A section is accepted only if all its references agree **and** its
+compiled bytes equal the DOL bytes there (relocated fields masked; `.bss`/`.sbss`
+are located by references only). 97 sections were byte-verified and added, 10
+rejected. A few earlier region-map ranges were found too short and were extended to
+the next unit (`ipcclt.c` `.sbss` to include its `initialized` static, `OSContext.c`
+`.data` padding).
+
+86 units whose compiled sections are all covered are linked; the build
+matches.
+
+**Naming caveat.** Names come from ordered size alignment plus a byte comparison. When
+several tiny functions have identical bytes (e.g. `blr` stubs), only their order tells
+them apart, which fails if the source has dead-stripped functions of the same size in
+between. This happened in `gki_ppc.c`: 0x80288288/0x8028828C/0x80288290 are
+`GKI_run`, `GKI_sched_lock`, `GKI_sched_unlock` (proven by `BTA_Init` calling
+0x80288288 where the compiled code calls `GKI_run`); the first naming was shifted.
+Other units with same-byte functions were checked: in mutex_TRK, targsupp, UDP_Stubs,
+cc_gdev and extras the function lists are identical to the source, so the order is
+certain.

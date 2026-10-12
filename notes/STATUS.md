@@ -31,6 +31,9 @@
 
 - Step 5: **MetroTRK matches** (29/29 units, mscharged-decomp code, CC0, GC/2.7).
 
+- Step 5: **RVL_SDK 86/177 units match** (mscharged-decomp code, CC0); data
+  sections placed by relocation pairing and verified byte by byte.
+
 ## In progress
 
 - Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units), MSL_C
