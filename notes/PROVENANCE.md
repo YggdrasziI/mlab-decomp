@@ -179,7 +179,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (99 of 177 units Matching so far)
+## RVL_SDK (121 of 177 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -229,3 +229,46 @@ between. This happened in `gki_ppc.c`: 0x80288288/0x8028828C/0x80288290 are
 Other units with same-byte functions were checked: in mutex_TRK, targsupp, UDP_Stubs,
 cc_gdev and extras the function lists are identical to the source, so the order is
 certain.
+
+### Unit-by-unit data review (22 byte-identical units that failed to link)
+
+Each unit was linked alone and the failure analysed (link error or first differing
+DOL range). Fixes, all verified by `main.dol: OK`:
+
+- **Version banners.** The `<< RVL_SDK - X 	release build: ... >>` strings in
+  mscharged carry the build dates of its own SDK. They were replaced by the dates found
+  in this DOL (EXI, SI, VI, GX, DVD, NAND, OS, SC, WPAD); this is the only change to
+  those lines.
+- **Dead-stripped data.** The DOL lacks the strings, statics and objects used only by
+  functions that its link stripped; the linker compacts what remains, so the split
+  range is the DOL range, shorter than the compiled section (`SIBios.c`, `dvdfs.c`,
+  `NANDCheck.c`, `gpiUnique.c` `.data`; `gstats.c` `.bss` without `challenge$1040`;
+  `Pad.c` keeps only `__PADSpec`).
+- **Wrong guessed symbol sizes** (dtk merged neighbouring objects, so ranges ended
+  inside a symbol): `IdleContext`/`IdleThread` (`OSThread.c`), `lbl_8039F888`
+  (`dsp_task.c`), `lbl_805C8000` (`gt2Utility.c`), corrected from the compiled layout.
+- **Alignment.** `hcisu_h2.c` `.bss` is 0x24 bytes; the next unit (`uusb_ppc.c`, still
+  auto-split) needs the 32-byte alignment of its compiled `.bss`, set with `align:32`
+  on its first object.
+- **Names by reference position** (byte-identical code): 42 BTE/GameSpy names, the DSP
+  mailbox functions and task globals, AX command-list functions and globals,
+  `DVDCancel`, `StatsServerHostname`, `gcd_gamename`, `gcd_secret_key`, and data
+  defined twice once named (`bd_addr_null` in `bd.c` `.sbss2`, `BT_BD_ANY` in
+  `btu_init.c` `.sdata2`).
+- **Wrong split / wrong name found.** `AXCL.c` `.text` was a 0x30-byte fragment; the
+  unit is 0x802589E0-0x80259458 (same order and sizes as the compiled code). The name
+  `gpiProcessRegisterUniqueNick` was on the wrong twin: 0x8030CDB0 compares `n\`
+  (the source's string), 0x8030CEDC compares `c\`.
+
+Functions **written from this DOL** (absent from the mscharged sources, real names
+unknown, marked in the code):
+
+- `fn_8026829C` in `NANDCheck.c`: free blocks/files for the application (calls the
+  static `nandCalcUsage`, so it belongs to this unit).
+- `fn_80259414` in `AXCL.c`: empty function called by the AX shutdown function where AX
+  init calls `__AXClInit`.
+- `fn_8030CEDC` in `gpiUnique.c`: `c\` (CD key registration) reply handler, twin of
+  `gpiProcessRegisterUniqueNick`.
+
+rb3's `NANDCheck.c` was checked and does not contain `fn_8026829C`; no rb3 code was
+used.

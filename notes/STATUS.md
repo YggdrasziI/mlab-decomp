@@ -31,8 +31,10 @@
 
 - Step 5: **MetroTRK matches** (29/29 units, mscharged-decomp code, CC0, GC/2.7).
 
-- Step 5: **RVL_SDK 99/177 units match** (mscharged-decomp code, CC0); data
-  sections placed by relocation pairing and verified byte by byte.
+- Step 5: **RVL_SDK 121/177 units match** (mscharged-decomp code, CC0); data
+  sections placed by relocation pairing and verified byte by byte, then the 22
+  byte-identical units that failed to link were fixed one by one (see
+  `notes/PROVENANCE.md`, "Unit-by-unit data review").
 
 ## In progress
 
@@ -48,6 +50,11 @@
 - Nothing.
 
 ## To do
+
+- Step 5: `alloc.c` (MSL_C): `realloc` and `fn_80330B20` to decompile from the DOL.
+- Step 5: RVL_SDK: the 51 units whose code differs from mscharged in some functions,
+  the 5 units without a source, the debugger driver block (0x80344FD4-0x80345AD8) and
+  the unsplit SDK regions.
 
 - Step 3: continue TU splits with the same method (reference projects for names and
   order, verified on this DOL by sizes and referenced data). The build alone cannot
