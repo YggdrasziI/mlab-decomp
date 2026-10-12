@@ -29,12 +29,15 @@ void __OSInitNet(void) {
         }
     }
 
-    // @bug Wrong prototype. Somebody forgot to include the header!!!
-    error = NWC24iSynchronizeRtcCounter();
-    if (error != 0) {
-        OSReport(
-            "Failed to synchronize time with network resource managers. %d\n",
-            error);
+    // This SDK build skips the RTC synchronization in the IPL and passes
+    // FALSE, as in zeldaret/tp, Petari and DarkRTA/rb3.
+    if (!__OSInIPL) {
+        error = NWC24iSynchronizeRtcCounter(FALSE);
+        if (error != 0) {
+            OSReport(
+                "Failed to synchronize time with network resource managers. %d\n",
+                error);
+        }
     }
 }
 
