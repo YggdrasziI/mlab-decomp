@@ -13,6 +13,12 @@
   `-fp_contract off` proven; Wii 1.x and GC 2.x ruled out (details in
   `notes/COMPILER.md`).
 
+- Toolchain set to **GC/3.0a5.2** (working hypothesis), `-fp_contract off`,
+  `mw_comment_version: 15`; `__init_cpp_exceptions.cpp` split with the GC 2.7+/Wii
+  layout; build still matches.
+- Step 3 (first pass): region map of `.text` and all data sections in
+  `notes/SPLITS.md` (game / SDK / runtime / MSL / TRK, plus two unknown blocks).
+
 ## In progress
 
 - Step 2: tell apart the GC 3.0 versions. Fuzzing reduced them to two classes,
@@ -25,7 +31,6 @@
 
 ## To do
 
-- Set `mw_version`, `linker_version` and `mw_comment_version` (14 for 3.0a3, 15 for
-  3.0a5+) and switch to `-fp_contract off` in `configure.py`.
-- Step 3: split SDK, runtime and game code in `splits.txt`.
+- Step 3: TU-level splits. The build cannot prove TU boundaries (any consistent
+  split matches); decide how to source TU hypotheses (see `notes/SPLITS.md`).
 - Step 4: objdiff, GitHub Actions CI, decomp.dev.
