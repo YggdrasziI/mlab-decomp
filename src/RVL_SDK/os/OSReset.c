@@ -124,21 +124,22 @@ BOOL __OSCallShutdownFunctions(BOOL final, u32 event) {
     return err ? FALSE : TRUE;
 }
 
+// From zeldaret/tp libs/revolution/src/os/OSReset.c (CC0-1.0, commit c8fa8c9e).
 void __OSShutdownDevices(u32 event) {
-    BOOL rc;
+    int rc;
     BOOL disableRecalibration;
     BOOL doRecal;
 
-    switch (event) {
-    case OS_SHUTDOWN_FATAL:
-    case OS_SHUTDOWN_RESTART:
-    case OS_SHUTDOWN_RETURN_MENU:
-    case OS_SHUTDOWN_EXEC:
+    switch(event) {
+    case 0:
+    case 5:
+    case 6:
         doRecal = FALSE;
         break;
-    case OS_SHUTDOWN_REBOOT:
-    case OS_SHUTDOWN_SHUTDOWN:
-    case OS_SHUTDOWN_IDLE:
+    case 2:
+    case 3:
+    case 4:
+    case 1:
     default:
         doRecal = TRUE;
         break;
@@ -150,15 +151,15 @@ void __OSShutdownDevices(u32 event) {
         disableRecalibration = __PADDisableRecalibration(TRUE);
     }
 
-    while (!__OSCallShutdownFunctions(FALSE, event)) {
-    }
-    while (!__OSSyncSram()) {
-    }
+    do {} while (!__OSCallShutdownFunctions(FALSE, event));
+    do {} while (!__OSSyncSram());
 
     OSDisableInterrupts();
-    rc = __OSCallShutdownFunctions(TRUE, event);
-    LCDisable();
 
+    rc = __OSCallShutdownFunctions(TRUE, event);
+    ASSERTLINE(491, rc);
+
+    LCDisable();
     if (!doRecal) {
         __PADDisableRecalibration(disableRecalibration);
     }
@@ -292,39 +293,10 @@ void OSRestart(u32 resetCode) {
     __OSHotReset();
 }
 
+// From SMGCommunity/Petari src/RVL_SDK/os/OSReset.c (CC0-1.0, commit 6804bd31).
 void OSReturnToMenu(void) {
-    OSStateFlags state;
-    u32 rtcFlags;
-
-    __OSStopPlayRecord();
-    __OSUnRegisterStateEvent();
-    __DVDPrepareReset();
-    __OSReadStateFlags(&state);
-
-    if (__DVDGetCoverStatus() != DVD_COVER_CLOSED) {
-        state.discState = DVD_STATE_COVER_CLOSED;
-    } else if (state.discState != DVD_STATE_BUSY ||
-               (__OSGetRTCFlags(&rtcFlags) && rtcFlags)) {
-        state.discState = DVD_STATE_WAITING;
-    } else {
-        state.discState = DVD_STATE_BUSY;
-    }
-
-    state.shutdownType = OS_STATE_FLAGS_SHUTDOWN_RETURN_MENU;
-
-    __OSClearRTCFlags();
-    __OSWriteStateFlags(&state);
-
-    OSDisableScheduler();
-    __OSShutdownDevices(OS_SHUTDOWN_RETURN_MENU);
-    OSEnableScheduler();
-
-    __OSLaunchMenu();
-
-    OSDisableScheduler();
-    __VISetRGBModeImm();
-    __OSHotReset();
-    OSPanic(__FILE__, 843, "OSReturnToMenu(): Falied to boot system menu.\n");
+    __OSReturnToMenu(0);
+    OSPanic(__FILE__, 0x348, "OSReturnToMenu(): Falied to boot system menu.\n");
 }
 
 void __OSReturnToMenuForError(void) {

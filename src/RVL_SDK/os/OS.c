@@ -871,20 +871,22 @@ void OSRegisterVersion(const char* ver) {
 // Must be defined down here because of data pooling
 static const char* AppGameNameForSysMenu = "HAEA";
 
+// From SMGCommunity/Petari src/RVL_SDK/os/OS.c (CC0-1.0, commit 6804bd31).
 const char* OSGetAppGamename(void) {
-    int i;
-    const char* name =
-        (const char*)OSPhysicalToCached(OS_PHYS_CURRENT_APP_NAME);
+    const char* appNameSrc = (char*)OSPhysicalToCached(0x3194);
 
     if (__OSInIPL) {
-        name = AppGameNameForSysMenu;
+        appNameSrc = AppGameNameForSysMenu;
+    }
+    else if ((*appNameSrc < '0') || ('9' < *appNameSrc && *appNameSrc < 'A') || ('Z' < *appNameSrc)) {
+        appNameSrc = (char*)OSPhysicalToCached(0x3180);
     }
 
-    for (i = 0; i < 4; i++) {
-        GameNameBuffer[i] = name[i];
-    }
-    GameNameBuffer[4] = '\0';
-
+    GameNameBuffer[0] = *appNameSrc++;
+    GameNameBuffer[1] = *appNameSrc++;
+    GameNameBuffer[2] = *appNameSrc++;
+    GameNameBuffer[3] = *appNameSrc;
+    GameNameBuffer[4] = 0x00;
     return GameNameBuffer;
 }
 
