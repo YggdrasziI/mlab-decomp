@@ -835,6 +835,10 @@ MSL_C/printf.c:
 	extab       start:0x80006660 end:0x800066D0
 	extabindex  start:0x80006990 end:0x80006A38
 	.text       start:0x80334A8C end:0x80336FE0
+	.rodata     start:0x80352890 end:0x803528C0
+	.data       start:0x803B4E18 end:0x803B5068
+	.sdata      start:0x805FAE30 end:0x805FAE38
+	.sdata2     start:0x80600B88 end:0x80600B90
 
 MSL_C/qsort.c:
 	extab       start:0x800066D0 end:0x800066D8
