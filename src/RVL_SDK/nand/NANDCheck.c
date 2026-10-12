@@ -95,6 +95,47 @@ s32 NANDCheck(u32 neededBlocks, u32 neededFiles, u32* answer) {
     return NAND_RESULT_OK;
 }
 
+// Not in the reference source: written from this game's DOL. Synchronous
+// counterpart of the state 21 computation in nandUserAreaCallback (free blocks
+// and files left for the application). Real name unknown.
+s32 fn_8026829C(u32* availBlocks, u32* availFiles) {
+    s32 result;
+
+    s32 userBlocks = -1;
+    s32 userFiles = -1;
+    s32 homeDirBlocks = -1;
+    s32 homeDirFiles = -1;
+
+    // The converted error codes are discarded in the original.
+    result = ISFS_GetUsage(nandGetHomeDir(), &homeDirBlocks, &homeDirFiles);
+    if (result != IPC_RESULT_OK) {
+        nandConvertErrorCode(result);
+    }
+
+    homeDirFiles--;
+
+    result = nandCalcUserUsage(&userBlocks, &userFiles);
+    if (result != IPC_RESULT_OK) {
+        nandConvertErrorCode(result);
+    }
+
+    {
+        u32 freeUserBlocks =
+            (u32)userBlocks > 0x4400 ? 0 : 0x4400 - userBlocks;
+        u32 freeUserFiles = (u32)userFiles > 0xFA0 ? 0 : 0xFA0 - userFiles;
+        u32 freeHomeBlocks =
+            (u32)homeDirBlocks > 0x400 ? 0 : 0x400 - homeDirBlocks;
+        u32 freeHomeFiles = (u32)homeDirFiles > 0x20 ? 0 : 0x20 - homeDirFiles;
+
+        *availBlocks =
+            freeUserBlocks < freeHomeBlocks ? freeUserBlocks : freeHomeBlocks;
+        *availFiles =
+            freeUserFiles < freeHomeFiles ? freeUserFiles : freeHomeFiles;
+    }
+
+    return NAND_RESULT_OK;
+}
+
 s32 NANDCheckAsync(u32 neededBlocks, u32 neededFiles, u32* answer,
                    NANDAsyncCallback callback, NANDCommandBlock* block) {
     if (!nandIsInitialized()) {
