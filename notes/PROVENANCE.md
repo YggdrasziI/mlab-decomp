@@ -57,7 +57,7 @@ the source and dead-stripped by the linker (the build matches).
   `OSSetCurrentHeap`, `OSAllocFromHeap`, `OSFreeToHeap`, `OSSetArenaLo`,
   `__OSCurrHeap`, and `@stringBase0` (0x80352220, `GCN_mem_alloc.c` string pool).
 
-## MSL_C (55 of 59 units Matching so far)
+## MSL_C (56 of 59 units Matching)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 same commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, license **CC0-1.0**: the 50
@@ -79,8 +79,8 @@ Local changes to the mscharged sources (all marked in the code):
   (`mbstring.c`), `__fpclassifyf` (`math_api.c`), `strcspn` (`string.c`), `fwrite`
   (`direct_io.c`).
 
-Compiler: `ansi_fp.c`, `strtoul.c`, `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c`
-are built with `GC/3.0a5` (they only match with a compiler older than 3.0a5.2), the
+Compiler: `ansi_fp.c`, `strtoul.c`, `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c`,
+`e_asin.c` are built with `GC/3.0a5` (they only match with a compiler older than 3.0a5.2), the
 other files with `GC/3.0a5.2`; see `notes/COMPILER.md`.
 
 Additions from zeldaret/tp (CC0-1.0), same commit as above: `labs` in `arith.c`,
@@ -97,7 +97,9 @@ Split fix: `string.c` also owns `.sdata2` 0x80600B90-0x80600B98, the empty strin
 `strtok_null` / `strtok_ptr` point to (no code references it, so the region map missed
 it).
 
-Not Matching yet, with the reason:
+Not Matching yet (3 units): each has functions that no reference project has a source
+for (they were dead-stripped from those games), so they must be decompiled from this
+DOL:
 
 - `alloc.c`: two functions differ (0x80330B20, 0x80330F50);
 - `arith.c`: `abs` and `labs` match, but the third function (0x80332EF0)
@@ -105,16 +107,19 @@ Not Matching yet, with the reason:
 - `uart_console_io_gcn.c`: `__write_console` is identical up to symbol names, but the
   unit also has `__close_console` and an 8-byte function (0x8033B094, `li r3,0; blr`)
   whose name no reference gives;
-- `e_asin.c` (from TP, see below): its single function differs from this DOL.
 
 ### Units with no mscharged source
 
-- `signal.c`, `e_asin.c`, `e_fmod.c`, `e_log.c`, `e_log10.c`: from
+- `e_asin.c`: from [SMGCommunity/Petari](https://github.com/SMGCommunity/Petari)
+  `src/MSL_C/MSL_Common_Embedded/Math/Double_precision/e_asin.c`, commit
+  `6804bd31724eaa01b33b68c622fcda6d1b433e17`, **CC0-1.0**, include line adapted; built
+  with `GC/3.0a5` (TP's version and 3.0a5.2 do not match).
+- `signal.c`, `e_fmod.c`, `e_log.c`, `e_log10.c`: from
   [zeldaret/tp](https://github.com/zeldaret/tp) `libs/PowerPC_EABI_Support/MSL/...`,
   commit `c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`, **CC0-1.0**. Only the include lines
   were adapted to this project's headers (`<internal/fdlibm.h>`, plus `<errno.h>`,
   `<internal/math_nan.h>`, `<stdlib.h>` where needed); `signal.c` uses this project's
-  `sig_func` type name instead of `__signal_func_ptr`. All but `e_asin.c` match.
+  `sig_func` type name instead of `__signal_func_ptr`. All match.
 - `w_asin.c`, `w_fmod.c`, `w_log.c`, `w_log10.c`: written for this project from the
   fdlibm wrapper pattern of mscharged's `w_acos.c` (built with `-D_IEEE_LIBM`, like the
   other wrappers). All match.
