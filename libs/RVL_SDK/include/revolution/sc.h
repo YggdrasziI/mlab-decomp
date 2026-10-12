@@ -180,6 +180,8 @@ u8 SCGetWpadSpeakerVolume(void);
 BOOL SCSetWpadSpeakerVolume(u8 vol);
 u32 SCGetSimpleAddressID(void);
 BOOL SCGetSimpleAddressData(SCSimpleAddress* address);
+// Return type proven by the sign extension in __DVDShowFatalMessage (this DOL).
+s8 SCGetProductGameRegion(void);
 
 typedef void (*SCFlushCallback)(SCStatus status);
 

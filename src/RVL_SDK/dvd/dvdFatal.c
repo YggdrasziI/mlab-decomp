@@ -4,76 +4,166 @@
 
 static funcptr_t FatalFunc = NULL;
 
-const char* const __DVDErrorMessage[] = {
-    // clang-format off
-
-    // SC_LANG_JP
-    "\n\n\nエラーが発生しました。\n\n"
+// From SMGCommunity/Petari src/RVL_SDK/dvd/dvdFatal.c (CC0-1.0, commit 6804bd31):
+// this SDK build has a default and a European message table.
+const char* const __DVDErrorMessageDefault[] = {
+    "\n"
+    "\n"
+    "\n"
+    "エラーが発生しました。\n"
+    "\n"
     "イジェクトボタンを押してディスクを取り出してか\n"
     "ら、本体の電源をOFFにして、本体の取扱説明書の\n"
     "指示に従ってください。",
 
-    // SC_LANG_EN
-    "\n\n\nAn error has occurred.\n"
+    "\n"
+    "\n"
+    "\n"
+    "An error has occurred.\n"
     "Press the Eject Button, remove the\n"
     "Game Disc, and turn the power off.\n"
-    "Please read the Wii operations manual\n"
+    "Please read the Wii Operations Manual\n"
     "for more information.",
 
-    // SC_LANG_DE
-    "\n\n\nEin Fehler ist aufgetreten.\n"
+    "\n"
+    "\n"
+    "\n"
+    "Ein Fehler ist aufgetreten.\n"
     "Dr\xFC""cke den Ausgabeknopf, entnimm die\n"
-    "Game Disc und schalte die Wii-Konsole\n"
-    "aus. Bitte lies die Bedienungsanleitung der\n"
-    "Wii-Konsole, um weitere Informationen zu\n"
-    "erhalten.",
+    "Disc und schalte die Wii-Konsole aus.\n"
+    "Bitte lies die Wii-Bedienungsanleitung,\n"
+    "um weitere Informationen zu erhalten.",
 
-    // SC_LANG_FR
-    "\n\n\nUne erreur est survenue.\n"
+    "\n"
+    "\n"
+    "\n"
+    "Une erreur est survenue.\n"
     "Appuyez sur le bouton EJECT, retirez\n"
-    "le disque de jeu et \xE9teignez la console.\n"
-    "Veuillez vous r\xE9""f\xE9rer au mode d'emploi\n"
-    "de la console pour de plus amples\n"
-    "informations.",
+    "le disque et \xE9""teignez la console.\n"
+    "Veuillez vous r\xE9""f\xE9""rer au mode d'emploi\n"
+    "Wii pour plus de d\xE9""tails.",
 
-    // SC_LANG_SP
-    "\n\n\nSe ha producido un error.\n"
-    "Pulsa el Bot\xF3n EJECT, saca el disco y\n"
+    "\n"
+    "\n"
+    "\n"
+    "Se ha producido un error.\n"
+    "Pulsa el Bot\xF3""n EJECT, extrae el disco y\n"
     "apaga la consola. Consulta el manual de\n"
     "instrucciones de la consola Wii para\n"
-    "obtener m\xE1s informaci\xF3n.",
-    
-    // SC_LANG_IT
-    "\n\n\nSi \xE8 verificato un errore.\n"
-    "Premi il pulsante EJECT, estrai il disco\n"
-    "di gioco e spegni la console. Per maggiori\n"
-    "informazioni consulta il manuale di\n"
-    "istruzioni della console Wii.",
-    
-    // SC_LANG_NL
-    "\n\n\nEr is een fout opgetreden.\n"
-    "Druk op de ejectknop, verwijder de\n"
-    "speldisk en zet het systeem uit. Lees\n"
-    "de Wii-handleiding voor meer informatie."
+    "obtener m\xE1""s informaci\xF3""n.",
 
-    // clang-format on
+    "\n"
+    "\n"
+    "\n"
+    "Si \xE8"" verificato un errore.\n"
+    "Premi il pulsante EJECT, estrai il disco\n"
+    "e spegni la console. Per maggiori\n"
+    "informazioni, consulta il manuale di\n"
+    "istruzioni della console Wii.",
+
+    "\n"
+    "\n"
+    "\n"
+    "Er is een fout opgetreden.\n"
+    "Druk op de EJECT-knop, verwijder de\n"
+    "disk en zet het Wii-systeem uit. Lees\n"
+    "de handleiding voor meer informatie."
+};
+
+const char* const __DVDErrorMessageEurope[] = {
+    "\n"
+    "\n"
+    "\n"
+    "エラーが発生しました。\n"
+    "\n"
+    "イジェクトボタンを押してディスクを取り出してか\n"
+    "ら、本体の電源をOFFにして、本体の取扱説明書の\n"
+    "指示に従ってください。",
+
+    "\n"
+    "\n"
+    "\n"
+    "An error has occurred.\n"
+    "Press the EJECT Button, remove the\n"
+    "Game Disc, and turn the power off.\n"
+    "Please read the Wii Operations Manual\n"
+    "for more information.",
+
+    "\n"
+    "\n"
+    "\n"
+    "Ein Fehler ist aufgetreten.\n"
+    "Dr\xFC""cke den Ausgabeknopf, entnimm die\n"
+    "Disc und schalte die Wii-Konsole aus.\n"
+    "Bitte lies die Wii-Bedienungsanleitung,\n"
+    "um weitere Informationen zu erhalten.",
+
+    "\n"
+    "\n"
+    "\n"
+    "Une erreur est survenue.\n"
+    "Appuyez sur le bouton EJECT, retirez\n"
+    "le disque et \xE9""teignez la console.\n"
+    "Veuillez vous r\xE9""f\xE9""rer au mode d'emploi\n"
+    "Wii pour plus de d\xE9""tails.",
+
+    "\n"
+    "\n"
+    "\n"
+    "Se ha producido un error.\n"
+    "Pulsa el Bot\xF3""n EJECT, extrae el disco y\n"
+    "apaga la consola. Consulta el manual de\n"
+    "instrucciones de la consola Wii para\n"
+    "obtener m\xE1""s informaci\xF3""n.",
+
+    "\n"
+    "\n"
+    "\n"
+    "Si \xE8"" verificato un errore.\n"
+    "Premi il pulsante EJECT, estrai il disco\n"
+    "e spegni la console. Per maggiori\n"
+    "informazioni, consulta il manuale di\n"
+    "istruzioni della console Wii.",
+
+    "\n"
+    "\n"
+    "\n"
+    "Er is een fout opgetreden.\n"
+    "Druk op de EJECT-knop, verwijder de\n"
+    "disk en zet het Wii-systeem uit. Lees\n"
+    "de handleiding voor meer informatie."
 };
 
 void __DVDShowFatalMessage(void) {
-    const char* msg;
-    GXColor bgColor = {0, 0, 0, 0};
-    GXColor textColor = {255, 255, 255, 0};
+    const char* message;
+    const char* const* messageList;
+    GXColor bg = { 0, 0, 0, 0 };
+    GXColor fg = { 255, 255, 255, 0 };
 
-    if (SCGetLanguage() == SC_LANG_JP) {
-        OSSetFontEncode(OS_FONT_ENCODE_SJIS);
-    } else {
-        OSSetFontEncode(OS_FONT_ENCODE_ANSI);
+    if (SCGetLanguage() == 0) {
+        OSSetFontEncode(1);
+    }
+    else {
+        OSSetFontEncode(0);
     }
 
-    msg = (SCGetLanguage() > SC_LANG_NL) ? __DVDErrorMessage[SC_LANG_EN]
-                                         : __DVDErrorMessage[SCGetLanguage()];
+    switch (SCGetProductGameRegion()) {
+        default:
+            messageList = __DVDErrorMessageDefault;
+            break;
+        case 2:
+            messageList = __DVDErrorMessageEurope;
+            break;
+    }
 
-    OSFatal(textColor, bgColor, msg);
+    if (SCGetLanguage() > 6) {
+        message = messageList[1];
+    }
+    else {
+        message = messageList[SCGetLanguage()];
+    }
+
+    OSFatal(fg, bg, message);
 }
 
 BOOL DVDSetAutoFatalMessaging(BOOL enable) {
