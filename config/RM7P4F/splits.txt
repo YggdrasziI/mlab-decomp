@@ -367,6 +367,7 @@ RVL_SDK/fs/fs.c:
 
 RVL_SDK/pad/Pad.c:
 	.text       start:0x8026F404 end:0x8026F460
+	.sbss       start:0x805FC1F8 end:0x805FC1FC
 
 RVL_SDK/wpad/WPAD.c:
 	.text       start:0x8026F460 end:0x80276CD8

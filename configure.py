@@ -450,7 +450,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/ipc/memory.c"),
             Object(Matching, "RVL_SDK/ipc/ipcProfile.c"),
             Object(NonMatching, "RVL_SDK/fs/fs.c"),
-            Object(NonMatching, "RVL_SDK/pad/Pad.c", extra_cflags=["-inline noauto"]),
+            Object(Matching, "RVL_SDK/pad/Pad.c", extra_cflags=["-inline noauto"]),
             Object(NonMatching, "RVL_SDK/wpad/WPAD.c", cflags=cflags_rvl_wpad),
             Object(NonMatching, "RVL_SDK/wpad/WPADHIDParser.c"),
             Object(Matching, "RVL_SDK/wpad/WPADEncrypt.c"),
