@@ -18,7 +18,7 @@ unit (TU). A TU boundary is only proven once the TU is decompiled and matches.
 |---|---|---|---|
 | `.init` (startup, `memcpy`, `memset`) | 0x80004000 | — | `__check_pad3`, `__start`, `__init_registers`, `memcpy` 0x80004338, `memset` 0x8000443C |
 | Game (+ possible middleware) | `.text` start | 0x80232AF8 | see "Game / SDK boundary" |
-| Wii SDK (RVL) and network libraries | 0x80232AF8 | ~0x8032EF00 | `PPCMfmsr` 0x80232AF8; version strings registered by `EXIInit`, `SIInit`, `GXInit`, `DVDInit`, `SCInit`, … up to SSL (`fn_8032E18C`) |
+| Wii SDK (RVL) and network libraries | 0x80232AF8 | 0x8032EEE4 | `PPCMfmsr` 0x80232AF8; version strings registered by `EXIInit`, `SIInit`, `GXInit`, `DVDInit`, `SCInit`, … up to SSL (`fn_8032E18C`) |
 | Runtime.PPCEABI.H | 0x8032EEE4 | 0x8032FEF0 | see "Runtime.PPCEABI.H units" below |
 | MSL_C (including its math library) | 0x8032FEF0 | 0x8033F460 | see "MSL_C units" below; the 43 unnamed functions after `fwide` are MSL math (`e_pow.c` … `w_sqrt.c`) |
 | MetroTRK | 0x8033F460 | 0x80344FD4 | see "MetroTRK units" below |
@@ -192,10 +192,89 @@ table at 0x803B4DD0 (used by `file_io.c`, `mbstring.c`, `scanf.c`, `strtoul.c`,
 `extras.c`), `errno`-like 0x805FC580 (used by math and `strtoul.c`) and
 0x805FAE48 / 0x805FAE4C.
 
+## RVL_SDK units
+
+References: TP (`config/RZDP01`, `revolution/*` and `homebuttonLib`), Petari
+(`config/RMGP01`, `RVL_SDK/*`) and mscharged-decomp (`config/R4QE01`, `RVL_SDK/*`, the
+only one with the network libraries DWC/GameSpy/NHTTP/SSL). All CC0-1.0; split
+boundaries only, no code. Read on 2026-10-12.
+
+Method (automated, scripts kept out of the repository):
+
+1. Each of our 3634 functions in 0x80232AF8-0x8032EEE4 gets, per reference, the unit of
+   the reference function with the **same name and size** (254 functions are named by
+   dtk), otherwise the unit given by **size alignment**, counting only aligned runs of
+   at least 3 functions. Priority on conflict: name before size, then TP > Petari >
+   mscharged (5 functions disagreed). 2312 functions got a label.
+2. Unlabeled functions are absorbed only when both neighbours carry the same unit.
+3. A unit is kept only when it is **anchored**: its label appears in a single run, and
+   the functions right before and after it are labeled with other units. Units touching
+   an unlabeled gap could extend into it and were not split.
+4. Data: objects referenced **only** by the unit's functions, forming a contiguous block
+   with nothing else inside, kept only when the block size equals the same unit's
+   section size in at least one reference. Two ranges were then removed because dtk
+   reported a misaligned section start (`bte_main.c` `.sbss`, `vi3in1.c` `.sbss`): an
+   unreferenced object probably belongs at their start, which is not proven.
+
+Result: **154 units**, 0x78BFC of the 0xFC3EC bytes of SDK code (about 48 %), with 162
+data sections. For 125 units the `.text` size is identical to the same unit in a
+reference; the other 29 differ (version differences) but are anchored by their
+neighbours. No overlap, no dtk warning, `main.dol` matches. Unit paths follow the
+references under `RVL_SDK/` (e.g. `RVL_SDK/os/OSAlarm.c`,
+`RVL_SDK/gamespy/serverbrowsing/sb_server.c`).
+
+Libraries split (units): `base` 1, `os` 24, `exi` 3, `si` 2, `db` 1, `vi` 3, `gx` 10,
+`dvd` 8, `axfx` 1, `mem` 2, `nand` 4, `sc` 1, `ipc` 4, `fs` 1, `pad` 1, `wpad` 3, `usb` 1,
+`wud` 2, `bte` 65, GameSpy (`gamespy`, `GP`, `gt2`, `gstats`, `natneg`,
+`serverbrowsing`) 17.
+
+Not split yet (`auto_*`): weakly anchored units and unlabeled code (versions that differ
+from every reference, notably AX/AXFX, HBM and its `nw4hbm` layout code, DWC, GameSpy,
+NCD/NWC24/SO/NHTTP/SSL):
+
+| Range | Size | Content (weak unit labels; `?` = unlabeled) |
+
+|---|---|---|
+
+| 0x8023B288-0x8023BEC4 | 0xc3c | `os/OSRtc.c`, ?, `os/OSSync.c` |
+
+| 0x8023DD68-0x8023EBBC | 0xe54 | `os/OSIpc.c`, ?, `os/OSStateTM.c`, ?, `os/OSPlayRecord.c` |
+
+| 0x8023F084-0x80240790 | 0x170c | `os/OSPlayTime.c`, ?, `os/__ppc_eabi_init.cpp` |
+
+| 0x80248050-0x80249700 | 0x16b0 | `mtx/mtx.c`, ?, `gx/GXInit.c` |
+
+| 0x8024BBE4-0x8024C3B8 | 0x7d4 | `gx/GXFrameBuf.c`, ?, `gx/GXLight.c` |
+
+| 0x802576BC-0x8025B434 | 0x3d78 | `ai/ai.c`, ?, `ax/AXCL.c`, ?, `ax/AXVPB.c` |
+
+| 0x8025B4C0-0x8025F96C | 0x44ac | `axfx/AXFXReverbHiExp.c`, ?, `axfx/AXFXHooks.c` |
+
+| 0x8025FDD8-0x80260798 | 0x9c0 | `mem/mem_expHeap.c`, ?, `mem/mem_allocator.c` |
+
+| 0x80264F90-0x80265AF0 | 0xb60 | `dsp/dsp.c`, ?, `dsp/dsp_task.c` |
+
+| 0x802680D8-0x8026A9D8 | 0x2900 | `nand/NANDCheck.c`, ?, `nand/NANDLogging.c`, `esp/esp.c`, ?, `sc/scsystem.c` |
+
+| 0x8026AE5C-0x8026BDC4 | 0xf68 | `sc/scapi_prdinfo.c`, ?, `arc/arc.c` |
+
+| 0x8027D220-0x80280688 | 0x3468 | `wpad/debug_msg.c`, ?, `euart/euart.c` |
+
+| 0x80286764-0x802867B4 | 0x50 | `wpad/debug_msg.c` |
+
+| 0x802B3D54-0x802FB3A4 | 0x47650 | `tpl/TPL.c`, ?, `hbm/HBMGUIManager.cpp`, `hbm/HBMController.cpp`, ?, `hbm/HBMRemoteSpk.cpp`, ?, `lyt/lyt_bounding.cpp`, ?, `lyt/lyt_common.cpp`, ?, `lyt/lyt_layout.cpp`, ?, `lyt... |
+
+| 0x802FBDF8-0x8030D008 | 0x11210 | `gamespy/hashtable.c`, ?, `gamespy/nonport.c`, `common/gsAvailable.c`, ?, `GP/gp.c`, ?, `GP/gpiBuffer.c`, `GP/gpiCallback.c`, ?, `GP/gpiConnect.c`, ?, `GP/gpiInfo.c`, ?, `GP/gpi... |
+
+| 0x80312E2C-0x80316914 | 0x3ae8 | `qr2/qr2.c`, ?, `gstats/gbucket.c` |
+
+| 0x8031CEC0-0x8032EEE4 | 0x12024 | `serverbrowsing/sb_serverlist.c`, ?, `rfl/RFL_System.c`, ?, `nwc24/NWC24Schedule.c`, ?, `nwc24/NWC24Time.c`, ?, `nwc24/NWC24System.c`, ? |
+
 ## Splits in `splits.txt`
 
 | Unit | Status |
 |---|---|
+| `RVL_SDK/*` (154 anchored units) | Split, NonMatching (about 48 % of SDK code) |
 | `Runtime.PPCEABI.H/*` (9 units) | Split, NonMatching |
 | `MSL_C/*` (59 units) | Split, NonMatching (3 small gaps, see above) |
 | `MetroTRK/*` (29 units) | Split, NonMatching |
