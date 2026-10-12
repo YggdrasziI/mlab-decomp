@@ -107,11 +107,17 @@ Split fix: `string.c` also owns `.sdata2` 0x80600B90-0x80600B98, the empty strin
 `strtok_null` / `strtok_ptr` point to (no code references it, so the region map missed
 it).
 
-Not Matching yet (1 unit): each has functions that no reference project has a source
-for (they were dead-stripped from those games), so they must be decompiled from this
-DOL:
+Not Matching yet (1 unit): `alloc.c`, whose two remaining functions have no source in
+any reference project (they were dead-stripped from those games) and must be decompiled
+from this DOL:
 
-- `alloc.c`: two functions differ (0x80330B20, 0x80330F50);
+- 0x80330F50 is **`realloc`**: [DarkRTA/rb3](https://github.com/DarkRTA/rb3) (Rock Band 3,
+  Wii, `config/SZBE69/symbols.txt`) has the same MSL layout (`deallocate_from_fixed_pools`
+  0x1EC, an unnamed 0x260 function, `malloc` 0xA0, `free` 0x130, `realloc` 0x318).
+  Only the **name** is taken from rb3 (it has no license, so none of its code is used).
+- 0x80330B20 (0x260): unnamed in rb3 too; an allocator helper that tries to resize a
+  block in place (it calls `SubBlock_merge_next` and `Block_link`), called by `realloc`.
+  Keeps its address-based name.
 
 ### Units with no mscharged source
 
