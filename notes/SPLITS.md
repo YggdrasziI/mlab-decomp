@@ -19,14 +19,13 @@ unit (TU). A TU boundary is only proven once the TU is decompiled and matches.
 | `.init` (startup, `memcpy`, `memset`) | 0x80004000 | — | `__check_pad3`, `__start`, `__init_registers`, `memcpy` 0x80004338, `memset` 0x8000443C |
 | Game (+ possible middleware) | `.text` start | 0x80232AF8 | see "Game / SDK boundary" |
 | Wii SDK (RVL) and network libraries | 0x80232AF8 | ~0x8032EF00 | `PPCMfmsr` 0x80232AF8; version strings registered by `EXIInit`, `SIInit`, `GXInit`, `DVDInit`, `SCInit`, … up to SSL (`fn_8032E18C`) |
-| Runtime.PPCEABI.H | 0x8032EF00 | 0x8032FD80 | `__va_arg`, `__register_global_object`, `__destroy_global_chain`, `__save_fpr`/`__restore_fpr`/`__save_gpr`/`__restore_gpr`, `__div2u`, `__mod2u`, `__init_cpp_exceptions`, `__fini_cpp_exceptions`, `__register_fragment`, `__unregister_fragment` (ends 0x8032FD80) |
-| MSL_C | 0x8032FD80 | 0x8033AFB4? | `__close_all`, `__prep_buffer`, `__flush_buffer`, `__fwrite`, `_fseek`, `wcstombs`, `memmove`, `memchr`, `parse_format`, `long2str`, `float2str`, `__pformatter`, `vprintf`, `vsnprintf`, `sprintf`, `strcpy`, `strchr`, `fwide` 0x8033AF30 |
+| Runtime.PPCEABI.H | 0x8032EEE4 | 0x8032FEF0 | see "Runtime.PPCEABI.H units" below |
+| MSL_C | 0x8032FEF0 | 0x8033AFB4? | `__close_all`, `__prep_buffer`, `__flush_buffer`, `__fwrite`, `_fseek`, `wcstombs`, `memmove`, `memchr`, `parse_format`, `long2str`, `float2str`, `__pformatter`, `vprintf`, `vsnprintf`, `sprintf`, `strcpy`, `strchr`, `fwide` 0x8033AF30 |
 | Unknown block (43 unnamed functions) | 0x8033AFB4 | 0x8033F460 | references a large `.sdata2` block (floating point constants); possibly MSL math. **Unproven** |
 | MetroTRK | 0x8033F460 | 0x80344CC8 | `TRKNubMainLoop` … `gdev_cc_initialize` |
 | Unknown block (39 unnamed functions) | 0x80344CC8 | 0x80345AD8 | after the last TRK communication functions. **Unproven** |
 
-Uncertain: `strlen` (0x8032EEE4, weak) sits right before `__va_arg`; it is not yet
-attributed to the SDK, the runtime or MSL.
+`strlen` (0x8032EEE4, weak) belongs to the runtime's `__mem.c` (see below).
 
 ### Game / SDK boundary (0x80232AF8)
 
@@ -75,9 +74,9 @@ the link order seen in `.text`.
 
 | Section | Game | SDK | Runtime | MSL | Unknown (after MSL) | TRK |
 |---|---|---|---|---|---|---|
-| `.rodata` | 0x80345FC0–0x80349FF8 | 0x8034A8A0–0x803521A4 | 0x80352208 | 0x80352220–0x803528F8 | 0x80352F30–0x803531B0 | 0x80353268–0x8035334C |
+| `.rodata` | 0x80345FC0–0x80349FF8 | 0x8034A8A0–0x803521A4 | 0x80352208–0x80352290 | 0x80352290–0x803528F8 | 0x80352F30–0x803531B0 | 0x80353268–0x8035334C |
 | `.data` | 0x80353460–0x80389498 | 0x803894F0–0x803B4968 | — | 0x803B4AB8–0x803B51CC | — | 0x803B5210–0x803B5328 |
-| `.bss` | 0x803B5380–0x8055CAB0 | 0x8055CB60–0x805F2920 | — | 0x805F5950–0x805F5CA8 | — | 0x805F5CD0–0x805F8170 |
+| `.bss` | 0x803B5380–0x8055CAB0 | 0x8055CB60–0x805F2920 | 0x805F5940 | 0x805F5950–0x805F5CA8 | — | 0x805F5CD0–0x805F8170 |
 | `.sdata` | 0x805F81A0–0x805FA0F8 | 0x805FA100–0x805FAE20 | `fragmentID` 0x805FAE28 | 0x805FAE38–0x805FAE50 | — | — |
 | `.sbss` | 0x805FAE60–0x805FBBE0 | 0x805FBBE8–0x805FC56C | 0x805FC570 | 0x805FC578–0x805FC594 | 0x805FC588–0x805FC5A0 | 0x805FC5A8–0x805FC5B0 |
 | `.sdata2` | 0x805FC5E0–0x80600654 | 0x80600658–0x80600B30 | — | 0x80600B38–0x80600BC8 | 0x80600BD0–0x806010D8 | — |
@@ -92,9 +91,33 @@ objects in between are not classified. Exceptions:
 - `.sdata` 0x805FAE58 and `.sbss` 0x805FC5B8–0x805FC5C8: referenced by the unknown
   block after TRK.
 
+## Runtime.PPCEABI.H units
+
+TU names and order are **hypotheses taken from other decompilation projects** using
+the same Metrowerks runtime, both CC0-1.0:
+[SMGCommunity/Petari](https://github.com/SMGCommunity/Petari) (`config/RMGP01/splits.txt`)
+and [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
+(`config/R4QE01/splits.txt`), read on 2026-10-12. Only split boundaries were used, no
+code. Each unit was checked against this DOL by function sizes and order, and by the
+data its functions reference:
+
+| Unit | `.text` | Other sections | Check against this DOL |
+|---|---|---|---|
+| `__mem.c` | 0x8032EEE4–0x8032EF00 | `.init` 0x80004338–0x8000446C | `strlen` 0x1C; `memcpy`/`__fill_mem`/`memset` same layout as Petari |
+| `__va_arg.c` | 0x8032EF00–0x8032EFC8 | — | `__va_arg` 0xC8 |
+| `global_destructor_chain.c` | 0x8032EFC8–0x8032F028 | `.sbss` 0x805FC570–0x805FC578 | 0x18 + 0x48; `__global_destructor_chain` |
+| `NMWException.cpp` | 0x8032F028–0x8032F3D8 | `extab` 0x800064E0–0x80006528, `extabindex` 0x80006780–0x800067BC | 5 functions, sizes identical to Petari (0x104, 0xBC, 0xF8, 0x78, 0x80); extab 0x48 / extabindex 0x3C as in Petari |
+| `ptmf.c` | 0x8032F3D8–0x8032F400 | — | only one function (0x28 = `__ptmf_scall` size; it adjusts `this` and calls through `r12`). The other ptmf functions are absent (dead-stripped, hypothesis) |
+| `runtime.c` | 0x8032F400–0x8032FCAC | `.rodata` 0x80352208–0x80352220 | first function 0x5C (`__cvt_fp2unsigned` size), `__save_fpr`…`__mod2u` named by dtk; `.rodata` 0x18 as in Petari. Two extra functions (0xB0, 0xA0) not in Petari |
+| `__init_cpp_exceptions.cpp` | 0x8032FCAC–0x8032FD1C | `.ctors$10`, `.dtors$10`, `.dtors$15`, `.sdata` `fragmentID` | required by the GC 3.0a5.2 linker |
+| `Gecko_ExceptionPPC.cpp` | 0x8032FD1C–0x8032FD80 | `.bss` 0x805F5940–0x805F5950 | `__register_fragment` + `__unregister_fragment` = 0x64; `fragmentinfo` |
+| `GCN_mem_alloc.c` | 0x8032FD80–0x8032FEF0 | `.rodata` 0x80352220–0x80352290 | two 0xB8 functions (0x170 total, as in mscharged); `.rodata` 0x70 as in Petari; strings `GCN_Mem_Alloc.c` and "Metrowerks CW runtime library initializing default heap" in this DOL |
+
+All units are `NonMatching` (nothing decompiled yet); the build still matches.
+
 ## Splits in `splits.txt`
 
 | Unit | Status |
 |---|---|
-| `Runtime.PPCEABI.H/__init_cpp_exceptions.cpp` | Split (required by the GC 3.0a5.2 linker), NonMatching |
+| `Runtime.PPCEABI.H/*` (9 units above) | Split, NonMatching |
 | Everything else | dtk `auto_*` objects (gap-based, not TU-accurate) |
