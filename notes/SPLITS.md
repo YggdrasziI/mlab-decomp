@@ -20,8 +20,7 @@ unit (TU). A TU boundary is only proven once the TU is decompiled and matches.
 | Game (+ possible middleware) | `.text` start | 0x80232AF8 | see "Game / SDK boundary" |
 | Wii SDK (RVL) and network libraries | 0x80232AF8 | ~0x8032EF00 | `PPCMfmsr` 0x80232AF8; version strings registered by `EXIInit`, `SIInit`, `GXInit`, `DVDInit`, `SCInit`, … up to SSL (`fn_8032E18C`) |
 | Runtime.PPCEABI.H | 0x8032EEE4 | 0x8032FEF0 | see "Runtime.PPCEABI.H units" below |
-| MSL_C | 0x8032FEF0 | 0x8033AFB4? | `__close_all`, `__prep_buffer`, `__flush_buffer`, `__fwrite`, `_fseek`, `wcstombs`, `memmove`, `memchr`, `parse_format`, `long2str`, `float2str`, `__pformatter`, `vprintf`, `vsnprintf`, `sprintf`, `strcpy`, `strchr`, `fwide` 0x8033AF30 |
-| Unknown block (43 unnamed functions) | 0x8033AFB4 | 0x8033F460 | references a large `.sdata2` block (floating point constants); possibly MSL math. **Unproven** |
+| MSL_C (including its math library) | 0x8032FEF0 | 0x8033F460 | see "MSL_C units" below; the 43 unnamed functions after `fwide` are MSL math (`e_pow.c` … `w_sqrt.c`) |
 | MetroTRK | 0x8033F460 | 0x80344FD4 | see "MetroTRK units" below |
 | Debugger communication driver (EXI2), variant unidentified | 0x80344FD4 | 0x80345AD8 | 31 functions; installs an interrupt handler (interrupt 0x19) and masks/unmasks interrupts. Same role as `DebuggerDriver.c`/`exi2.c`, but its function sizes match neither Petari's `NDEV` nor TP's `NdevExi2A`. **Unidentified** |
 
@@ -69,8 +68,8 @@ unit (TU). A TU boundary is only proven once the TU is decompiled and matches.
 ## Data regions
 
 Each data object was classified by the region of the functions that reference it.
-In every section the order is game → SDK → runtime → MSL → unknown → TRK, which matches
-the link order seen in `.text`.
+In every section the order is game → SDK → runtime → MSL ("unknown" column = MSL math)
+→ TRK, which matches the link order seen in `.text`.
 
 | Section | Game | SDK | Runtime | MSL | Unknown (after MSL) | TRK |
 |---|---|---|---|---|---|---|
@@ -144,10 +143,40 @@ Small differences: `targimpl.c` `.bss` is 0x580 here (0x57C in the reference), a
 few ranges end on dtk symbol sizes (padding included) where dtk sized a symbol larger
 than the reference.
 
+## MSL_C units
+
+Reference: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
+`config/R4QE01/splits.txt` (CC0-1.0), cross-checked with Petari. This MSL is a
+**different version** from both references (extra and missing functions), so only
+**anchored** units were split: every reference function of the unit aligns by size with
+ours, the unit is contiguous, and the functions right before and after it are also
+aligned. Sections were kept only when their size equals the reference section size
+(including `extab`/`extabindex`). Objects that a unit references but that the reference
+does not place in that unit (shared MSL data) were left out.
+
+Split (25): `ansi_fp.c`, `mem.c`, `mem_funcs.c`, `misc_io.c`, `qsort.c`, `rand.c`,
+`strtold.c`, `e_rem_pio2.c`, `k_cos.c`, `k_rem_pio2.c`, `k_sin.c`, `k_tan.c`,
+`s_atan.c`, `s_ceil.c`, `s_copysign.c`, `s_cos.c`, `s_floor.c`, `s_frexp.c`,
+`s_ldexp.c`, `s_sin.c`, `s_tan.c`, `w_acos.c`, `w_atan2.c`, `math_ppc.c`, `w_sqrt.c`.
+
+Not split yet (left as `auto_*`):
+
+- weakly anchored (sizes match but a neighbour is unaligned): `alloc.c` (ours 0x1060 vs
+  0xE00), `ansi_files.c`, `arith.c`, `buffer_io.c`, `file_io.c`, `printf.c` (0x2554 vs
+  0x2490), `scanf.c`, `strtoul.c`, `wchar_io.c`, `uart_console_io_gcn.c`, `math_sun.c`,
+  `extras.c`, `e_acos.c`, `e_atan2.c`, `e_pow.c`, `w_pow.c`, `e_sqrt.c`;
+- partly missing: `char_io.c`, `direct_io.c`, `FILE_POS.c`, `mbstring.c`, `math_api.c`,
+  `string.c`, `wstring.c`; not found: `wmem.c`, `wprintf.c`;
+- our functions with no counterpart in mscharged (e.g. `fn_80330B20` 0x260,
+  `fn_80330F50` 0x318, `fn_8033BAE0` 0x330, `fn_8033BE10` 0x2B4): possibly units that
+  Petari has and mscharged lacks (`ctype.c`, `errno.c`, `locale.c`, `signal.c`,
+  `wctype.c`, …). To investigate.
+
 ## Splits in `splits.txt`
 
 | Unit | Status |
 |---|---|
 | `Runtime.PPCEABI.H/*` (9 units) | Split, NonMatching |
+| `MSL_C/*` (25 anchored units) | Split, NonMatching |
 | `MetroTRK/*` (29 units) | Split, NonMatching |
 | Everything else | dtk `auto_*` objects (gap-based, not TU-accurate) |

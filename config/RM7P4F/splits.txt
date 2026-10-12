@@ -51,6 +51,112 @@ Runtime.PPCEABI.H/GCN_mem_alloc.c:
 	.text       start:0x8032FD80 end:0x8032FEF0
 	.rodata     start:0x80352220 end:0x80352290
 
+MSL_C/ansi_fp.c:
+	extab       start:0x80006598 end:0x800065D0
+	extabindex  start:0x80006864 end:0x800068B8
+	.text       start:0x80331560 end:0x80332ED0
+	.rodata     start:0x803522A8 end:0x80352388
+	.data       start:0x803B4AB8 end:0x803B4C20
+	.sdata2     start:0x80600B38 end:0x80600B70
+
+MSL_C/mem.c:
+	extab       start:0x80006648 end:0x80006650
+	extabindex  start:0x8000696C end:0x80006978
+	.text       start:0x80334594 end:0x80334704
+
+MSL_C/mem_funcs.c:
+	.text       start:0x80334704 end:0x803349D4
+
+MSL_C/misc_io.c:
+	.text       start:0x80334A6C end:0x80334A8C
+
+MSL_C/qsort.c:
+	extab       start:0x800066D0 end:0x800066D8
+	extabindex  start:0x80006A38 end:0x80006A44
+	.text       start:0x80336FE0 end:0x80337150
+
+MSL_C/rand.c:
+	.text       start:0x80337150 end:0x80337178
+	.sdata      start:0x805FAE38 end:0x805FAE40
+
+MSL_C/strtold.c:
+	extab       start:0x80006700 end:0x80006710
+	extabindex  start:0x80006A80 end:0x80006A98
+	.text       start:0x80338C2C end:0x8033A0A4
+	.rodata     start:0x803528E8 end:0x803528F8
+	.sdata2     start:0x80600B98 end:0x80600BD0
+
+MSL_C/e_rem_pio2.c:
+	.text       start:0x8033CA20 end:0x8033CDB8
+	.rodata     start:0x80352F70 end:0x803530F8
+	.sdata2     start:0x80600EF8 end:0x80600F50
+
+MSL_C/k_cos.c:
+	.text       start:0x8033CDB8 end:0x8033CEC8
+	.sdata2     start:0x80600F50 end:0x80600F98
+
+MSL_C/k_rem_pio2.c:
+	.text       start:0x8033CEC8 end:0x8033E5D4
+	.rodata     start:0x803530F8 end:0x80353148
+	.sdata2     start:0x80600F98 end:0x80600FD8
+
+MSL_C/k_sin.c:
+	.text       start:0x8033E5D4 end:0x8033E694
+	.sdata2     start:0x80600FD8 end:0x80601010
+
+MSL_C/k_tan.c:
+	.text       start:0x8033E694 end:0x8033E8EC
+	.rodata     start:0x80353148 end:0x803531B0
+	.sdata2     start:0x80601010 end:0x80601048
+
+MSL_C/s_atan.c:
+	.text       start:0x8033E8EC end:0x8033EB2C
+	.rodata     start:0x803531B0 end:0x80353248
+	.sdata2     start:0x80601048 end:0x80601070
+
+MSL_C/s_ceil.c:
+	.text       start:0x8033EB2C end:0x8033EC6C
+	.sdata2     start:0x80601070 end:0x80601080
+
+MSL_C/s_copysign.c:
+	.text       start:0x8033EC6C end:0x8033EC98
+
+MSL_C/s_cos.c:
+	.text       start:0x8033EC98 end:0x8033ED6C
+	.sdata2     start:0x80601080 end:0x80601088
+
+MSL_C/s_floor.c:
+	.text       start:0x8033ED6C end:0x8033EEB0
+	.sdata2     start:0x80601088 end:0x80601098
+
+MSL_C/s_frexp.c:
+	.text       start:0x8033EEB0 end:0x8033EF38
+	.sdata2     start:0x80601098 end:0x806010A0
+
+MSL_C/s_ldexp.c:
+	.text       start:0x8033EF38 end:0x8033F0A4
+	.sdata2     start:0x806010A0 end:0x806010C8
+
+MSL_C/s_sin.c:
+	.text       start:0x8033F0A4 end:0x8033F17C
+	.sdata2     start:0x806010C8 end:0x806010D0
+
+MSL_C/s_tan.c:
+	.text       start:0x8033F17C end:0x8033F1F4
+	.sdata2     start:0x806010D0 end:0x806010D8
+
+MSL_C/w_acos.c:
+	.text       start:0x8033F1F4 end:0x8033F1F8
+
+MSL_C/w_atan2.c:
+	.text       start:0x8033F1F8 end:0x8033F1FC
+
+MSL_C/math_ppc.c:
+	.text       start:0x8033F458 end:0x8033F45C
+
+MSL_C/w_sqrt.c:
+	.text       start:0x8033F45C end:0x8033F460
+
 MetroTRK/mainloop.c:
 	.text       start:0x8033F460 end:0x8033F558
 
