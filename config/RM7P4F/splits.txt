@@ -192,8 +192,10 @@ RVL_SDK/vi/i2c.c:
 
 RVL_SDK/vi/vi3in1.c:
 	.text       start:0x802469AC end:0x80248050
+	.data       start:0x80397978 end:0x80397F08
 	.bss        start:0x8055E0E0 end:0x8055E100
 	.sdata      start:0x805FA1D0 end:0x805FA1E8
+	.sbss       start:0x805FBE18 end:0x805FBE30
 
 RVL_SDK/gx/GXInit.c:
 	.text       start:0x80248534 end:0x80249700

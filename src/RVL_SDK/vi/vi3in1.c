@@ -477,7 +477,7 @@ void __VISetRevolutionModeSimple(void) {
     VISetClosedCaption(0, 0, 0, 0);
     __VISetClosedCaption();
     __VISetMacrovisionImm(&VIZeroACPType);
-    VISetRGBOverDrive(VI_ODV_L2);
+    VISetRGBOverDrive(VI_ODV_L1); // L1 in this SDK build, as in zeldaret/tp and Petari
     __VISetRGBOverDrive();
     __VISetTrapFilterImm(VI_DISABLE);
     __VISetGammaImm(&gammaSet[VI_GM_1_0]);
