@@ -206,7 +206,7 @@ cflags_base = [
     "-maxerrors 1",
     "-nosyspath",
     "-RTTI off",
-    "-fp_contract on",
+    "-fp_contract off",  # Proven on game code, see notes/COMPILER.md
     "-str reuse",
     "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
     "-i include",
@@ -247,7 +247,9 @@ cflags_rel = [
     "-sdata2 0",
 ]
 
-config.linker_version = "GC/1.3.2"
+# Working hypothesis: game code matches GC 3.0a3 to 3.0a5.2 identically;
+# 3.0a5.2 is chosen (SDK build tag 0x4199_60831). See notes/COMPILER.md.
+config.linker_version = "GC/3.0a5.2"
 
 
 # Helper function for Dolphin libraries

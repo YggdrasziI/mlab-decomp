@@ -65,11 +65,20 @@ SDK: `OSReset.c`, `OSStateTM.c`, `OSPlayTime.c`, `OSLaunch.c`, `OS.c`, `vi.c`, `
 Other strings: `eidos`, `backbone` (offset 0x35c4f1); assertion format
 `Assert: File - "%s", Function "%s", Line: %d, …` (offset 0x371ffa).
 
-## Unverified template defaults
+## Working configuration (2026-10-12)
 
-- `mw_comment_version: 11` in `config.yml` and `linker_version = "GC/1.3.2"` in
-  `configure.py` are template defaults (see results below: 11 matches none of the
-  remaining candidates).
+**GC/3.0a5.2 is a working hypothesis**, not a proven fact: the GC 3.0 family is proven,
+but no game function has been found that tells 3.0a5.2 apart from 3.0a3…3.0a5 (see
+below). It was picked because the SDK build tag `0x4199_60831` matches its build number.
+
+- `configure.py`: `linker_version = "GC/3.0a5.2"`, `-fp_contract off` in `cflags_base`.
+- `config.yml`: `mw_comment_version: 15` (value written by 3.0a5.2).
+- The 3.0a5.2 linker warns that `global_destructor_chain.c` and
+  `__init_cpp_exceptions.cpp` "need to be updated" until
+  `Runtime.PPCEABI.H/__init_cpp_exceptions.cpp` is split with the "GC 2.7+ and Wii
+  linkers" layout (`.ctors$10`, `.dtors$10`, `.dtors$15`, `fragmentID` in `.sdata`).
+  With that split the build matches (`main.dol: OK`).
+- The SDK compiler is still untested (`DolphinLib` keeps the template value, unused).
 
 ## Compiler tests (2026-10-11)
 
