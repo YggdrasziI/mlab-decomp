@@ -750,6 +750,7 @@ RVL_SDK/gamespy/gt2/gt2Socket.c:
 
 RVL_SDK/gamespy/gt2/gt2Utility.c:
 	.text       start:0x80312B40 end:0x80312E2C
+	.bss        start:0x805C8000 end:0x805C8030
 	.sdata      start:0x805FABC8 end:0x805FABE0
 	.sbss       start:0x805FC3E8 end:0x805FC3F0
 
