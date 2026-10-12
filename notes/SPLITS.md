@@ -145,38 +145,58 @@ than the reference.
 
 ## MSL_C units
 
-Reference: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
-`config/R4QE01/splits.txt` (CC0-1.0), cross-checked with Petari. This MSL is a
-**different version** from both references (extra and missing functions), so only
-**anchored** units were split: every reference function of the unit aligns by size with
-ours, the unit is contiguous, and the functions right before and after it are also
-aligned. Sections were kept only when their size equals the reference section size
-(including `extab`/`extabindex`). Objects that a unit references but that the reference
-does not place in that unit (shared MSL data) were left out.
+References (all CC0-1.0, split boundaries only, no code):
+[zeldaret/tp](https://github.com/zeldaret/tp) `config/RZDP01` (primary: the most mature
+project), [SMGCommunity/Petari](https://github.com/SMGCommunity/Petari) `config/RMGP01`
+and [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp)
+`config/R4QE01`, read on 2026-10-12.
 
-Split (25): `ansi_fp.c`, `mem.c`, `mem_funcs.c`, `misc_io.c`, `qsort.c`, `rand.c`,
-`strtold.c`, `e_rem_pio2.c`, `k_cos.c`, `k_rem_pio2.c`, `k_sin.c`, `k_tan.c`,
-`s_atan.c`, `s_ceil.c`, `s_copysign.c`, `s_cos.c`, `s_floor.c`, `s_frexp.c`,
-`s_ldexp.c`, `s_sin.c`, `s_tan.c`, `w_acos.c`, `w_atan2.c`, `math_ppc.c`, `w_sqrt.c`.
+This MSL is a different version from each reference, so units were placed with a
+**three-way view**: function sizes aligned against each reference separately, then each
+of our functions attributed to the unit that at least one reference aligns to it.
+Where alignment by size alone was ambiguous, the code itself was used:
 
-Not split yet (left as `auto_*`):
+- **`w_*` wrappers** (0x8033F1F4–0x8033F210, 4 bytes each) are single `b` instructions
+  to their `e_*` function: `e_acos`, `e_asin`, `e_atan2`, `e_fmod`, `e_log`, `e_log10`,
+  `e_pow` (sizes equal to the references). This corrected an earlier size-only split:
+  0x8033F1F8 is `w_asin.c`, not `w_atan2.c`. `w_log.c` is named by the `w_<name>.c`
+  convention; no reference has it (hypothesis).
+- **`extras.c`**: the three 4-byte functions inside it (0x8033B1B8, 0x8033B1BC,
+  0x8033B310) branch to `__msl_strnicmp` / `__msl_itoa`, so they are `strnicmp`-style
+  and `itoa` aliases, not math wrappers (TP and Petari align them as `w_*` by size).
+- **`arith.c`** starts at 0x80332ED0: both 0x10 functions there have the `abs` code
+  (`srawi`/`xor`/`subf`), i.e. `abs` and `labs`, followed by `div`.
+- **`alloc.c`** includes `fn_80330F50` (0x318): it uses the allocator pools and calls
+  `allocate_from_fixed_pools` / `allocate_from_var_pools`.
+- **`uart_console_io_gcn.c`** includes `fn_8033B08C`, which sits between two functions
+  of that unit (units are contiguous).
 
-- weakly anchored (sizes match but a neighbour is unaligned): `alloc.c` (ours 0x1060 vs
-  0xE00), `ansi_files.c`, `arith.c`, `buffer_io.c`, `file_io.c`, `printf.c` (0x2554 vs
-  0x2490), `scanf.c`, `strtoul.c`, `wchar_io.c`, `uart_console_io_gcn.c`, `math_sun.c`,
-  `extras.c`, `e_acos.c`, `e_atan2.c`, `e_pow.c`, `w_pow.c`, `e_sqrt.c`;
-- partly missing: `char_io.c`, `direct_io.c`, `FILE_POS.c`, `mbstring.c`, `math_api.c`,
-  `string.c`, `wstring.c`; not found: `wmem.c`, `wprintf.c`;
-- our functions with no counterpart in mscharged (e.g. `fn_80330B20` 0x260,
-  `fn_80330F50` 0x318, `fn_8033BAE0` 0x330, `fn_8033BE10` 0x2B4): possibly units that
-  Petari has and mscharged lacks (`ctype.c`, `errno.c`, `locale.c`, `signal.c`,
-  `wctype.c`, …). To investigate.
+Data: `extab`/`extabindex` ranges come from this DOL (each entry belongs to a function
+of the unit). Other sections were kept when their size equals at least one reference,
+e.g. `ansi_files.c` `.bss` 0x300 (three 0x100 buffers), `scanf.c` `.data` 0x120 (three
+jump tables), `strtoul.c` `.data` 0x88, `signal.c` `.bss` 0x20,
+`abort_exit_ppc_eabi.c` `.sbss` 0x8 (`__stdio_exit` included), `e_log.c` /
+`e_log10.c` `.sbss` 0x8 each, `e_pow.c` `.rodata` 0x30 + `.sdata2` 0x110.
+
+59 units are split, covering 0x8032FEF0–0x8033F460 except three gaps left as `auto_*`:
+
+| Gap | Content | Why not split |
+|---|---|---|
+| 0x80333B34–0x80333B60 | one 0x2C function calling `__close_console` | no reference has it |
+| 0x8033ABF0–0x8033AE98 | three functions doing date arithmetic, calling an OS function | time functions, not in any reference |
+| 0x8033AFB4–0x8033AFBC | `li r3, 0; blr`, called by the date code | owner unknown |
+
+Data not assigned yet (owner unclear, shared between units): `printf.c` data (the
+references give `.rodata` 0x30, `.data` 0x250, `.sdata` 0x8, `.sdata2` 0x8), the 0x48
+table at 0x803B4DD0 (used by `file_io.c`, `mbstring.c`, `scanf.c`, `strtoul.c`,
+`extras.c`), `errno`-like 0x805FC580 (used by math and `strtoul.c`) and
+0x805FAE48 / 0x805FAE4C.
 
 ## Splits in `splits.txt`
 
 | Unit | Status |
 |---|---|
 | `Runtime.PPCEABI.H/*` (9 units) | Split, NonMatching |
-| `MSL_C/*` (25 anchored units) | Split, NonMatching |
+| `MSL_C/*` (59 units) | Split, NonMatching (3 small gaps, see above) |
 | `MetroTRK/*` (29 units) | Split, NonMatching |
 | Everything else | dtk `auto_*` objects (gap-based, not TU-accurate) |

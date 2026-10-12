@@ -20,9 +20,9 @@
 
 ## In progress
 
-- Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units) and the
-  25 anchored MSL_C units; hypotheses from Petari / mscharged-decomp / TP checked
-  against the DOL. Next: remaining MSL_C units (different MSL version), then the SDK.
+- Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units) and MSL_C
+  (59 units, 3 small gaps); hypotheses from TP / Petari / mscharged-decomp checked
+  against the DOL. Next: the SDK.
 - Watch for a game function that matches with only {3.0a5.2} or only {3.0a3…3.0a5};
   it would settle the exact compiler version.
 

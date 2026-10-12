@@ -51,6 +51,21 @@ Runtime.PPCEABI.H/GCN_mem_alloc.c:
 	.text       start:0x8032FD80 end:0x8032FEF0
 	.rodata     start:0x80352220 end:0x80352290
 
+MSL_C/alloc.c:
+	extab       start:0x80006528 end:0x80006570
+	extabindex  start:0x800067BC end:0x80006828
+	.text       start:0x8032FEF0 end:0x80331268
+	.rodata     start:0x80352290 end:0x803522A8
+	.bss        start:0x805F5950 end:0x805F5988
+	.sbss       start:0x805FC578 end:0x805FC580
+
+MSL_C/ansi_files.c:
+	extab       start:0x80006570 end:0x80006598
+	extabindex  start:0x80006828 end:0x80006864
+	.text       start:0x80331268 end:0x80331560
+	.data       start:0x803B4978 end:0x803B4AB8
+	.bss        start:0x805F5988 end:0x805F5C88
+
 MSL_C/ansi_fp.c:
 	extab       start:0x80006598 end:0x800065D0
 	extabindex  start:0x80006864 end:0x800068B8
@@ -58,6 +73,39 @@ MSL_C/ansi_fp.c:
 	.rodata     start:0x803522A8 end:0x80352388
 	.data       start:0x803B4AB8 end:0x803B4C20
 	.sdata2     start:0x80600B38 end:0x80600B70
+
+MSL_C/arith.c:
+	.text       start:0x80332ED0 end:0x80332F4C
+
+MSL_C/buffer_io.c:
+	extab       start:0x800065D0 end:0x800065E8
+	extabindex  start:0x800068B8 end:0x800068DC
+	.text       start:0x80332F4C end:0x8033326C
+
+MSL_C/char_io.c:
+	extab       start:0x800065E8 end:0x800065F8
+	extabindex  start:0x800068DC end:0x800068F4
+	.text       start:0x8033326C end:0x803334E8
+
+MSL_C/direct_io.c:
+	extab       start:0x800065F8 end:0x80006608
+	extabindex  start:0x800068F4 end:0x8000690C
+	.text       start:0x803334E8 end:0x80333B34
+
+MSL_C/file_io.c:
+	extab       start:0x80006610 end:0x80006638
+	extabindex  start:0x80006918 end:0x80006954
+	.text       start:0x80333B60 end:0x803341E8
+
+MSL_C/FILE_POS.c:
+	extab       start:0x80006638 end:0x80006640
+	extabindex  start:0x80006954 end:0x80006960
+	.text       start:0x803341E8 end:0x8033445C
+
+MSL_C/mbstring.c:
+	extab       start:0x80006640 end:0x80006648
+	extabindex  start:0x80006960 end:0x8000696C
+	.text       start:0x8033445C end:0x80334594
 
 MSL_C/mem.c:
 	extab       start:0x80006648 end:0x80006650
@@ -67,8 +115,18 @@ MSL_C/mem.c:
 MSL_C/mem_funcs.c:
 	.text       start:0x80334704 end:0x803349D4
 
+MSL_C/math_api.c:
+	extab       start:0x80006650 end:0x80006660
+	extabindex  start:0x80006978 end:0x80006990
+	.text       start:0x803349D4 end:0x80334A6C
+
 MSL_C/misc_io.c:
 	.text       start:0x80334A6C end:0x80334A8C
+
+MSL_C/printf.c:
+	extab       start:0x80006660 end:0x800066D0
+	extabindex  start:0x80006990 end:0x80006A38
+	.text       start:0x80334A8C end:0x80336FE0
 
 MSL_C/qsort.c:
 	extab       start:0x800066D0 end:0x800066D8
@@ -79,12 +137,94 @@ MSL_C/rand.c:
 	.text       start:0x80337150 end:0x80337178
 	.sdata      start:0x805FAE38 end:0x805FAE40
 
+MSL_C/scanf.c:
+	extab       start:0x800066D8 end:0x800066F0
+	extabindex  start:0x80006A44 end:0x80006A68
+	.text       start:0x80337178 end:0x803386E4
+	.rodata     start:0x803528C0 end:0x803528E8
+	.data       start:0x803B5068 end:0x803B5188
+
+MSL_C/signal.c:
+	extab       start:0x800066F0 end:0x800066F8
+	extabindex  start:0x80006A68 end:0x80006A74
+	.text       start:0x803386E4 end:0x80338794
+	.bss        start:0x805F5C88 end:0x805F5CA8
+
+MSL_C/string.c:
+	extab       start:0x800066F8 end:0x80006700
+	extabindex  start:0x80006A74 end:0x80006A80
+	.text       start:0x80338794 end:0x80338C2C
+	.sdata      start:0x805FAE40 end:0x805FAE48
+
 MSL_C/strtold.c:
 	extab       start:0x80006700 end:0x80006710
 	extabindex  start:0x80006A80 end:0x80006A98
 	.text       start:0x80338C2C end:0x8033A0A4
 	.rodata     start:0x803528E8 end:0x803528F8
 	.sdata2     start:0x80600B98 end:0x80600BD0
+
+MSL_C/strtoul.c:
+	extab       start:0x80006710 end:0x80006738
+	extabindex  start:0x80006A98 end:0x80006AD4
+	.text       start:0x8033A0A4 end:0x8033ABF0
+	.data       start:0x803B5188 end:0x803B5210
+
+MSL_C/wstring.c:
+	.text       start:0x8033AE98 end:0x8033AF2C
+
+MSL_C/wchar_io.c:
+	.text       start:0x8033AF2C end:0x8033AFB4
+
+MSL_C/uart_console_io_gcn.c:
+	extab       start:0x80006750 end:0x80006758
+	extabindex  start:0x80006AF8 end:0x80006B04
+	.text       start:0x8033AFBC end:0x8033B09C
+	.sbss       start:0x805FC588 end:0x805FC590
+
+MSL_C/abort_exit_ppc_eabi.c:
+	extab       start:0x80006758 end:0x80006760
+	extabindex  start:0x80006B04 end:0x80006B10
+	.text       start:0x8033B09C end:0x8033B0D0
+	.sbss       start:0x805FC590 end:0x805FC598
+
+MSL_C/math_sun.c:
+	extab       start:0x80006760 end:0x80006768
+	extabindex  start:0x80006B10 end:0x80006B1C
+	.text       start:0x8033B0D0 end:0x8033B110
+
+MSL_C/extras.c:
+	.text       start:0x8033B110 end:0x8033B314
+
+MSL_C/e_acos.c:
+	.text       start:0x8033B314 end:0x8033B5D8
+	.sdata2     start:0x80600BD0 end:0x80600C58
+
+MSL_C/e_asin.c:
+	.text       start:0x8033B5D8 end:0x8033B870
+	.sdata2     start:0x80600C58 end:0x80600CE0
+
+MSL_C/e_atan2.c:
+	.text       start:0x8033B870 end:0x8033BAE0
+	.sdata2     start:0x80600CE0 end:0x80600D38
+
+MSL_C/e_fmod.c:
+	.text       start:0x8033BAE0 end:0x8033BE10
+	.rodata     start:0x80352F30 end:0x80352F40
+
+MSL_C/e_log.c:
+	.text       start:0x8033BE10 end:0x8033C0C4
+	.sbss       start:0x805FC598 end:0x805FC5A0
+	.sdata2     start:0x80600D38 end:0x80600DB8
+
+MSL_C/e_log10.c:
+	.text       start:0x8033C0C4 end:0x8033C1D8
+	.sbss       start:0x805FC5A0 end:0x805FC5A8
+	.sdata2     start:0x80600DB8 end:0x80600DE8
+
+MSL_C/e_pow.c:
+	.text       start:0x8033C1D8 end:0x8033CA20
+	.rodata     start:0x80352F40 end:0x80352F70
+	.sdata2     start:0x80600DE8 end:0x80600EF8
 
 MSL_C/e_rem_pio2.c:
 	.text       start:0x8033CA20 end:0x8033CDB8
@@ -148,8 +288,27 @@ MSL_C/s_tan.c:
 MSL_C/w_acos.c:
 	.text       start:0x8033F1F4 end:0x8033F1F8
 
-MSL_C/w_atan2.c:
+MSL_C/w_asin.c:
 	.text       start:0x8033F1F8 end:0x8033F1FC
+
+MSL_C/w_atan2.c:
+	.text       start:0x8033F1FC end:0x8033F200
+
+MSL_C/w_fmod.c:
+	.text       start:0x8033F200 end:0x8033F204
+
+MSL_C/w_log.c:
+	.text       start:0x8033F204 end:0x8033F208
+
+MSL_C/w_log10.c:
+	.text       start:0x8033F208 end:0x8033F20C
+
+MSL_C/w_pow.c:
+	.text       start:0x8033F20C end:0x8033F210
+
+MSL_C/e_sqrt.c:
+	.text       start:0x8033F210 end:0x8033F458
+	.sdata2     start:0x806010D8 end:0x806010E0
 
 MSL_C/math_ppc.c:
 	.text       start:0x8033F458 end:0x8033F45C
