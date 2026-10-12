@@ -716,8 +716,9 @@ RVL_SDK/gamespy/GP/gpiInfo.c:
 	.sdata      start:0x805FA960 end:0x805FAA18
 
 RVL_SDK/gamespy/GP/gpiUnique.c:
-	.text       start:0x8030CEDC end:0x8030D008
-	.sdata      start:0x805FAB98 end:0x805FABA0
+	.text       start:0x8030CDB0 end:0x8030D008
+	.data       start:0x803B2238 end:0x803B2278
+	.sdata      start:0x805FAB90 end:0x805FABA0
 
 RVL_SDK/gamespy/GP/gpiUtility.c:
 	.text       start:0x8030D008 end:0x8030D5EC
