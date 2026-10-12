@@ -235,7 +235,7 @@ certain.
 Each unit was linked alone and the failure analysed (link error or first differing
 DOL range). Fixes, all verified by `main.dol: OK`:
 
-- **Version banners.** The `<< RVL_SDK - X 	release build: ... >>` strings in
+- **Version banners.** The `<< RVL_SDK - X \trelease build: ... >>` strings in
   mscharged carry the build dates of its own SDK. They were replaced by the dates found
   in this DOL (EXI, SI, VI, GX, DVD, NAND, OS, SC, WPAD); this is the only change to
   those lines.
@@ -257,8 +257,8 @@ DOL range). Fixes, all verified by `main.dol: OK`:
   `btu_init.c` `.sdata2`).
 - **Wrong split / wrong name found.** `AXCL.c` `.text` was a 0x30-byte fragment; the
   unit is 0x802589E0-0x80259458 (same order and sizes as the compiled code). The name
-  `gpiProcessRegisterUniqueNick` was on the wrong twin: 0x8030CDB0 compares `n\`
-  (the source's string), 0x8030CEDC compares `c\`.
+  `gpiProcessRegisterUniqueNick` was on the wrong twin: 0x8030CDB0 compares `\rn\`
+  (the source's string), 0x8030CEDC compares `\rc\`.
 
 Functions **written from this DOL** (absent from the mscharged sources, real names
 unknown, marked in the code):
@@ -267,7 +267,7 @@ unknown, marked in the code):
   static `nandCalcUsage`, so it belongs to this unit).
 - `fn_80259414` in `AXCL.c`: empty function called by the AX shutdown function where AX
   init calls `__AXClInit`.
-- `fn_8030CEDC` in `gpiUnique.c`: `c\` (CD key registration) reply handler, twin of
+- `fn_8030CEDC` in `gpiUnique.c`: `\rc\` (CD key registration) reply handler, twin of
   `gpiProcessRegisterUniqueNick`.
 
 rb3's `NANDCheck.c` was checked and does not contain `fn_8026829C`; no rb3 code was
