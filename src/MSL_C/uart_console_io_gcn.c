@@ -34,3 +34,16 @@ DSIOResult __write_console(__file_handle handle, unsigned char* buffer, size_t* 
     __TRK_write_console(handle, buffer, count, idle_fn);
     return 0;
 }
+
+// __close_console: from zeldaret/tp (CC0-1.0); present in this game's DOL (0x8033B08C).
+DSIOResult __close_console(__file_handle handle)
+{
+    return 0;
+}
+
+// Unknown function at 0x8033B094 (li r3, 0; blr), called by fn_80333B34. Its real name is
+// not known yet, so it keeps its address-based name.
+int fn_8033B094(void)
+{
+    return 0;
+}

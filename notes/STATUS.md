@@ -25,8 +25,8 @@
 
 - Step 5 (started): **Runtime.PPCEABI.H matches** (9/9 units, 100 % code and data,
   linked), from mscharged-decomp / TP code (CC0), provenance in `notes/PROVENANCE.md`.
-- Step 5: **MSL_C 56/59 units match** and are linked (mscharged-decomp code, CC0); the
-  remaining 3 (`alloc.c`, `arith.c`, `uart_console_io_gcn.c`) need functions decompiled
+- Step 5: **MSL_C 57/59 units match** and are linked (mscharged-decomp code, CC0); the
+  remaining 2 (`alloc.c`, `arith.c`) need functions decompiled
   from this DOL; see `notes/PROVENANCE.md`.
 
 ## In progress
