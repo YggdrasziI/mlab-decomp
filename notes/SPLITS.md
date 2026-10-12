@@ -129,8 +129,9 @@ except:
 
 - `mslsupp.c`: 0x5BC instead of 0x640; the missing 0x84 is `__close_console`, absent
   here (dead-stripped, hypothesis);
-- `InitMetroTRK`: 0x94 instead of 0x98 (version difference), compensated inside
-  `dolphin_trk.c` (unit size still 0x31C).
+- `InitMetroTRK`: dtk sized it 0x94 instead of 0x98; the missing 4 bytes are its final
+  `blr` (0x80344230 = `4E800020`), left as a gap by the analysis. Corrected in
+  `symbols.txt` (not a version difference).
 
 Data was assigned from the objects each unit's functions reference, and every range
 size was compared with the reference (e.g. `dispatch.c` `.data` 0x6C, `msghndlr.c` two

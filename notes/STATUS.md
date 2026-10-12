@@ -29,8 +29,7 @@
   remaining unit (`alloc.c`) needs two functions decompiled
   from this DOL; see `notes/PROVENANCE.md`.
 
-- Step 5: **MetroTRK 28/29 units match** (mscharged-decomp code, CC0, GC/2.7); only
-  `dolphin_trk.c` (`InitMetroTRK` differs) remains.
+- Step 5: **MetroTRK matches** (29/29 units, mscharged-decomp code, CC0, GC/2.7).
 
 ## In progress
 

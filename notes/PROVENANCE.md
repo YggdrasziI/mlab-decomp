@@ -153,7 +153,7 @@ from this DOL:
   `log`, `log10` (byte-identical), `__ieee754_asin` (0x8033B5D8, branch target of
   `asin`).
 
-## MetroTRK (28 of 29 units Matching)
+## MetroTRK (29 of 29 units Matching)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: the 29 `src/MetroTRK/*`
@@ -163,8 +163,9 @@ without `-enc SJIS`, with `-fp_contract on -str reuse,readonly -use_lmw_stmw on
 -inline on,deferred -func_align 4 -sdata 0 -sdata2 0`; `cflags_metrotrk_deferred_auto`
 for 9 files; `-sdata 8` for `cc_gdev.c` and `serpoll.c`).
 
-Every function present in this DOL is byte-identical, except `InitMetroTRK`
-(`dolphin_trk.c`, 0x94 here vs 0x98 in mscharged); `dolphin_trk.c` stays NonMatching.
+Every function present in this DOL is byte-identical. `InitMetroTRK` first looked
+4 bytes shorter: dtk had cut its final `blr` into a gap; its size is corrected to 0x98 in
+`symbols.txt`.
 The sources also define functions absent from this DOL (`TRKStandardACK`,
 `TRKSendACK`, `TRKReadBuffer1_*`, `GetThreadInfo`, …): they are inlined where used and
 their stand-alone copies are dead-stripped by the linker, so the sources are kept as

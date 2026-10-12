@@ -612,7 +612,7 @@ config.libs = [
             Object(Matching, "MetroTRK/mpc_7xx_603e.c"),
             Object(Matching, "MetroTRK/mslsupp.c"),
             Object(Matching, "MetroTRK/__exception.s"),
-            Object(NonMatching, "MetroTRK/dolphin_trk.c", cflags=cflags_metrotrk_deferred_auto),
+            Object(Matching, "MetroTRK/dolphin_trk.c", cflags=cflags_metrotrk_deferred_auto),
             Object(Matching, "MetroTRK/main_TRK.c"),
             Object(Matching, "MetroTRK/dolphin_trk_glue.c"),
             Object(Matching, "MetroTRK/targcont.c"),
