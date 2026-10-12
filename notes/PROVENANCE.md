@@ -179,7 +179,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (94 of 177 units Matching so far)
+## RVL_SDK (99 of 177 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -216,6 +216,9 @@ More units linked afterwards:
   their data (jump tables, statics). Linked one by one, each keeps `main.dol` matching:
   our linker strips the same data. (`bta_dm_act.c`, `btm_inq.c`, `hcisu_h2.c` failed this
   test and stay NonMatching.)
+- `scapi_prdinfo.c`, `bd.c`, `utl.c`, `gap_api.c`, `port_utils.c`: compiled sections
+  that the split lacks belong to data the DOL dead-stripped; each linked alone keeps
+  `main.dol` matching.
 
 **Naming caveat.** Names come from ordered size alignment plus a byte comparison. When
 several tiny functions have identical bytes (e.g. `blr` stubs), only their order tells

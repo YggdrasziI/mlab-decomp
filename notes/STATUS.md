@@ -31,7 +31,7 @@
 
 - Step 5: **MetroTRK matches** (29/29 units, mscharged-decomp code, CC0, GC/2.7).
 
-- Step 5: **RVL_SDK 94/177 units match** (mscharged-decomp code, CC0); data
+- Step 5: **RVL_SDK 99/177 units match** (mscharged-decomp code, CC0); data
   sections placed by relocation pairing and verified byte by byte.
 
 ## In progress
