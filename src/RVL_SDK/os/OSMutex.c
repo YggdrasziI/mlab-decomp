@@ -141,6 +141,30 @@ void OSInitCond(OSCond* cond) {
     OSInitThreadQueue(&cond->queue);
 }
 
+// From zeldaret/tp (CC0-1.0), libs/revolution/src/os/OSMutex.c; assertions
+// dropped, queue macro renamed to this file's DequeueItem.
+void OSWaitCond(OSCond* cond, OSMutex* mutex) {
+    BOOL enabled = OSDisableInterrupts();
+    OSThread* currentThread = OSGetCurrentThread();
+
+    if (mutex->thread == currentThread) {
+        s32 count = mutex->count;
+        mutex->count = 0;
+        DequeueItem(&currentThread->queueMutex, mutex, link);
+        mutex->thread = NULL;
+        if (currentThread->priority < currentThread->base) {
+            currentThread->priority = __OSGetEffectivePriority(currentThread);
+        }
+        OSDisableScheduler();
+        OSWakeupThread(&mutex->queue);
+        OSEnableScheduler();
+        OSSleepThread(&cond->queue);
+        OSLockMutex(mutex);
+        mutex->count = count;
+    }
+    OSRestoreInterrupts(enabled);
+}
+
 void OSSignalCond(OSCond* cond) {
     OSWakeupThread(&cond->queue);
 }

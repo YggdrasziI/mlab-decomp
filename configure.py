@@ -385,7 +385,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/os/OSLink.c"),
             Object(Matching, "RVL_SDK/os/OSMessage.c"),
             Object(Matching, "RVL_SDK/os/OSMemory.c"),
-            Object(NonMatching, "RVL_SDK/os/OSMutex.c"),
+            Object(Matching, "RVL_SDK/os/OSMutex.c"),
             Object(NonMatching, "RVL_SDK/os/OSReboot.c"),
             Object(NonMatching, "RVL_SDK/os/OSReset.c"),
             Object(Matching, "RVL_SDK/os/OSRtc.c"),
