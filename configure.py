@@ -208,7 +208,7 @@ cflags_base = [
     "-RTTI off",
     "-fp_contract off",  # Proven on game code, see notes/COMPILER.md
     "-str reuse",
-    "-multibyte",  # For Wii compilers, replace with `-enc SJIS`
+    "-enc SJIS",  # Shift-JIS sources (Wii-era Nintendo encoding); same objects as -multibyte for current code
     "-i include",
     f"-i build/{config.version}/include",
     "-i libs/Runtime/include",
