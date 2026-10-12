@@ -985,16 +985,21 @@ static void cbForStateDownRotation(u32 intType) {
     }
 }
 
-static void stateCoverClosed_CMD(DVDCommandBlock* block) {
-#pragma unused(block)
+// From zeldaret/tp libs/revolution/src/dvd/dvd.c (CC0-1.0, commit c8fa8c9e):
+// this SDK build handles command 40 here.
+static void stateCoverClosed_CMD(DVDCommandBlock* command) {
+    if (CurrCommand == 40) {
+        NumInternalRetry = 0;
 
-    DVDLowClearCoverInterrupt(NULL);
-
-    StampCommand(COMMAND_READID,
-                 DVD_LOW_OFFSET(offsetof(DVDDiskHeader, diskID)),
-                 sizeof(DVDDiskID));
-
-    DVDLowReadDiskID(&CurrDiskID, cbForStateCoverClosed);
+        if (!CheckCancel(0)) {
+            executing->state = 1;
+            stateBusy(executing);
+        }
+    } else {
+        DVDLowClearCoverInterrupt(0);
+        StampCommand(5, 0, sizeof(DVDDiskID));
+        DVDLowReadDiskID(&CurrDiskID, cbForStateCoverClosed);
+    }
 }
 
 static void cbForStateCoverClosed(u32 intType) {

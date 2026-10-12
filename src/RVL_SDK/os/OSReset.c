@@ -356,7 +356,8 @@ u32 OSGetResetCode(void) {
     return code;
 }
 
-void OSResetSystem(int reset, u32 resetCode, BOOL forceMenu) {
-    OSPanic(__FILE__, 1020,
-            "OSResetSystem() is obsoleted. It doesn't work any longer.\n");
+// From SMGCommunity/Petari src/RVL_SDK/os/OSReset.c (CC0-1.0, commit 6804bd31):
+// this SDK build reports a different line number.
+void OSResetSystem(int, u32, int) {
+    OSPanic(__FILE__, 1130, "OSResetSystem() is obsoleted. It doesn't work any longer.\n");
 }

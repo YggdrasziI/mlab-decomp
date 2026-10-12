@@ -536,47 +536,33 @@ VIRetraceCallback VISetPostRetraceCallback(VIRetraceCallback cb) {
     return oldcb;
 }
 
+// From zeldaret/tp libs/revolution/src/vi/vi.c (CC0-1.0, commit c8fa8c9e).
 static timing_s* getTiming(VITVMode mode) {
     switch (mode) {
-        case VI_TVMODE_NTSC_INT:
-            return &timing[0];
-        case VI_TVMODE_NTSC_DS:
-            return &timing[1];
-        case VI_TVMODE_PAL_INT:
-            return &timing[2];
-        case VI_TVMODE_PAL_DS:
-            return &timing[3];
-        case VI_TVMODE_EURGB60_INT:
-            return &timing[0];
-        case VI_TVMODE_EURGB60_DS:
-            return &timing[1];
-        case VI_TVMODE_MPAL_INT:
-            return &timing[4];
-        case VI_TVMODE_MPAL_DS:
-            return &timing[5];
-        case VI_TVMODE_NTSC_PROG:
-        case VI_TVMODE_MPAL_PROG:
-        case VI_TVMODE_EURGB60_PROG:
-            return &timing[6];
-        case VI_TVMODE_NTSC_3D:
-            return &timing[7];
-        case VI_TVMODE_DEBUG_PAL_INT:
-            return &timing[2];
-        case VI_TVMODE_DEBUG_PAL_DS:
-            return &timing[3];
-        case VI_TVMODE_GCA_INT:
-            return &timing[8];
-        case VI_TVMODE_GCA_PROG:
-            return &timing[9];
-        case VI_TVMODE_PAL_PROG:
-            break;
-        case VI_TVMODE_EXTRA_INT:
-        case VI_TVMODE_EXTRA_DS:
-        case VI_TVMODE_EXTRA_PROG:
-            return timingExtra;
+    case VI_TVMODE_NTSC_INT:        return &timing[0];
+    case VI_TVMODE_NTSC_DS:         return &timing[1];
+    case VI_TVMODE_PAL_INT:         return &timing[2];
+    case VI_TVMODE_PAL_DS:          return &timing[3];
+    case VI_TVMODE_EURGB60_INT:     return &timing[0];
+    case VI_TVMODE_EURGB60_DS:      return &timing[1];
+    case VI_TVMODE_MPAL_INT:        return &timing[4];
+    case VI_TVMODE_MPAL_DS:         return &timing[5];
+    case VI_TVMODE_NTSC_PROG:
+    case VI_TVMODE_MPAL_PROG:
+    case VI_TVMODE_EURGB60_PROG:    return &timing[6];
+    case VI_TVMODE_NTSC_3D:         return &timing[7];
+    case VI_TVMODE_DEBUG_PAL_INT:   return &timing[2];
+    case VI_TVMODE_DEBUG_PAL_DS:    return &timing[3];
+    case VI_TVMODE_GCA_INT:         return &timing[8];
+    case VI_TVMODE_GCA_PROG:        return &timing[9];
+    case VI_TVMODE_PAL_PROG:        return &timing[10];
+    case VI_TVMODE_EXTRA_INT:
+    case VI_TVMODE_EXTRA_DS:
+    case VI_TVMODE_EXTRA_PROG:
+    case VI_TVMODE_HD720_PROG:      return timingExtra;
+    default:
+        return NULL;
     }
-
-    return NULL;
 }
 
 void __VIInit(VITVMode mode) {
