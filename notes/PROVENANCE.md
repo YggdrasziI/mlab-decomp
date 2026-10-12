@@ -57,7 +57,7 @@ the source and dead-stripped by the linker (the build matches).
   `OSSetCurrentHeap`, `OSAllocFromHeap`, `OSFreeToHeap`, `OSSetArenaLo`,
   `__OSCurrHeap`, and `@stringBase0` (0x80352220, `GCN_mem_alloc.c` string pool).
 
-## MSL_C (57 of 59 units Matching)
+## MSL_C (58 of 59 units Matching)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 same commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, license **CC0-1.0**: the 50
@@ -89,6 +89,10 @@ this project under its address-based name `fn_8033B094` (real name unknown). Ext
 names mapped by position: `InitializeUART` (0x80280414), `WriteUARTN` (0x8028045C),
 `__TRK_write_console` (0x80344024, MetroTRK).
 
+`arith.c`: the third function (0x80332EF0, a floored signed remainder called by the
+date code) has no source in any reference; it was **decompiled from this DOL** for this
+project, under its address-based name `fn_80332EF0`, and is byte-identical.
+
 Additions from zeldaret/tp (CC0-1.0), same commit as above: `labs` in `arith.c`,
 `strnicmp` in `extras.c` (both byte-identical). In `wstring.c`, `wcscpy` and `wcschr`
 are disabled with `#if 0` (absent from this DOL), and 0x8033AE98 is `wcslen` (size
@@ -103,13 +107,11 @@ Split fix: `string.c` also owns `.sdata2` 0x80600B90-0x80600B98, the empty strin
 `strtok_null` / `strtok_ptr` point to (no code references it, so the region map missed
 it).
 
-Not Matching yet (2 units): each has functions that no reference project has a source
+Not Matching yet (1 unit): each has functions that no reference project has a source
 for (they were dead-stripped from those games), so they must be decompiled from this
 DOL:
 
 - `alloc.c`: two functions differ (0x80330B20, 0x80330F50);
-- `arith.c`: `abs` and `labs` match, but the third function (0x80332EF0)
-  is a signed remainder helper whose name is unknown (it is not TP's `div`);
 
 ### Units with no mscharged source
 

@@ -512,7 +512,7 @@ config.libs = [
             Object(NonMatching, "MSL_C/alloc.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "MSL_C/ansi_files.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "MSL_C/ansi_fp.c", extra_cflags=["-Cpp_exceptions on", "-rostr", "-use_lmw_stmw on"], mw_version="GC/3.0a5"),
-            Object(NonMatching, "MSL_C/arith.c"),
+            Object(Matching, "MSL_C/arith.c"),
             Object(Matching, "MSL_C/buffer_io.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "MSL_C/char_io.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "MSL_C/direct_io.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
