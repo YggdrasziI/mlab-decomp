@@ -422,6 +422,7 @@ RVL_SDK/bte/gki_ppc.c:
 
 RVL_SDK/bte/hcisu_h2.c:
 	.text       start:0x802883E0 end:0x80288A7C
+	.rodata     start:0x8034AB18 end:0x8034AB30
 	.data       start:0x803A34B8 end:0x803A3528
 	.bss        start:0x805B8BC8 end:0x805B8C00
 	.sdata2     start:0x806009F8 end:0x80600A08
