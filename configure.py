@@ -514,7 +514,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/bte/rfc_l2cap_if.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
             Object(Matching, "RVL_SDK/bte/rfc_mx_fsm.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
             Object(Matching, "RVL_SDK/bte/rfc_port_fsm.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
-            Object(NonMatching, "RVL_SDK/bte/rfc_port_if.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
+            Object(Matching, "RVL_SDK/bte/rfc_port_if.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
             Object(Matching, "RVL_SDK/bte/rfc_ts_frames.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
             Object(Matching, "RVL_SDK/bte/rfc_utils.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
             Object(Matching, "RVL_SDK/bte/sdp_api.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),

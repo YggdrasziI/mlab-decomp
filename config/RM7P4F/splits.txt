@@ -643,6 +643,7 @@ RVL_SDK/bte/rfc_port_fsm.c:
 
 RVL_SDK/bte/rfc_port_if.c:
 	.text       start:0x802AC398 end:0x802AC8C4
+	.bss        start:0x805C0248 end:0x805C0660
 
 RVL_SDK/bte/rfc_ts_frames.c:
 	.text       start:0x802AC8C4 end:0x802ADF0C
