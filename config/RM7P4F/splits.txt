@@ -199,7 +199,11 @@ RVL_SDK/vi/vi3in1.c:
 
 RVL_SDK/gx/GXInit.c:
 	.text       start:0x80248534 end:0x80249700
+	.data       start:0x80397F20 end:0x80398160
+	.bss        start:0x8055E100 end:0x8055E780
 	.sdata      start:0x805FA1F0 end:0x805FA1F8
+	.sbss       start:0x805FBE30 end:0x805FBE58
+	.sdata2     start:0x806006D8 end:0x80600700
 
 RVL_SDK/gx/GXFifo.c:
 	.text       start:0x80249700 end:0x8024A3A4

@@ -488,6 +488,7 @@ void __GXInitGX(void)
     GXSetViewport(0.0f, 0.0f, renderObj->fbWidth, renderObj->xfbHeight, 0.0f, 1.0f);
 
     GXSetProjectionv(GXDefaultProjData);
+    __GXSetGenMode(); // in this SDK build, as in zeldaret/tp and Petari
 
     GXSetCoPlanar(GX_FALSE);
     GXSetCullMode(GX_CULL_BACK);
