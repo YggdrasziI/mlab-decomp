@@ -445,7 +445,7 @@ config.libs = [
             Object(NonMatching, "RVL_SDK/sc/scapi.c"),
             Object(Matching, "RVL_SDK/sc/scapi_prdinfo.c"),
             Object(Matching, "RVL_SDK/arc/arc.c"),
-            Object(NonMatching, "RVL_SDK/ipc/ipcMain.c"),
+            Object(Matching, "RVL_SDK/ipc/ipcMain.c"),
             Object(NonMatching, "RVL_SDK/ipc/ipcclt.c"),
             Object(Matching, "RVL_SDK/ipc/memory.c"),
             Object(Matching, "RVL_SDK/ipc/ipcProfile.c"),

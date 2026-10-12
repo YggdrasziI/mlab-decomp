@@ -17,6 +17,12 @@ void IPCInit(void) {
     }
 }
 
+// From zeldaret/tp libs/revolution/src/ipc/ipcMain.c (CC0-1.0, commit c8fa8c9e).
+void IPCReInit(void) {
+    Initialized = FALSE;
+    IPCInit();
+}
+
 u32 IPCReadReg(s32 index) {
     return IPC_HW_REGS_PPC[index];
 }
