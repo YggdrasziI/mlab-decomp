@@ -57,7 +57,7 @@ the source and dead-stripped by the linker (the build matches).
   `OSSetCurrentHeap`, `OSAllocFromHeap`, `OSFreeToHeap`, `OSSetArenaLo`,
   `__OSCurrHeap`, and `@stringBase0` (0x80352220, `GCN_mem_alloc.c` string pool).
 
-## MSL_C (53 of 59 units Matching so far)
+## MSL_C (55 of 59 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 same commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, license **CC0-1.0**: the 50
@@ -83,6 +83,11 @@ Compiler: `ansi_fp.c`, `strtoul.c`, `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_ata
 are built with `GC/3.0a5` (they only match with a compiler older than 3.0a5.2), the
 other files with `GC/3.0a5.2`; see `notes/COMPILER.md`.
 
+Additions from zeldaret/tp (CC0-1.0), same commit as above: `labs` in `arith.c`,
+`strnicmp` in `extras.c` (both byte-identical). In `wstring.c`, `wcscpy` and `wcschr`
+are disabled with `#if 0` (absent from this DOL), and 0x8033AE98 is `wcslen` (size
+alignment had confused it with `wcscpy`, also 0x1C bytes).
+
 Split fix: `printf.c` gets its data, which the region map had left unassigned:
 `.rodata` 0x80352890-0x803528C0 (`@stringBase0`, 0x2B), `.data` 0x803B4E18-0x803B5068
 (its switch jump tables, 0x250), `.sdata` 0x805FAE30-0x805FAE38 (`@wstringBase0`),
@@ -94,8 +99,12 @@ it).
 
 Not Matching yet, with the reason:
 
-- version differences in some functions: `alloc.c`, `arith.c`, `wstring.c`,
-  `uart_console_io_gcn.c`, `extras.c`;
+- `alloc.c`: two functions differ (0x80330B20, 0x80330F50);
+- `arith.c`: `abs` and `labs` match, but the third function (0x80332EF0)
+  is a signed remainder helper whose name is unknown (it is not TP's `div`);
+- `uart_console_io_gcn.c`: `__write_console` is identical up to symbol names, but the
+  unit also has `__close_console` and an 8-byte function (0x8033B094, `li r3,0; blr`)
+  whose name no reference gives;
 - `e_asin.c` (from TP, see below): its single function differs from this DOL.
 
 ### Units with no mscharged source

@@ -13,6 +13,7 @@ size_t wcslen(const wchar_t* pStr)
     return len;
 }
 
+#if 0 // Not present in this game's DOL (dead-stripped by the original link).
 wchar_t* wcscpy(wchar_t* pDest, const wchar_t* pSrc)
 {
     const wchar_t* p = (wchar_t*)pSrc - 1;
@@ -22,6 +23,7 @@ wchar_t* wcscpy(wchar_t* pDest, const wchar_t* pSrc)
         ;
     return pDest;
 }
+#endif
 
 wchar_t* wcsncpy(wchar_t* pDest, const wchar_t* pSrc, size_t num)
 {
@@ -64,6 +66,7 @@ int wcscmp(const wchar_t* pStr1, const wchar_t* pStr2)
     return c1 - c2;
 }
 
+#if 0 // Not present in this game's DOL (dead-stripped by the original link).
 wchar_t* wcschr(const wchar_t* pStr, const wchar_t chr)
 {
     const wchar_t* p = (wchar_t*)pStr - 1;
@@ -80,3 +83,4 @@ wchar_t* wcschr(const wchar_t* pStr, const wchar_t chr)
 
     return c ? 0 : (wchar_t*)p;
 }
+#endif

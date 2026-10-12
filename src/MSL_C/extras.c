@@ -33,6 +33,11 @@ int stricmp(const char* s1, const char* s2)
     }
 }
 
+// strnicmp: from zeldaret/tp (CC0-1.0); present in this game's DOL.
+int strnicmp(const char* str1, const char* str2, int n) {
+    return __msl_strnicmp(str1, str2, n);
+}
+
 int strncasecmp(const char* s1, const char* s2, size_t n)
 {
     return __msl_strnicmp(s1, s2, n);
