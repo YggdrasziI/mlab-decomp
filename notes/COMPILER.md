@@ -166,3 +166,23 @@ functions, with the same result. GC 2.0, 2.0p1, 2.5, 2.6, 2.7 tested; GC 1.x not
 | Function | Content | GC 3.0a3 → 3.0a5 | GC 3.0a5.2 | Wii 1.0 | GC 2.7 |
 |---|---|---|---|---|---|
 | `fn_80147800` | type-tagged value decode, dead `(short)` conversion | ✓ | ✓ | ✗ | ✗ |
+
+## Library compilers (2026-10-12)
+
+MSL_C (sources from mscharged-decomp) was compiled per file with GC/3.0a5.2 and with
+GC/3.0a5, and each function compared byte by byte with this DOL (relocated fields
+masked):
+
+| Files | GC/3.0a5.2 | GC/3.0a5 | GC/3.0a3 |
+|---|---|---|---|
+| `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c` | ✗ (dead stores removed, function too short) | ✓ | ✓ |
+| `ansi_fp.c` (`__dec2num`), `strtoul.c` (`__strtoull`) | ✗ | ✓ | not tested |
+| `printf.c` | ✓ 16/16 | ✗ 14/16 | not tested |
+| other matching MSL files | ✓ | ✓ | — |
+
+So **this DOL contains code from both compiler classes**: some MSL files need a
+compiler older than 3.0a5.2 (3.0a3 or 3.0a5, still indistinguishable), and `printf.c`
+needs 3.0a5.2. This is the first concrete evidence of the {3.0a3…3.0a5} class in the
+DOL; it concerns library code, and says nothing yet about the game code. The project
+now builds those six files with `GC/3.0a5` (per-object `mw_version`), the rest of
+MSL_C with `GC/3.0a5.2`.

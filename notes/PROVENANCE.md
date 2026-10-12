@@ -57,7 +57,7 @@ the source and dead-stripped by the linker (the build matches).
   `OSSetCurrentHeap`, `OSAllocFromHeap`, `OSFreeToHeap`, `OSSetArenaLo`,
   `__OSCurrHeap`, and `@stringBase0` (0x80352220, `GCN_mem_alloc.c` string pool).
 
-## MSL_C (47 of 59 units Matching so far)
+## MSL_C (53 of 59 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 same commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, license **CC0-1.0**: the 50
@@ -79,6 +79,10 @@ Local changes to the mscharged sources (all marked in the code):
   (`mbstring.c`), `__fpclassifyf` (`math_api.c`), `strcspn` (`string.c`), `fwrite`
   (`direct_io.c`).
 
+Compiler: `ansi_fp.c`, `strtoul.c`, `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c`
+are built with `GC/3.0a5` (they only match with a compiler older than 3.0a5.2), the
+other files with `GC/3.0a5.2`; see `notes/COMPILER.md`.
+
 Split fix: `printf.c` gets its data, which the region map had left unassigned:
 `.rodata` 0x80352890-0x803528C0 (`@stringBase0`, 0x2B), `.data` 0x803B4E18-0x803B5068
 (its switch jump tables, 0x250), `.sdata` 0x805FAE30-0x805FAE38 (`@wstringBase0`),
@@ -90,9 +94,8 @@ it).
 
 Not Matching yet, with the reason:
 
-- version differences in some functions: `alloc.c`, `ansi_fp.c`, `arith.c`,
-  `strtoul.c`, `wstring.c`, `uart_console_io_gcn.c`, `extras.c`,
-  `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c`;
+- version differences in some functions: `alloc.c`, `arith.c`, `wstring.c`,
+  `uart_console_io_gcn.c`, `extras.c`;
 - `e_asin.c` (from TP, see below): its single function differs from this DOL.
 
 ### Units with no mscharged source
