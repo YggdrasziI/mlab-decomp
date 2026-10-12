@@ -51,7 +51,8 @@ devsupport@gamespy.com
 // buffer size only needs to be slighty larger than the largest message that
 // will be sent ("slighty larger" due to overhead with reliable messages, and
 // unreliable messages starting with the magic string).
-#define GTI2_STACK_RECV_BUFFER_SIZE 65535
+// 4096 in this GameSpy build (size of the static buffer in this DOL).
+#define GTI2_STACK_RECV_BUFFER_SIZE 4096
 
 // a server will disconnect a client that doesn't not successfully connect
 // within this time (in milliseconds). if the connectAttemptCallback has been
