@@ -7,15 +7,15 @@ on:
 jobs:
   build:
     # This is a *private* build container.
-    # See docs/github_actions.md for more information.
-    container: ghcr.io/my/game-build:main
+    # See https://github.com/encounter/dtk-template/blob/main/docs/github_actions.md
+    container: ghcr.io/yggdraszii/mlab-decomp-build:main
 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         # Add game versions here
-        version: [GAMEID]
+        version: [RM7P4F]
 
     steps:
     # Checkout the repository

@@ -36,4 +36,8 @@
 - Step 3: continue TU splits with the same method (reference projects for names and
   order, verified on this DOL by sizes and referenced data). The build alone cannot
   prove TU boundaries (see `notes/SPLITS.md`).
-- Step 4: objdiff, GitHub Actions CI, decomp.dev.
+- Step 4: GitHub Actions CI enabled (`.github/workflows/build.yml`) with the private
+  build image `ghcr.io/yggdraszii/mlab-decomp-build:main` (repository
+  `YggdrasziI/mlab-decomp-build`). Waiting for `orig/RM7P4F/sys/main.dol` to be added
+  there by the owner and for the package's Actions access to include `mlab-decomp`.
+  decomp.dev requires a public repository: postponed.
