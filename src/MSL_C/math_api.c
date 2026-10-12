@@ -1,6 +1,7 @@
 #include <internal/math_api.h>
 #pragma exceptions on
 
+#if 0 // Not present in this game's DOL (dead-stripped by the original link).
 int __fpclassifyf(float x) {
     int val = (*(int*)&x);
 
@@ -23,6 +24,7 @@ int __fpclassifyf(float x) {
 
     return 4;
 }
+#endif
 
 int __signbitd(double x) {
     return (*(int*)&x) & 0x80000000;

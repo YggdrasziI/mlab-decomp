@@ -5,6 +5,7 @@
 #include "misc_io.h"
 #include "wchar_io.h"
 
+#if 0 // Not present in this game's DOL (dead-stripped by the original link).
 int __get_char(FILE* file)
 {
     int io_state;
@@ -70,7 +71,9 @@ int __get_char(FILE* file)
         }
     }
 }
+#endif
 
+#if 0 // Not present in this game's DOL (dead-stripped by the original link).
 int fgetc(FILE* file)
 {
     if (__fwide(file, -1) >= 0)
@@ -80,6 +83,7 @@ int fgetc(FILE* file)
 
     return file->buffer_length-- ? *file->buffer_ptr++ : __get_char(file);
 }
+#endif
 
 int __put_char(int c, FILE* stream)
 {

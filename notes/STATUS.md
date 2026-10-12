@@ -25,7 +25,7 @@
 
 - Step 5 (started): **Runtime.PPCEABI.H matches** (9/9 units, 100 % code and data,
   linked), from mscharged-decomp / TP code (CC0), provenance in `notes/PROVENANCE.md`.
-- Step 5: **MSL_C 29/59 units match** and are linked (mscharged-decomp code, CC0); the
+- Step 5: **MSL_C 37/59 units match** and are linked (mscharged-decomp code, CC0); the
   remaining 30 and their reasons are listed in `notes/PROVENANCE.md`.
 
 ## In progress

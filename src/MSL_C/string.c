@@ -284,6 +284,7 @@ char* strchr(const char* str, int ch)
     return (c ? 0 : (char*)p);
 }
 
+#if 0 // Not present in this game's DOL (dead-stripped by the original link).
 size_t strcspn(const char* str, const char* set)
 {
     const unsigned char* pChar;
@@ -309,6 +310,7 @@ size_t strcspn(const char* str, const char* set)
 
     return (pChar - (unsigned char*)str);
 }
+#endif
 
 char* strtok(char* str, const char* delim)
 {

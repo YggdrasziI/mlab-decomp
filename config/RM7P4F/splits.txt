@@ -863,6 +863,7 @@ MSL_C/string.c:
 	extabindex  start:0x80006A74 end:0x80006A80
 	.text       start:0x80338794 end:0x80338C2C
 	.sdata      start:0x805FAE40 end:0x805FAE48
+	.sdata2     start:0x80600B90 end:0x80600B98
 
 MSL_C/strtold.c:
 	extab       start:0x80006700 end:0x80006710

@@ -127,9 +127,11 @@ int fseek(FILE* stream, long offset, int whence)
     return code;
 }
 
+#if 0 // Not present in this game's DOL (dead-stripped by the original link).
 void rewind(FILE* stream)
 {
     stream->file_state.error = 0;
     _fseek(stream, 0, SEEK_SET);
     stream->file_state.error = 0;
 }
+#endif

@@ -178,6 +178,7 @@ size_t __fread(void* buffer, size_t size, size_t count, FILE* stream)
     return bytes_read / size;
 }
 
+#if 0 // Not present in this game's DOL (dead-stripped by the original link).
 size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream)
 {
     size_t retval;
@@ -188,6 +189,7 @@ size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream)
 
     return retval;
 }
+#endif
 
 size_t __fwrite(const void* buffer, size_t size, size_t count, FILE* stream)
 {

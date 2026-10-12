@@ -50,6 +50,7 @@ int __wctomb_noconv(char* pSrc, wchar_t cr)
     return 1;
 }
 
+#if 0 // Not present in this game's DOL (dead-stripped by the original link).
 size_t mbstowcs(wchar_t* pDest, const char* pSrc, size_t num)
 {
     int res;
@@ -93,6 +94,7 @@ size_t mbstowcs(wchar_t* pDest, const char* pSrc, size_t num)
 
     return count;
 }
+#endif
 
 size_t wcstombs(char* pSrc, const wchar_t* pwcs, size_t n)
 {

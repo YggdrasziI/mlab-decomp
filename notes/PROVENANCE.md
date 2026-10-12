@@ -57,7 +57,7 @@ the source and dead-stripped by the linker (the build matches).
   `OSSetCurrentHeap`, `OSAllocFromHeap`, `OSFreeToHeap`, `OSSetArenaLo`,
   `__OSCurrHeap`, and `@stringBase0` (0x80352220, `GCN_mem_alloc.c` string pool).
 
-## MSL_C (29 of 59 units Matching so far)
+## MSL_C (37 of 59 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 same commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, license **CC0-1.0**: the 50
@@ -71,12 +71,20 @@ per-file flags are the ones mscharged uses (`cflags_msl` = base flags + `-inline
 The units linked are those marked `Matching` in `configure.py` (all their sections
 are byte-identical and the build matches).
 
+Local changes to the mscharged sources (all marked in the code):
+
+- functions absent from this DOL are disabled with `#if 0` (the original link
+  dead-stripped them; ours keeps them because of their exception tables):
+  `__get_char` and `fgetc` (`char_io.c`), `rewind` (`FILE_POS.c`), `mbstowcs`
+  (`mbstring.c`), `__fpclassifyf` (`math_api.c`), `strcspn` (`string.c`), `fwrite`
+  (`direct_io.c`).
+
+Split fix: `string.c` also owns `.sdata2` 0x80600B90-0x80600B98, the empty string that
+`strtok_null` / `strtok_ptr` point to (no code references it, so the region map missed
+it).
+
 Not Matching yet, with the reason:
 
-- compiled source has functions this DOL does not have (kept by their exception
-  tables): `char_io.c`, `FILE_POS.c`, `mbstring.c`, `math_api.c`, `string.c`;
-- small data/size differences: `rand.c` (`.sdata`), `strtold.c` (`.rodata`),
-  `direct_io.c` (4 bytes of `.text`);
 - version differences in some functions: `alloc.c`, `ansi_fp.c`, `arith.c`,
   `printf.c`, `scanf.c`, `strtoul.c`, `wstring.c`, `uart_console_io_gcn.c`, `extras.c`,
   `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c`;
