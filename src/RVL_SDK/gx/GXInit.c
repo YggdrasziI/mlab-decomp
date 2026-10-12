@@ -8,7 +8,7 @@ static GXData gxData;
 
 GXData* const __GXData = &gxData;
 
-char* __GXVersion = "<< RVL_SDK - GX \trelease build: Nov 30 2006 03:30:39 (0x4199_60831) >>";
+char* __GXVersion = "<< RVL_SDK - GX \trelease build: Dec 11 2007 01:34:15 (0x4199_60831) >>";
 
 volatile void* __piReg = NULL;
 volatile void* __cpReg = NULL;

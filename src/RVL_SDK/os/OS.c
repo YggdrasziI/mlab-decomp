@@ -33,7 +33,7 @@ BOOL __OSInNandBoot;
 BOOL __OSInIPL;
 
 const char* __OSVersion =
-    "<< RVL_SDK - OS \trelease build: Apr 24 2007 11:50:47 (0x4199_60831) >>";
+    "<< RVL_SDK - OS \trelease build: Jan 30 2008 01:38:43 (0x4199_60831) >>";
 
 static void OSExceptionInit(void);
 

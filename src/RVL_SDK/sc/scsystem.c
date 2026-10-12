@@ -97,7 +97,7 @@ typedef struct SCItem {
 } SCItem;
 
 const char* __SCVersion =
-    "<< RVL_SDK - SC \trelease build: Nov 30 2006 03:33:00 (0x4199_60831) >>";
+    "<< RVL_SDK - SC \trelease build: Aug  8 2007 02:09:03 (0x4199_60831) >>";
 
 static SCControl Control;
 static u8 ConfBuf[SC_CONF_MAX_SIZE] ALIGN(32);

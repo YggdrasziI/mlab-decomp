@@ -136,7 +136,7 @@ static void defaultOptionalCommandChecker(DVDCommandBlock* block,
                                           DVDLowCallback callback);
 
 const char* __DVDVersion =
-    "<< RVL_SDK - DVD \trelease build: Apr 24 2007 11:44:29 (0x4199_60831) >>";
+    "<< RVL_SDK - DVD \trelease build: Aug  8 2007 01:59:13 (0x4199_60831) >>";
 
 static volatile u32 CommandInfoCounter = 0;
 static volatile BOOL PauseFlag = FALSE;

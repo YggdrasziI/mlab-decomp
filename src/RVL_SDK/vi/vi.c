@@ -18,7 +18,7 @@
 
 #define MARK_CHANGED(index) (changed |= 1LL << (63 - (index)))
 
-const char* __VIVersion = "<< RVL_SDK - VI \trelease build: Nov 30 2006 03:31:49 (0x4199_60831) >>";
+const char* __VIVersion = "<< RVL_SDK - VI \trelease build: Aug  8 2007 02:07:17 (0x4199_60831) >>";
 
 static void __VIRetraceHandler(__OSInterrupt, OSContext*);
 static inline VIScanMode VIGetScanMode(void);
