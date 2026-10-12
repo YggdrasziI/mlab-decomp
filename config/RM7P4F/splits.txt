@@ -106,6 +106,7 @@ RVL_SDK/os/OSSync.c:
 
 RVL_SDK/os/OSThread.c:
 	.text       start:0x8023BEC4 end:0x8023D47C
+	.bss        start:0x8055CF78 end:0x8055D970
 	.sdata      start:0x805FA170 end:0x805FA174
 	.sbss       start:0x805FBCA8 end:0x805FBCB4
 
