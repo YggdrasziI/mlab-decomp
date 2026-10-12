@@ -57,7 +57,7 @@ the source and dead-stripped by the linker (the build matches).
   `OSSetCurrentHeap`, `OSAllocFromHeap`, `OSFreeToHeap`, `OSSetArenaLo`,
   `__OSCurrHeap`, and `@stringBase0` (0x80352220, `GCN_mem_alloc.c` string pool).
 
-## MSL_C (39 of 59 units Matching so far)
+## MSL_C (47 of 59 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 same commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, license **CC0-1.0**: the 50
@@ -93,8 +93,19 @@ Not Matching yet, with the reason:
 - version differences in some functions: `alloc.c`, `ansi_fp.c`, `arith.c`,
   `strtoul.c`, `wstring.c`, `uart_console_io_gcn.c`, `extras.c`,
   `e_pow.c`, `e_rem_pio2.c`, `k_tan.c`, `s_atan.c`;
-- no mscharged source: `signal.c`, `e_asin.c`, `e_fmod.c`, `e_log.c`, `e_log10.c`,
-  `w_asin.c`, `w_fmod.c`, `w_log.c`, `w_log10.c`.
+- `e_asin.c` (from TP, see below): its single function differs from this DOL.
+
+### Units with no mscharged source
+
+- `signal.c`, `e_asin.c`, `e_fmod.c`, `e_log.c`, `e_log10.c`: from
+  [zeldaret/tp](https://github.com/zeldaret/tp) `libs/PowerPC_EABI_Support/MSL/...`,
+  commit `c8fa8c9e2aab72cf4e5db0e5d1c84a9ea6ee6eb0`, **CC0-1.0**. Only the include lines
+  were adapted to this project's headers (`<internal/fdlibm.h>`, plus `<errno.h>`,
+  `<internal/math_nan.h>`, `<stdlib.h>` where needed); `signal.c` uses this project's
+  `sig_func` type name instead of `__signal_func_ptr`. All but `e_asin.c` match.
+- `w_asin.c`, `w_fmod.c`, `w_log.c`, `w_log10.c`: written for this project from the
+  fdlibm wrapper pattern of mscharged's `w_acos.c` (built with `-D_IEEE_LIBM`, like the
+  other wrappers). All match.
 
 ### Symbols renamed for MSL_C
 
@@ -110,4 +121,6 @@ Not Matching yet, with the reason:
   pointers prove it), `__double_huge`, `__float_huge`, `__float_nan`,
   `_current_locale` (0x803B4DD0), `__lconv`, `errno` (0x805FC580), `__aborting`,
   `stdin_buff`, `stdout_buff`, `stderr_buff`, `__strtoull` (0x8033A4D4, called by
-  `scanf.c`).
+  `scanf.c`), `__ieee754_fmod`, `__ieee754_log`, `__ieee754_log10`, `asin`, `fmod`,
+  `log`, `log10` (byte-identical), `__ieee754_asin` (0x8033B5D8, branch target of
+  `asin`).
