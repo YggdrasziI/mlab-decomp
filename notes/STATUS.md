@@ -21,7 +21,7 @@
 ## In progress
 
 - Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units), MSL_C
-  (59 units, 3 small gaps) and RVL_SDK (154 anchored units, about 48 % of SDK code);
+  (59 units, 3 small gaps) and RVL_SDK (177 units, about 52 % of SDK code);
   hypotheses from TP / Petari / mscharged-decomp checked against the DOL. Remaining:
   the unanchored SDK regions listed in `notes/SPLITS.md`, then the game code.
 - Watch for a game function that matches with only {3.0a5.2} or only {3.0a3…3.0a5};

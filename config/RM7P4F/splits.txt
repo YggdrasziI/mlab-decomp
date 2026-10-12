@@ -85,6 +85,12 @@ RVL_SDK/os/OSReset.c:
 	.text       start:0x8023A9E0 end:0x8023B288
 	.sdata      start:0x805FA168 end:0x805FA170
 
+RVL_SDK/os/OSRtc.c:
+	.text       start:0x8023B288 end:0x8023BD14
+
+RVL_SDK/os/OSSync.c:
+	.text       start:0x8023BE44 end:0x8023BEC4
+
 RVL_SDK/os/OSThread.c:
 	.text       start:0x8023BEC4 end:0x8023D47C
 
@@ -94,6 +100,12 @@ RVL_SDK/os/OSTime.c:
 
 RVL_SDK/os/OSUtf.c:
 	.text       start:0x8023DB30 end:0x8023DD68
+
+RVL_SDK/os/OSIpc.c:
+	.text       start:0x8023DD68 end:0x8023DD90
+
+RVL_SDK/os/OSPlayRecord.c:
+	.text       start:0x8023E4C4 end:0x8023EBBC
 
 RVL_SDK/os/OSStateFlags.c:
 	.text       start:0x8023EBBC end:0x8023EDC8
@@ -106,6 +118,14 @@ RVL_SDK/os/OSNet.c:
 RVL_SDK/os/OSNandbootInfo.c:
 	.text       start:0x8023EE7C end:0x8023F084
 	.data       start:0x80397068 end:0x80397088
+
+RVL_SDK/os/OSPlayTime.c:
+	.text       start:0x8023F084 end:0x8023F91C
+	.bss        start:0x8055DC60 end:0x8055DC90
+	.sdata2     start:0x806006A8 end:0x806006B8
+
+RVL_SDK/os/__ppc_eabi_init.cpp:
+	.text       start:0x802406DC end:0x80240790
 
 RVL_SDK/exi/EXIBios.c:
 	.text       start:0x80240790 end:0x80242024
@@ -146,6 +166,10 @@ RVL_SDK/vi/vi3in1.c:
 	.text       start:0x802469AC end:0x80248050
 	.bss        start:0x8055E0E0 end:0x8055E100
 	.sdata      start:0x805FA1D0 end:0x805FA1E8
+
+RVL_SDK/gx/GXInit.c:
+	.text       start:0x80248534 end:0x80249700
+	.sdata      start:0x805FA1F0 end:0x805FA1F8
 
 RVL_SDK/gx/GXFifo.c:
 	.text       start:0x80249700 end:0x8024A3A4
@@ -224,9 +248,18 @@ RVL_SDK/dvd/dvd_broadway.c:
 	.sdata      start:0x805FA278 end:0x805FA288
 	.sbss       start:0x805FBF78 end:0x805FBFA0
 
+RVL_SDK/ax/AXCL.c:
+	.text       start:0x80259418 end:0x80259448
+
+RVL_SDK/ax/AXVPB.c:
+	.text       start:0x8025B3F4 end:0x8025B434
+
 RVL_SDK/axfx/AXFXReverbHi.c:
 	.text       start:0x8025B434 end:0x8025B4C0
 	.sdata2     start:0x80600790 end:0x80600798
+
+RVL_SDK/axfx/AXFXHooks.c:
+	.text       start:0x8025F934 end:0x8025F96C
 
 RVL_SDK/mem/mem_heapCommon.c:
 	.text       start:0x8025F96C end:0x8025FDD8
@@ -235,6 +268,9 @@ RVL_SDK/mem/mem_heapCommon.c:
 
 RVL_SDK/mem/mem_list.c:
 	.text       start:0x80260798 end:0x80264F90
+
+RVL_SDK/dsp/dsp_task.c:
+	.text       start:0x80265690 end:0x80265AF0
 
 RVL_SDK/nand/nand.c:
 	.text       start:0x80265AF0 end:0x80266A90
@@ -250,8 +286,28 @@ RVL_SDK/nand/NANDCore.c:
 RVL_SDK/nand/NANDSecret.c:
 	.text       start:0x80268020 end:0x802680D8
 
+RVL_SDK/nand/NANDCheck.c:
+	.text       start:0x802680D8 end:0x8026829C
+
+RVL_SDK/nand/NANDLogging.c:
+	.text       start:0x802683B0 end:0x80268980
+	.sdata      start:0x805FA2F0 end:0x805FA2F8
+
+RVL_SDK/sc/scsystem.c:
+	.text       start:0x80269074 end:0x8026A9D8
+
 RVL_SDK/sc/scapi.c:
 	.text       start:0x8026A9D8 end:0x8026AE5C
+
+RVL_SDK/sc/scapi_prdinfo.c:
+	.text       start:0x8026AE5C end:0x8026B04C
+	.data       start:0x8039FE00 end:0x8039FE48
+	.sdata      start:0x805FA410 end:0x805FA418
+
+RVL_SDK/arc/arc.c:
+	.text       start:0x8026B44C end:0x8026BDC4
+	.data       start:0x8039FE58 end:0x8039FEC8
+	.sdata      start:0x805FA438 end:0x805FA440
 
 RVL_SDK/ipc/ipcMain.c:
 	.text       start:0x8026BDC4 end:0x8026BE90
@@ -291,6 +347,10 @@ RVL_SDK/wpad/WPADEncrypt.c:
 	.text       start:0x8027C178 end:0x8027D220
 	.data       start:0x803A07C8 end:0x803A1AF0
 	.sbss       start:0x805FC250 end:0x805FC258
+
+RVL_SDK/euart/euart.c:
+	.text       start:0x80280318 end:0x80280688
+	.sbss       start:0x805FC278 end:0x805FC288
 
 RVL_SDK/usb/usb.c:
 	.text       start:0x80280688 end:0x802817B4
@@ -572,8 +632,28 @@ RVL_SDK/bte/sdp_utils.c:
 	.rodata     start:0x8034AF80 end:0x8034AF90
 	.data       start:0x803A8A40 end:0x803A8B38
 
+RVL_SDK/tpl/TPL.c:
+	.text       start:0x802B3D54 end:0x802B3E88
+
+RVL_SDK/dwc/dwc_common.c:
+	.text       start:0x802E5EEC end:0x802E6298
+	.data       start:0x803AD448 end:0x803AD458
+	.bss        start:0x805C5F98 end:0x805C5FB0
+
 RVL_SDK/gamespy/darray.c:
 	.text       start:0x802FB3A4 end:0x802FBDF8
+
+RVL_SDK/gamespy/hashtable.c:
+	.text       start:0x802FBDF8 end:0x802FC290
+
+RVL_SDK/gamespy/GP/gpiInfo.c:
+	.text       start:0x80305700 end:0x80307B98
+	.data       start:0x803B1880 end:0x803B1BD8
+	.sdata      start:0x805FA960 end:0x805FAA18
+
+RVL_SDK/gamespy/GP/gpiUnique.c:
+	.text       start:0x8030CEDC end:0x8030D008
+	.sdata      start:0x805FAB98 end:0x805FABA0
 
 RVL_SDK/gamespy/GP/gpiUtility.c:
 	.text       start:0x8030D008 end:0x8030D5EC
@@ -605,6 +685,10 @@ RVL_SDK/gamespy/gt2/gt2Socket.c:
 
 RVL_SDK/gamespy/gt2/gt2Utility.c:
 	.text       start:0x80312B40 end:0x80312E2C
+
+RVL_SDK/gamespy/gstats/gbucket.c:
+	.text       start:0x8031577C end:0x80316914
+	.sdata2     start:0x80600B18 end:0x80600B20
 
 RVL_SDK/gamespy/gstats/gstats.c:
 	.text       start:0x80316914 end:0x803189FC
