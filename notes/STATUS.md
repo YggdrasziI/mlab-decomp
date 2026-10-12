@@ -12,7 +12,6 @@
 - Step 2 (partial): game code is compiled with a **GC 3.0** mwcc (3.0a3 to 3.0a5.2),
   `-fp_contract off` proven; Wii 1.x and GC 2.x ruled out (details in
   `notes/COMPILER.md`).
-
 - Toolchain set to **GC/3.0a5.2** (working hypothesis), `-fp_contract off`,
   `mw_comment_version: 15`; `__init_cpp_exceptions.cpp` split with the GC 2.7+/Wii
   layout; build still matches.
@@ -21,13 +20,13 @@
 
 ## In progress
 
-- Step 2: tell apart the GC 3.0 versions. Fuzzing reduced them to two classes,
-  {3.0a5.2} vs {3.0a3…3.0a5}; the only known differing pattern (dead int→float
-  conversions) does not occur in the game. Undecidable so far.
+- Step 3: TU-level splits (only `__init_cpp_exceptions.cpp` so far).
+- Watch for a game function that matches with only {3.0a5.2} or only {3.0a3…3.0a5};
+  it would settle the exact compiler version.
 
 ## Blocked
 
-- Choice of the exact compiler version: pending decision (see `notes/COMPILER.md`).
+- Nothing.
 
 ## To do
 
