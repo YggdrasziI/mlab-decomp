@@ -126,6 +126,10 @@ RVL_SDK/os/OSIpc.c:
 
 RVL_SDK/os/OSPlayRecord.c:
 	.text       start:0x8023E4C4 end:0x8023EBBC
+	.data       start:0x80396E90 end:0x80396ED8
+	.bss        start:0x8055DA40 end:0x8055DC40
+	.sdata      start:0x805FA180 end:0x805FA184
+	.sbss       start:0x805FBCE8 end:0x805FBD08
 
 RVL_SDK/os/OSStateFlags.c:
 	.text       start:0x8023EBBC end:0x8023EDC8

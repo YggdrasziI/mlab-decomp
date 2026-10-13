@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (155 of 179 units Matching so far)
+## RVL_SDK (156 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -383,6 +383,15 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   `BTA_HH_ADD_DEV_EVT` fills the three handle tables. Names from relocation pairing:
   `WUDHidHostCallback`, `WUDiRemoveDevice`, `WUD_DEBUGPrint`, `_wcb`, `_work`,
   `_dev_handle_to_bda`, `_dev_handle_queue_size`, `_dev_handle_notack_num`.
+
+- **`os/OSPlayRecord.c`.** The only difference was the `.bss` layout: `Block` is at
+  +0x13C (4-aligned) in the DOL, +0x140 in our build. `NANDCommandBlock` has one more
+  field in this SDK, `BOOL simpleFlag` at 0xB8 (as in Petari's `nand.h`, CC0, commit
+  `6804bd31`): the struct becomes 0xBC bytes, so MWCC no longer gives the object 8-byte
+  alignment. No other unit changed (objdiff report compared before/after). This
+  disproves the earlier guess that `FileInfo` and `Block` share an aggregate. Data
+  ranges added to the split; `.bss` objects and `PlayRecordLastCloseTime` (one `s64`,
+  dtk had two labels) named.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).

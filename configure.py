@@ -394,7 +394,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/os/OSTime.c"),
             Object(Matching, "RVL_SDK/os/OSUtf.c"),
             Object(Matching, "RVL_SDK/os/OSIpc.c"),
-            Object(NonMatching, "RVL_SDK/os/OSPlayRecord.c"),
+            Object(Matching, "RVL_SDK/os/OSPlayRecord.c"),
             Object(Matching, "RVL_SDK/os/OSStateFlags.c"),
             Object(Matching, "RVL_SDK/os/OSNet.c"),
             Object(Matching, "RVL_SDK/os/OSNandbootInfo.c"),
