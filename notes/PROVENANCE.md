@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (151 of 179 units Matching so far)
+## RVL_SDK (152 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -345,6 +345,15 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   Data ranges added to the split (`.data` messages, `.bss` `CheckBuffer`, `.sdata`
   `lowDone` and the colour constant, `.sbss` `lowIntType`), each one bounded by the
   neighbouring units.
+
+- **`sc/scapi.c`.** This SC build has one more config item than the mscharged
+  source: `"BT.CDIF"` (DOL 0x3b3688, between `BT.DINF` and `BT.SENS`), so every later
+  item ID is one higher. Added `SC_ITEM_BT_CDIF` to the enum in `sc.h`, the
+  `"BT.CDIF"` entry in the `scsystem.c` name table, and `SCGetBtCmpDevInfoArray` /
+  `SCSetBtCmpDevInfoArray` (Petari, CC0, commit `6804bd31`, `src/RVL_SDK/sc/scapi.c`;
+  our header already declared them). Name fix: 0x8026AE54 was named
+  `SCSetWpadMotorMode`; it writes item 0x1F (`BT.SPKV`), so it is
+  `SCSetWpadSpeakerVolume`.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).

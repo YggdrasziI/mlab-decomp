@@ -123,6 +123,16 @@ BOOL SCSetBtDeviceInfoArray(const SCBtDeviceInfoArray* info) {
                                   SC_ITEM_BT_DINF);
 }
 
+// Not in the reference source (newer SC build, item "BT.CDIF"); from Petari
+// src/RVL_SDK/sc/scapi.c.
+BOOL SCGetBtCmpDevInfoArray(SCBtCmpDevInfoArray* array) {
+    return SCFindByteArrayItem(array, sizeof(*array), SC_ITEM_BT_CDIF);
+}
+
+BOOL SCSetBtCmpDevInfoArray(SCBtCmpDevInfoArray* array) {
+    return SCReplaceByteArrayItem(array, sizeof(*array), SC_ITEM_BT_CDIF);
+}
+
 u32 SCGetBtDpdSensibility(void) {
     u32 item;
 
