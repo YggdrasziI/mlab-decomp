@@ -2,9 +2,12 @@
 #include <revolution/os.h>
 #include <size_t.h>
 #include <stdint.h>
+#include <string.h>
 
 #define IPC_QUEUE_CAPACITY 16
-#define IPC_HEAP_SIZE 0x800
+// IPCCltInit creates a 0x1000-byte heap in this SDK build, IPCCltReInit 0x800.
+#define IPC_HEAP_SIZE 0x1000
+#define IPC_REINIT_HEAP_SIZE 0x800
 
 typedef struct IPCRequestQueue {
     u32 sent;                                // at 0x0
@@ -19,6 +22,10 @@ static s32 hid = -1;
 
 static BOOL __relnchFl = FALSE;
 static IPCRequestEx* __relnchRpc = NULL;
+// Reboot request handling of this SDK build, from SMGCommunity/Petari
+// src/RVL_SDK/ipc/ipcclt.c (CC0-1.0, commit 6804bd31).
+static IPCRequestEx* __relnchRpcSave = NULL;
+static u8 __rpcBuf[(sizeof(IPCRequestEx) + 31) & ~31] ALIGN(32);
 
 static IPCRequestQueue __responses;
 
@@ -84,8 +91,6 @@ static inline s32 __ipcSendRequest(void) {
         }
 
         if (req->reboot) {
-            __relnchFl = TRUE;
-            __relnchRpc = req;
             __mailboxAck--;
         }
 
@@ -98,6 +103,60 @@ static inline s32 __ipcSendRequest(void) {
 
 exit:
     return ret;
+}
+
+// The reboot path (IOS_IoctlvReboot) compiles the wrap-around count with the
+// 0xFFFFFFFF - b + a + 1 form (subfic) in this DOL, unlike the other callers;
+// these two copies only differ by that expression.
+static inline s32 __ipcQueueRequestRb(IPCRequestEx* req) {
+    s32 ret = IPC_RESULT_OK;
+    s32 waiting;
+
+    waiting =
+        (__responses.queued < __responses.sent)
+            // Difference of count
+            ? (u32)0xFFFFFFFF - __responses.sent + __responses.queued + 1
+            // Is queue full?
+            : (__responses.queued - __responses.sent) >= IPC_QUEUE_CAPACITY;
+
+    if (waiting != 0) {
+        ret = IPC_RESULT_BUSY_INTERNAL;
+    } else {
+        __responses.queue[__responses.back] = req;
+        __responses.back = (__responses.back + 1) % IPC_QUEUE_CAPACITY;
+        __responses.queued++;
+        IPCiProfQueueReq(req, req->base.fd);
+    }
+
+    return ret;
+}
+
+static inline void __ipcSendRequestRb(void) {
+    IPCRequestEx* req;
+    s32 waiting;
+
+    waiting = (__responses.queued < __responses.sent)
+                  ? (u32)0xFFFFFFFF - __responses.sent + __responses.queued + 1
+                  : (__responses.queued - __responses.sent) == 0;
+
+    if (waiting != 0) {
+        return;
+    }
+
+    req = __responses.queue[__responses.front];
+    if (req == NULL) {
+        return;
+    }
+
+    if (req->reboot) {
+        __mailboxAck--;
+    }
+
+    IPCWriteReg(IPC_PPCMSG, (u32)OSCachedToPhysical(req));
+    __responses.front = (__responses.front + 1) % IPC_QUEUE_CAPACITY;
+    __responses.sent++;
+    __mailboxAck--;
+    IPCWriteReg(IPC_PPCCTRL, (IPCReadReg(IPC_PPCCTRL) & 0x30) | 1);
 }
 
 static void IpcReplyHandler(s16 intr, OSContext* ctx) {
@@ -158,7 +217,7 @@ static void IpcReplyHandler(s16 intr, OSContext* ctx) {
                                   req->base.ioctlv.vectors[i].length);
             }
 
-            if (__relnchFl && __relnchRpc == req) {
+            if (__relnchFl && __relnchRpcSave == req) {
                 __relnchFl = FALSE;
                 if (__mailboxAck < 1) {
                     __mailboxAck++;
@@ -240,6 +299,23 @@ s32 IPCCltInit(void) {
         }
     }
 
+    return err;
+}
+
+s32 IPCCltReInit(void) {
+    s32 err = 0;
+    void* lo;
+
+    lo = IPCGetBufferLo();
+    if ((char*)lo + IPC_REINIT_HEAP_SIZE > IPCGetBufferHi()) {
+        err = IPC_RESULT_ALLOC_FAILED;
+        goto out;
+    }
+
+    hid = iosCreateHeap(lo, IPC_REINIT_HEAP_SIZE);
+    IPCSetBufferLo((char*)lo + IPC_REINIT_HEAP_SIZE);
+
+out:
     return err;
 }
 
@@ -619,15 +695,65 @@ s32 IOS_Ioctlv(s32 fd, s32 type, s32 inCount, s32 outCount,
 
 s32 IOS_IoctlvReboot(s32 fd, s32 type, s32 inCount, s32 outCount,
                      IPCIOVector* vectors) {
+    IPCRequestEx* rpc;
+    s32 ret = IPC_RESULT_OK;
+    BOOL enabled;
     IPCRequestEx* req;
-    s32 ret = __ios_Ipc1(fd, IPC_REQ_IOCTLV, NULL, NULL, &req);
-    if (ret == IPC_RESULT_OK) {
-        req->reboot = TRUE;
-        ret = __ios_Ioctlv(req, type, inCount, outCount, vectors);
-        if (ret == IPC_RESULT_OK) {
-            ret = __ios_Ipc2(req, NULL);
-        }
+
+    enabled = OSDisableInterrupts();
+
+    if (__relnchFl) {
+        OSRestoreInterrupts(enabled);
+        ret = -10;
+        goto finish;
     }
 
+    __relnchFl = TRUE;
+    OSRestoreInterrupts(enabled);
+
+    ret = __ios_Ipc1(fd, IPC_REQ_IOCTLV, NULL, NULL, &rpc);
+    if (ret != IPC_RESULT_OK) {
+        goto err;
+    }
+
+    __relnchRpcSave = rpc;
+    rpc->reboot = TRUE;
+
+    ret = __ios_Ioctlv(rpc, type, inCount, outCount, vectors);
+    if (ret != IPC_RESULT_OK) {
+        goto err;
+    }
+
+    memcpy(&__rpcBuf, rpc, sizeof(IPCRequestEx));
+    __relnchRpc = (IPCRequestEx*)&__rpcBuf;
+    req = rpc;
+
+    OSInitThreadQueue(&__relnchRpc->queue);
+    DCFlushRange(&req->base, sizeof(IPCRequest));
+
+    enabled = OSDisableInterrupts();
+    ret = __ipcQueueRequestRb(req);
+    if (ret != IPC_RESULT_OK) {
+        OSRestoreInterrupts(enabled);
+        goto err;
+    }
+
+    if (__mailboxAck > 0) {
+        __ipcSendRequestRb();
+    }
+
+    OSSleepThread(&__relnchRpc->queue);
+    OSRestoreInterrupts(enabled);
+    ret = __relnchRpc->base.ret;
+
+err:
+    __relnchFl = FALSE;
+    __relnchRpcSave = NULL;
+
+    if (rpc != NULL && ret != IPC_RESULT_OK) {
+        ipcFree(rpc);
+    }
+
+finish:
     return ret;
 }

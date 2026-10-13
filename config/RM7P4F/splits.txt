@@ -398,6 +398,8 @@ RVL_SDK/ipc/ipcMain.c:
 
 RVL_SDK/ipc/ipcclt.c:
 	.text       start:0x8026BE90 end:0x8026D718
+	.bss        start:0x80589220 end:0x805892C0
+	.sdata      start:0x805FA440 end:0x805FA448
 	.sbss       start:0x805FC1C8 end:0x805FC1D8
 
 RVL_SDK/ipc/memory.c:

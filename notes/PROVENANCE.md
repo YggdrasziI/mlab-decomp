@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (164 of 179 units Matching so far)
+## RVL_SDK (165 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -475,6 +475,17 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   `block_relocations` (0x80233818, 0x80233890): `OSInit` builds the constant
   0x80004000 with `lis`/`addi`, and dtk turned it into a relocation to `__check_pad3`
   (same address).
+
+- **`ipc/ipcclt.c`.** Reboot request handling of this SDK, after Petari (CC0, commit
+  `6804bd31`, `src/RVL_SDK/ipc/ipcclt.c`): `IOS_IoctlvReboot` sets `__relnchFl` itself,
+  keeps the request in `__relnchRpcSave` and a copy in the 32-byte aligned `__rpcBuf`;
+  the send path no longer sets the flags; the reply handler compares with
+  `__relnchRpcSave`; `IPCCltReInit` added (0x800-byte heap) while `IPCCltInit` now
+  creates a 0x1000-byte heap. In this DOL the reboot path computes the queue
+  difference with the `0xFFFFFFFF - b + a + 1` form (`subfic`) and sends with early
+  returns, unlike the other callers; it uses two local copies of the queue/send
+  inlines (`__ipcQueueRequestRb` / `__ipcSendRequestRb`, our names, no symbols).
+  Data ranges added to the split; names from relocation pairing.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
