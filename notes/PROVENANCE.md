@@ -512,3 +512,22 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `.bss` `Control` / `ConfBuf` / `ConfBufForFlush` (0x80581080), `.sdata` from
   `__SCVersion` (0x805FA308), `.sbss` from `BgJobStatus` (0x805FC190); each one ends on
   the next unit's symbol.
+
+- **Address-named functions in the NonMatching SDK units (naming pass).** 35
+  `fn_XXXXXXXX` / suffixed symbols renamed after the source function with the same
+  size and the same place in the unit's order, kept only when the code then matches
+  at 92 % or more (most at 99.9 %+, the rest being relocation names to unsplit data):
+  vi (`OnShutdown`, `__VIRetraceHandler`, `VISetTimeToDimming`), dvd
+  (`stateReadingFST`, `stateCheckID`, `cbForStateCheckID2`, `Callback`),
+  dvd_broadway (12 `DVDLow*` functions), WPAD (`WPADiInitSub`), WPADHIDParser
+  (`__a1_22_ack`, `__a1_33_data_type`, `__a1_36_data_type`), WUD
+  (`EnableStackHandler`, `InitHandler`, `InitCore`, `WUDIsBusy`,
+  `WUDSecurityCallback`, `WUDStoredLinkKeyCallback`), gpiInfo (6 functions).
+  `OnShutdown` and `Callback` get `scope:local` (the names already exist elsewhere);
+  dtk then suffixes such local names with their address, so objdiff still cannot pair
+  them. Rejected (same size, but 11-20 % similar, so a different function):
+  0x8023696C (`__OSBootDolSimple`), 0x80284578 (`WUDiAutoSync`), 0x80288B10
+  (`uusb_issue_bulk_read`). With the `DVDLow*` names in place, dtk named ten
+  dvd_broadway data symbols itself (`dvdContexts`, `diRegValCache`, `DiFD`,
+  `requestInProgress`, `freeCommandBuf`, `freeDvdContext`, `spinUpValue`,
+  `diCommand`, `@3872`); all of them exist in `dvd_broadway.c`.
