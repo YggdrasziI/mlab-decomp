@@ -500,3 +500,15 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   message on a connection that is not yet `GTI2Connected` goes to
   `gti2UnrecognizedMessageCallback`. `gti2ReceiveMessages` is still 97 % (see the
   note in the source).
+
+- **`sc/scsystem.c`.** The code already matched (mscharged-decomp source, plus the
+  `"BT.CDIF"` entry above); the unit failed only because six static functions had
+  address names and the split had no data. Renamed from the source order and exact
+  sizes, each one then 100 %: `ReadCallbackFromReload` (0x80269414),
+  `CloseCallbackFromReload` (0x802694FC), `FinishFromReload` (0x80269588),
+  `ParseConfBuf` (0x802696C8), `SCFlushAsync` (0x8026A484), `MyNandCallback`
+  (0x8026A6A0). Data ranges added from relocation pairing: `.rodata` path strings
+  (0x8034AA40), `.data` name table and the `MyNandCallback` jump table (0x8039FC28),
+  `.bss` `Control` / `ConfBuf` / `ConfBufForFlush` (0x80581080), `.sdata` from
+  `__SCVersion` (0x805FA308), `.sbss` from `BgJobStatus` (0x805FC190); each one ends on
+  the next unit's symbol.

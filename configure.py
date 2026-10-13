@@ -443,7 +443,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/nand/NANDSecret.c"),
             Object(Matching, "RVL_SDK/nand/NANDCheck.c"),
             Object(Matching, "RVL_SDK/nand/NANDLogging.c"),
-            Object(NonMatching, "RVL_SDK/sc/scsystem.c"),
+            Object(Matching, "RVL_SDK/sc/scsystem.c"),
             Object(Matching, "RVL_SDK/sc/scapi.c"),
             Object(Matching, "RVL_SDK/sc/scapi_prdinfo.c"),
             Object(Matching, "RVL_SDK/arc/arc.c"),

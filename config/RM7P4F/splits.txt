@@ -378,6 +378,11 @@ RVL_SDK/nand/NANDLogging.c:
 
 RVL_SDK/sc/scsystem.c:
 	.text       start:0x80269074 end:0x8026A9D8
+	.rodata     start:0x8034AA40 end:0x8034AA98
+	.data       start:0x8039FC28 end:0x8039FE00
+	.bss        start:0x80581080 end:0x80589220
+	.sdata      start:0x805FA308 end:0x805FA410
+	.sbss       start:0x805FC190 end:0x805FC1A8
 
 RVL_SDK/sc/scapi.c:
 	.text       start:0x8026A9D8 end:0x8026AE5C
