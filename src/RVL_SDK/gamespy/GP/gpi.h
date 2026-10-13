@@ -96,6 +96,11 @@ typedef struct {
   char lastStatusString[GP_STATUS_STRING_LEN];
   char lastLocationString[GP_LOCATION_STRING_LEN];
 
+  // This GameSpy build has 0x184 more bytes before errorCode (errorCode is at
+  // 0x5B8 in the DOL, every later field is shifted by 0x184). Their content and
+  // exact position after lastStatusState are unknown; no linked code uses them.
+  char unk_0x434[0x184];
+
   GPErrorCode errorCode;
   GPIBool fatalError;
   FILE* diskCache;

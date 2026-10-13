@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (153 of 179 units Matching so far)
+## RVL_SDK (154 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -363,6 +363,16 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   `<cstdio>`/`<cstdlib>`/`<mem.h>`. New header `revolution/nand/NANDLogging.h`
   (`NANDLoggingCallback`, from Petari's `nandlogging.h`). Data ranges added to the
   split; `lbl_805FA2F0` renamed `s_fd` (size 4, the rest is padding).
+
+- **`gamespy/GP/gpiUtility.c`.** `GPIConnection` (`gpi.h`) is 0x184 bytes larger in
+  this GameSpy build: `errorCode` is at 0x5B8 instead of 0x434, and every later field
+  used by `gpiInfo.c` is shifted by the same amount (0x450 -> 0x5D4 ... 0x474 -> 0x5F8),
+  while offsets up to 0x2B4 are unchanged. A placeholder `unk_0x434[0x184]` was put
+  just before `errorCode`; its real content, and whether it sits before or after
+  `lastStatusString` / `lastLocationString`, is **not proven** (no linked code uses
+  those fields). Names from byte-identical code and relocation pairing:
+  `gpiCheckSocketConnect`, `gpiReadKeyAndValue`, `GSISocketSelect` (0x802FD51C),
+  `Util_RandSeed`, `Util_RandInt`, `B64Encode`.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
