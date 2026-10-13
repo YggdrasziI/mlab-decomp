@@ -56,7 +56,7 @@ static u16 __WPAD_dpd_diff_count_threshold = 4;
 static u16 __WPAD_acc_hyst_count_threshold = 30;
 static u16 __WPAD_dpd_hyst_count_threshold = 30;
 
-static void WPADiConnCallback(UINT8 devHandle, u8 open);
+static void WPADiConnCallback(WUDDevInfo* pInfo, u8 open);
 static void WPADiRecvCallback(UINT8 devHandle, UINT8* pReport, UINT16 len);
 
 static void __wpadSyncCallback(WPADChannel chan, WPADResult result);
@@ -1115,7 +1115,10 @@ static s32 WPADiRetrieveChannel(u8 devHandle) {
     return WPAD_CHAN_INVALID;
 }
 
-static void WPADiConnCallback(UINT8 devHandle, u8 open) {
+// The WUD callback passes the device info in this SDK build; the body below
+// is still the older code (WPAD.c does not match yet).
+static void WPADiConnCallback(WUDDevInfo* pInfo, u8 open) {
+    UINT8 devHandle = pInfo->devHandle;
     s32 chan;
     WPADCB* p;
     WPADCommand command;

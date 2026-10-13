@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (154 of 179 units Matching so far)
+## RVL_SDK (155 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -373,6 +373,16 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   those fields). Names from byte-identical code and relocation pairing:
   `gpiCheckSocketConnect`, `gpiReadKeyAndValue`, `GSISocketSelect` (0x802FD51C),
   `Util_RandSeed`, `Util_RandInt`, `B64Encode`.
+
+- **`wud/WUDHidHost.c`.** Newer WUD code, ported from Petari (CC0, commit `6804bd31`,
+  `src/RVL_SDK/wud/WUDHidHost.c`) into our file with our names: the HID connection
+  callback receives the `WUDDevInfo*` (typedef `WUDHidConnCallback` changed in both WUD
+  headers, as in Petari's `wud.h`; `WPAD.c`'s `WPADiConnCallback` only adapted to the
+  new signature, it does not match yet), the open-error path moves an
+  authentication-failed device to the bottom of its list outside of a sync, and
+  `BTA_HH_ADD_DEV_EVT` fills the three handle tables. Names from relocation pairing:
+  `WUDHidHostCallback`, `WUDiRemoveDevice`, `WUD_DEBUGPrint`, `_wcb`, `_work`,
+  `_dev_handle_to_bda`, `_dev_handle_queue_size`, `_dev_handle_notack_num`.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
