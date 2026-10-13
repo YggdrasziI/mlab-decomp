@@ -227,6 +227,9 @@ Method (automated, scripts kept out of the repository):
    also confirmed by the source file name strings `arc.c` / `TPL.c` used by a function
    inside each range. Data ranges ending on an unaligned address were dropped (two in
    `TPL.c`), since the following split would start misaligned.
+   Correction: the 0x40 block taken as `AXVPB.c` is in fact `AXProf.c`
+   (`__AXGetCurrentProfile`); `AXVPB.c` is 0x8025A0B0-0x8025B3F4 (see
+   `notes/PROVENANCE.md`, third pass). A size match alone is not enough.
 
 Data check: the reference scan was rerun over every disassembly file (including the
 per-unit subfolders created by earlier splits); all 162 data sections of the first pass

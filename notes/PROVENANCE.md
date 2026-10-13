@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (146 of 177 units Matching so far)
+## RVL_SDK (148 of 178 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -311,6 +311,24 @@ with `""`). `sc.h` declares `SCGetProductGameRegion` as returning `s8`
 GameSpy (no reference project has it): `gt2Socket.c` (bind error check inside the
 protocol test), `sb_server.c` (server keys filtered by the qr2 function at
 `0x803156EC`, real name unknown), receive buffer size 4096 (`gt2Main.h`).
+
+### Third pass: remaining units, smallest first
+
+- **`ax/AXVPB.c` (split redone) and `ax/AXProf.c` (new unit).** The old `AXVPB.c` split
+  (0x8025B3F4-0x8025B434) held only `__AXGetCurrentProfile` (0x40, byte-identical to
+  mscharged `AXProf.c`, which has no other function). `AXVPB.c` is 0x8025A0B0-0x8025B3F4:
+  its functions follow the mscharged order and sizes, and its `.data`/`.bss`/`.sbss`/
+  `.sdata2` ranges come from the references of that code. `AXProf.c` is copied
+  unchanged from mscharged. Four functions of this newer AX build are missing from
+  mscharged `AXVPB.c` and were added (own code; names from TP
+  `libs/dolphin/src/ax/AXVPB.c`, commit `c8fa8c9e`, CC0):
+  `AXSetVoiceItdOn` (same stores as TP), `AXGetMaxDspCycles` / `AXGetDspCycles`
+  (return `__AXMaxDspCycles` / `__AXRecDspCycles`, identified by the `.sbss` layout),
+  `__AXVPBQuit` (same position as in TP, between `__AXVPBInitCommon` and
+  `AXSetVoiceSrcType`; the Wii version clears `__AXPB`, `__AXITD`, `__AXVPB` and
+  `__AXMaxVoices`). `__AXGetStackHead`, `__AXPushFreeStack`, `__AXPushCallbackStack`
+  and `__AXDepopVoice` (other AX units, not split yet) were named by pairing the
+  relocations of the byte-identical `AXVPB.c` code.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).

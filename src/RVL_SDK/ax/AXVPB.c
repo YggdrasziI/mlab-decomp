@@ -426,6 +426,13 @@ static void __AXVPBInitCommon(void) {
     DCFlushRange(__AXPB, __AXMaxVoices * sizeof(AXPB));
 }
 
+void __AXVPBQuit(void) {
+    __AXPB = NULL;
+    __AXITD = NULL;
+    __AXVPB = NULL;
+    __AXMaxVoices = 0;
+}
+
 void AXSetVoiceSrcType(AXVPB* vpb, u32 type) {
     BOOL old;
     AXPB* ppb;
@@ -547,6 +554,17 @@ void AXSetVoiceMix(AXVPB* vpb, AXPBMIX* mix) {
 
     vpb->pb.mixerCtrl = mixerCtrl;
     vpb->sync |= AX_PBSYNC_MIX | AX_PBSYNC_MIXER_CTRL;
+    OSRestoreInterrupts(old);
+}
+
+void AXSetVoiceItdOn(AXVPB* p) {
+    BOOL old;
+
+    old = OSDisableInterrupts();
+    p->pb.itd.flag = 1;
+    p->pb.itd.shiftL = p->pb.itd.shiftR = p->pb.itd.targetShiftL = p->pb.itd.targetShiftR = 0;
+    p->sync &= ~AX_PBSYNC_ITD_SHIFT;
+    p->sync |= AX_PBSYNC_ITD;
     OSRestoreInterrupts(old);
 }
 
@@ -785,6 +803,14 @@ void AXGetLpfCoefs(u16 freq, u16* a, u16* b) {
 
     *b = 32768 * -rf30;
     *a = 32767 - *b;
+}
+
+u32 AXGetMaxDspCycles(void) {
+    return __AXMaxDspCycles;
+}
+
+u32 AXGetDspCycles(void) {
+    return __AXRecDspCycles;
 }
 
 void AXSetVoiceRmtOn(AXVPB* vpb, u16 on) {

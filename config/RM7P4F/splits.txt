@@ -296,7 +296,15 @@ RVL_SDK/ax/AXCL.c:
 	.sbss       start:0x805FC038 end:0x805FC058
 
 RVL_SDK/ax/AXVPB.c:
+	.text       start:0x8025A0B0 end:0x8025B3F4
+	.data       start:0x8039A130 end:0x8039A1C0
+	.bss        start:0x80567B00 end:0x80579200
+	.sbss       start:0x805FC0E8 end:0x805FC108
+	.sdata2     start:0x80600788 end:0x80600790
+
+RVL_SDK/ax/AXProf.c:
 	.text       start:0x8025B3F4 end:0x8025B434
+	.sbss       start:0x805FC108 end:0x805FC118
 
 RVL_SDK/axfx/AXFXReverbHi.c:
 	.text       start:0x8025B434 end:0x8025B4C0
