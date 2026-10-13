@@ -195,12 +195,11 @@ static int Think(SOCKET sock, NAT * nat)
 	if(sock != INVALID_SOCKET)
 	{
 		// Check if there is data.
-		while(TRUE /*CanReceiveOnSocket(sock)*/)
+		// NOT MATCHING yet (99.5 %): the loop shape matches this game's DOL, but the
+		// inlined OutputMapping NULL test is compiled "beq" here and "bne; b" in the
+		// DOL. Cause unknown.
+		while(CanReceiveOnSocket(sock))
 		{
-			// 
-			if (!CanReceiveOnSocket(sock)) {
-				break;
-			}
 			length = recvfrom(sock, data, NNINBUF_LEN, 0, (struct sockaddr *)&saddr, &saddrlen);
 
 			if (gsiSocketIsError(length))

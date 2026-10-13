@@ -56,7 +56,7 @@
   dvd_broadway, mem_list (split covers more than
   the unit), NANDCore, scsystem, ipcclt, WPAD, WPADHIDParser,
   usb, WUD, uusb_ppc and the GameSpy units gpiInfo,
-  gt2Message, NATify, natneg, sb_queryengine (newer/older code than the sources;
+  gt2Message, NATify (99.8 %, one branch in `Think`), natneg, sb_queryengine (newer/older code than the sources;
   needs hand decompilation). Then the debugger driver block (0x80344FD4-0x80345AD8)
   and the unsplit SDK regions.
 
