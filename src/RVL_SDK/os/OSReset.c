@@ -36,7 +36,9 @@ OSThreadQueue __OSActiveThreadQueue AT_ADDRESS(OS_BASE_CACHED | 0x000000DC);
 void __OSGetIOSRev(OSIOSRev* rev);
 
 void __OSLaunchMenu(void);
-void __OSRelaunchTitle(void);
+void __OSRelaunchTitle(u32 resetCode);
+void __OSReturnToMenul(u32 menuMode, const char* url, ...);
+void __OSHotResetForError(void);
 u32 __DVDGetCoverStatus(void);
 void __DVDPrepareReset(void);
 
@@ -167,36 +169,42 @@ void __OSShutdownDevices(u32 event) {
     KillThreads();
 }
 
+// From SMGCommunity/Petari src/RVL_SDK/os/OSReset.c (CC0-1.0, commit 6804bd31), the
+// non-RMG __OSGetDiscState variant: OSRebootSystem, OSShutdownSystem, OSRestart and
+// __OSReturnToMenu of this SDK build share the disc-state helper and end with
+// __OSHotResetForError.
+u8 __OSGetDiscState(u8 last) {
+    u32 flags;
+
+    if (__DVDGetCoverStatus() != DVD_COVER_CLOSED) {
+        return 3;
+    } else {
+        if ((last == 1) && (__OSGetRTCFlags(&flags) && !flags)) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+}
+
 void OSRebootSystem(void) {
     OSStateFlags state;
-    u32 rtcFlags;
 
     __OSStopPlayRecord();
     __OSUnRegisterStateEvent();
     __DVDPrepareReset();
     __OSReadStateFlags(&state);
-
-    if (__DVDGetCoverStatus() != DVD_COVER_CLOSED) {
-        state.discState = DVD_STATE_COVER_CLOSED;
-    } else if (state.discState != DVD_STATE_BUSY ||
-               (__OSGetRTCFlags(&rtcFlags) && rtcFlags)) {
-        state.discState = DVD_STATE_WAITING;
-    } else {
-        state.discState = DVD_STATE_BUSY;
-    }
-
+    state.discState = __OSGetDiscState(state.discState);
     state.shutdownType = OS_STATE_FLAGS_SHUTDOWN_RESTART;
-
     __OSClearRTCFlags();
     __OSWriteStateFlags(&state);
     OSDisableScheduler();
-    __OSShutdownDevices(OS_SHUTDOWN_REBOOT);
-    __OSHotReset();
+    __OSShutdownDevices(1);
+    __OSHotResetForError();
 }
 
 void OSShutdownSystem(void) {
     SCIdleModeInfo idleInfo;
-    u32 rtcFlags;
     OSIOSRev iosRev;
     OSStateFlags state;
 
@@ -207,25 +215,16 @@ void OSShutdownSystem(void) {
     }
 
     SCGetIdleMode(&idleInfo);
-
     __OSStopPlayRecord();
     __OSUnRegisterStateEvent();
     __DVDPrepareReset();
     __OSReadStateFlags(&state);
-
-    if (__DVDGetCoverStatus() != DVD_COVER_CLOSED) {
-        state.discState = DVD_STATE_COVER_CLOSED;
-    } else if (state.discState != DVD_STATE_BUSY ||
-               (__OSGetRTCFlags(&rtcFlags) && rtcFlags)) {
-        state.discState = DVD_STATE_WAITING;
-    } else {
-        state.discState = DVD_STATE_BUSY;
-    }
+    state.discState = __OSGetDiscState(state.discState);
 
     if (idleInfo.standby == TRUE) {
-        state.shutdownType = OS_SHUTDOWN_RETURN_MENU;
+        state.shutdownType = OS_STATE_FLAGS_SHUTDOWN_IDLE;
     } else {
-        state.shutdownType = OS_SHUTDOWN_REBOOT;
+        state.shutdownType = OS_STATE_FLAGS_SHUTDOWN_POWER_OFF;
     }
 
     __OSClearRTCFlags();
@@ -233,64 +232,60 @@ void OSShutdownSystem(void) {
     __OSGetIOSRev(&iosRev);
 
     if (idleInfo.standby == TRUE) {
+        __OSIsReturnToIdle = TRUE;
+
         OSDisableScheduler();
-        __OSShutdownDevices(OS_SHUTDOWN_RETURN_MENU);
+        __OSShutdownDevices(5);
         OSEnableScheduler();
         __OSLaunchMenu();
     } else {
         OSDisableScheduler();
-        __OSShutdownDevices(OS_SHUTDOWN_SHUTDOWN);
+        __OSShutdownDevices(2);
         __OSShutdownToSBY();
     }
 }
 
-void OSShutdownSystemForBS(u32 resetCode) {
-    OSNandbootInfo* nandInfo;
-    OSStateFlags state;
-
-    OSSetArenaLo(EXEC_WORK_ARENA_LO);
-    OSSetArenaHi(EXEC_WORK_ARENA_HI);
-
-    nandInfo = OSAllocFromMEM1ArenaLo(sizeof(OSNandbootInfo), 32);
-    memset(nandInfo, 0, sizeof(OSNandbootInfo));
-
-    __OSReadNandbootInfo(nandInfo);
-    nandInfo->returnValue = 1;
-    nandInfo->argValue = resetCode | 0x80000000;
-    __OSWriteNandbootInfo(nandInfo);
-
-    if (__OSReadStateFlags(&state)) {
-        state.shutdownType = OS_STATE_FLAGS_SHUTDOWN_RETURN_MENU;
-        __OSWriteStateFlags(&state);
-    }
-
-    OSDisableScheduler();
-    __OSShutdownDevices(OS_SHUTDOWN_RESTART);
-    OSEnableScheduler();
-
-    __OSRelaunchTitle();
-}
-
 void OSRestart(u32 resetCode) {
-    u8 appType;
-
-    appType = OSGetAppType();
-
+    u8 type = OSGetAppType();
     __OSStopPlayRecord();
     __OSUnRegisterStateEvent();
 
-    if (appType == OS_APP_TYPE_CHANNEL) {
-        OSShutdownSystemForBS(resetCode);
-    } else if (appType == OS_APP_TYPE_DVD) {
+    if (type == OS_APP_TYPE_CHANNEL) {
         OSDisableScheduler();
-        __OSShutdownDevices(OS_SHUTDOWN_RESTART);
+        __OSShutdownDevices(4);
+        OSEnableScheduler();
+        __OSRelaunchTitle(resetCode);
+    } else if (type == OS_APP_TYPE_DVD) {
+        OSDisableScheduler();
+        __OSShutdownDevices(4);
         OSEnableScheduler();
         __OSReboot(resetCode, bootThisDol);
     }
 
     OSDisableScheduler();
-    __OSShutdownDevices(OS_SHUTDOWN_REBOOT);
-    __OSHotReset();
+    __OSShutdownDevices(1);
+    __OSHotResetForError();
+}
+
+void __OSReturnToMenu(u8 menuMode) {
+    OSStateFlags state;
+
+    __OSStopPlayRecord();
+    __OSUnRegisterStateEvent();
+    __DVDPrepareReset();
+    __OSReadStateFlags(&state);
+    state.discState = __OSGetDiscState(state.discState);
+    state.shutdownType = OS_STATE_FLAGS_SHUTDOWN_RETURN_MENU;
+    state.menuMode = menuMode;
+    __OSClearRTCFlags();
+    __OSWriteStateFlags(&state);
+    OSDisableScheduler();
+    __OSShutdownDevices(5);
+    OSEnableScheduler();
+    __OSLaunchMenu();
+    OSDisableScheduler();
+    __VISetRGBModeImm();
+    __OSHotResetForError();
 }
 
 // From SMGCommunity/Petari src/RVL_SDK/os/OSReset.c (CC0-1.0, commit 6804bd31).
@@ -299,21 +294,67 @@ void OSReturnToMenu(void) {
     OSPanic(__FILE__, 0x348, "OSReturnToMenu(): Falied to boot system menu.\n");
 }
 
+void OSReturnToDataManager(void) {
+    __OSReturnToMenu(1);
+    OSPanic(__FILE__, 858, "OSReturnToDataManager(): Falied to boot system menu.\n");
+}
+
+void OSReturnToSetting(u8 setting) {
+    char* url;
+
+    switch (setting) {
+    case 1:
+        url = "Calendar/Calendar_index.html";
+        break;
+    case 2:
+        url = "Display/Display_index.html";
+        break;
+    case 3:
+        url = "Sound/Sound_index.html";
+        break;
+    case 4:
+        url = "Parental_Control/Parental_Control_index.html";
+        break;
+    case 5:
+        url = "Internet/Internet_index.html";
+        break;
+    case 6:
+        url = "WiiConnect24/Wiiconnect24_index.html";
+        break;
+    case 7:
+        url = "Update/Update_index.html";
+        break;
+    default:
+        OSReport("OSReturnToSetting(): You can't specify %d.  \n", setting);
+        OSPanic(__FILE__, 0x394, "");
+    }
+
+    __OSReturnToMenul(1, url, NULL);
+}
+
 void __OSReturnToMenuForError(void) {
     OSStateFlags state;
 
     __OSReadStateFlags(&state);
-    state.discState = DVD_STATE_WAITING;
+    state.discState = 2;
     state.shutdownType = OS_STATE_FLAGS_SHUTDOWN_RETURN_MENU;
     __OSClearRTCFlags();
     __OSWriteStateFlags(&state);
-
     __OSLaunchMenu();
-
     OSDisableScheduler();
     __VISetRGBModeImm();
+    __OSHotResetForError();
+    OSPanic(__FILE__, 0x3BB, "__OSReturnToMenu(): Falied to boot system menu.\n");
+}
+
+void __OSHotResetForError(void) {
+    if (__OSInNandBoot || __OSInReboot) {
+        __OSInitSTM();
+    }
+
     __OSHotReset();
-    OSPanic(__FILE__, 869, "__OSReturnToMenu(): Falied to boot system menu.\n");
+
+    OSPanic(__FILE__, 0x3D3, "__OSHotReset(): Falied to reset system.\n");
 }
 
 u32 OSGetResetCode(void) {
@@ -332,4 +373,11 @@ u32 OSGetResetCode(void) {
 // this SDK build reports a different line number.
 void OSResetSystem(int, u32, int) {
     OSPanic(__FILE__, 1130, "OSResetSystem() is obsoleted. It doesn't work any longer.\n");
+}
+
+// From SMGCommunity/Petari src/RVL_SDK/os/OSReset.c (CC0-1.0, commit 6804bd31). Its
+// code is dead-stripped from this DOL, only its string remains in .data.
+u32 OSSetBootDol(u32 dolOffset) {
+    OSPanic(__FILE__, __LINE__, "OSSetBootDol() is obsoleted. It doesn't work any longer.\n");
+    return 0;
 }

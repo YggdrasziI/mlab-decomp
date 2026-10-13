@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (157 of 179 units Matching so far)
+## RVL_SDK (158 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -403,6 +403,18 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   ranges added to the split. 13 names from relocation pairing (the five static/inline
   helpers, `__OSHotResetForError`, `__OSSetVIForceDimming`, four `AI*` DMA functions,
   `ESP_GetConsumption`, `__OSExpireAIFade`).
+
+- **`os/OSReset.c`.** Newer reset code ported from Petari (CC0, commit `6804bd31`,
+  `src/RVL_SDK/os/OSReset.c`) into our file, with our field and constant names:
+  `__OSGetDiscState` (the non-RMG variant), `OSRebootSystem`, `OSShutdownSystem`
+  (sets `__OSIsReturnToIdle`), `OSRestart` (`__OSRelaunchTitle(resetCode)`),
+  `__OSReturnToMenu`, `OSReturnToDataManager`, `OSReturnToSetting` (URL strings checked
+  in the DOL), `__OSReturnToMenuForError`, `__OSHotResetForError`, and the obsolete
+  `OSSetBootDol` (its code is dead-stripped, its string is in `.data`).
+  `OSShutdownSystemForBS` is gone. Data ranges added to the split; names from
+  relocation pairing and the matching code (`__OSRelaunchTitle`, `__OSReturnToMenul`,
+  `__OSShutdownToSBY`, `bootThisDol`, `__OSIsReturnToIdle`). `.data` shows 99.5 % in
+  objdiff only because of the section's end padding.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
