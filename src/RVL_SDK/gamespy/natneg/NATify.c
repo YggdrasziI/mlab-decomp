@@ -198,6 +198,9 @@ static int Think(SOCKET sock, NAT * nat)
 		// NOT MATCHING yet (99.5 %): the loop shape matches this game's DOL, but the
 		// inlined OutputMapping NULL test is compiled "beq" here and "bne; b" in the
 		// DOL. Cause unknown.
+		// Tried without effect: GC/3.0a3 to 3.0a5.2; "!= NULL" first, early return,
+		// empty/";"/expression/empty-call NULL branch, inline keyword, locals for the
+		// AddressToString results, trailing else, continue form, manual inlining.
 		while(CanReceiveOnSocket(sock))
 		{
 			length = recvfrom(sock, data, NNINBUF_LEN, 0, (struct sockaddr *)&saddr, &saddrlen);
