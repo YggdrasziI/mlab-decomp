@@ -580,3 +580,20 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `WPADStartFastSimpleSync`, `WPADStopSimpleSync`, `WPADSetSimpleSyncCallback`,
   `WPADRegisterAllocator`, `WPADGetStatus`); `_wmb` (0x8058CBD0) from relocation
   pairing. Data ranges added to the split (`.data`, `.bss`, `.sbss`).
+
+- **`wpad/WPADHIDParser.c` (from Petari).** Petari (CC0, commit `6804bd31`,
+  `src/RVL_SDK/wpad/WPADHIDParser.c`, matching for all its versions) has the same 22
+  functions in the same order and sizes as this DOL; our mscharged-based file was an
+  older version. Petari's body is used with our include block and a short
+  compatibility block at the top of the file: type aliases (`WPADControlBlock`,
+  `WPADCmdQueue`, `WPADConfig`, `WPADMEMGameInfo`), Petari's data format names, its
+  error codes as plain int macros (as enum constants, `(err < 0) ? -3 : 0` compiled
+  with a branch instead of the DOL's `srawi`/`and`), `WPADExtensionCallback` as a
+  pointer type, and `<math.h>` (without it `cos`/`sin` were implicit int functions).
+  Control-block fields (`p_wpd->`, `p_cb->`) renamed to ours with the same table as
+  for `WPAD.c`; Petari's flat `rxBuf + idx * WPAD_RX_DATASIZE` becomes
+  `(u8*)rxBufs + ...`; callbacks take `WPADResult`; two `WPADiSend*` calls and one
+  comparison cast `extensionCallback` to `WPADCallback`. Names: 13 functions from the
+  Petari alignment, which also corrects 0x8027A048 to `__a1_34_data_type` (the naming
+  pass had called it `__a1_36_data_type`, same size by chance; `__a1_36_data_type` is
+  0x8027AAD4). The existing data ranges of the split fit the object exactly.
