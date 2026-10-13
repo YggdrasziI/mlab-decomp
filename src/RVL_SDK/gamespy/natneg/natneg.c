@@ -496,6 +496,10 @@ void NNCancel(int cookie)
 	neg->state = ns_canceled;
 }
 
+// NOT MATCHING yet: the receive loop and the final report now follow this DOL,
+// but the first socket test uses r0 instead of r3, and the inlined
+// SendPingPacket computes Connect.finished with branches in the DOL
+// (branch-free here); ProcessPingPacket has the same ternary issue.
 static void NegotiateThink(NATNegotiator neg)
 {
 	//check for any incoming data
@@ -524,11 +528,8 @@ static void NegotiateThink(NATNegotiator neg)
 	if (neg->negotiateSock != INVALID_SOCKET)
 	{
 		//first, socket processing
-		while (TRUE /*CanReceiveOnSocket(neg->negotiateSock)*/)
+		while (CanReceiveOnSocket(neg->negotiateSock))
 		{
-			if (!CanReceiveOnSocket(neg->negotiateSock)) {
-				break;
-			}
 			error = recvfrom(neg->negotiateSock, indata, NNINBUF_LEN, 0, (struct sockaddr *)&saddr, &saddrlen);
 
 			if (gsiSocketIsError(error))
@@ -574,18 +575,18 @@ static void NegotiateThink(NATNegotiator neg)
 		}
 	}
 
-	if (neg->state == ns_finished && current_time() > neg->retryTime && neg->gameSock == INVALID_SOCKET) //check if it is ready to be removed
+	if (neg->state == ns_finished && current_time() > neg->retryTime) //check if it is ready to be removed
 	{
 		struct sockaddr_in saddr;
 		saddr.sin_family = AF_INET;
 		saddr.sin_port = htons(neg->guessedPort);
 		saddr.sin_addr.s_addr = neg->guessedIP;
-			
+		
 		// now that we've finished processing, send off the report
-		/*if (neg->gameSock == INVALID_SOCKET)*/
+		if (neg->gameSock == INVALID_SOCKET)
 			StartReport(neg, nr_success, neg->negotiateSock, (struct sockaddr_in *)&saddr);
-		/*else
-			StartReport(neg, nr_success, neg->gameSock, (struct sockaddr_in *)&saddr);*/
+		else
+			StartReport(neg, nr_success, neg->gameSock, (struct sockaddr_in *)&saddr);
 	}
 
 	if (neg->state == ns_initack && current_time() > neg->retryTime) //see if the partner has timed out
