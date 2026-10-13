@@ -203,6 +203,9 @@ typedef struct WUDCB {
 
     u16 bufferStatus0;  // 0x744
     u16 bufferStatus1;  // 0x746
+
+    s16 delayCnt;
+    s16 incomeCnt;
 } WUDCB;
 
 extern WUDCB _wcb;

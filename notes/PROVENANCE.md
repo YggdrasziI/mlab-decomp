@@ -531,3 +531,27 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   dvd_broadway data symbols itself (`dvdContexts`, `diRegValCache`, `DiFD`,
   `requestInProgress`, `freeCommandBuf`, `freeDvdContext`, `spinUpValue`,
   `diCommand`, `@3872`); all of them exist in `dvd_broadway.c`.
+
+- **`wud/WUD.c` (newer WUD, from Petari).** Petari (CC0, commit `6804bd31`,
+  `src/RVL_SDK/wud/WUD.c`) matches this DOL's WUD function by function: same order and
+  sizes for all 66 functions (Petari has one more, `WUDGetAllocatedMemSize`, 4 bytes,
+  not in this DOL). Its body replaces ours, with our include block. Adaptations: the
+  four SC flush callbacks take `SCStatus` (our `SCFlushAsync` type), the fiber stack
+  arguments are cast to `void*`, `ASSERT` is defined as a no-op in the file (as in
+  Petari's `os.h`; without it the calls compiled to `bl ASSERT`), and the
+  `WUD_DEBUGPrint("start\n")` of `_WUDStartSyncDevice` is removed: that string is not
+  in this DOL while every other literal of the file is. `WUDSecurityCallback` and
+  `App_MEMfree` keep our versions (our BTE `tBTA_DM_AUTH_CMPL` has no `key_type`; this
+  DOL's BTE is the older one). Headers: `WUDCB` gains `delayCnt`/`incomeCnt` at the end,
+  `WUDDevInfo` field 0x5B is `sync_type` (was `UNK_0x5B`, also in `WUDHidHost.c`),
+  `WUDShutdown` takes `BOOL exec`, and `sc.h` gets Petari's spellings as layout-identical
+  aliases (`num`/`info[]` next to `numRegist`/`devices[]`, `SCBtDeviceInfoSingle`,
+  `SCBtCmpDevInfoSingle`). `WPAD.c` passes `FALSE` to `WUDShutdown` for now (WPAD is
+  not ported yet). Names: 17 WUD functions from the Petari alignment
+  (`ShutFlushCallback`, `InitFlushCallback`, `WUDiIsSyncDisabled`, `WUDiSyncDone`,
+  `SyncHandler`, `DeleteAllHandler`, `WUDiGetRegisteredDevice`, `ShutdownHandler`,
+  `WUDShutdown`, `StartSyncDevice`, `WUDStartFastSyncSimple`, `WUDCancelSyncDevice`,
+  `WUDiInitSub`, `WUDiRegisterDevice`, `WUDSearchCallback`,
+  `WUDVendorSpecificCallback`, `WUDPowerManagerCallback`); data names from relocation
+  pairing (`_scArray`, `_spArray`, `__WUDHandlerStack`, `_discResp`, `_scFlush` and the
+  file's statics). `.bss` range added to the split (0x8058E140-0x805900E8).

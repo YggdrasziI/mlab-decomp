@@ -136,14 +136,30 @@ typedef struct SCBtDeviceInfo {
     SCDevInfo info;
 } SCBtDeviceInfo;
 
+/* SDK spellings used by the newer WUD/WPAD code (same layout) */
+typedef struct SCBtDeviceInfoSingle {
+    BD_ADDR bd_addr;
+    u8 bd_name[64];
+} SCBtDeviceInfoSingle;
+
+typedef struct SCBtCmpDevInfoSingle {
+    BD_ADDR bd_addr;
+    u8 bd_name[64];
+    u8 link_key[16];
+} SCBtCmpDevInfoSingle;
+
 typedef struct SCBtDeviceInfoArray {
-    u8 numRegist;
+    union {
+        u8 numRegist;
+        u8 num;
+    };
     union {
         struct {
             SCBtDeviceInfo regist[SC_MAX_DEV_ENTRY_FOR_STD];
             SCBtDeviceInfo active[SC_MAX_DEV_ENTRY_FOR_SMP];
         };
         SCBtDeviceInfo devices[SC_MAX_DEV_ENTRY];
+        SCBtDeviceInfoSingle info[SC_MAX_DEV_ENTRY];
     };
 } SCBtDeviceInfoArray;
 
@@ -154,8 +170,14 @@ typedef struct SCBtCmpDevInfo {
 } SCBtCmpDevInfo;
 
 typedef struct SCBtCmpDevInfoArray {
-    u8 numRegist;                                      // 0x00
-    SCBtCmpDevInfo devices[SC_MAX_DEV_ENTRY_FOR_SMP];  // 0x01
+    union {
+        u8 numRegist;  // 0x00
+        u8 num;
+    };
+    union {
+        SCBtCmpDevInfo devices[SC_MAX_DEV_ENTRY_FOR_SMP];  // 0x01
+        SCBtCmpDevInfoSingle info[SC_MAX_DEV_ENTRY_FOR_SMP];
+    };
 } SCBtCmpDevInfoArray;
 
 BOOL SCGetBtCmpDevInfoArray(SCBtCmpDevInfoArray* devInfo);

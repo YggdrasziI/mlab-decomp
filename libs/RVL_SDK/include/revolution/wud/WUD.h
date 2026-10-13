@@ -65,7 +65,7 @@ typedef struct WUDDevInfo {
     UINT8 appID;      // at 0x58
     u8 status;        // at 0x59
     s8 UNK_0x5A;      // at 0x5A
-    u8 UNK_0x5B;      // at 0x5B
+    u8 sync_type;      // at 0x5B
     u8 UNK_0x5C;      // at 0x5C
     u8 UNK_0x5D[1];
     tBTA_HH_ATTR_MASK hhAttrMask; // at 0x5E
@@ -75,7 +75,7 @@ BOOL WUDInit(void);
 BOOL WUDIsBusy(void);
 void WUDRegisterAllocator(WUDAllocFunc pAllocFunc, WUDFreeFunc pFreeFunc);
 u32 WUDGetAllocatedMemSize(void);
-void WUDShutdown(void);
+void WUDShutdown(BOOL exec);
 
 WUDLibStatus WUDGetStatus(void);
 u8 WUDGetBufferStatus(void);
