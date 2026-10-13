@@ -490,3 +490,13 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
 
+
+- **`gamespy/gt2/gt2Message.c` (still NonMatching).** `gti2HandleMessage` (static,
+  0x8031089C, formerly `fn_8031089C`; named from its place in the source order between
+  `gti2HandleUnreliableMessage` and `gti2HandleConnectionReset`, and its 100 % match)
+  is a newer version than the mscharged-decomp source, decompiled from this DOL: the
+  magic-string app message advances `message` and `actualMessage` by
+  `GTI2_MAGIC_STRING_LEN` (no `protocolOffset` reapplied), and an app unreliable
+  message on a connection that is not yet `GTI2Connected` goes to
+  `gti2UnrecognizedMessageCallback`. `gti2ReceiveMessages` is still 97 % (see the
+  note in the source).

@@ -951,9 +951,8 @@ static GT2Bool gti2HandleMessage(GT2Socket socket, GT2Byte* message, int len, un
     {
         message[3] = message[1];
         message[2] = message[0];
-        message = actualMessage;
-        actualMessage += socket->protocolOffset;
-        actualLength -= socket->protocolOffset;
+        message += GTI2_MAGIC_STRING_LEN;
+        actualMessage += GTI2_MAGIC_STRING_LEN;
         len -= GTI2_MAGIC_STRING_LEN;
         magicString = GT2False;
     }
@@ -961,8 +960,17 @@ static GT2Bool gti2HandleMessage(GT2Socket socket, GT2Byte* message, int len, un
     // if it doesn't have a magic string it's an app unreliable
     if (!magicString)
     {
-        if (!gti2HandleAppUnreliable(connection, message, len))
-            return GT2False;
+        // not connected yet: let the unrecognized message callback handle it
+        if (connection->state < GTI2Connected)
+        {
+            if (!gti2UnrecognizedMessageCallback(socket, ip, port, message, len, &handled))
+                return GT2False;
+        }
+        else
+        {
+            if (!gti2HandleAppUnreliable(connection, message, len))
+                return GT2False;
+        }
 
         return GT2True;
     }
@@ -1166,6 +1174,11 @@ GT2Bool gti2ReceiveMessages(GT2Socket socket)
     }
 #endif
 
+    // NOT MATCHING yet (97 %, 8 bytes short): in this DOL the inlined
+    // gti2HandleHostUnreachable keeps its final "if (!x) return GT2False;
+    // return GT2True;" as branches (cmpwi/bne/li/b/li), while ours folds it
+    // into "x != 0" (neg/or/srwi). The out-of-line copy matches. Tried: inline
+    // keyword, return/if-else/nested-block tails; none changes the inlined copy.
     // check for messages
     while (CanReceiveOnSocket(socket->socket))
     {
