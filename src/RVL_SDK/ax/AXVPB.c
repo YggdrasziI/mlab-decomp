@@ -426,6 +426,7 @@ static void __AXVPBInitCommon(void) {
     DCFlushRange(__AXPB, __AXMaxVoices * sizeof(AXPB));
 }
 
+// Not in the reference source (newer AX build); name from TP libs/dolphin/src/ax/AXVPB.c.
 void __AXVPBQuit(void) {
     __AXPB = NULL;
     __AXITD = NULL;
@@ -557,6 +558,7 @@ void AXSetVoiceMix(AXVPB* vpb, AXPBMIX* mix) {
     OSRestoreInterrupts(old);
 }
 
+// Not in the reference source (newer AX build); name from TP libs/dolphin/src/ax/AXVPB.c.
 void AXSetVoiceItdOn(AXVPB* p) {
     BOOL old;
 
@@ -805,10 +807,12 @@ void AXGetLpfCoefs(u16 freq, u16* a, u16* b) {
     *a = 32767 - *b;
 }
 
+// Not in the reference source (newer AX build); name from TP libs/dolphin/src/ax/AXVPB.c.
 u32 AXGetMaxDspCycles(void) {
     return __AXMaxDspCycles;
 }
 
+// Not in the reference source (newer AX build); name from TP libs/dolphin/src/ax/AXVPB.c.
 u32 AXGetDspCycles(void) {
     return __AXRecDspCycles;
 }
