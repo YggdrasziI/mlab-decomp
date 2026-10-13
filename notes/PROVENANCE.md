@@ -597,3 +597,14 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   Petari alignment, which also corrects 0x8027A048 to `__a1_34_data_type` (the naming
   pass had called it `__a1_36_data_type`, same size by chance; `__a1_36_data_type` is
   0x8027AAD4). The existing data ranges of the split fit the object exactly.
+
+- **`bte/uusb_ppc.c` (from Petari).** Petari (CC0, commit `6804bd31`,
+  `src/RVL_SDK/bte/uusb_ppc.c`, GC/3.0a5.2, matching for all its versions) has the
+  same functions and sizes as this DOL after its first one (`__ntd_get_allocated_mem_size`,
+  not in this DOL). Our older file (debug `OSReport` traces) is replaced by Petari's
+  body after our include block, with Petari's empty `UUSBDBG`, its `unk*_t` macros,
+  `fd` typed `IPCResult` (our IUSB API) and the fiber arguments cast to `void*`.
+  Names from the alignment: `uusb_ReadIntrDataCB`, `uusb_ReadBulkDataCB`,
+  `uusb_issue_intr_read`, `uusb_WriteCtrlDataCB`, `uusb_WriteBulkDataCB`. `.sdata`
+  range added to the split (0x805FA4F8-0x805FA508: `wait4hci`, the file descriptor,
+  `"oh0"`, `"oh1"`).

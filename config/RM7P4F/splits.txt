@@ -490,6 +490,7 @@ RVL_SDK/bte/hcisu_h2.c:
 RVL_SDK/bte/uusb_ppc.c:
 	.text       start:0x80288A7C end:0x80289674
 	.bss        start:0x805B8C00 end:0x805BAC60
+	.sdata      start:0x805FA4F8 end:0x805FA508
 	.sbss       start:0x805FC2C0 end:0x805FC2D8
 
 RVL_SDK/bte/bte_hcisu.c:

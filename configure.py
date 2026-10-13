@@ -464,7 +464,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/bte/gki_time.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
             Object(Matching, "RVL_SDK/bte/gki_ppc.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
             Object(Matching, "RVL_SDK/bte/hcisu_h2.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
-            Object(NonMatching, "RVL_SDK/bte/uusb_ppc.c", cflags=cflags_rvl_bte),
+            Object(Matching, "RVL_SDK/bte/uusb_ppc.c", cflags=cflags_rvl_bte),
             Object(Matching, "RVL_SDK/bte/bte_hcisu.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
             Object(Matching, "RVL_SDK/bte/bte_init.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
             Object(Matching, "RVL_SDK/bte/bte_logmsg.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),
