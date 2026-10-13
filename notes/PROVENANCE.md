@@ -624,3 +624,20 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   pass had `DVDLowWaitForCoverClose`: same size, 93.6 % similar). Lesson: two names of
   that pass were wrong at 92-94 % similarity (this one and `__a1_34_data_type`); only
   names confirmed by an exact alignment or a 100 % match should be trusted.
+
+- **`vi/vi.c` (functions from Petari).** Same VI banner as Petari's ("Aug  8 2007
+  02:07:17"); Petari (CC0, commit `6804bd31`, `src/RVL_SDK/vi/vi.c`, GC/3.0a5.2,
+  matching for all its versions) has the same function order and sizes, plus four
+  unused functions this DOL does not have. Our file keeps its globals; these functions
+  were replaced by Petari's: `__VIRetraceHandler`, `VIInit`, `setFbbRegs`,
+  `setHorizontalRegs` (now defined after `setFbbRegs`, its place in the DOL, with a
+  prototype earlier), `setVerticalRegs`, `VIConfigure`, `VIConfigurePan`, `VIFlush`,
+  `VISetTimeToDimming`; added: `__VIResetDev0Idle` (inlined) and `VIResetDimmingCount`;
+  `VIGetTvFormat` gains `case 8`. Aliases at the top: `__VIRegs` for our `VI_HW_REGS`,
+  `VI_XFBMODE_*` for our `VI_XFB_MODE_*`. The file now defines the three PAL
+  progressive render modes after `taps` (`GXPal528Prog`, `GXPal528ProgSoft`,
+  `GXPal524ProgAa`, from Petari; `VI_MAX_WIDTH_PAL`/`VI_MAX_HEIGHT_PAL` = 720/574):
+  without them `.data` was 0xC0 bytes short. Names: `setHorizontalRegs`,
+  `setVerticalRegs`, `VIResetDimmingCount` from the alignment,
+  `__DVDStopMotorCommandBlock` (0x80563450) from relocation pairing. `.data` range
+  added to the split (0x80397420-0x80397978).
