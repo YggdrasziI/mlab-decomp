@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (163 of 179 units Matching so far)
+## RVL_SDK (164 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -463,6 +463,18 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   `USB_ERR` gated by `s_usb_err = 1`, IPC heap of 0x4000 bytes, and the two strings
   of dead-stripped functions that this file has (`packet %u too big`, insertion
   notification path error). Names from byte-identical code and relocation pairing.
+
+- **`os/OS.c`.** Changes following Petari (CC0, commit `6804bd31`, `src/RVL_SDK/os/OS.c`):
+  console type 0x300 -> 0x100 in `OSGetConsoleType` and its "RVA 1" report,
+  `OSInit` clears the arenas only outside NAND boot / reboot, checks the device with
+  `__DVDCheckDevice` for disc apps and calls `__OSInitPlayTime`; the arena pointers are
+  read once into a temporary (as in Petari). Kernel build date "Jan 30 2008 01:38:43"
+  and the `OS_ERROR` line numbers 1150 / 1168 come from this DOL. Data ranges added to
+  the split (the `.data` jump table of `ReportOSInfo` was outside any unit, which made
+  dtk treat the static function as external). `config.yml` gets two
+  `block_relocations` (0x80233818, 0x80233890): `OSInit` builds the constant
+  0x80004000 with `lis`/`addi`, and dtk turned it into a relocation to `__check_pad3`
+  (same address).
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).

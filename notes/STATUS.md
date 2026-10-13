@@ -31,7 +31,7 @@
 
 - Step 5: **MetroTRK matches** (29/29 units, mscharged-decomp code, CC0, GC/2.7).
 
-- Step 5: **RVL_SDK 163/179 units match** (mscharged-decomp code, CC0); data
+- Step 5: **RVL_SDK 164/179 units match** (mscharged-decomp code, CC0); data
   sections placed by relocation pairing and verified byte by byte, then the 22
   byte-identical units that failed to link were fixed one by one (see
   `notes/PROVENANCE.md`, "Unit-by-unit data review").
@@ -51,7 +51,7 @@
 
 ## To do
 
-- Step 5: RVL_SDK, 16 units left (NonMatching): OS, OSExec,
+- Step 5: RVL_SDK, 15 units left (NonMatching): OSExec,
   vi, dvd,
   dvd_broadway, mem_list (split covers more than
   the unit), scsystem, ipcclt, WPAD, WPADHIDParser,

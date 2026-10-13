@@ -6,3 +6,9 @@ symbols: config/RM7P4F/symbols.txt
 splits: config/RM7P4F/splits.txt
 # Written by GC 3.0a5.2 (byte 0xB of .comment), see notes/COMPILER.md.
 mw_comment_version: 15
+
+# OSInit builds the constant 0x80004000 (default MEM1 arena start) with lis/addi;
+# dtk would otherwise turn it into a relocation to __check_pad3 (same address).
+block_relocations:
+- source: .text:0x80233818
+- source: .text:0x80233890

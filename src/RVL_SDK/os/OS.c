@@ -208,6 +208,10 @@ u32 OSGetConsoleType(void) {
             if (hollywood > 0x00000011) {
                 return OS_CONSOLE_NDEV_2_1;
             }
+
+        // From SMGCommunity/Petari src/RVL_SDK/os/OS.c (CC0-1.0, commit 6804bd31).
+        case 0x0300:
+            return 0x00000100;
         }
     }
 
@@ -342,7 +346,7 @@ static void CheckTargets(void) {
     case 0x81:
         OSReport("OS ERROR: boot program is not for RVL target. Please use "
                  "correct boot program.\n");
-#line 1112
+#line 1150
         OS_ERROR("Failed to run app");
         break;
     case 0x80:
@@ -354,7 +358,7 @@ static void CheckTargets(void) {
     case 0x81:
         OSReport("OS ERROR: apploader[D].img is not for RVL target. Please use "
                  "correct apploader[D].img.\n");
-#line 1130
+#line 1168
         OS_ERROR("Failed to run app");
         break;
     case 0x80:
@@ -370,7 +374,7 @@ static void ReportOSInfo(void) {
     u32 tdev;
 
     OSReport("\nRevolution OS\n");
-    OSReport("Kernel built : %s %s\n", "Apr 24 2007", "11:50:47");
+    OSReport("Kernel built : %s %s\n", "Jan 30 2008", "01:38:43");
 
     OSReport("Console Type : ");
     type = OSGetConsoleType();
@@ -386,6 +390,10 @@ static void ReportOSInfo(void) {
             break;
         case OS_CONSOLE_RVL_PP_2_2:
             OSReport("Pre-production board 2-2\n");
+            break;
+        // From SMGCommunity/Petari src/RVL_SDK/os/OS.c (CC0-1.0, commit 6804bd31).
+        case 0x00000100:
+            OSReport("RVA 1\n");
             break;
         default:
             OSReport("Retail %d\n", type);
@@ -491,8 +499,8 @@ void OSInit(void) {
             // Use the linker-generated arena if it is in MEM1...
             if (OSIsMEM1Region(__ArenaLo)) {
                 // ...and if the OS boot info does not specify one
-                mem1lo =
-                    BootInfo->arenaLo == NULL ? __ArenaLo : BootInfo->arenaLo;
+                void* tmp = BootInfo->arenaLo;
+                mem1lo = tmp == NULL ? __ArenaLo : tmp;
 
                 /**
                  * Linker generates stack/arena in this order:
@@ -523,7 +531,8 @@ void OSInit(void) {
         if (mem1hi == NULL) {
             // Use the linker-generated arena if OS boot info does not specify
             // one
-            mem1hi = BootInfo->arenaHi == NULL ? __ArenaHi : BootInfo->arenaHi;
+            void* tmp = BootInfo->arenaHi;
+            mem1hi = tmp == NULL ? __ArenaHi : tmp;
         }
         OSSetMEM1ArenaHi(mem1hi);
 
@@ -582,8 +591,13 @@ void OSInit(void) {
             EnableMetroTRKInterrupts();
         }
 
-        ClearArena();
-        ClearMEM2Arena();
+        // The checks below follow SMGCommunity/Petari src/RVL_SDK/os/OS.c (CC0-1.0,
+        // commit 6804bd31).
+        if (!__OSInNandBoot && !__OSInReboot) {
+            ClearArena();
+            ClearMEM2Arena();
+        }
+
         OSEnableInterrupts();
         IPCCltInit();
 
@@ -608,6 +622,16 @@ void OSInit(void) {
                 DCInvalidateRange(&DriveInfo, sizeof(DVDDriveInfo));
                 DVDInquiryAsync(&DriveBlock, &DriveInfo, InquiryCallback);
             }
+
+            if (OSGetAppType() == OS_APP_TYPE_DVD && !__OSInReboot) {
+                if (!__DVDCheckDevice()) {
+                    OSReturnToMenu();
+                }
+            }
+        }
+
+        if (!__OSInIPL && !__OSInNandBoot) {
+            __OSInitPlayTime();
         }
 
         if (!__OSInIPL && !__OSInNandBoot && !__OSInReboot) {
