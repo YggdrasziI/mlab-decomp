@@ -25,9 +25,9 @@
 
 - Step 5 (started): **Runtime.PPCEABI.H matches** (9/9 units, 100 % code and data,
   linked), from mscharged-decomp / TP code (CC0), provenance in `notes/PROVENANCE.md`.
-- Step 5: **MSL_C 58/59 units match** and are linked (mscharged-decomp code, CC0); the
-  remaining unit (`alloc.c`) needs two functions decompiled
-  from this DOL; see `notes/PROVENANCE.md`.
+- Step 5: **MSL_C 59/59 units match** and are linked (mscharged-decomp code, CC0;
+  `realloc` and `fn_80330B20` in `alloc.c` decompiled from this DOL); see
+  `notes/PROVENANCE.md`.
 
 - Step 5: **MetroTRK matches** (29/29 units, mscharged-decomp code, CC0, GC/2.7).
 
@@ -51,7 +51,6 @@
 
 ## To do
 
-- Step 5: `alloc.c` (MSL_C): `realloc` and `fn_80330B20` to decompile from the DOL.
 - Step 5: RVL_SDK, 31 units left (NonMatching): OS, OSExec, OSReset, OSPlayRecord
   (bss layout: FileInfo and Block seem to share one aggregate, not proven),
   OSPlayTime, __ppc_eabi_init, vi, GXFifo, dvd, dvderror, dvdDeviceError,

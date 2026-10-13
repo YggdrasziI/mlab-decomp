@@ -573,7 +573,7 @@ config.libs = [
         "cflags": cflags_msl,
         "progress_category": "sdk",
         "objects": [
-            Object(NonMatching, "MSL_C/alloc.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "MSL_C/alloc.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "MSL_C/ansi_files.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "MSL_C/ansi_fp.c", extra_cflags=["-Cpp_exceptions on", "-rostr", "-use_lmw_stmw on"], mw_version="GC/3.0a5"),
             Object(Matching, "MSL_C/arith.c"),

@@ -57,7 +57,7 @@ the source and dead-stripped by the linker (the build matches).
   `OSSetCurrentHeap`, `OSAllocFromHeap`, `OSFreeToHeap`, `OSSetArenaLo`,
   `__OSCurrHeap`, and `@stringBase0` (0x80352220, `GCN_mem_alloc.c` string pool).
 
-## MSL_C (58 of 59 units Matching)
+## MSL_C (59 of 59 units Matching)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 same commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, license **CC0-1.0**: the 50
@@ -107,17 +107,18 @@ Split fix: `string.c` also owns `.sdata2` 0x80600B90-0x80600B98, the empty strin
 `strtok_null` / `strtok_ptr` point to (no code references it, so the region map missed
 it).
 
-Not Matching yet (1 unit): `alloc.c`, whose two remaining functions have no source in
-any reference project (they were dead-stripped from those games) and must be decompiled
-from this DOL:
+`alloc.c`: two functions have no source in any reference project (they were
+dead-stripped from those games) and were decompiled from this DOL (own code, no copy):
 
 - 0x80330F50 is **`realloc`**: [DarkRTA/rb3](https://github.com/DarkRTA/rb3) (Rock Band 3,
   Wii, `config/SZBE69/symbols.txt`) has the same MSL layout (`deallocate_from_fixed_pools`
   0x1EC, an unnamed 0x260 function, `malloc` 0xA0, `free` 0x130, `realloc` 0x318).
-  Only the **name** is taken from rb3 (it has no license, so none of its code is used).
-- 0x80330B20 (0x260): unnamed in rb3 too; an allocator helper that tries to resize a
-  block in place (it calls `SubBlock_merge_next` and `Block_link`), called by `realloc`.
-  Keeps its address-based name.
+  Only the **name** is taken from rb3. Written as an inline `__pool_realloc` (name is
+  ours, not proven) on top of the file's `__pool_alloc` / `__pool_free`, like `malloc`.
+- 0x80330B20 (0x260): unnamed in rb3 too; resizes a block in place (merges the next free
+  sub-block, splits off the tail) and returns whether the new size fits. Keeps its
+  address-based name. It must sit before `__pool_alloc` in the file: the `.text` and
+  `extab` order of the DOL put it before `malloc`.
 
 ### Units with no mscharged source
 

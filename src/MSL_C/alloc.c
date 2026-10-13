@@ -615,6 +615,65 @@ void deallocate_from_fixed_pools(__mem_pool_obj* pool_obj, void* ptr, unsigned l
     }
 }
 
+int fn_80330B20(__mem_pool* pool, void* ptr, size_t size, size_t* max_size) {
+    size_t current_size;
+    unsigned long req_size;
+    SubBlock* sb;
+    SubBlock* next;
+    SubBlock* np;
+    unsigned long sb_size;
+
+    current_size = __msize_inline(ptr);
+    if (size == current_size) {
+        if (max_size != 0) {
+            *max_size = current_size;
+        }
+        return 1;
+    }
+
+    if (classify(ptr)) {
+        if (size > 0xFFFFFFFF - 0x80) {
+            size = 0xFFFFFFFF - 0x80;
+        }
+        req_size = size + 8;
+        req_size = (req_size + 7) & ~7;
+        if (req_size < 0x50) {
+            req_size = 0x50;
+        }
+
+        sb = SubBlock_from_pointer(ptr);
+        sb_size = current_size + 8;
+        next = (SubBlock*)((char*)sb + sb_size);
+        if (SubBlock_is_free(next) && req_size <= sb_size + SubBlock_size(next)) {
+            SubBlock_merge_next(sb, &Block_start(SubBlock_block(sb)));
+            sb_size = SubBlock_size(sb);
+        }
+
+        if (sb_size >= req_size + 0x50) {
+            np = SubBlock_split(sb, req_size);
+            Block_link(SubBlock_block(sb), np);
+            sb_size = SubBlock_size(sb);
+        }
+
+        if (max_size != 0) {
+            *max_size = sb_size - 8;
+        }
+
+        if (size > current_size) {
+            if (max_size != 0 && size > sb_size - 8 && SubBlock_is_free(next)) {
+                *max_size += SubBlock_size(next);
+            }
+            return size <= sb_size - 8;
+        }
+        return sb_size - 8 < current_size;
+    }
+
+    if (max_size != 0) {
+        *max_size = current_size;
+    }
+    return 0;
+}
+
 inline void* __pool_alloc(__mem_pool* pool, size_t size) {
     void* result;
     __mem_pool_obj* pool_obj;
@@ -659,3 +718,31 @@ void* malloc(size_t size) {
 }
 
 void free(void* ptr) { __pool_free(get_malloc_pool(), ptr); }
+
+inline void* __pool_realloc(__mem_pool* pool, void* ptr, size_t size) {
+    size_t current_size;
+    void* newptr;
+
+    if (ptr == 0) {
+        return __pool_alloc(pool, size);
+    }
+
+    if (size == 0) {
+        __pool_free(pool, ptr);
+        return 0;
+    }
+
+    current_size = __msize_inline(ptr);
+    if (fn_80330B20(pool, ptr, size, 0) || size <= current_size) {
+        return ptr;
+    }
+
+    newptr = __pool_alloc(pool, size);
+    if (newptr != 0) {
+        memcpy(newptr, ptr, current_size);
+        __pool_free(pool, ptr);
+    }
+    return newptr;
+}
+
+void* realloc(void* ptr, size_t size) { return __pool_realloc(get_malloc_pool(), ptr, size); }
