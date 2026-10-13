@@ -391,6 +391,8 @@ SBServer SBQueryEngineUpdateServerByIP(SBQueryEngine* engine, const char* ip,
   return server;
 }
 
+int fn_803156EC(const char* key);
+
 static void ParseSingleQR2Reply(SBQueryEngine* engine, SBServer server,
                                 char* data, int len) {
   int i;
@@ -420,8 +422,10 @@ static void ParseSingleQR2Reply(SBQueryEngine* engine, SBServer server,
       dlen = NTSLengthSB(data, len);
       if (dlen < 0)
         break;
-      SBServerAddKeyValue(
-          server, qr2_registered_key_list[engine->serverkeys[i]], data);
+      // Filtered as in sb_server.c (qr2 function 0x803156EC, name unknown).
+      if (!fn_803156EC(qr2_registered_key_list[engine->serverkeys[i]]))
+        SBServerAddKeyValue(
+            server, qr2_registered_key_list[engine->serverkeys[i]], data);
       data += dlen;
       len -= dlen;
     }
@@ -560,7 +564,7 @@ static void ProcessIncomingICMPReplies(SBQueryEngine* engine) {
 
 static void ProcessIncomingReplies(SBQueryEngine* engine, SBBool icmpSocket) {
   int i;
-  char indata[MAX_RECVFROM_SIZE];
+  char indata[MAX_RECVFROM_SIZE] __attribute__((aligned(32)));
   struct sockaddr_in saddr;
   int saddrlen = sizeof(saddr);
   SBServer server;

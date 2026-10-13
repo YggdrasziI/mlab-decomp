@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (159 of 179 units Matching so far)
+## RVL_SDK (160 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -423,6 +423,13 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   `next` / `disr` / `sec`. `.bss` range added to the split; names from relocation
   pairing (the eight NAND callbacks, `DVDLowGetStatusRegister`, `NandInfo`, `NandCb`,
   `ExistFlag`, `NextOffset`, `__FirstErrorInfo`).
+
+- **`gamespy/serverbrowsing/sb_queryengine.c`.** Two edits to the mscharged code:
+  basic-query key values go through the same qr2 filter as in `sb_server.c`
+  (`fn_803156EC`, name unknown) before `SBServerAddKeyValue`, and the receive buffer of
+  `ProcessIncomingReplies` is 32-byte aligned (the DOL realigns the stack frame). Names
+  from the matching code: `ParseSingleQR2Reply`, `ProcessIncomingReplies`, `recvfrom`
+  (0x802FD36C), `SOHtoNl`.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
