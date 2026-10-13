@@ -20,6 +20,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-13 | eb8fbb9 | 539400 / 3412920 bytes (15.80 %) | 2210 / 12580 | 262 linked / 985 | RVL_SDK third pass continued: OSReset, dvderror, sb_queryengine, GXFifo, NANDCore, usb, OS, ipcclt (165/179 SDK units); NATify 99.8 %, natneg 98 %; 13.72 % of code linked |
 | 2026-10-13 | d9a8d84 | 543204 / 3412920 bytes (15.92 %) | 2217 / 12580 | 263 linked / 983 | RVL_SDK: `scsystem` linked (166/179 SDK units), `gti2HandleMessage` decompiled (gt2Message 1 function left); 13.91 % of code linked |
 | 2026-10-13 | 7f45f31 | 568928 / 3412920 bytes (16.67 %) | 2254 / 12580 | 265 linked / 980 | RVL_SDK: WUD (from Petari) and WPAD (newer behaviour after Petari) linked, 35+17+8 SDK functions named (168/179 SDK units); 15.37 % of code linked |
+| 2026-10-13 | 31528e9 | 604072 / 3412920 bytes (17.70 %) | 2307 / 12580 | 269 linked / 979 | RVL_SDK from Petari (CC0): WPADHIDParser, uusb_ppc, dvd_broadway, vi linked (172/179 SDK units); 16.67 % of code linked |
 
 Notes:
 
