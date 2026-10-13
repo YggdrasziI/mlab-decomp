@@ -403,7 +403,7 @@ GXBool GXGetCPUFifo(GXFifoObj* fifo)
         return GX_FALSE;
     }
 
-    GXFlush();
+    // No GXFlush() in this SDK build (Petari keeps it only for RMG).
     __GXSaveFifo();
 
     *realFifo = CPUFifo;
@@ -411,9 +411,26 @@ GXBool GXGetCPUFifo(GXFifoObj* fifo)
     return GX_TRUE;
 }
 
-GXFifoObj* GXGetGPFifo()
+GXBool GXGetGPFifo(GXFifoObj* fifo)
 {
-    return (GXFifoObj*)&GPFifo;
+    __GXFifoObj* realFifo = (__GXFifoObj*)fifo;
+    if (!GPFifoReady)
+    {
+        return GX_FALSE;
+    }
+
+    __GXSaveFifo();
+
+    *realFifo = GPFifo;
+
+    return GX_TRUE;
+}
+
+void GXGetFifoPtrs(const GXFifoObj* fifo, void** readPtr, void** writePtr)
+{
+    __GXFifoObj* realFifo = (__GXFifoObj*)fifo;
+    *readPtr = realFifo->rdPtr;
+    *writePtr = realFifo->wrPtr;
 }
 
 u32 GXGetFifoCount(const GXFifoObj* fifo)

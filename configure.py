@@ -411,7 +411,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/vi/i2c.c"),
             Object(Matching, "RVL_SDK/vi/vi3in1.c"),
             Object(Matching, "RVL_SDK/gx/GXInit.c"),
-            Object(NonMatching, "RVL_SDK/gx/GXFifo.c"),
+            Object(Matching, "RVL_SDK/gx/GXFifo.c"),
             Object(Matching, "RVL_SDK/gx/GXAttr.c"),
             Object(Matching, "RVL_SDK/gx/GXMisc.c"),
             Object(Matching, "RVL_SDK/gx/GXGeometry.c"),

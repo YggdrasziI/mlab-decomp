@@ -20,7 +20,7 @@ void GXInitFifoPtrs(GXFifoObj* fifo, void* readPtr, void* writePtr);
 void GXSetCPUFifo(GXFifoObj* fifo);
 void GXSetGPFifo(GXFifoObj* fifo);
 GXBool GXGetCPUFifo(GXFifoObj* fifo);
-GXFifoObj* GXGetGPFifo(void);
+GXBool GXGetGPFifo(GXFifoObj* fifo);
 
 void GXGetFifoPtrs(const GXFifoObj*, void** readPtr, void** writePtr);
 

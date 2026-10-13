@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (160 of 179 units Matching so far)
+## RVL_SDK (161 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -430,6 +430,18 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   `ProcessIncomingReplies` is 32-byte aligned (the DOL realigns the stack frame). Names
   from the matching code: `ParseSingleQR2Reply`, `ProcessIncomingReplies`, `recvfrom`
   (0x802FD36C), `SOHtoNl`.
+
+- **`gx/GXFifo.c`.** `GXGetCPUFifo` has no `GXFlush()` call (Petari keeps it only for
+  RMG), `GXGetGPFifo` copies the GP FIFO like `GXGetCPUFifo` does (prototype in
+  `GXFifo.h` changed to `GXBool GXGetGPFifo(GXFifoObj*)`), and `GXGetFifoPtrs` was added
+  (Petari, CC0, commit `6804bd31`). `.bss` range added to the split; FIFO objects and
+  `.sbss` variables named from relocation pairing.
+- **`bte/uusb_ppc.c` (not done).** The DOL has a smaller variant of the USB transport:
+  `uusb_ReadIntrDataCB` (0x114), `uusb_ReadBulkDataCB` (0x19C), `uusb_issue_intr_read`
+  (0xCC), `uusb_WriteCtrlDataCB` (0xEC), `uusb_WriteBulkDataCB` (0xE0) at
+  0x80288B10-0x80289058 (roles from their calls; not renamed yet), no
+  `__ntd_*`/trace functions, and shorter `UUSB_Register` / `UUSB_Write`. Neither
+  mscharged nor Petari has this variant; needs hand decompilation.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
