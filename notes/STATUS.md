@@ -31,7 +31,7 @@
 
 - Step 5: **MetroTRK matches** (29/29 units, mscharged-decomp code, CC0, GC/2.7).
 
-- Step 5: **RVL_SDK 162/179 units match** (mscharged-decomp code, CC0); data
+- Step 5: **RVL_SDK 163/179 units match** (mscharged-decomp code, CC0); data
   sections placed by relocation pairing and verified byte by byte, then the 22
   byte-identical units that failed to link were fixed one by one (see
   `notes/PROVENANCE.md`, "Unit-by-unit data review").
@@ -51,11 +51,11 @@
 
 ## To do
 
-- Step 5: RVL_SDK, 17 units left (NonMatching): OS, OSExec,
+- Step 5: RVL_SDK, 16 units left (NonMatching): OS, OSExec,
   vi, dvd,
   dvd_broadway, mem_list (split covers more than
   the unit), scsystem, ipcclt, WPAD, WPADHIDParser,
-  usb, WUD, uusb_ppc and the GameSpy units gpiInfo,
+  WUD, uusb_ppc and the GameSpy units gpiInfo,
   gt2Message, NATify (99.8 %, one branch in `Think`), natneg (newer/older code than the sources;
   needs hand decompilation). Then the debugger driver block (0x80344FD4-0x80345AD8)
   and the unsplit SDK regions.

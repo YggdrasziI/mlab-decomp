@@ -457,7 +457,7 @@ config.libs = [
             Object(NonMatching, "RVL_SDK/wpad/WPADHIDParser.c"),
             Object(Matching, "RVL_SDK/wpad/WPADEncrypt.c"),
             Object(Matching, "RVL_SDK/euart/euart.c"),
-            Object(NonMatching, "RVL_SDK/usb/usb.c"),
+            Object(Matching, "RVL_SDK/usb/usb.c"),
             Object(NonMatching, "RVL_SDK/wud/WUD.c", cflags=cflags_rvl_wud),
             Object(Matching, "RVL_SDK/wud/WUDHidHost.c", cflags=cflags_rvl_wud),
             Object(Matching, "RVL_SDK/bte/gki_buffer.c", cflags=cflags_rvl_bte, mw_version="GC/3.0a5"),

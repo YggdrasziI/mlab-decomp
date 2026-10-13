@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (162 of 179 units Matching so far)
+## RVL_SDK (163 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -454,6 +454,15 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   split. Names from byte-identical code: `NANDChangeDir`, `nandChangeDirCallback`,
   `NANDPrivateGetTypeAsync`, `nandGetTypeCallback` (guesses from call lists alone were
   wrong for two of them, so only byte pairing is used for names).
+
+- **`usb/usb.c`.** Newer IUSB code, following Petari (CC0, commit `6804bd31`,
+  `src/RVL_SDK/usb/usb.c`) in our file: request block with an isochronous callback and
+  `xfer`/`spare` fields (clean list at 0x14, `nclean` at 0x34, as the DOL offsets show),
+  `_intrBlkCtrlIsoCb` (name from its own log string; accepts `nclean` 4 and 2, resets
+  it, calls the iso callback), `memset` of each request block after allocation,
+  `USB_ERR` gated by `s_usb_err = 1`, IPC heap of 0x4000 bytes, and the two strings
+  of dead-stripped functions that this file has (`packet %u too big`, insertion
+  notification path error). Names from byte-identical code and relocation pairing.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
