@@ -18,10 +18,6 @@ static void nandShutdownCallback(s32 result, void* arg);
 static void nandChangeDirCallback(s32 result, void* arg);
 static void nandGetTypeCallback(s32 result, void* arg);
 static BOOL nandOnShutdown(BOOL final, u32 event);
-static s32 _ES_InitLib(s32* fd);
-static s32 _ES_GetDataDir(s32* fd, u64 tid, char* dirOut) DECOMP_DONT_INLINE;
-static s32 _ES_GetTitleId(s32* fd, u64* tidOut);
-static s32 _ES_CloseLib(s32* fd);
 
 const char* __NANDVersion =
     "<< RVL_SDK - NAND \trelease build: Dec 11 2007 01:35:48 (0x4199_60831) >>";
@@ -170,6 +166,7 @@ s32 nandConvertErrorCode(s32 result) {
                             IPC_RESULT_MAXBLOCKS,             NAND_RESULT_MAXBLOCKS,
                             IPC_RESULT_MAXFD,                 NAND_RESULT_MAXFD,
                             IPC_RESULT_MAXFILES,              NAND_RESULT_MAXFILES,
+                            -110,                             NAND_RESULT_MAXDEPTH,
                             IPC_RESULT_NOEXISTS,              NAND_RESULT_NOEXISTS,
                             IPC_RESULT_NOTEMPTY,              NAND_RESULT_NOTEMPTY,
                             -104,                             NAND_RESULT_UNKNOWN,
@@ -210,12 +207,27 @@ s32 nandConvertErrorCode(s32 result) {
 
     for (; i < ARRAY_SIZE(errorMap); i += 2) {
         if (result == errorMap[i]) {
+            // Error logging to NAND, as in zeldaret/tp NANDCore.c (CC0); this
+            // build passes no logging callback.
+            if (result == IPC_RESULT_ECC_CRIT || result == -116 || result == -117 ||
+                result == -9 || result == IPC_RESULT_ECC_CRIT_INTERNAL) {
+                char buf[128] ALIGN(64);
+                sprintf(buf, "ISFS error code: %d", result);
+                NANDLoggingAddMessageAsync(NULL, buf);
+            }
+
             nandReportErrorCode(result);
             return errorMap[i + 1];
         }
     }
 
     OSReport("CAUTION!  Unexpected error code [%d] was found.\n", result);
+    {
+        char buf[128] ALIGN(64);
+        sprintf(buf, "ISFS unexpected error code: %d", result);
+        NANDLoggingAddMessageAsync(NULL, buf);
+    }
+
     nandReportErrorCode(result);
     return NAND_RESULT_UNKNOWN;
 }
@@ -255,8 +267,7 @@ void nandGetParentDirectory(char* dir, const char* path) {
 
 s32 NANDInit(void) {
     s32 result;
-    u64 tid;
-    s32 fd;
+    ESTitleId tid;
     BOOL enabled;
 
     enabled = OSDisableInterrupts();
@@ -275,21 +286,23 @@ s32 NANDInit(void) {
     result = ISFS_OpenLib();
     if (result == IPC_RESULT_OK) {
 
-        result = _ES_InitLib(&fd);
+        // This SDK build uses the ESP library instead of its own /dev/es helpers
+        // (as in zeldaret/tp libs/revolution/src/nand/NANDCore.c, CC0).
+        result = ESP_InitLib();
 
         if (result == IPC_RESULT_OK) {
-            result = _ES_GetTitleId(&fd, &tid);
+            result = ESP_GetTitleId(&tid);
         }
 
         if (result == IPC_RESULT_OK) {
-            result = _ES_GetDataDir(&fd, tid, s_homeDir);
+            result = ESP_GetDataDir(tid, s_homeDir);
         }
 
         if (result == IPC_RESULT_OK) {
             strcpy(s_currentDir, s_homeDir);
         }
 
-        _ES_CloseLib(&fd);
+        ESP_CloseLib();
 
         if (result != IPC_RESULT_OK) {
             OSReport("Failed to set home directory.\n");
@@ -514,83 +527,4 @@ void NANDInitBanner(NANDBanner* banner, u32 flags, const wchar_t* title,
     } else {
         wcsncpy(banner->subtitle, subtitle, NAND_BANNER_TITLE_MAX);
     }
-}
-
-/**
- * These were actually re(?)implemented in NANDCore/OSExec according to BBA
- */
-
-static s32 _ES_InitLib(s32* fd) {
-    s32 result;
-
-    *fd = -1;
-    result = IPC_RESULT_OK;
-
-    *fd = IOS_Open("/dev/es", IPC_OPEN_NONE);
-    if (*fd < 0) {
-        result = *fd;
-    }
-
-    return result;
-}
-
-static s32 _ES_GetDataDir(s32* fd, u64 tid, char* dirOut) {
-    // TODO(kiwi) Hacky solution
-    u8 tidWork[256] ALIGN(32);
-    u8 vectorWork[32] ALIGN(32);
-    IPCIOVector* pVectors = (IPCIOVector*)vectorWork;
-    u64* pTid = (u64*)tidWork;
-
-    // Cast is necessary
-    if (*fd < 0 || dirOut == ((void*)NULL)) {
-        return -0x3F9;
-    }
-
-    if ((u32)dirOut % 32 != 0) {
-        return -0x3F9;
-    }
-
-    *pTid = tid;
-
-    pVectors[0].base = pTid;
-    pVectors[0].length = sizeof(u64);
-    pVectors[1].base = dirOut;
-    pVectors[1].length = 30;
-
-    return IOS_Ioctlv(*fd, ES_IOCTLV_GET_DATA_DIR, 1, 1, pVectors);
-}
-
-static s32 _ES_GetTitleId(s32* fd, u64* tidOut) {
-    s32 result;
-    u64* pTid;
-    // TODO(kiwi) Hacky solution
-    u8 tidWork[256] ALIGN(32);
-    u8 vectorWork[32] ALIGN(32);
-    IPCIOVector* pVectors = (IPCIOVector*)vectorWork;
-
-    // Cast is necessary
-    if (*fd < 0 || tidOut == ((void*)NULL)) {
-        return -0x3F9;
-    }
-
-    pTid = (u64*)tidWork;
-    pVectors[0].base = pTid;
-    pVectors[0].length = sizeof(u64);
-
-    result = IOS_Ioctlv(*fd, ES_IOCTLV_GET_TITLE_ID, 0, 1, pVectors);
-    if (result == IPC_RESULT_OK) {
-        *tidOut = *pTid;
-    }
-
-    return result;
-}
-
-static s32 _ES_CloseLib(s32* fd) {
-    s32 result = IPC_RESULT_OK;
-
-    if (*fd >= 0 && (result = IOS_Close(*fd)) == IPC_RESULT_OK) {
-        *fd = -1;
-    }
-
-    return result;
 }

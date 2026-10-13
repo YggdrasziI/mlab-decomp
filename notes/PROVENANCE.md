@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (161 of 179 units Matching so far)
+## RVL_SDK (162 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -442,6 +442,18 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   0x80288B10-0x80289058 (roles from their calls; not renamed yet), no
   `__ntd_*`/trace functions, and shorter `UUSB_Register` / `UUSB_Write`. Neither
   mscharged nor Petari has this variant; needs hand decompilation.
+
+- **`nand/NANDCore.c`.** Three changes to the mscharged code, each also in zeldaret/tp
+  `libs/revolution/src/nand/NANDCore.c` (CC0, commit `c8fa8c9e`): the error map has the
+  `MAXDEPTH` entry (-110 -> `NAND_RESULT_MAXDEPTH`, checked in the DOL table at
+  0x8034A8F8), `nandConvertErrorCode` logs some errors with
+  `NANDLoggingAddMessageAsync` (no callback in this build, 64-byte aligned buffer, no
+  `__NANDPrintErrorMessage` call), and `NANDInit` uses `ESP_InitLib` / `ESP_GetTitleId`
+  / `ESP_GetDataDir` / `ESP_CloseLib` (the local `/dev/es` helpers were removed;
+  `ESP_GetDataDir` prototype added to `esp/esp.h`, from Petari). Data ranges added to the
+  split. Names from byte-identical code: `NANDChangeDir`, `nandChangeDirCallback`,
+  `NANDPrivateGetTypeAsync`, `nandGetTypeCallback` (guesses from call lists alone were
+  wrong for two of them, so only byte pairing is used for names).
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
