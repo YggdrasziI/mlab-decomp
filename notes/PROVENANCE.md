@@ -608,3 +608,19 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `uusb_issue_intr_read`, `uusb_WriteCtrlDataCB`, `uusb_WriteBulkDataCB`. `.sdata`
   range added to the split (0x805FA4F8-0x805FA508: `wait4hci`, the file descriptor,
   `"oh0"`, `"oh1"`).
+
+- **`dvd/dvd_broadway.c` (from Petari).** Petari (CC0, commit `6804bd31`,
+  `src/RVL_SDK/dvd/dvd_broadway.c`, matching for all its versions) has the same 30
+  functions in the same order and sizes. Petari's body is used after our include block
+  with: `bool` replaced by `u8` (Petari's MSL `bool` is `unsigned char`; ours is `int`),
+  `IOSFd`/`IOSError`/`IOSIoVector`/`ESTicket`/`ESTitleMeta` as typedefs of our types,
+  and Petari's `IOS_ERROR_*` values as int macros. The file defines the DVDLow API with
+  this SDK's signatures (`u8` results, new functions), so `dvd_broadway.h` now hides
+  its older prototypes when `DVD_BROADWAY_NO_PROTOTYPES` is defined; only this file
+  defines it, the other units still see the old prototypes (the build stays identical).
+  Names from the alignment: `DVDLowFinalize`,
+  `DVDLowOpenPartitionWithTmdAndTicketView`, `DVDLowGetNoDiscBufferSizes`,
+  `DVDLowGetNoDiscOpenPartitionParams`, and 0x8025661C is `DVDLowInquiry` (the naming
+  pass had `DVDLowWaitForCoverClose`: same size, 93.6 % similar). Lesson: two names of
+  that pass were wrong at 92-94 % similarity (this one and `__a1_34_data_type`); only
+  names confirmed by an exact alignment or a 100 % match should be trusted.

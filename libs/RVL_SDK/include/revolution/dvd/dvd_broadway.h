@@ -73,6 +73,8 @@ typedef struct DVDVideoReportKey {
 
 typedef void (*DVDLowCallback)(u32 intType);
 
+/* dvd_broadway.c defines these with its own (newer SDK) signatures */
+#ifndef DVD_BROADWAY_NO_PROTOTYPES
 BOOL DVDLowInit(void);
 BOOL DVDLowReadDiskID(DVDDiskID* out, DVDLowCallback callback);
 BOOL DVDLowOpenPartition(u32 offset, const ESPTicket* ticket, u32 certsSize,
@@ -97,6 +99,7 @@ BOOL DVDLowUnmaskStatusInterrupts(void);
 BOOL DVDLowMaskCoverInterrupt(void);
 BOOL DVDLowClearCoverInterrupt(DVDLowCallback callback);
 BOOL __DVDLowTestAlarm(const OSAlarm* alarm);
+#endif
 
 #ifdef __cplusplus
 }
