@@ -224,7 +224,10 @@ typedef struct WPADCB {
     u8 lastReportId;        // at 0x987
     WPADCallback getInfoCB; // at 0x988
     u8 getInfoBusy;         // at 0x98C
-    u8 UNK_0x98F[0x9A0 - 0x990];
+    u8 extEnc;              // at 0x98D
+    u8 pwrSave;             // at 0x98E
+    u8 padding2;            // at 0x98F
+    u8 UNK_0x990[0x9A0 - 0x990];
 } ALIGN(32) WPADCB;
 
 typedef WPADCB WPADControlBlock;
@@ -241,8 +244,8 @@ void WPADiCreateKeyFor3rd(s32 chan);
 
 BOOL WPADiSendSetPort(WPADCommandQueue* pQueue, u8 port,
                       WPADCallback pCallback);
-BOOL WPADiSendSetReportType(WPADCommandQueue* pQueue, s32 format,
-                            WPADCallback pCallback);
+BOOL WPADiSendSetReportType(WPADCommandQueue* pQueue, u32 format,
+                            BOOL powerSave, WPADCallback pCallback);
 BOOL WPADiSendEnableDPD(WPADCommandQueue* pQueue, BOOL enable,
                         WPADCallback pCallback);
 BOOL WPADiSendEnableSpeaker(WPADCommandQueue* pQueue, BOOL enable,
@@ -270,7 +273,7 @@ u16 _WPADGetStackBufferStatus(s32 chan);
 u16 _WPADGetModuleBufferStatus(s32 chan);
 
 void __WPADShutdown(void);
-void __WPADReconnect(void);
+void __WPADReconnect(BOOL exec);
 
 #ifdef __cplusplus
 }

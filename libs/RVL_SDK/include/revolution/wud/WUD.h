@@ -73,6 +73,7 @@ typedef struct WUDDevInfo {
 
 BOOL WUDInit(void);
 BOOL WUDIsBusy(void);
+BOOL WUDCancelSyncDevice(void);
 void WUDRegisterAllocator(WUDAllocFunc pAllocFunc, WUDFreeFunc pFreeFunc);
 u32 WUDGetAllocatedMemSize(void);
 void WUDShutdown(BOOL exec);

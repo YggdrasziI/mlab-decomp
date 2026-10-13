@@ -555,3 +555,28 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `WUDVendorSpecificCallback`, `WUDPowerManagerCallback`); data names from relocation
   pairing (`_scArray`, `_spArray`, `__WUDHandlerStack`, `_discResp`, `_scFlush` and the
   file's statics). `.bss` range added to the split (0x8058E140-0x805900E8).
+
+- **`wpad/WPAD.c` (newer WPAD, after Petari).** This DOL's WPAD banner is
+  "Dec 11 2007 01:35:07", the build Petari matches for RMGK01 (CC0, commit `6804bd31`,
+  `src/RVL_SDK/wpad/WPAD.c`); function order and sizes follow it, except that this DOL
+  also has `__wpadSyncCallback`, `WPADGetRadioSensitivity` and `WPADGetInfo` and lacks
+  `WPADSetAutoSleepTime` and `WPADGetWorkMemorySize`. Our file keeps its own names
+  (Petari's field and constant names differ too much for a mechanical copy); the newer
+  behaviour was applied function by function from Petari: `WPADiSendSetReportType`
+  takes `powerSave` (continuous-report byte 0 or 4; `WPADHIDParser.c` callers pass
+  `pwrSave`), `WPADSetDataFormat` restructured, `__ClearControlBlock` clears `pwrSave`,
+  `WPADiInitSub` registers the version before creating the alarm, `WPADInit` sets
+  `_startup` and the reconnect counters, `OnShutdown` cancels a running sync first and
+  handles return-to-menu with `__OSIsReturnToIdle`, `__WPADReconnect(exec)` only arms
+  a delayed reconnect that `WPADiManageHandler` runs through `__reconnect` /
+  `WPADiShutdown(exec)`, `WPADiRumbleMotor` checks the controller itself,
+  `WPADiAfh` is called on `_afhCnt == 60000`, `firmwareCheckCallback` computes the port
+  first, and `WPADiConnCallback` sets the device type from the device name
+  ("Nintendo RVL-CNT") and clears `extEnc`. `_startup`/`_recCnt` are declared without
+  initializer after `_initialized` (their `.sbss` place in this DOL); `_recFlag = -1`
+  sits in `.sdata` after `__WPADVersion`. `WPADCB`'s last bytes are named `extEnc`,
+  `pwrSave`, `padding2` (same size). Names: 8 functions from the Petari alignment; the
+  five 4-byte stubs at 0x802715D8-0x802715E8 were misnamed (their branch targets show
+  `WPADStartFastSimpleSync`, `WPADStopSimpleSync`, `WPADSetSimpleSyncCallback`,
+  `WPADRegisterAllocator`, `WPADGetStatus`); `_wmb` (0x8058CBD0) from relocation
+  pairing. Data ranges added to the split (`.data`, `.bss`, `.sbss`).

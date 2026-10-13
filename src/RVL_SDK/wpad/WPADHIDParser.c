@@ -113,7 +113,7 @@ void abortInitExtension(WPADChannel chan, WPADResult result)
         }
         else
         {
-            WPADiSendSetReportType(&p_wpd->extCmdQueue, p_wpd->dataFormat, NULL);
+            WPADiSendSetReportType(&p_wpd->extCmdQueue, p_wpd->dataFormat, p_wpd->pwrSave, NULL);
             return;
         }
 
@@ -477,7 +477,7 @@ static inline void initExtension(s32 chan)
     u8 extcmd = 0;
 
     WPADiClearQueue(&p_wpd->extCmdQueue);
-    WPADiSendSetReportType(&p_wpd->extCmdQueue, p_wpd->dataFormat, abortInitExtension);
+    WPADiSendSetReportType(&p_wpd->extCmdQueue, p_wpd->dataFormat, p_wpd->pwrSave, abortInitExtension);
     WPADiSendWriteDataCmd(&p_wpd->extCmdQueue, 0x55, WM_REG_EXTENSION_F0, abortInitExtension);
     WPADiSendWriteDataCmd(&p_wpd->extCmdQueue, extcmd, WM_REG_EXTENSION_FB, abortInitExtension);
     WPADiSendReadData(&p_wpd->extCmdQueue, p_wpd->wmReadDataBuf, 2, WM_REG_EXTENSION_DEV_MODE, abortInitExtension);
@@ -596,7 +596,7 @@ void __a1_20_status_report(u8 chan, u8* data)
         p_wpd->devMode = 0;
 
         WPADiClearQueue(&p_wpd->extCmdQueue);
-        WPADiSendSetReportType(&p_wpd->extCmdQueue, p_wpd->dataFormat, NULL);
+        WPADiSendSetReportType(&p_wpd->extCmdQueue, p_wpd->dataFormat, p_wpd->pwrSave, NULL);
 
         if (attach)
         {

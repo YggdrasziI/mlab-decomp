@@ -31,7 +31,7 @@
 
 - Step 5: **MetroTRK matches** (29/29 units, mscharged-decomp code, CC0, GC/2.7).
 
-- Step 5: **RVL_SDK 167/179 units match** (mscharged-decomp code, CC0); data
+- Step 5: **RVL_SDK 168/179 units match** (mscharged-decomp code, CC0); data
   sections placed by relocation pairing and verified byte by byte, then the 22
   byte-identical units that failed to link were fixed one by one (see
   `notes/PROVENANCE.md`, "Unit-by-unit data review").
@@ -51,10 +51,10 @@
 
 ## To do
 
-- Step 5: RVL_SDK, 12 units left (NonMatching): OSExec,
+- Step 5: RVL_SDK, 11 units left (NonMatching): OSExec,
   vi, dvd,
   dvd_broadway, mem_list (split covers more than
-  the unit), WPAD, WPADHIDParser,
+  the unit), WPADHIDParser,
   uusb_ppc and the GameSpy units gpiInfo (99.99 % fuzzy: `GPIProfile` has one more
   field before `cache`, 0x10 instead of 0xC; callees `fn_8030A3E8` / `fn_803085D8` are
   `gpiGetProfile` / `gpiAddOperation` by relocation pairing, not renamed yet),

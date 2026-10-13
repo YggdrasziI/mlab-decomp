@@ -12,6 +12,7 @@ extern "C" {
 
 BOOL WUDInit();
 BOOL WUDIsBusy();
+BOOL WUDCancelSyncDevice(void);
 void WUDRegisterAllocator(WUDAllocFunc pAllocFunc, WUDFreeFunc pFreeFunc);
 void* App_MEMalloc(u32 size);
 BOOL App_MEMfree(void* pBlock);
