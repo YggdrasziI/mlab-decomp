@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (158 of 179 units Matching so far)
+## RVL_SDK (159 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -415,6 +415,14 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   relocation pairing and the matching code (`__OSRelaunchTitle`, `__OSReturnToMenul`,
   `__OSShutdownToSBY`, `bootThisDol`, `__OSIsReturnToIdle`). `.data` shows 99.5 % in
   objdiff only because of the section's end padding.
+
+- **`dvd/dvderror.c`.** The DOL has the newer error log (ring of error records in NAND,
+  13 functions). Whole file from Petari (CC0, commit `6804bd31`,
+  `src/RVL_SDK/dvd/dvderror.c`), adapted to our header names: `DVDCBCallback` ->
+  `DVDErrorCallback`, `DVDErrorInfo` fields `nextOffset` / `status` / `dateTime` ->
+  `next` / `disr` / `sec`. `.bss` range added to the split; names from relocation
+  pairing (the eight NAND callbacks, `DVDLowGetStatusRegister`, `NandInfo`, `NandCb`,
+  `ExistFlag`, `NextOffset`, `__FirstErrorInfo`).
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
