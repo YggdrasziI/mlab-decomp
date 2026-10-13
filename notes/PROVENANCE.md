@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (152 of 179 units Matching so far)
+## RVL_SDK (153 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -354,6 +354,15 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   our header already declared them). Name fix: 0x8026AE54 was named
   `SCSetWpadMotorMode`; it writes item 0x1F (`BT.SPKV`), so it is
   `SCSetWpadSpeakerVolume`.
+
+- **`nand/NANDLogging.c`.** No mscharged source. Taken from Petari (CC0), commit
+  `6804bd31`, `src/RVL_SDK/nand/NANDLogging.c`, adapted to our headers only: `IOSFd` /
+  `ISFSError` become `s32`, `ISFS_ERROR_OK` becomes `IPC_RESULT_OK`,
+  `ISFS_ERROR_UNKNOWN` is written `-117` (its value in Petari's `fs.h`), `cal.mon` becomes
+  `cal.month`, the `u8*` casts on ISFS buffers are dropped, C headers instead of
+  `<cstdio>`/`<cstdlib>`/`<mem.h>`. New header `revolution/nand/NANDLogging.h`
+  (`NANDLoggingCallback`, from Petari's `nandlogging.h`). Data ranges added to the
+  split; `lbl_805FA2F0` renamed `s_fd` (size 4, the rest is padding).
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).

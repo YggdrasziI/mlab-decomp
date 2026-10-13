@@ -352,7 +352,10 @@ RVL_SDK/nand/NANDCheck.c:
 
 RVL_SDK/nand/NANDLogging.c:
 	.text       start:0x802683B0 end:0x80268980
+	.data       start:0x8039FBE0 end:0x8039FC28
+	.bss        start:0x80580D80 end:0x80581080
 	.sdata      start:0x805FA2F0 end:0x805FA2F8
+	.sbss       start:0x805FC188 end:0x805FC190
 
 RVL_SDK/sc/scsystem.c:
 	.text       start:0x80269074 end:0x8026A9D8

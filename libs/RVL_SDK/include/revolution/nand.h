@@ -10,6 +10,7 @@ extern "C" {
 
 #include <revolution/nand/NANDCheck.h>
 #include <revolution/nand/NANDCore.h>
+#include <revolution/nand/NANDLogging.h>
 #include <revolution/nand/NANDOpenClose.h>
 #include <revolution/nand/nand.h>
 
