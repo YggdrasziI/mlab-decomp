@@ -427,7 +427,7 @@ config.libs = [
             Object(NonMatching, "RVL_SDK/dvd/dvderror.c"),
             Object(Matching, "RVL_SDK/dvd/dvdidutils.c"),
             Object(Matching, "RVL_SDK/dvd/dvdFatal.c"),
-            Object(NonMatching, "RVL_SDK/dvd/dvdDeviceError.c"),
+            Object(Matching, "RVL_SDK/dvd/dvdDeviceError.c"),
             Object(NonMatching, "RVL_SDK/dvd/dvd_broadway.c"),
             Object(Matching, "RVL_SDK/ax/AXCL.c"),
             Object(Matching, "RVL_SDK/ax/AXVPB.c"),

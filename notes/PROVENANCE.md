@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (150 of 179 units Matching so far)
+## RVL_SDK (151 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -338,6 +338,13 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   (unchanged). Petari splits the file the same way (`.init` 0x800042E0-0x80004338 for
   `__init_hardware` / `__flush_cache`, `.text` 0xB4 for `__init_user`, `__init_cpp`,
   `exit`).
+
+- **`dvd/dvdDeviceError.c`.** No mscharged source. Taken from Petari (CC0), commit
+  `6804bd31`, `src/RVL_SDK/dvd/dvdDeviceError.c`; one change: `iosRev.major` becomes
+  `iosRev.idLo` (our `OSIOSRev` names the byte at offset 1 `idLo`, as `OSNet.c` uses it).
+  Data ranges added to the split (`.data` messages, `.bss` `CheckBuffer`, `.sdata`
+  `lowDone` and the colour constant, `.sbss` `lowIntType`), each one bounded by the
+  neighbouring units.
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).

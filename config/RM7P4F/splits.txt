@@ -282,6 +282,10 @@ RVL_SDK/dvd/dvdFatal.c:
 RVL_SDK/dvd/dvdDeviceError.c:
 	.text       start:0x80254FD8 end:0x80255270
 	.rodata     start:0x8034A8D8 end:0x8034A8F8
+	.data       start:0x80399048 end:0x803991E0
+	.bss        start:0x80563740 end:0x80563760
+	.sdata      start:0x805FA270 end:0x805FA278
+	.sbss       start:0x805FBF70 end:0x805FBF78
 
 RVL_SDK/dvd/dvd_broadway.c:
 	.text       start:0x80255270 end:0x802576BC
