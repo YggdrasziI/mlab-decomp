@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (148 of 178 units Matching so far)
+## RVL_SDK (150 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -329,6 +329,15 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   `__AXMaxVoices`). `__AXGetStackHead`, `__AXPushFreeStack`, `__AXPushCallbackStack`
   and `__AXDepopVoice` (other AX units, not split yet) were named by pairing the
   relocations of the byte-identical `AXVPB.c` code.
+
+- **`os/__ppc_eabi_init.cpp` (`.text`) and `os/init/__ppc_eabi_init.cpp` (`.init`, new
+  unit).** No mscharged source. Taken from
+  [SMGCommunity/Petari](https://github.com/SMGCommunity/Petari) (CC0), commit `6804bd31`:
+  `src/RVL_SDK/os/__ppc_eabi_init.c` (only an `#include <revolution/base/PPCArch.h>`
+  added; our file keeps the `.cpp` unit name) and `src/RVL_SDK/os/init/__ppc_eabi_init.cpp`
+  (unchanged). Petari splits the file the same way (`.init` 0x800042E0-0x80004338 for
+  `__init_hardware` / `__flush_cache`, `.text` 0xB4 for `__init_user`, `__init_cpp`,
+  `exit`).
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).
