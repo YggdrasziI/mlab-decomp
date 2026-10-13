@@ -15,6 +15,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-12 | eae294f | 494344 / 3412920 bytes (14.48 %) | 2048 / 12580 | 195 linked / 986 | RVL_SDK: 99 units linked; 8.48 % of code linked |
 | 2026-10-12 | 48855ac | 497736 / 3412920 bytes (14.58 %) | 2060 / 12580 | 217 linked / 990 | RVL_SDK: 121 units linked after the unit-by-unit data review; 10.16 % of code linked |
 | 2026-10-13 | 90cb988 | 509368 / 3412920 bytes (14.92 %) | 2104 / 12580 | 242 linked / 988 | RVL_SDK: 146 units linked (functions from TP/Petari/rb3 where they match); 12.22 % of code linked |
+| 2026-10-13 | 906585f | 510768 / 3412920 bytes (14.97 %) | 2106 / 12580 | 243 linked / 988 | MSL_C 59/59 linked (`alloc.c` done: `realloc`, `fn_80330B20` decompiled from the DOL); 12.37 % of code linked |
 
 Notes:
 
