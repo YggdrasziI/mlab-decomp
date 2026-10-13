@@ -17,6 +17,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-13 | 90cb988 | 509368 / 3412920 bytes (14.92 %) | 2104 / 12580 | 242 linked / 988 | RVL_SDK: 146 units linked (functions from TP/Petari/rb3 where they match); 12.22 % of code linked |
 | 2026-10-13 | 906585f | 510768 / 3412920 bytes (14.97 %) | 2106 / 12580 | 243 linked / 988 | MSL_C 59/59 linked (`alloc.c` done: `realloc`, `fn_80330B20` decompiled from the DOL); 12.37 % of code linked |
 | 2026-10-13 | 1d905cd | 525220 / 3412920 bytes (15.39 %) | 2164 / 12580 | 254 linked / 990 | RVL_SDK third pass, smallest units first: AXVPB (split redone), AXProf, __ppc_eabi_init (.text and .init), dvdDeviceError, scapi, NANDLogging, gpiUtility, WUDHidHost, OSPlayRecord, OSPlayTime; 12.82 % of code linked |
+| 2026-10-13 | eb8fbb9 | 539400 / 3412920 bytes (15.80 %) | 2210 / 12580 | 262 linked / 985 | RVL_SDK third pass continued: OSReset, dvderror, sb_queryengine, GXFifo, NANDCore, usb, OS, ipcclt (165/179 SDK units); NATify 99.8 %, natneg 98 %; 13.72 % of code linked |
 
 Notes:
 
