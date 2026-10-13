@@ -180,7 +180,7 @@ Symbols: 85 functions renamed after byte-identical matches, and by call position
 MetroTRK as the debugger communication driver (`DebuggerDriver.c`-style API), whose
 function sizes differ from Petari's and TP's versions.
 
-## RVL_SDK (156 of 179 units Matching so far)
+## RVL_SDK (157 of 179 units Matching so far)
 
 Source: [yannicksuter/mscharged-decomp](https://github.com/yannicksuter/mscharged-decomp),
 commit `126acd42cb8ca0eea1efa75c5a8da7110ef9a142`, **CC0-1.0**: 172 `src/RVL_SDK/**`
@@ -392,6 +392,17 @@ protocol test), `sb_server.c` (server keys filtered by the qr2 function at
   disproves the earlier guess that `FileInfo` and `Block` share an aggregate. Data
   ranges added to the split; `.bss` objects and `PlayRecordLastCloseTime` (one `s64`,
   dtk had two labels) named.
+
+- **`os/OSPlayTime.c`.** No mscharged source. Taken from Petari (CC0, commit `6804bd31`,
+  `src/RVL_SDK/os/OSPlayTime.c`; the DOL has `__OSExpireThread` like Petari, TP has
+  `__OSExpireCallback` instead), adapted to our headers: `__OSActiveThreadQueue` declared
+  with `AT_ADDRESS` as in `OSReset.c`, `thread->nextActive`, `__OSExpireAlarm.end`,
+  `AIDMACallback`, `AIInitDMA(buffer, ...)` without the `u32` cast. Header additions
+  from Petari: ES ticket types and five `ESP_*` prototypes in `esp/esp.h` (the local
+  `ESTicketView` of `OSExec.c`, same 0xD8 size, removed), new `os/OSPlayTime.h`. Data
+  ranges added to the split. 13 names from relocation pairing (the five static/inline
+  helpers, `__OSHotResetForError`, `__OSSetVIForceDimming`, four `AI*` DMA functions,
+  `ESP_GetConsumption`, `__OSExpireAIFade`).
 
 Names corrected on the way (earlier size-alignment errors, proven by code):
 `gt2CloseAllConnectionsHard` (0x8030EE04), `ServerBrowserCount` (0x8031CE30).

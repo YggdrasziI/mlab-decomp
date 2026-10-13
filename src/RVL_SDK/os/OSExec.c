@@ -36,10 +36,6 @@ typedef struct DVDPartitionInfo
     u32 type;
 } DVDPartitionInfo;
 
-typedef struct ESTicketView
-{
-    u8 data[TICKET_VIEW_SIZE];
-} ESTicketView;
 
 typedef struct ImgHeader
 {
