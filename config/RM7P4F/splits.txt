@@ -495,9 +495,10 @@ RVL_SDK/sc/scapi.c:
 	.text       start:0x8026A9D8 end:0x8026AE5C
 
 RVL_SDK/sc/scapi_prdinfo.c:
-	.text       start:0x8026AE5C end:0x8026B04C
-	.data       start:0x8039FE00 end:0x8039FE48
-	.sdata      start:0x805FA410 end:0x805FA418
+	.text       start:0x8026AE5C end:0x8026B174
+	.data       start:0x8039FE00 end:0x8039FE58
+	.sdata      start:0x805FA410 end:0x805FA438
+	.sbss       start:0x805FC1A8 end:0x805FC1B0
 
 RVL_SDK/arc/arc.c:
 	.text       start:0x8026B44C end:0x8026BDC4

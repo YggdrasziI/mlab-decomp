@@ -119,3 +119,33 @@ BOOL SCGetProductSN(u32* sn) {
 
     return FALSE;
 }
+
+// From Garigari (src/RVL_SDK/sc/scapi_prdinfo.c); this DOL's table has JP, US, EU only.
+typedef struct SCProductGameRegionAndString {
+    s8 game;
+    char string[3];
+} SCProductGameRegionAndString;
+
+static SCProductGameRegionAndString ProductGameRegionAndStringTbl[] = {
+    0, "JP",
+    1, "US",
+    2, "EU",
+    -1
+};
+
+s8 SCGetProductGameRegion(void) {
+    char buf[3];
+    SCProductGameRegionAndString* p = ProductGameRegionAndStringTbl;
+
+    if (__SCF1("GAME", buf, sizeof(buf))) {
+        while (p->game != -1) {
+            if (strcmp(p->string, buf) == 0) {
+                return p->game;
+            }
+
+            p++;
+        }
+    }
+
+    return -1;
+}

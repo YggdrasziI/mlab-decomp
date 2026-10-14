@@ -861,3 +861,13 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   ProgSoft modes by position, size and content. Data ranges: `.data`
   0x803982F0-0x80398498, `.sdata2` 0x80600700-0x80600708; GXLight has no data
   referenced in the DOL.
+
+- **`sc/scapi_prdinfo.c` extended.** The split ended at 0x8026B04C, but
+  `SCGetProductCode` (60), `SCGetProductSN` (104) and `SCGetProductGameRegion` (132)
+  follow in the same order as mscharged-decomp's R4QK01 and Garigari's files; the unit
+  now ends at 0x8026B174. `SCGetProductGameRegion` and its table from Garigari (CC0,
+  commit `ece4a903`, `src/RVL_SDK/sc/scapi_prdinfo.c`), with this DOL's table (JP, US,
+  EU, then -1; 16 bytes at 0x8039FE48). Data ranges now `.data`
+  0x8039FE00-0x8039FE58, `.sdata` 0x805FA410-0x805FA438 ("AREA", "CODE", "SERNO",
+  "%u", "GAME"), `.sbss` 0x805FC1A8-0x805FC1B0 (`SCGetProductCode`'s buffer).
+  0x8026B174 (728 bytes, a table computation with no call) stays unsplit.
