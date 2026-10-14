@@ -141,6 +141,9 @@ RVL_SDK/os/OSStateTM.c:
 	.bss        start:0x8055D980 end:0x8055DA40
 	.sbss       start:0x805FBCC0 end:0x805FBCE0
 
+RVL_SDK/os/time.dolphin.c:
+	.text       start:0x8023E484 end:0x8023E4C4
+
 RVL_SDK/os/OSPlayRecord.c:
 	.text       start:0x8023E4C4 end:0x8023EBBC
 	.data       start:0x80396E90 end:0x80396ED8

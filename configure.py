@@ -396,6 +396,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/os/OSUtf.c"),
             Object(Matching, "RVL_SDK/os/OSIpc.c"),
             Object(Matching, "RVL_SDK/os/OSStateTM.c"),
+            Object(Matching, "RVL_SDK/os/time.dolphin.c"),
             Object(Matching, "RVL_SDK/os/OSPlayRecord.c"),
             Object(Matching, "RVL_SDK/os/OSStateFlags.c"),
             Object(Matching, "RVL_SDK/os/OSNet.c"),

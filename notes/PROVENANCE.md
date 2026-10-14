@@ -871,3 +871,9 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   0x8039FE00-0x8039FE58, `.sdata` 0x805FA410-0x805FA438 ("AREA", "CODE", "SERNO",
   "%u", "GAME"), `.sbss` 0x805FC1A8-0x805FC1B0 (`SCGetProductCode`'s buffer).
   0x8026B174 (728 bytes, a table computation with no call) stays unsplit.
+
+- **`os/time.dolphin.c` (written from the DOL).** 0x8023E484 (64 bytes, called from the
+  MSL area at 0x8033ADE0) returns `OSGetTime()` in seconds plus 0xBC17C200 (the seconds
+  from 1900 to 2000). oot-vc's splits name this function `__get_time` in a
+  `revolution/os/time.dolphin.c` unit at the same place in the OS block (size 0x40);
+  oot-vc has no license, so only these names were used, the code was written here.
