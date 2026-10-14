@@ -497,9 +497,15 @@ void NNCancel(int cookie)
 }
 
 // NOT MATCHING yet: the receive loop and the final report now follow this DOL,
-// but the first socket test uses r0 instead of r3, and the inlined
-// SendPingPacket computes Connect.finished with branches in the DOL
-// (branch-free here); ProcessPingPacket has the same ternary issue.
+// but the first socket test uses r0 instead of r3 (no reuse of the loaded
+// socket), and the inlined SendPingPacket / SendReportPacket compute
+// Connect.finished / Report.negResult with branches in the DOL (branch-free
+// here). The same two helpers are branch-free in the DOL's StartReport and
+// ProcessPingPacket, so only this function's copy differs. Tried without effect:
+// GC/3.0a3 to 3.0a5.2, Wii compilers, -opt flags one by one, -O3,
+// optimization_level 1-3 on this function, SendPingPacket defined after it,
+// the socket test in the while condition, ternary spellings (if/else stops the
+// inlining).
 static void NegotiateThink(NATNegotiator neg)
 {
 	//check for any incoming data
@@ -714,10 +720,6 @@ static void ProcessPingPacket(NATNegotiator neg, NatNegPacket *p, struct sockadd
 			//we need to leave it around for a while to process any incoming data.
 			neg->state = ns_finished;
 			neg->retryTime = current_time() + FINISHED_IDLE_TIME;
-
-			if (neg->gameSock != INVALID_SOCKET) {
-				StartReport(neg, nr_success, neg->gameSock, fromaddr);
-			}
 		} else if (!p->Packet.Connect.finished)
 			SendPingPacket(neg);
 	}

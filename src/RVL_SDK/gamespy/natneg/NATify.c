@@ -201,6 +201,11 @@ static int Think(SOCKET sock, NAT * nat)
 		// Tried without effect: GC/3.0a3 to 3.0a5.2; "!= NULL" first, early return,
 		// empty/";"/expression/empty-call NULL branch, inline keyword, locals for the
 		// AddressToString results, trailing else, continue form, manual inlining.
+		// Also tried (2026-10-14): OutputMapping defined after Think, switch(ptype),
+		// do/while(0), for and goto forms of the NULL branch, ternary and && forms;
+		// flags -opt nopeephole/nolifetimes/noloop/nopropagation, -O3, -inline
+		// deferred/smart, -ipa function/off. The DOL keeps an unthreaded jump
+		// ("bne body; b join"), as if the NULL branch held code removed late.
 		while(CanReceiveOnSocket(sock))
 		{
 			length = recvfrom(sock, data, NNINBUF_LEN, 0, (struct sockaddr *)&saddr, &saddrlen);
