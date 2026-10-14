@@ -368,6 +368,16 @@ RVL_SDK/mem/mem_heapCommon.c:
 	.bss        start:0x80579200 end:0x80579228
 	.sbss       start:0x805FC118 end:0x805FC120
 
+RVL_SDK/mem/mem_expHeap.c:
+	.text       start:0x8025FDD8 end:0x80260544
+
+RVL_SDK/mem/mem_frameHeap.c:
+	.text       start:0x80260544 end:0x802606E8
+
+RVL_SDK/mem/mem_allocator.c:
+	.text       start:0x802606E8 end:0x80260798
+	.sdata2     start:0x806008A8 end:0x806008C0
+
 RVL_SDK/mem/mem_list.c:
 	.text       start:0x80260798 end:0x802608AC
 

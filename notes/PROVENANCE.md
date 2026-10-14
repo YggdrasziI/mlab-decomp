@@ -795,3 +795,13 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   position and size; `Unit01` by relocation pairing. Data ranges: `mtx.c` `.sdata`
   0x805FA1E8-0x805FA1F0 and `.sdata2` 0x806006C0-0x806006C8, `mtx44.c` `.sdata2`
   0x806006C8-0x806006D8 (our object has more constants, for stripped functions).
+
+- **`mem/mem_expHeap.c`, `mem/mem_frameHeap.c`, `mem/mem_allocator.c` (from
+  mscharged-decomp).** 0x8025FDD8-0x80260798 has mscharged-decomp's expHeap, frameHeap
+  and allocator functions with the same sizes (the rest is stripped; no unitHeap
+  function is linked). Sources from mscharged-decomp (CC0, commit `dfe2446c`,
+  `src/RVL_SDK/mem/`). This DOL's allocator also has an OS-heap variant, written from
+  the DOL and named by address since no reference names it: `fn_80260714`
+  (`OSAllocFromHeap`), `fn_8026071C` (`OSFreeToHeap`) and the initializer
+  `fn_8026077C` (third function table at 0x806008B8). Names of the other functions by
+  position and size. `.sdata2` 0x806008A8-0x806008C0 (the three function tables).
