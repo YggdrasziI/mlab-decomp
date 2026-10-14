@@ -402,6 +402,10 @@ RVL_SDK/nand/NANDLogging.c:
 	.sdata      start:0x805FA2F0 end:0x805FA2F8
 	.sbss       start:0x805FC188 end:0x805FC190
 
+RVL_SDK/esp/esp.c:
+	.text       start:0x80268980 end:0x80269074
+	.sdata      start:0x805FA2F8 end:0x805FA308
+
 RVL_SDK/sc/scsystem.c:
 	.text       start:0x80269074 end:0x8026A9D8
 	.rodata     start:0x8034AA40 end:0x8034AA98

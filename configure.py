@@ -442,6 +442,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/dsp/dsp_debug.c"),
             Object(Matching, "RVL_SDK/dsp/dsp_task.c"),
             Object(Matching, "RVL_SDK/nand/nand.c"),
+            Object(Matching, "RVL_SDK/esp/esp.c"),
             Object(Matching, "RVL_SDK/nand/NANDOpenClose.c"),
             Object(Matching, "RVL_SDK/nand/NANDCore.c"),
             Object(Matching, "RVL_SDK/nand/NANDSecret.c"),

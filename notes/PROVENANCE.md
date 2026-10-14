@@ -728,3 +728,12 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `DSPAddTask`, `DSPAssertTask`, `__DSPHandler`; data `__DSPVersion`,
   `__DSP_init_flag`. Data ranges: `.data` 0x8039F808-0x8039F888, `.sdata`
   0x805FA2A8-0x805FA2B0, `.sbss` 0x805FC160-0x805FC168.
+
+- **`esp/esp.c` (from Petari).** 0x80268980-0x80269074 holds the ten functions of
+  Petari's `esp.c` with the same sizes (found by a size-sequence search over the
+  reference clones). Taken from Petari (CC0, commit `601f78cb`,
+  `src/RVL_SDK/esp/esp.c`, matching for all its versions) with our headers: Petari's
+  type names aliased to ours (`IOSIoVector`, `ESTicket`, `ESTitleMeta`, `ESTmdView`),
+  and `NULL` redefined as `((void*)0)` in this file (Petari's C definition; the DOL
+  compares pointers with `li`/`cmplw`, our `NULL` 0 gives `cmpwi`). `.sdata`
+  0x805FA2F8-0x805FA308 (`__esFd`, "/dev/es").
