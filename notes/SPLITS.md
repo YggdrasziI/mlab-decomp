@@ -261,7 +261,6 @@ after it are split as `dsp.c`, `dsp_debug.c` and `dsp_task.c`.
 
 | Range | Size |
 |---|---|
-| 0x8023BD14-0x8023BE44 | 0x130 |
 | 0x8023E484-0x8023E4C4 | 0x40 |
 | 0x8024BBE4-0x8024C3B8 | 0x7d4 |
 | 0x802576BC-0x80259418 | 0x1d5c |

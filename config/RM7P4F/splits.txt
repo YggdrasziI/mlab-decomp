@@ -110,6 +110,9 @@ RVL_SDK/os/OSRtc.c:
 	.text       start:0x8023B288 end:0x8023BD14
 	.bss        start:0x8055CF20 end:0x8055CF74
 
+RVL_SDK/os/OSSemaphore.c:
+	.text       start:0x8023BD14 end:0x8023BE44
+
 RVL_SDK/os/OSSync.c:
 	.text       start:0x8023BE44 end:0x8023BEC4
 

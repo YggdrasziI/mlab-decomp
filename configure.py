@@ -389,6 +389,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/os/OSReboot.c"),
             Object(Matching, "RVL_SDK/os/OSReset.c"),
             Object(Matching, "RVL_SDK/os/OSRtc.c"),
+            Object(Matching, "RVL_SDK/os/OSSemaphore.c"),
             Object(Matching, "RVL_SDK/os/OSSync.c"),
             Object(Matching, "RVL_SDK/os/OSThread.c"),
             Object(Matching, "RVL_SDK/os/OSTime.c"),

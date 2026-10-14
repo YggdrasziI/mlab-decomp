@@ -841,3 +841,11 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   same pairing. Data ranges: `AXOut.c` `.bss` 0x80566C80-0x80567A80, `.sbss`
   0x805FC058-0x805FC098; `AXSPB.c` `.bss` 0x80567A80-0x80567B00, `.sbss`
   0x805FC098-0x805FC0E8.
+
+- **`os/OSSemaphore.c` (TP + rb3).** 0x8023BD14-0x8023BE44 has `OSInitSemaphore`,
+  `OSWaitSemaphore`, `OSSignalSemaphore` (sizes as in rb3 and Castaway) and
+  `OSGetSemaphoreCount` (8 bytes). Based on TP's GameCube `OSSemaphore.c` (CC0, commit
+  `c8fa8c9e`); `OSWaitSemaphore` and `OSSignalSemaphore` take the forms of rb3's
+  `src/sdk/RVL_SDK/src/os/OSSemaphore.c` (owner allows rb3 reuse, commit `b9dfa78b`),
+  and `OSSemaphore.count` is volatile as rb3's `vs32 activeSignals` (the DOL reloads
+  it after the wait loop). Names by size and order.

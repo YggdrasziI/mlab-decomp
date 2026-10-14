@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 typedef struct OSSemaphore {
-    s32 count;
+    volatile s32 count; // vs32 in rb3's OSSemaphore.h
     OSThreadQueue queue;
 } OSSemaphore;
 
