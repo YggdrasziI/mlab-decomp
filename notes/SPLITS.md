@@ -256,8 +256,8 @@ reference (e.g. `OSStateTM.c`, `mtx.c`, `GXFrameBuf.c`, `ai.c`, `mem_expHeap.c`,
 0x802608AC-0x80265690 was inside the `mem_list.c` split until 2026-10-14 (the unit is
 only 0x114 bytes). It starts with the MIX library, now split as `mix/mix.c`
 (0x802608AC-0x80263A38) and `mix/remote.c` (0x80263A38-0x80263F18), both matching.
-0x80263F18-0x80264F90 (calls `AXSetVoice*`) and the DSP functions up to `dsp_task.c`
-are not identified yet.
+0x80263F18-0x80264F90 (calls `AXSetVoice*`) is not identified yet; the DSP functions
+after it are split as `dsp.c`, `dsp_debug.c` and `dsp_task.c`.
 
 | Range | Size |
 |---|---|
@@ -270,7 +270,7 @@ are not identified yet.
 | 0x80259448-0x8025B3F4 | 0x1fac |
 | 0x8025B4C0-0x8025F934 | 0x4474 |
 | 0x8025FDD8-0x80260798 | 0x9c0 |
-| 0x80263F18-0x80265690 | 0x1778 |
+| 0x80263F18-0x80264F90 | 0x1078 |
 | 0x8026829C-0x802683B0 | 0x114 |
 | 0x80268980-0x80269074 | 0x6f4 |
 | 0x8026B04C-0x8026B44C | 0x400 |

@@ -714,3 +714,17 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `MIXUnMute` / `MIXIsMute`; `AXIsInit` (0x80257CD0) by relocation pairing. Data
   ranges: `.data` 0x8039DEE0-0x8039EA70, `.bss` 0x80579228-0x8057D5A8, `.sbss`
   0x805FC120-0x805FC138.
+
+- **`dsp/dsp.c`, `dsp/dsp_debug.c` (from mscharged-decomp), `dsp/dsp_task.c` bounds.**
+  The `dsp_task.c` split started after `__DSPHandler` (0x8026525C, 0x434 bytes, the
+  size of mscharged-decomp's); it now starts there, and `dsp.c` (0x80264F90) and
+  `dsp_debug.c` (0x8026520C) are split before it, in mscharged-decomp's order. Sources
+  from mscharged-decomp (CC0, commit `e15f617c`, `src/RVL_SDK/dsp/`), with the build
+  date of this DOL in both the banner and `DSPInit`'s debug print ("Aug  8 2007
+  01:59:06", found at 0x8039F870 and in the `__DSPVersion` string), and
+  `DSPCancelTask` added (0x80265110: `task->flags |= 2` with interrupts disabled, as
+  in TP's GameCube `dsp.c`, CC0, commit `c8fa8c9e`; prototype added to `dsp.h`).
+  Names by position and size against mscharged-decomp: `DSPInit`, `DSPCheckInit`,
+  `DSPAddTask`, `DSPAssertTask`, `__DSPHandler`; data `__DSPVersion`,
+  `__DSP_init_flag`. Data ranges: `.data` 0x8039F808-0x8039F888, `.sdata`
+  0x805FA2A8-0x805FA2B0, `.sbss` 0x805FC160-0x805FC168.

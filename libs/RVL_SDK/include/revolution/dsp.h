@@ -116,6 +116,7 @@ void DSPAssertInt(void);
 void DSPInit(void);
 BOOL DSPCheckInit(void);
 DSPTask* DSPAddTask(DSPTask* task);
+DSPTask* DSPCancelTask(DSPTask* task);
 DSPTask* DSPAssertTask(DSPTask* task);
 
 void __DSP_debug_printf(const char* fmt, ...);
