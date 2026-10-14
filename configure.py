@@ -461,6 +461,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/wpad/WPAD.c", cflags=cflags_rvl_wpad),
             Object(Matching, "RVL_SDK/wpad/WPADHIDParser.c"),
             Object(Matching, "RVL_SDK/wpad/WPADEncrypt.c"),
+            Object(Matching, "RVL_SDK/kpad/KPAD.c"),
             Object(Matching, "RVL_SDK/euart/euart.c"),
             Object(Matching, "RVL_SDK/usb/usb.c"),
             Object(Matching, "RVL_SDK/wud/WUD.c", cflags=cflags_rvl_wud),

@@ -737,3 +737,21 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   and `NULL` redefined as `((void*)0)` in this file (Petari's C definition; the DOL
   compares pointers with `li`/`cmplw`, our `NULL` 0 gives `cmpwi`). `.sdata`
   0x805FA2F8-0x805FA308 (`__esFd`, "/dev/es").
+
+- **`kpad/KPAD.c` (from Petari).** 0x8027D270-0x80280318 has the functions of Petari's
+  RMGJ01 `KPAD.c` with the same sizes (the DOL lacks `KPADSetBtnRepeat`,
+  `KPADSetHoriParam`, `KPADSetDistParam`, `KPADSetSensorHeight`: stripped). Taken from
+  Petari (CC0, commit `601f78cb`, `src/RVL_SDK/kpad/KPAD.c` and
+  `include/revolution/kpad.h`) with: this DOL's banner ("Aug  8 2007 02:05:53
+  (0x4199_60831)"), a 16-entry `uniRingBuf` instead of 120 (the DOL tests
+  `idx >= 16` and `KPADInsideStatus` is 0x538 bytes), real calls to `sqrt`/`sin`/`cos`
+  (24 `bl sqrt` in the DOL; our `math.h` inlines `sqrt`), `ASSERT` defined empty,
+  Petari's WPAD names mapped to their values, casts for our WPAD prototypes, and
+  `Vec2` taken from our `mtx/vec2.h`. 0x8027D28C is `KPADSetAccParam`, not
+  `KPADSetHoriParam` (same size; it writes `acc_play_radius` at 0x9C). `DEBUGPrint`
+  (0x8027D220) stays outside the split (not in Petari's KPAD). `PSMTXMultVec`
+  (0x80248448) and the data names from relocation pairing. Data ranges: `.data`
+  0x803A1AF0-0x803A1B48, `.bss` 0x8058CC20-0x8058E140, `.sdata`
+  0x805FA470-0x805FA4E0, `.sbss` 0x805FC258-0x805FC278, `.sdata2`
+  0x80600990-0x806009F0 (our object has 0x1C more `.sdata2`, constants of stripped
+  code that the linker drops).
