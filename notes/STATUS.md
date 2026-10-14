@@ -53,8 +53,13 @@
 
 - Step 5: RVL_SDK, 3 units left (NonMatching):
   the GameSpy units gt2Message (only `gti2ReceiveMessages` left, 97 %, see the source note), NATify (99.8 %, one branch in `Think`), natneg (98 %, see the NOT MATCHING note in `NegotiateThink`) (newer/older code than the sources;
-  needs hand decompilation). Then the debugger driver block (0x80344FD4-0x80345AD8)
-  and the unsplit SDK regions.
+  needs hand decompilation). All three show the same trait: in the DOL, copies of
+  inlined helpers are less optimized than ours (unthreaded jumps, 0/1 results kept
+  as branches, no reuse of a loaded value) while the out-of-line copies match; no
+  compiler version or flag tried reproduces it (see the source notes; `-ipa program`
+  only defers code generation to the linker, it is not a lead). Then the debugger
+  driver block (0x80344FD4-0x80345AD8) and the unsplit SDK regions (0x80263F18-0x80264F90,
+  AX voice code after MIX, has no reference yet).
 
 - Step 3: continue TU splits with the same method (reference projects for names and
   order, verified on this DOL by sizes and referenced data). The build alone cannot

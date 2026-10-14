@@ -23,6 +23,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-13 | 31528e9 | 604072 / 3412920 bytes (17.70 %) | 2307 / 12580 | 269 linked / 979 | RVL_SDK from Petari (CC0): WPADHIDParser, uusb_ppc, dvd_broadway, vi linked (172/179 SDK units); 16.67 % of code linked |
 | 2026-10-14 | d7dc2b0 | 616096 / 3412920 bytes (18.05 %) | 2322 / 12580 | 271 linked / 979 | RVL_SDK: gpiInfo (newer `GPIProfile` / `GPIPeer` layouts from mkw, CC0) and dvd (newer functions from Petari, CC0) linked (174/179 SDK units); 17.51 % of code linked |
 | 2026-10-14 | eddfdb2 | 620860 / 3412920 bytes (18.19 %) | 2327 / 12580 | 273 linked / 977 | RVL_SDK: OSExec (Petari's newer build) and mem_list (split shrunk to the unit; the rest is an unsplit MIX region) linked (176/179 SDK units); 17.68 % of code linked |
+| 2026-10-14 | a208594 | 637472 / 3412920 bytes (18.68 %) | 2361 / 12580 | 277 linked / 981 | RVL_SDK: MIX (`mix`, `remote`, newer than mscharged-decomp's) and DSP (`dsp`, `dsp_debug`, `dsp_task` from `__DSPHandler`) split and linked; GameSpy gt2Message / NATify / natneg still not matching; 18.14 % of code linked |
 
 Notes:
 
