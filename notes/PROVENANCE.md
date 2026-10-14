@@ -828,3 +828,16 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   0x805FA290-0x805FA298, `.sbss` 0x805FBFE0-0x805FBFE8; `AXAlloc.c` `.bss`
   0x80563900-0x80563A00, `.sbss` 0x805FBFE8-0x805FBFF0; `AXAux.c` `.bss`
   0x80563A00-0x80566B80, `.sbss` 0x805FBFF0-0x805FC038.
+
+- **`ax/AXOut.c`, `ax/AXSPB.c` (from mscharged-decomp).** 0x80259458-0x8025A0B0 has
+  mscharged-decomp's / Castaway's AXOut and AXSPB functions. Sources from
+  mscharged-decomp (CC0, commit `dfe2446c`) with, checked against the DOL:
+  `__AXOutAiCallback` returns early when `__AXDSPDoneFlag` is set; `__AXOutQuit`
+  written from the DOL (clears the user frame callback, cancels the DSP task, sleeps
+  on the out thread queue, stops AI DMA, clears the exceed callback);
+  `__AXSPBQuit` empty (4 bytes). Function names by position and size; data names by
+  relocation pairing; the DSP microcode symbols (`axDspSlave`, `axDspInitVector`,
+  `axDspResumeVector`, `axDspSlaveLength`, still in unsplit data) named from the
+  same pairing. Data ranges: `AXOut.c` `.bss` 0x80566C80-0x80567A80, `.sbss`
+  0x805FC058-0x805FC098; `AXSPB.c` `.bss` 0x80567A80-0x80567B00, `.sbss`
+  0x805FC098-0x805FC0E8.

@@ -366,6 +366,16 @@ RVL_SDK/ax/AXCL.c:
 	.bss        start:0x80566B80 end:0x80566C80
 	.sbss       start:0x805FC038 end:0x805FC058
 
+RVL_SDK/ax/AXOut.c:
+	.text       start:0x80259458 end:0x80259C8C
+	.bss        start:0x80566C80 end:0x80567A80
+	.sbss       start:0x805FC058 end:0x805FC098
+
+RVL_SDK/ax/AXSPB.c:
+	.text       start:0x80259C8C end:0x8025A0B0
+	.bss        start:0x80567A80 end:0x80567B00
+	.sbss       start:0x805FC098 end:0x805FC0E8
+
 RVL_SDK/ax/AXVPB.c:
 	.text       start:0x8025A0B0 end:0x8025B3F4
 	.data       start:0x8039A130 end:0x8039A1C0
