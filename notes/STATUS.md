@@ -51,17 +51,17 @@
 
 ## To do
 
-- Step 5: RVL_SDK, 3 units left (NonMatching):
-  the GameSpy units gt2Message (only `gti2ReceiveMessages` left, 97 %, see the source note), NATify (99.8 %, one branch in `Think`), natneg (98 %, see the NOT MATCHING note in `NegotiateThink`) (newer/older code than the sources;
-  needs hand decompilation). All three show the same trait: in the DOL, copies of
-  inlined helpers are less optimized than ours (unthreaded jumps, 0/1 results kept
-  as branches, no reuse of a loaded value) while the out-of-line copies match; no
-  compiler version or flag tried reproduces it (see the source notes; `-ipa program`
-  only defers code generation to the linker, it is not a lead). Then the debugger
-  driver block (0x80344FD4-0x80345AD8; its `DB*` sizes differ from every reference)
-  and the unsplit SDK regions listed in `notes/SPLITS.md`: AXFX (0x8025B4C0, a newer
-  layout than mscharged-decomp's), 0x80263F18 (AX voice code after MIX) and 0x8026B174
-  (no reference), and the DWC / GameSpy / NCD / NHTTP blocks.
+- Step 5: RVL_SDK NonMatching units (all split): gt2Message, NATify, natneg, qr2
+  (the "unthreaded branch / leftover compare" trait: in the DOL, empty debug branches
+  keep a jump and a dead compare that our compile removes; no flag or spelling tried
+  reproduces it), and gsPlatformSocket / gsPlatformUtil / gsMemory (this build's
+  gsMemory keeps its callback table in .bss at 0x805C6D08 and the platform files call
+  through it; no reference has that version).
+  Unsplit SDK regions (see `notes/SPLITS.md`): the DWC block 0x802B3E88-0x802E5EEC
+  and 0x802E6298-0x802FB3A4 (newer DWC than mscharged-decomp; mkw has the same sizes
+  in places but unnamed), AXFX 0x8025D2E0-0x8025F934 (newer Delay-type effects, no
+  names in any reference), 0x80263F18-0x80264F90 (AX voice manager used by the game,
+  no reference), and the debugger driver block (0x80344FD4-0x80345AD8).
 
 - Step 3: continue TU splits with the same method (reference projects for names and
   order, verified on this DOL by sizes and referenced data). The build alone cannot
