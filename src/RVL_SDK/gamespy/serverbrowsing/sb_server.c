@@ -289,7 +289,7 @@ SBServer SBServerGetNext(SBServer server) { return server->next; }
 // In this GameSpy build, server keys for which this qr2 function (0x803156EC)
 // returns nonzero are not stored. It tests entries 31 and 32 of
 // qr2_registered_key_list; its real name is unknown.
-int fn_803156EC(const char* key);
+int qr2_internal_is_master_only_key(const char* key);
 
 static int CheckValidKey(char* key) {
   const char* InvalidKeys[] = {"queryid", "final"};
@@ -327,7 +327,7 @@ void SBServerParseKeyVals(SBServer server, char* keyvals) {
     if (v == NULL)
       v = "";
     if (CheckValidKey(k)) {
-      if (!fn_803156EC(k))
+      if (!qr2_internal_is_master_only_key(k))
         SBServerAddKeyValue(server, k, v);
     }
     k = mytok(NULL, '\\');
@@ -383,7 +383,7 @@ void SBServerParseQR2FullKeysSingle(SBServer server, char* data, int len) {
     data += dlen;
     len -= dlen;
 
-    if (!fn_803156EC(k))
+    if (!qr2_internal_is_master_only_key(k))
       SBServerAddKeyValue(server, k, v);
   }
   // skip the NUL
@@ -527,7 +527,7 @@ void SBServerParseQR2FullKeysSplit(SBServer server, char* data, int len) {
         data += dlen;
         len -= dlen;
 
-        if (!fn_803156EC(k))
+        if (!qr2_internal_is_master_only_key(k))
           SBServerAddKeyValue(server, k, v);
       } else {
         char tempkey[128];

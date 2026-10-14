@@ -590,6 +590,8 @@ config.libs = [
             Object(Matching, "RVL_SDK/gamespy/GP/gpiBuffer.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/GP/gpiCallback.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/GP/gpiConnect.c", cflags=cflags_rvl_spy),
+            Object(NonMatching, "RVL_SDK/gamespy/qr2/qr2.c", cflags=cflags_rvl_spy),
+            Object(Matching, "RVL_SDK/gamespy/qr2/qr2regkeys.c", cflags=cflags_rvl_spy),
         ],
     },
     {

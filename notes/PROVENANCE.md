@@ -918,3 +918,14 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `B64Decode`, `gsiTimeInSec`, `__GSIACGamename` (0x40 bytes, as in mkw), and
   `gpiProcessRegisterCdKey` (our `gpiUnique.c` had it as `fn_8030CEDC`).
   `gsUdpEngine.c` `.bss` is 0x805C6FB0-0x805C6FF0 (0x40, as in mkw).
+
+- **`gamespy/qr2/qr2.c`, `qr2regkeys.c` (from mkw).** 0x80312E2C-0x8031577C holds mkw's
+  qr2 units (25 functions, same sizes). Sources and `qr2.h` / `qr2regkeys.h` from mkw
+  (CC0, commit `fa127308`); serverbrowsing's placeholder `fn_803156EC` is
+  `qr2_internal_is_master_only_key`. mkw's `qr2.c` replaces `qr2_check_queries` with an
+  asm copy and adds a dummy function that forces three debug strings into `.data`;
+  both were dropped: the C version is used, with its input buffer as a function
+  static (the DOL's `.bss` order: `local_ip_list`, `qr2_hostname`, then the buffer).
+  `qr2.c` is NonMatching (2 instructions, see the note in the source);
+  `qr2regkeys.c` is linked (`.data` 0x803B3228-0x803B3700, `.sdata`
+  0x805FAC10-0x805FAC88, the key strings found by their bytes).

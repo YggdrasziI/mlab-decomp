@@ -1018,6 +1018,14 @@ RVL_SDK/gamespy/gt2/gt2Utility.c:
 	.sdata      start:0x805FABC8 end:0x805FABE0
 	.sbss       start:0x805FC3E8 end:0x805FC3F0
 
+RVL_SDK/gamespy/qr2/qr2.c:
+	.text       start:0x80312E2C end:0x803156EC
+
+RVL_SDK/gamespy/qr2/qr2regkeys.c:
+	.text       start:0x803156EC end:0x8031577C
+	.data       start:0x803B3228 end:0x803B3700
+	.sdata      start:0x805FAC10 end:0x805FAC88
+
 RVL_SDK/gamespy/gstats/gbucket.c:
 	.text       start:0x8031577C end:0x80316914
 	.sbss       start:0x805FC3F8 end:0x805FC410

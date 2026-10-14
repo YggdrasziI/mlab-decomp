@@ -391,7 +391,7 @@ SBServer SBQueryEngineUpdateServerByIP(SBQueryEngine* engine, const char* ip,
   return server;
 }
 
-int fn_803156EC(const char* key);
+int qr2_internal_is_master_only_key(const char* key);
 
 static void ParseSingleQR2Reply(SBQueryEngine* engine, SBServer server,
                                 char* data, int len) {
@@ -423,7 +423,7 @@ static void ParseSingleQR2Reply(SBQueryEngine* engine, SBServer server,
       if (dlen < 0)
         break;
       // Filtered as in sb_server.c (qr2 function 0x803156EC, name unknown).
-      if (!fn_803156EC(qr2_registered_key_list[engine->serverkeys[i]]))
+      if (!qr2_internal_is_master_only_key(qr2_registered_key_list[engine->serverkeys[i]]))
         SBServerAddKeyValue(
             server, qr2_registered_key_list[engine->serverkeys[i]], data);
       data += dlen;
