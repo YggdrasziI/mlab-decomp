@@ -25,6 +25,7 @@ AXVPB* __AXPopStackFromBottom(u32 prio);
 void AXFreeVoice(AXVPB* vpb);
 AXVPB* AXAcquireVoice(u32 prio, AXVoiceCallback callback, u32 userContext);
 void AXSetVoicePriority(AXVPB* vpb, u32 prio);
+void __AXAllocQuit(void);
 
 #ifdef __cplusplus
 }

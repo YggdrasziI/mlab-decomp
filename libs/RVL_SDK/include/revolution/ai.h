@@ -37,6 +37,7 @@ extern "C"
 AIDMACallback AIRegisterDMACallback(AIDMACallback callback);
 void AIInitDMA(void* buffer, u32 length);
 void AIStartDMA(void);
+void AIStopDMA(void);
 u32 AIGetDMABytesLeft(void);
 u32 AIGetDMAStartAddr(void);
 u32 AIGetDMALength(void);

@@ -805,3 +805,26 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   (`OSAllocFromHeap`), `fn_8026071C` (`OSFreeToHeap`) and the initializer
   `fn_8026077C` (third function table at 0x806008B8). Names of the other functions by
   position and size. `.sdata2` 0x806008A8-0x806008C0 (the three function tables).
+
+- **`ai/ai.c`, `ax/AX.c`, `ax/AXAlloc.c`, `ax/AXAux.c` (from mscharged-decomp).**
+  0x802576BC-0x802589E0 has pik2wii's AI/AX function sequence plus `AIStopDMA`,
+  `AXQuit`, `__AXAllocQuit` and `__AXAuxQuit` (sizes as in Castaway's symbols). Split
+  into the four files of mscharged-decomp, pik2wii and Castaway; sources from
+  mscharged-decomp (CC0, commit `dfe2446c`) with this DOL's build dates in the AI and
+  AX banners ("Aug  8 2007 01:58:12" / "01:58:18"). Added from the DOL: `AIStopDMA`
+  (clears the play bit), `AXQuit` (calls `__AXOutQuit`, `__AXAllocQuit`,
+  `__AXVPBQuit`, `__AXSPBQuit`, `__AXAuxQuit`, `__AXClQuit` when initialized; the
+  GameCube order of TP/melee's `AX.c`, with `__AXOutQuit` first), `__AXAllocQuit`
+  (same body as `__AXAllocInit`), `__AXAuxQuit` (clears the three aux callbacks);
+  prototypes added to the AX/AI headers. Names: `__AXSPBQuit` (0x80259F40, 4 bytes),
+  `__AXClQuit` (0x80259414, was `fn_80259414` in our `AXCL.c`) and `__AXOutQuit`
+  (0x80259AC4) from their place in `AXQuit` and Castaway's sizes; `AXGetAuxACallback`
+  (0x802589CC) from its body; `__AXOutInit`, `__AXSPBInit` and the data by relocation
+  pairing; the rest by position and size. `config.yml` blocks a false relocation at
+  `.rodata:0x8034F28C` (a u16 character table holding 0x8056 0x58F0, read as a
+  pointer into `__AXBufferAuxB`). Data ranges: `ai.c` `.data`
+  0x8039A0A0-0x8039A0E8, `.sdata` 0x805FA288-0x805FA290, `.sbss`
+  0x805FBFA0-0x805FBFE0; `AX.c` `.data` 0x8039A0E8-0x8039A130, `.sdata`
+  0x805FA290-0x805FA298, `.sbss` 0x805FBFE0-0x805FBFE8; `AXAlloc.c` `.bss`
+  0x80563900-0x80563A00, `.sbss` 0x805FBFE8-0x805FBFF0; `AXAux.c` `.bss`
+  0x80563A00-0x80566B80, `.sbss` 0x805FBFF0-0x805FC038.

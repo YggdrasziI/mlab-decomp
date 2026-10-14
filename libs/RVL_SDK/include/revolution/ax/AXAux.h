@@ -55,6 +55,7 @@ void AXRegisterAuxCCallback(AXAuxCallback callback, void* context);
 void AXGetAuxACallback(AXAuxCallback* callback, void** context);
 void AXGetAuxBCallback(AXAuxCallback* callback, void** context);
 void AXGetAuxCCallback(AXAuxCallback* callback, void** context);
+void __AXAuxQuit(void);
 
 #ifdef __cplusplus
 }

@@ -12,3 +12,6 @@ mw_comment_version: 15
 block_relocations:
 - source: .text:0x80233818
 - source: .text:0x80233890
+# A u16 character table holds 0x8056 0x58F0 side by side; dtk read it as a pointer
+# into the AXAux buffers.
+- source: .rodata:0x8034F28C

@@ -8,6 +8,7 @@ extern "C" {
 void AXInit(void);
 BOOL AXIsInit(void);
 void AXInitEx(u32 mode);
+void AXQuit(void);
 
 #ifdef __cplusplus
 }

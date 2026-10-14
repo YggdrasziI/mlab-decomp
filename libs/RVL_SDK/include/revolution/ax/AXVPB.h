@@ -91,6 +91,7 @@ void AXSetVoiceLpf(AXVPB* vpb, AXPBLPF* lpf);
 void AXSetVoiceLpfCoefs(AXVPB* vpb, u16 a0, u16 b0);
 void AXSetVoiceRmtOn(AXVPB* vpb, u16 on);
 void AXSetVoiceRmtMix(AXVPB* vpb, AXPBRMTMIX* mix);
+void __AXVPBQuit(void);
 
 #ifdef __cplusplus
 }

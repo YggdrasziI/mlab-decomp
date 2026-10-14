@@ -244,7 +244,7 @@ void __AXClInit(void) {
 // Not in the reference source: an empty function placed here in this game's
 // DOL and called by the AX shutdown function (fn_80257C88) where the AX init
 // function calls __AXClInit. Real name unknown.
-void fn_80259414(void) {}
+void __AXClQuit(void) {}
 
 void AXSetMode(u32 mode) {
     __AXClMode = mode;
