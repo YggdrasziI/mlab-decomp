@@ -54,7 +54,8 @@ typedef struct {
   char* statusString;
   char* locationString;
   unsigned int ip;
-  unsigned int port;
+  unsigned short port;
+  GPEnum quietModeFlags;
 } GPIBuddyStatus;
 
 // Profile data.
@@ -121,6 +122,7 @@ GPIBool gpiProfileMap(GPConnection* connection, gpiProfileMapFunc func,
 GPIProfile* gpiFindBuddy(GPConnection* connection, int buddyIndex);
 
 void gpiRemoveBuddyStatus(GPIBuddyStatus* buddyStatus);
+void gpiRemoveBuddyStatusInfo(GPIBuddyStatusInfo* buddyStatusInfo);
 
 GPIBool gpiCanFreeProfile(GPIProfile* profile);
 

@@ -899,3 +899,22 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   early-reflection line (`earlyLine[fx->earlyPos[2]] = data;`), added to both
   callbacks. Names by position and size. Data ranges: `.data` 0x8039D180-0x8039D320 /
   0x8039D320-0x8039D4E0, `.sdata2` 0x80600798-0x806007D8 / 0x806007D8-0x80600818.
+
+- **GameSpy GP units and `gsUdpEngine.c` (from mkw).** mkw's GameSpy is the same
+  (newer) version as this DOL: long runs of identical function sizes, with names. Split
+  by aligning our functions with mkw's (RMCP01) units: `common/gsUdpEngine.c`,
+  `GP/gp.c`, `gpi.c`, `gpiBuddy.c`, `gpiBuffer.c`, `gpiCallback.c`, `gpiConnect.c`,
+  `gpiKeys.c`, `gpiOperation.c`, `gpiPeer.c`, `gpiProfile.c`, `gpiSearch.c`,
+  `gpiTransfer.c`. Sources from mkw (CC0, commit `fa127308`, `lib/gamespy/`),
+  unchanged; our GP headers replaced by mkw's (`gp.h`, `gpi.h`, `gpiBuddy.h`,
+  `gpiBuffer.h`, `gpiPeer.h`, `gpiProfile.h`, `gpiSearch.h`): this fills the
+  `unk_0x434[0x184]` placeholder of `GPIConnection` with the real fields (UDP layer,
+  rich status, extended info keys, `quietModeFlags`, `kaTransmit`); the already linked
+  gpiInfo / gpiUnique / gpiUtility units still give an identical DOL. Function names
+  from mkw's symbols; data names by relocation pairing; `.data` / `.sdata` ranges
+  from the references (the linker drops our unreferenced strings, so the ranges follow
+  the DOL). Also named from mkw / mscharged-decomp at the same places and sizes:
+  `MD5Update`, `MD5Transform`, `MD5Digest`, `connect`, `send`, `SetSockBlocking`,
+  `B64Decode`, `gsiTimeInSec`, `__GSIACGamename` (0x40 bytes, as in mkw), and
+  `gpiProcessRegisterCdKey` (our `gpiUnique.c` had it as `fn_8030CEDC`).
+  `gsUdpEngine.c` `.bss` is 0x805C6FB0-0x805C6FF0 (0x40, as in mkw).

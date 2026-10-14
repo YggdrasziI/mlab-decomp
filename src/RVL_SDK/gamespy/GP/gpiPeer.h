@@ -31,7 +31,7 @@ Please see the GameSpy Presence SDK documentation for more information
 
 // Timeout for a peer connection, in milliseconds.
 /////////////////////////////////////////////
-#define GPI_PEER_TIMEOUT (5 * 60)
+#define GPI_PEER_TIMEOUT (10 * 1000)
 
 // Timeout for a peer operation, in milliseconds
 ////////////////////////////////////////////
@@ -97,7 +97,13 @@ GPResult gpiPeerGetSig(GPConnection* connection, GPIPeer* peer);
 GPResult gpiPeerStartConnect(GPConnection* connection, GPIPeer* peer);
 
 // NOTE: use this function when in a gp function
-GPIPeer* gpiGetConnectedPeer(const GPConnection* connection, int profileid);
+GPIPeer* gpiGetPeerByProfile(const GPConnection* connection, int profileid);
+
+// NOTE: use this function only when in a UDP layer callback
+GPIPeer* gpiGetPeerByAddr(const GPConnection* connection, unsigned int ip,
+                          unsigned short port);
+
+gsi_bool gpiIsPeerConnected(GPIPeer* peer);
 
 GPIPeer* gpiAddPeer(GPConnection* connection, int profileid, GPIBool initiate);
 

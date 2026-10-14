@@ -86,20 +86,31 @@ typedef struct {
   char* inputBuffer;
   int inputBufferSize;
   GPIBuffer outputBuffer;
-  SOCKET peerSocket;
-  unsigned int peerPort;
+  // Replaced by UDP Layer
+  // SOCKET peerSocket;
+  char mHeader[GS_UDP_MSG_HEADER_LEN];
+  unsigned short peerPort;
   int nextOperationID;
   int numSearches;
 
   GPEnum lastStatusState;
+  unsigned int hostIp;
+  unsigned int hostPrivateIp;
+  unsigned short queryPort;
+  unsigned short hostPort;
+  unsigned int sessionFlags;
 
+  char richStatus[GP_RICH_STATUS_LEN];
+  char gameType[GP_STATUS_BASIC_STR_LEN];
+  char gameVariant[GP_STATUS_BASIC_STR_LEN];
+  char gameMapName[GP_STATUS_BASIC_STR_LEN];
+
+  // New Status Info extended info Keys
+  DArray extendedInfoKeys;
+
+  // Deprecated
   char lastStatusString[GP_STATUS_STRING_LEN];
   char lastLocationString[GP_LOCATION_STRING_LEN];
-
-  // This GameSpy build has 0x184 more bytes before errorCode (errorCode is at
-  // 0x5B8 in the DOL, every later field is shifted by 0x184). Their content and
-  // exact position after lastStatusState are unknown; no linked code uses them.
-  char unk_0x434[0x184];
 
   GPErrorCode errorCode;
   GPIBool fatalError;
@@ -116,6 +127,8 @@ typedef struct {
   int productID;
   int namespaceID;
   char loginTicket[GP_LOGIN_TICKET_LEN];
+  GPEnum quietModeFlags;
+  gsi_time kaTransmit;
 } GPIConnection;
 
 // FUNCTIONS

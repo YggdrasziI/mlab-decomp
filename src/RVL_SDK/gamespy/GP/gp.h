@@ -554,6 +554,7 @@ typedef struct {
   gsi_char locationString[GP_LOCATION_STRING_LEN]; // 0x108
   unsigned int ip;                                 // 0x208
   int port;                                        // 0x20C
+  GPEnum quietModeFlags;                           // 0x210
 } GPBuddyStatus;
 
 // BETA
@@ -978,6 +979,8 @@ GPResult gpGetBuddyStatus(GPConnection* connection, int index,
 GPResult gpGetBuddyStatusInfo(GPConnection* connection, int index,
                               GPBuddyStatusInfo* statusInfo);
 
+GPResult gpSetBuddyAddr(GPConnection* connection, int index,
+                        unsigned int buddyIp, unsigned short buddyPort);
 #endif
 // gpGetBuddyIndex
 //////////////////

@@ -116,8 +116,8 @@ GPResult gpiProcessRegisterUniqueNick(
 
 // Not in the reference source: written from this game's DOL. Same as
 // gpiProcessRegisterUniqueNick but expects \rc\, the reply to a CD key
-// registration (GPI_REGISTER_CDKEY). Real name unknown.
-GPResult fn_8030CEDC(
+// registration (GPI_REGISTER_CDKEY); name from mkw's symbols (same place and size).
+GPResult gpiProcessRegisterCdKey(
     GPConnection* connection,
     GPIOperation* operation,
     const char* input)

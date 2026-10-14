@@ -57,8 +57,12 @@ GPResult gpiSendServerBuddyMessage(GPConnection* connection, int profileid,
                                    int type, const char* message);
 
 GPResult gpiSendBuddyMessage(GPConnection* connection, int profileid, int type,
-                             const char* message, int sendOptions);
+                             const char* message, int sendOptions,
+                             GPIPeerOp* peerOp);
 
+GPResult gpiBuddyHandleKeyRequest(GPConnection* connection, GPIPeer* peer);
+GPResult gpiBuddyHandleKeyReply(GPConnection* connection, GPIPeer* peer,
+                                char* buffer);
 
 GPResult gpiAuthBuddyRequest(GPConnection* connection, GPProfile profile);
 

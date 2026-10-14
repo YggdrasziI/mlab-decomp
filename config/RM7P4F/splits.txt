@@ -911,11 +911,73 @@ RVL_SDK/gamespy/darray.c:
 RVL_SDK/gamespy/hashtable.c:
 	.text       start:0x802FBDF8 end:0x802FC290
 
+RVL_SDK/gamespy/common/gsUdpEngine.c:
+	.text       start:0x802FEA0C end:0x802FFBDC
+	.bss        start:0x805C6FB0 end:0x805C6FF0
+
+RVL_SDK/gamespy/GP/gp.c:
+	.text       start:0x802FFBDC end:0x80300A64
+	.data       start:0x803B0F20 end:0x803B1298
+	.sdata      start:0x805FA7C8 end:0x805FA7D8
+
+RVL_SDK/gamespy/GP/gpi.c:
+	.text       start:0x80300A64 end:0x803013F0
+	.data       start:0x803B1298 end:0x803B1318
+	.sdata      start:0x805FA7D8 end:0x805FA810
+
+RVL_SDK/gamespy/GP/gpiBuddy.c:
+	.text       start:0x803013F0 end:0x80303120
+	.data       start:0x803B1318 end:0x803B1460
+	.sdata      start:0x805FA810 end:0x805FA8B0
+
+RVL_SDK/gamespy/GP/gpiBuffer.c:
+	.text       start:0x80303120 end:0x80303B54
+	.data       start:0x803B1460 end:0x803B14C8
+	.sdata      start:0x805FA8B0 end:0x805FA8C8
+
+RVL_SDK/gamespy/GP/gpiCallback.c:
+	.text       start:0x80303B54 end:0x803040B8
+	.data       start:0x803B14C8 end:0x803B14D8
+
+RVL_SDK/gamespy/GP/gpiConnect.c:
+	.text       start:0x803040B8 end:0x80305700
+	.data       start:0x803B14D8 end:0x803B1880
+	.sdata      start:0x805FA8C8 end:0x805FA960
+
 RVL_SDK/gamespy/GP/gpiInfo.c:
 	.text       start:0x80305700 end:0x80307B98
 	.data       start:0x803B1880 end:0x803B1BD8
 	.sdata      start:0x805FA960 end:0x805FAA18
 	.sdata2     start:0x80600B08 end:0x80600B10
+
+RVL_SDK/gamespy/GP/gpiKeys.c:
+	.text       start:0x80307B98 end:0x80308200
+	.data       start:0x803B1BD8 end:0x803B1C20
+	.sdata      start:0x805FAA18 end:0x805FAA20
+
+RVL_SDK/gamespy/GP/gpiOperation.c:
+	.text       start:0x80308200 end:0x803088D8
+	.data       start:0x803B1C20 end:0x803B1C68
+
+RVL_SDK/gamespy/GP/gpiPeer.c:
+	.text       start:0x803088D8 end:0x80309FE4
+	.data       start:0x803B1C68 end:0x803B1D38
+	.sdata      start:0x805FAA20 end:0x805FAA68
+
+RVL_SDK/gamespy/GP/gpiProfile.c:
+	.text       start:0x80309FE4 end:0x8030A92C
+	.data       start:0x803B1D38 end:0x803B1EF0
+	.sdata      start:0x805FAA68 end:0x805FAA90
+
+RVL_SDK/gamespy/GP/gpiSearch.c:
+	.text       start:0x8030A92C end:0x8030CCC8
+	.data       start:0x803B1EF0 end:0x803B2210
+	.sdata      start:0x805FAA90 end:0x805FAB80
+
+RVL_SDK/gamespy/GP/gpiTransfer.c:
+	.text       start:0x8030CCC8 end:0x8030CDB0
+	.data       start:0x803B2210 end:0x803B2238
+	.sdata      start:0x805FAB80 end:0x805FAB90
 
 RVL_SDK/gamespy/GP/gpiUnique.c:
 	.text       start:0x8030CDB0 end:0x8030D008

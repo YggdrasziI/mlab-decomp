@@ -56,6 +56,8 @@ typedef struct {
   GPIBool processing;
   GPIBool remove;
   gsi_time searchStartTime;
+  int* revBuddyProfileIds;
+  int numOfRevBuddyProfiles;
 } GPISearchData;
 
 // FUNCTIONS
