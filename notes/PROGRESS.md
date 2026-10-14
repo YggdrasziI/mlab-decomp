@@ -24,6 +24,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-14 | d7dc2b0 | 616096 / 3412920 bytes (18.05 %) | 2322 / 12580 | 271 linked / 979 | RVL_SDK: gpiInfo (newer `GPIProfile` / `GPIPeer` layouts from mkw, CC0) and dvd (newer functions from Petari, CC0) linked (174/179 SDK units); 17.51 % of code linked |
 | 2026-10-14 | eddfdb2 | 620860 / 3412920 bytes (18.19 %) | 2327 / 12580 | 273 linked / 977 | RVL_SDK: OSExec (Petari's newer build) and mem_list (split shrunk to the unit; the rest is an unsplit MIX region) linked (176/179 SDK units); 17.68 % of code linked |
 | 2026-10-14 | a208594 | 637472 / 3412920 bytes (18.68 %) | 2361 / 12580 | 277 linked / 981 | RVL_SDK: MIX (`mix`, `remote`, newer than mscharged-decomp's) and DSP (`dsp`, `dsp_debug`, `dsp_task` from `__DSPHandler`) split and linked; GameSpy gt2Message / NATify / natneg still not matching; 18.14 % of code linked |
+| 2026-10-14 | fd99a1a | 671420 / 3412920 bytes (19.67 %) | 2530 / 12580 | 296 linked / 973 | RVL_SDK unsplit regions found by a size-sequence search over the reference clones and linked: esp, KPAD, OSStateTM, OSLaunch, mtx/mtxvec/mtx44, mem_expHeap/frameHeap/allocator, ai, AX, AXAlloc, AXAux, AXOut, AXSPB, OSSemaphore, GXFrameBuf, GXLight, scapi_prdinfo extended; 19.14 % of code linked |
 
 Notes:
 

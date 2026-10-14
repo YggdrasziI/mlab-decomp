@@ -247,7 +247,7 @@ unknown): `OSStateTM.c` (0x8023E080-0x8023E330), `OSLaunch.c` (0x8023FC84),
 `dwci_nd.c` (0x80320B8C), `ncdsystem.c` (0x8032149C), `NHTTP_bgnend.c` (0x80325ED4),
 `NHTTP_os_RVL.c` (0x8032683C), `d_nhttp.c` (0x8032C2B0).
 
-Not split yet (`auto_*`, 0x79500 bytes in 21 regions; table updated as units are split): mostly AX/AXFX, HBM and its
+Not split yet (`auto_*`, 0x5d9ec bytes in 11 regions of the RVL_SDK range, recomputed 2026-10-14): mostly AX/AXFX, HBM and its
 `nw4hbm` layout code, DWC, GameSpy and NCD/NWC24/SO/NHTTP/SSL, whose versions differ
 from every reference. Units next to these regions whose size does not match a
 reference (e.g. `OSStateTM.c`, `mtx.c`, `GXFrameBuf.c`, `ai.c`, `mem_expHeap.c`,
@@ -262,20 +262,16 @@ after it are split as `dsp.c`, `dsp_debug.c` and `dsp_task.c`.
 | Range | Size |
 |---|---|
 | 0x8023E484-0x8023E4C4 | 0x40 |
-| 0x802576BC-0x80259418 | 0x1d5c |
-| 0x80259448-0x8025B3F4 | 0x1fac |
 | 0x8025B4C0-0x8025F934 | 0x4474 |
 | 0x80263F18-0x80264F90 | 0x1078 |
-| 0x8026829C-0x802683B0 | 0x114 |
-| 0x8026B04C-0x8026B44C | 0x400 |
+| 0x8026B174-0x8026B44C | 0x2d8 |
 | 0x8027D220-0x8027D270 | 0x50 |
 | 0x80286764-0x802867B4 | 0x50 |
 | 0x802B3E88-0x802E5EEC | 0x32064 |
 | 0x802E6298-0x802FB3A4 | 0x1510c |
 | 0x802FC290-0x80305700 | 0x9470 |
-| 0x80307B98-0x8030CEDC | 0x5344 |
+| 0x80307B98-0x8030CDB0 | 0x5218 |
 | 0x80312E2C-0x8031577C | 0x2950 |
-| 0x8031CEC0-0x8032EEE4 | 0x12024 |
 
 ## Splits in `splits.txt`
 
