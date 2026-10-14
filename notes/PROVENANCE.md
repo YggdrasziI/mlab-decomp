@@ -942,3 +942,16 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   covers 0x802FD1B8-0x802FDBC0 (its `gethostbyname` owns the `dnscache` static);
   `recv` / `recvfrom` pass flags 4 as in mkw, `gsAssert.h` / `gsDebug.h` included;
   NonMatching (`gethostbyname`, see the source note).
+
+- **`common/gsPlatformSocket.c`, `gsPlatformUtil.c`, `gsMemory.c` (from mscharged-decomp,
+  NonMatching).** As in the GameSpy SDK (mkw's and mscharged-decomp's copies),
+  `gsPlatformSocket.c` includes `revolution/gsSocketRevolution.c` and
+  `gsPlatformUtil.c` includes `revolution/gsUtilRevolution.c`, so the units are
+  `gsPlatformSocket.c` (0x802FD1B8-0x802FDEF4: sockets, `gethostbyname`,
+  `SetSockBlocking`, `CanReceiveOnSocket`, `CanSendOnSocket`, `getlocalhost`,
+  `IsPrivateIP`), `gsPlatformUtil.c` (0x802FDEF4-0x802FE658: `gsiTimeInSec`,
+  `goastrdup` … `B64Encode`) and `gsMemory.c` (0x802FE658-0x802FE6B8,
+  `gsiMemoryCallbacksSet` first, named from its body). This DOL's gsMemory keeps the
+  callback table in `.bss` (0x805C6D08) and the platform files call through it; the
+  references' versions do not, so these units stay NonMatching (notes in the sources).
+  Two `const time_t*` casts added in `gsPlatformUtil.c` (code stripped in the DOL).

@@ -916,8 +916,14 @@ RVL_SDK/gamespy/md5c.c:
 	.rodata     start:0x8034DE50 end:0x8034DE68
 	.data       start:0x803B0EA8 end:0x803B0EE8
 
-RVL_SDK/gamespy/common/revolution/gsSocketRevolution.c:
-	.text       start:0x802FD1B8 end:0x802FDBC0
+RVL_SDK/gamespy/common/gsPlatformSocket.c:
+	.text       start:0x802FD1B8 end:0x802FDEF4
+
+RVL_SDK/gamespy/common/gsPlatformUtil.c:
+	.text       start:0x802FDEF4 end:0x802FE658
+
+RVL_SDK/gamespy/common/gsMemory.c:
+	.text       start:0x802FE658 end:0x802FE6B8
 
 RVL_SDK/gamespy/common/gsAvailable.c:
 	.text       start:0x802FE6B8 end:0x802FEA0C

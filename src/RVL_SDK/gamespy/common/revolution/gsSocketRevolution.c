@@ -188,9 +188,9 @@ int GSISocketSelect(SOCKET theSocket, int* theReadFlag, int* theWriteFlag,
  *
  * support DNS caching - use 'gethostbyname("clear")' to clear cache
  */
-// NOT MATCHING yet (82 %): this DOL's version frees the cache entries through a
-// function pointer read from a .bss table (0x805C6D08 + 4) instead of calling
-// gsifree; the rest of the file matches.
+// NOT MATCHING yet (compiled as part of gsPlatformSocket.c): this DOL's version
+// frees the cache entries through the memory-callback table (0x805C6D08 + 4, the
+// free pointer) instead of calling gsifree, see gsPlatformUtil.c / gsMemory.c.
 struct hostent* gethostbyname(const char* name) {
   typedef struct tagDNSHashMap {
     SOHostEnt entry;
