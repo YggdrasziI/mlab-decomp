@@ -34,6 +34,12 @@ typedef u8 ESVersion;
 typedef u8 ESTicketReserved[48];
 typedef u8 ESSysAccessMask[2];
 typedef u8 ESCidxMask[64];
+typedef u32 ESContentId;
+typedef u16 ESTitleVersion;
+typedef ESTitleId ESSysVersion;
+typedef u32 ESTitleType;
+typedef u16 ESContentType;
+typedef u8 ESTmdReserved[62];
 
 #pragma pack(push, 4)
 
@@ -58,12 +64,36 @@ typedef struct ESTicketView {
     ESLpEntry limits[8];
 } ESTicketView;
 
+typedef struct ESTmdViewHeader {
+    ESVersion version;
+    ESSysVersion sysVersion;
+    ESTitleId titleId;
+    ESTitleType type;
+    u16 groupId;
+    ESTmdReserved reserved;
+    ESTitleVersion titleVersion;
+    u16 numContents;
+} ESTmdViewHeader;
+
+typedef struct ESCmdView {
+    ESContentId cid;
+    u16 index;
+    ESContentType type;
+    u64 size;
+} ESCmdView;
+
+typedef struct ESTmdView {
+    ESTmdViewHeader head;
+    ESCmdView contents[512];
+} ESTmdView;
+
 #pragma pack(pop)
 
 s32 ESP_InitLib(void);
 s32 ESP_CloseLib(void);
 s32 ESP_DiGetTicketView(const void* ticket, ESTicketView* view);
 s32 ESP_DiGetTmd(ESPTmd* tmd, u32* tmdSize);
+s32 ESP_GetTmdView(ESTitleId titleId, ESTmdView* tmdView, u32* size);
 s32 ESP_LaunchTitle(ESTitleId titleId, ESTicketView* ticketView);
 s32 ESP_GetTicketViews(ESTitleId titleId, ESTicketView* ticketViews,
                        u32* count);

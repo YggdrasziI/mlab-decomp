@@ -771,3 +771,17 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `OSGetTime` scaled to milliseconds) is not in Petari's file and stays outside the
   split. Data ranges: `.data` 0x80396DC8-0x80396E90, `.bss` 0x8055D980-0x8055DA40,
   `.sbss` 0x805FBCC0-0x805FBCE0.
+
+- **`os/OSLaunch.c` (from Petari).** 0x8023F91C-0x802406DC has the eight functions of
+  Petari's RMGK01 `OSLaunch.c` with the same sizes (0xDC0 in both). Taken from Petari
+  (CC0, commit `601f78cb`, `src/RVL_SDK/os/OSLaunch.c`) with our headers: `NULL`
+  redefined as `((void*)0)` (as in `esp.c`), `OSTitleId` typedef, our field names for
+  `OSStateFlags` (`shutdownType`, `discState`), `const DVDDiskID*` for
+  `DVDGetCurrentDiskID`. Headers: `OSNandbootInfo` now has Petari's field layout
+  (same 0x1020 size, our lower-case names), `esp.h` gains Petari's `ESTmdView` types
+  and the `ESP_GetTmdView` prototype. Names by position and size: `PackArgs`,
+  `__OSCheckCompanyCode`, `__OSCheckTmdSysVersion`, `__OSGetValidTicketIndex`,
+  `__OSLaunchTitle`, `LaunchCommon`; `OSLaunchNoReturnFlag` by relocation pairing.
+  `lbl_80397124` was a 0x194-byte blob in `symbols.txt`, now the 0xB-byte string it
+  starts with. Data ranges: `.data` 0x803970C8-0x803971E0, `.sdata`
+  0x805FA190-0x805FA198, `.sbss` 0x805FBD20-0x805FBD28.

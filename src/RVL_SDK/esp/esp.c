@@ -10,7 +10,6 @@
 typedef IPCIOVector IOSIoVector;
 typedef ESPTicket ESTicket;
 typedef ESPTmd ESTitleMeta;
-typedef struct ESTmdView ESTmdView;
 
 static s32 __esFd = -1;
 

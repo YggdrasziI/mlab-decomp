@@ -14,8 +14,6 @@
 /* MEM | DSP | AI | EXI | PI */
 #define OS_INTERRUPTMASK_ALL_BUT_PI_ACR 0xFFFFFFF0
 
-typedef ESTitleId ESSysVersion;
-
 /* DVDLow functions as dvd_broadway.c defines them in this SDK */
 typedef void (*DVDLowCallback)(u32 intType);
 u8 DVDLowInit(void);

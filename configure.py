@@ -400,6 +400,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/os/OSNet.c"),
             Object(Matching, "RVL_SDK/os/OSNandbootInfo.c"),
             Object(Matching, "RVL_SDK/os/OSPlayTime.c"),
+            Object(Matching, "RVL_SDK/os/OSLaunch.c"),
             Object(Matching, "RVL_SDK/os/__ppc_eabi_init.cpp"),
             Object(Matching, "RVL_SDK/os/init/__ppc_eabi_init.cpp"),
             Object(Matching, "RVL_SDK/exi/EXIBios.c", extra_cflags=["-schedule off"]),

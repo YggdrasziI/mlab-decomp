@@ -6,9 +6,13 @@
 typedef struct OSNandbootInfo {
     /* 0x00 */ u32 checkSum;
     /* 0x04 */ u32 argsOff;
-    /* 0x08 */ u32 returnValue;
+    /* 0x08 */ u8 reserved[2];
+    /* 0x0A */ u8 lastAppType;
+    /* 0x0B */ u8 returnType;
     /* 0x0C */ u32 argValue;
-    /* 0x10 */ u8 unk_0x10[0x1020 - 0x10];
+    /* 0x10 */ u8 padding[8];
+    /* 0x18 */ u64 lastTitleId; // field layout from Petari's OSNandbootinfo.h
+    /* 0x20 */ u8 args[0x1000];
 } OSNandbootInfo; // size = 0x1020
 
 #define OS_NANDBOOT_CHECKSUM_SIZE (sizeof(OSNandbootInfo) - 4)
