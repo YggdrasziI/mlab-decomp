@@ -698,3 +698,19 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `ESP_GetTmdView` (0x80268D5C); data `id`, `DVDLowIntType`, `Prepared` from
   relocation pairing. Data ranges added to the split: `.data` 0x8038A0E0-0x8038A150,
   `.sbss` 0x805FBC50-0x805FBC68.
+
+- **`mix/mix.c`, `mix/remote.c` (from mscharged-decomp).** Found in 0x802608AC-0x80263F18,
+  the region that was inside the old `mem_list.c` split. Sources and headers
+  (`revolution/mix.h`, `revolution/mix/MIXPrivate.h`) taken from mscharged-decomp (CC0,
+  commit `e15f617c`, `src/RVL_SDK/mix/`). This DOL has a newer `mix.c`; changes, checked
+  instruction by instruction against the DOL: `MIXInit` also tests `!__init`; added
+  `MIXQuit` (clears `__MIXChannel`, `__MIXRmtChannel`, `__init`), `MIXGetSoundMode`,
+  `MIXMute`, `MIXUnMute`, `MIXIsMute`, `MIXSetFader` (bodies after TP's GameCube
+  `mix.c`, CC0, commit `c8fa8c9e`, with the Wii mute bit 8 seen in the DOL) and
+  `fn_80262218` (sets `auxC` like `MIXSetAuxB`; no reference gives its name).
+  `MIXRmtSetFader` is not in the DOL (stripped). Names: position, size and order
+  against mscharged-decomp's and rb3's MIX symbols (`MIXQuit` 0x14 and `MIXSetFader`
+  0x24 in rb3), GameCube MIX API order for `MIXGetSoundMode` / `MIXMute` /
+  `MIXUnMute` / `MIXIsMute`; `AXIsInit` (0x80257CD0) by relocation pairing. Data
+  ranges: `.data` 0x8039DEE0-0x8039EA70, `.bss` 0x80579228-0x8057D5A8, `.sbss`
+  0x805FC120-0x805FC138.

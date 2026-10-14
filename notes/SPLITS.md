@@ -254,12 +254,10 @@ reference (e.g. `OSStateTM.c`, `mtx.c`, `GXFrameBuf.c`, `ai.c`, `mem_expHeap.c`,
 `HBMGUIManager.cpp`, `dwc_main.c`) stay unsplit.
 
 0x802608AC-0x80265690 was inside the `mem_list.c` split until 2026-10-14 (the unit is
-only 0x114 bytes). It starts with the MIX library: 0x80260AD4 has the size of
-mscharged-decomp's `MIXInitChannel` (0x16C0) and 0x802623A8 that of
-`MIXUpdateSettings` (0x1690), the functions call `AXSetVoice*`, and the first two
-(0xB4, 0x3C) have the sizes of `__MIXSetPan` / `__MIXGetVolume`. This MIX is another
-version (`MIXInit` 0x114 instead of 0x108, extra small functions), so it is not split
-yet; where `mix.c` / `remote.c` end is not established.
+only 0x114 bytes). It starts with the MIX library, now split as `mix/mix.c`
+(0x802608AC-0x80263A38) and `mix/remote.c` (0x80263A38-0x80263F18), both matching.
+0x80263F18-0x80264F90 (calls `AXSetVoice*`) and the DSP functions up to `dsp_task.c`
+are not identified yet.
 
 | Range | Size |
 |---|---|
@@ -272,7 +270,7 @@ yet; where `mix.c` / `remote.c` end is not established.
 | 0x80259448-0x8025B3F4 | 0x1fac |
 | 0x8025B4C0-0x8025F934 | 0x4474 |
 | 0x8025FDD8-0x80260798 | 0x9c0 |
-| 0x802608AC-0x80265690 | 0x4de4 |
+| 0x80263F18-0x80265690 | 0x1778 |
 | 0x8026829C-0x802683B0 | 0x114 |
 | 0x80268980-0x80269074 | 0x6f4 |
 | 0x8026B04C-0x8026B44C | 0x400 |

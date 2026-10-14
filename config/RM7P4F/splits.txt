@@ -347,6 +347,17 @@ RVL_SDK/mem/mem_heapCommon.c:
 RVL_SDK/mem/mem_list.c:
 	.text       start:0x80260798 end:0x802608AC
 
+RVL_SDK/mix/mix.c:
+	.text       start:0x802608AC end:0x80263A38
+	.data       start:0x8039DEE0 end:0x8039EA70
+	.bss        start:0x80579228 end:0x8057BC28
+	.sbss       start:0x805FC120 end:0x805FC130
+
+RVL_SDK/mix/remote.c:
+	.text       start:0x80263A38 end:0x80263F18
+	.bss        start:0x8057BC28 end:0x8057D5A8
+	.sbss       start:0x805FC130 end:0x805FC138
+
 RVL_SDK/dsp/dsp_task.c:
 	.text       start:0x80265690 end:0x80265AF0
 	.data       start:0x8039F888 end:0x8039F9C8
