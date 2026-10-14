@@ -448,6 +448,8 @@ config.libs = [
             Object(Matching, "RVL_SDK/ax/AXVPB.c"),
             Object(Matching, "RVL_SDK/ax/AXProf.c"),
             Object(Matching, "RVL_SDK/axfx/AXFXReverbHi.c"),
+            Object(Matching, "RVL_SDK/axfx/AXFXReverbHiExp.c"),
+            Object(Matching, "RVL_SDK/axfx/AXFXReverbHiExpDpl2.c"),
             Object(Matching, "RVL_SDK/axfx/AXFXHooks.c"),
             Object(Matching, "RVL_SDK/mem/mem_heapCommon.c"),
             Object(Matching, "RVL_SDK/mem/mem_expHeap.c"),

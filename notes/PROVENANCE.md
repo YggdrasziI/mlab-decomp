@@ -890,3 +890,12 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   and headers (`revolution/wenc.h`, `revolution/wenc/wenc.h`) from mscharged-decomp
   (CC0, commit `dfe2446c`), unchanged. Data ranges: `.rodata` 0x8034AA98-0x8034AAD8,
   `.sdata2` 0x80600920-0x80600928.
+
+- **`axfx/AXFXReverbHiExp.c`, `axfx/AXFXReverbHiExpDpl2.c` (from mscharged-decomp).**
+  0x8025B4C0-0x8025D2E0 has both files' functions (`GetMemSize`/`SettingsUpdate`
+  stripped). Sources from mscharged-decomp (CC0, commit `dfe2446c`); their callbacks are
+  4 bytes longer in this DOL (0x51C / 0x5B0, Petari's and mkw's sizes): Petari's
+  `AXFXReverbHiExp.c` (CC0, commit `601f78cb`) also writes the input sample to the
+  early-reflection line (`earlyLine[fx->earlyPos[2]] = data;`), added to both
+  callbacks. Names by position and size. Data ranges: `.data` 0x8039D180-0x8039D320 /
+  0x8039D320-0x8039D4E0, `.sdata2` 0x80600798-0x806007D8 / 0x806007D8-0x80600818.

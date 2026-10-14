@@ -405,6 +405,16 @@ RVL_SDK/axfx/AXFXReverbHi.c:
 	.text       start:0x8025B434 end:0x8025B4C0
 	.sdata2     start:0x80600790 end:0x80600798
 
+RVL_SDK/axfx/AXFXReverbHiExp.c:
+	.text       start:0x8025B4C0 end:0x8025C36C
+	.data       start:0x8039D180 end:0x8039D320
+	.sdata2     start:0x80600798 end:0x806007D8
+
+RVL_SDK/axfx/AXFXReverbHiExpDpl2.c:
+	.text       start:0x8025C36C end:0x8025D2E0
+	.data       start:0x8039D320 end:0x8039D4E0
+	.sdata2     start:0x806007D8 end:0x80600818
+
 RVL_SDK/axfx/AXFXHooks.c:
 	.text       start:0x8025F934 end:0x8025F96C
 	.sdata      start:0x805FA2A0 end:0x805FA2A8
