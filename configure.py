@@ -422,7 +422,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/gx/GXTransform.c"),
             Object(Matching, "RVL_SDK/gx/GXPerf.c"),
             Object(Matching, "RVL_SDK/dvd/dvdfs.c"),
-            Object(NonMatching, "RVL_SDK/dvd/dvd.c"),
+            Object(Matching, "RVL_SDK/dvd/dvd.c"),
             Object(Matching, "RVL_SDK/dvd/dvdqueue.c"),
             Object(Matching, "RVL_SDK/dvd/dvderror.c"),
             Object(Matching, "RVL_SDK/dvd/dvdidutils.c"),

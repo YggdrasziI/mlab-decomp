@@ -63,6 +63,7 @@ typedef struct ESTicketView {
 s32 ESP_InitLib(void);
 s32 ESP_CloseLib(void);
 s32 ESP_DiGetTicketView(const void* ticket, ESTicketView* view);
+s32 ESP_DiGetTmd(ESPTmd* tmd, u32* tmdSize);
 s32 ESP_GetTitleId(ESTitleId* titleId);
 s32 ESP_GetDataDir(ESTitleId titleId, char* dataDir);
 s32 ESP_GetConsumption(ESTicketId ticketId, ESLpEntry* entries, u32* count);

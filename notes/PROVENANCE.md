@@ -654,3 +654,30 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   the float used by `gpiProcessGetInfo`, plus padding). Our object has four extra
   functions the DOL does not have (`gpiSetInfod`, `gpiSetInfoMask`,
   `gpiGetInfoNoWait`, `gpiSetInfoCache`); the linker strips them.
+
+- **`dvd/dvd.c` (functions from Petari).** Same DVD banner as Petari's US/PAL builds
+  ("Aug  8 2007 01:59:13"); Petari (CC0, commit `6804bd31`, `src/RVL_SDK/dvd/dvd.c`)
+  has every function of this unit at the same offset and size (plus
+  `DVDCheckDiskAsync`, which this DOL does not have). Our file keeps its headers and
+  enum names; these functions were taken from Petari: `stateBusy`, `cbForStateBusy`
+  (with `IsImmCommandWithResult` / `IsDmaCommand` and `ImmCommand` / `DmaCommand`),
+  `DVDCancelAsync`, `__DVDResetWithNoSpinup`; these were updated after Petari:
+  `DVDInit` (ESP ticket view and TMD read when `__OSLockedFlag == 0x80`),
+  `cbForStateReadingPartitionInfo` (boot partition from 0x80003198 /
+  `__OSLaunchPartitionType`), `stateOpenPartition` / `stateOpenPartition2`
+  (`DVDLowOpenPartitionWithTmdAndTicketView` path), and commands 41 / 42 added to
+  `cbForStateGoToRetry`, `stateCoverClosed` and `DVDCancel`. Adaptations: Petari's
+  `currTransferSize` / `transferredSize` are our `transferSize` / `transferTotal`,
+  `ESTitleMeta` / `ESTicket` are `ESPTmd` / `ESPTicket`, numbers replaced by our
+  `COMMAND_*` / `DVD_STATE_*` names, `MIN` defined locally (our headers lack it),
+  `DVDPartitionParams` copied into the file from Petari's `revolution/dvd.h`,
+  `ESP_DiGetTmd` prototype added to `esp.h`. The `OSPanic` line of `stateReadingFST`
+  is 1083 (0x43B in the DOL). `__DVDNumTmdBytes` is declared after `GameToc`
+  (32-byte aligned, as in Petari) to give the `.sbss` layout of the DOL. Names from
+  the alignment with Petari: `cbForStateGoToRetry`, `cbForStateReadingPartitionInfo`,
+  `cbForStateBusy`, `DVDCancelAsync`, `__DVDResetWithNoSpinup`; data names
+  (`CommandInfoCounter`, `BB2`, `LastState`...) from relocation pairing with our
+  object; `__DVDStopMotorCommandBlock` was 0x60 bytes in `symbols.txt` and is split
+  into it and `__DVDRestartMotorCommandBlock` (0x80563480). Data ranges added to the
+  split: `.data` 0x80398798-0x80398B08, `.bss` 0x8055E800-0x805634B0, `.sbss`
+  0x805FBEC0-0x805FBF58.

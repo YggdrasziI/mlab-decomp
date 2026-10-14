@@ -51,8 +51,7 @@
 
 ## To do
 
-- Step 5: RVL_SDK, 6 units left (NonMatching): OSExec,
-  dvd,
+- Step 5: RVL_SDK, 5 units left (NonMatching): OSExec,
   mem_list (split covers more than
   the unit),
   the GameSpy units gt2Message (only `gti2ReceiveMessages` left, 97 %, see the source note), NATify (99.8 %, one branch in `Think`), natneg (98 %, see the NOT MATCHING note in `NegotiateThink`) (newer/older code than the sources;
