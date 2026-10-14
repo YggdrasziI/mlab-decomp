@@ -849,3 +849,15 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `src/sdk/RVL_SDK/src/os/OSSemaphore.c` (owner allows rb3 reuse, commit `b9dfa78b`),
   and `OSSemaphore.count` is volatile as rb3's `vs32 activeSignals` (the DOL reloads
   it after the wait loop). Names by size and order.
+
+- **`gx/GXFrameBuf.c`, `gx/GXLight.c` (from mscharged-decomp).** 0x8024BBE4-0x8024C3B8
+  has mscharged-decomp's (R4QE01) and Petari's GXFrameBuf and GXLight functions with
+  the same sizes. Sources from mscharged-decomp (CC0, commit `dfe2446c`); the DOL
+  keeps the render modes Ntsc480IntDf, Ntsc480ProgSoft, Mpal480IntDf,
+  Mpal480ProgSoft, Pal528IntDf, Eurgb60Hz480IntDf and Eurgb60Hz480ProgSoft (the
+  others are stripped), so `GXMpal480ProgSoft` was added after `GXMpal480IntDf` with
+  the values of TP's `libs/revolution/src/gx/GXFrameBuf.c` (CC0, commit `c8fa8c9e`;
+  bytes checked against 0x803983A4). Names: `GXCopyDisp` (0x8024BFCC) and the three
+  ProgSoft modes by position, size and content. Data ranges: `.data`
+  0x803982F0-0x80398498, `.sdata2` 0x80600700-0x80600708; GXLight has no data
+  referenced in the DOL.
