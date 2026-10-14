@@ -345,7 +345,7 @@ RVL_SDK/mem/mem_heapCommon.c:
 	.sbss       start:0x805FC118 end:0x805FC120
 
 RVL_SDK/mem/mem_list.c:
-	.text       start:0x80260798 end:0x80264F90
+	.text       start:0x80260798 end:0x802608AC
 
 RVL_SDK/dsp/dsp_task.c:
 	.text       start:0x80265690 end:0x80265AF0

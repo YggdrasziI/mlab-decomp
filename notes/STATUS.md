@@ -51,9 +51,7 @@
 
 ## To do
 
-- Step 5: RVL_SDK, 4 units left (NonMatching):
-  mem_list (split covers more than
-  the unit),
+- Step 5: RVL_SDK, 3 units left (NonMatching):
   the GameSpy units gt2Message (only `gti2ReceiveMessages` left, 97 %, see the source note), NATify (99.8 %, one branch in `Think`), natneg (98 %, see the NOT MATCHING note in `NegotiateThink`) (newer/older code than the sources;
   needs hand decompilation). Then the debugger driver block (0x80344FD4-0x80345AD8)
   and the unsplit SDK regions.

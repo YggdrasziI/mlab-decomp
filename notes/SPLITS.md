@@ -247,11 +247,19 @@ unknown): `OSStateTM.c` (0x8023E080-0x8023E330), `OSLaunch.c` (0x8023FC84),
 `dwci_nd.c` (0x80320B8C), `ncdsystem.c` (0x8032149C), `NHTTP_bgnend.c` (0x80325ED4),
 `NHTTP_os_RVL.c` (0x8032683C), `d_nhttp.c` (0x8032C2B0).
 
-Not split yet (`auto_*`, 0x79500 bytes in 21 regions): mostly AX/AXFX, HBM and its
+Not split yet (`auto_*`, 0x79500 bytes in 21 regions; table updated as units are split): mostly AX/AXFX, HBM and its
 `nw4hbm` layout code, DWC, GameSpy and NCD/NWC24/SO/NHTTP/SSL, whose versions differ
 from every reference. Units next to these regions whose size does not match a
 reference (e.g. `OSStateTM.c`, `mtx.c`, `GXFrameBuf.c`, `ai.c`, `mem_expHeap.c`,
 `HBMGUIManager.cpp`, `dwc_main.c`) stay unsplit.
+
+0x802608AC-0x80265690 was inside the `mem_list.c` split until 2026-10-14 (the unit is
+only 0x114 bytes). It starts with the MIX library: 0x80260AD4 has the size of
+mscharged-decomp's `MIXInitChannel` (0x16C0) and 0x802623A8 that of
+`MIXUpdateSettings` (0x1690), the functions call `AXSetVoice*`, and the first two
+(0xB4, 0x3C) have the sizes of `__MIXSetPan` / `__MIXGetVolume`. This MIX is another
+version (`MIXInit` 0x114 instead of 0x108, extra small functions), so it is not split
+yet; where `mix.c` / `remote.c` end is not established.
 
 | Range | Size |
 |---|---|
@@ -264,7 +272,7 @@ reference (e.g. `OSStateTM.c`, `mtx.c`, `GXFrameBuf.c`, `ai.c`, `mem_expHeap.c`,
 | 0x80259448-0x8025B3F4 | 0x1fac |
 | 0x8025B4C0-0x8025F934 | 0x4474 |
 | 0x8025FDD8-0x80260798 | 0x9c0 |
-| 0x80264F90-0x80265690 | 0x700 |
+| 0x802608AC-0x80265690 | 0x4de4 |
 | 0x8026829C-0x802683B0 | 0x114 |
 | 0x80268980-0x80269074 | 0x6f4 |
 | 0x8026B04C-0x8026B44C | 0x400 |

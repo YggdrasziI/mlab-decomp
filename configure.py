@@ -435,7 +435,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/axfx/AXFXReverbHi.c"),
             Object(Matching, "RVL_SDK/axfx/AXFXHooks.c"),
             Object(Matching, "RVL_SDK/mem/mem_heapCommon.c"),
-            Object(NonMatching, "RVL_SDK/mem/mem_list.c"),
+            Object(Matching, "RVL_SDK/mem/mem_list.c"),
             Object(Matching, "RVL_SDK/dsp/dsp_task.c"),
             Object(Matching, "RVL_SDK/nand/nand.c"),
             Object(Matching, "RVL_SDK/nand/NANDOpenClose.c"),
