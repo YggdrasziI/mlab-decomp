@@ -64,6 +64,9 @@ s32 ESP_InitLib(void);
 s32 ESP_CloseLib(void);
 s32 ESP_DiGetTicketView(const void* ticket, ESTicketView* view);
 s32 ESP_DiGetTmd(ESPTmd* tmd, u32* tmdSize);
+s32 ESP_LaunchTitle(ESTitleId titleId, ESTicketView* ticketView);
+s32 ESP_GetTicketViews(ESTitleId titleId, ESTicketView* ticketViews,
+                       u32* count);
 s32 ESP_GetTitleId(ESTitleId* titleId);
 s32 ESP_GetDataDir(ESTitleId titleId, char* dataDir);
 s32 ESP_GetConsumption(ESTicketId ticketId, ESLpEntry* entries, u32* count);

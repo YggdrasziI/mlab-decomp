@@ -681,3 +681,20 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   into it and `__DVDRestartMotorCommandBlock` (0x80563480). Data ranges added to the
   split: `.data` 0x80398798-0x80398B08, `.bss` 0x8055E800-0x805634B0, `.sbss`
   0x805FBEC0-0x805FBF58.
+
+- **`os/OSExec.c` (from Petari).** This DOL has the layout of Petari's RMGK01 build
+  (0x1670 bytes: no `__OSRelaunchTitle` / `LaunchCommon` block), every function at
+  the same offset and size. The file was rewritten from Petari (CC0, commit
+  `6804bd31`, `src/RVL_SDK/os/OSExec.c`, KOR path, `-opt nolifetimes,noloop` as in
+  Petari's `configure.py`) with our headers: DVDLow prototypes declared in the file
+  with this SDK's signatures, `ESTitleMeta` reduced to a local `ESTitleMetaStart`
+  (only `sysVersion` at 0x184 is read), `DVDGameTOC` 8 bytes as in Petari's
+  `dvd.h`, `__PIRegs` written `PI_HW_REGS`, interrupt masks written as values
+  (0xFFFFFFF0 = MEM|DSP|AI|EXI|PI, `PI_ACR`), `__OSSetExecParams` made static (inlined,
+  no symbol in the DOL). `ESP_LaunchTitle` / `ESP_GetTicketViews` prototypes added to
+  `esp.h`. Names from the alignment with Petari: `Utf16ToArg`, `PackInstallerArgs`,
+  `__OSLaunchNextFirmware`, `__OSBootDolSimple`, and in ESP (same sizes as Petari's
+  RMGK01 symbols) `ESP_LaunchTitle` (0x80268A1C), `ESP_GetTicketViews` (0x80268AB0),
+  `ESP_GetTmdView` (0x80268D5C); data `id`, `DVDLowIntType`, `Prepared` from
+  relocation pairing. Data ranges added to the split: `.data` 0x8038A0E0-0x8038A150,
+  `.sbss` 0x805FBC50-0x805FBC68.
