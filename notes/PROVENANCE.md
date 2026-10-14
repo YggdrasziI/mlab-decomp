@@ -785,3 +785,13 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `lbl_80397124` was a 0x194-byte blob in `symbols.txt`, now the 0xB-byte string it
   starts with. Data ranges: `.data` 0x803970C8-0x803971E0, `.sdata`
   0x805FA190-0x805FA198, `.sbss` 0x805FBD20-0x805FBD28.
+
+- **`mtx/mtx.c`, `mtx/mtxvec.c`, `mtx/mtx44.c` (from mscharged-decomp).** 0x80248050-0x80248534
+  has PSMTXIdentity..PSMTXScale, PSMTXMultVec and C_MTXOrtho with the sizes of
+  mscharged-decomp's and oot-vc's MTX functions (the others are stripped). Split into
+  the three files of both references (oot-vc's split points match exactly; oot-vc has
+  no license file, so only its layout was used as a hint, no code). Sources from
+  mscharged-decomp (CC0, commit `dfe2446c`, `src/RVL_SDK/mtx/`), unchanged. Names by
+  position and size; `Unit01` by relocation pairing. Data ranges: `mtx.c` `.sdata`
+  0x805FA1E8-0x805FA1F0 and `.sdata2` 0x806006C0-0x806006C8, `mtx44.c` `.sdata2`
+  0x806006C8-0x806006D8 (our object has more constants, for stripped functions).
