@@ -583,6 +583,7 @@ config.libs = [
             Object(Matching, "RVL_SDK/gamespy/GP/gpiProfile.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/GP/gpiSearch.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/GP/gpiTransfer.c", cflags=cflags_rvl_spy),
+            Object(Matching, "RVL_SDK/gamespy/common/gsAvailable.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/common/gsUdpEngine.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/GP/gp.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/GP/gpi.c", cflags=cflags_rvl_spy),
@@ -592,6 +593,8 @@ config.libs = [
             Object(Matching, "RVL_SDK/gamespy/GP/gpiConnect.c", cflags=cflags_rvl_spy),
             Object(NonMatching, "RVL_SDK/gamespy/qr2/qr2.c", cflags=cflags_rvl_spy),
             Object(Matching, "RVL_SDK/gamespy/qr2/qr2regkeys.c", cflags=cflags_rvl_spy),
+            Object(Matching, "RVL_SDK/gamespy/md5c.c", cflags=cflags_rvl_spy),
+            Object(NonMatching, "RVL_SDK/gamespy/common/revolution/gsSocketRevolution.c", cflags=cflags_rvl_spy),
         ],
     },
     {

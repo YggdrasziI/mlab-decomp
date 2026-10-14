@@ -911,6 +911,21 @@ RVL_SDK/gamespy/darray.c:
 RVL_SDK/gamespy/hashtable.c:
 	.text       start:0x802FBDF8 end:0x802FC290
 
+RVL_SDK/gamespy/md5c.c:
+	.text       start:0x802FC290 end:0x802FD1B8
+	.rodata     start:0x8034DE50 end:0x8034DE68
+	.data       start:0x803B0EA8 end:0x803B0EE8
+
+RVL_SDK/gamespy/common/revolution/gsSocketRevolution.c:
+	.text       start:0x802FD1B8 end:0x802FDBC0
+
+RVL_SDK/gamespy/common/gsAvailable.c:
+	.text       start:0x802FE6B8 end:0x802FEA0C
+	.data       start:0x803B0EF8 end:0x803B0F20
+	.bss        start:0x805C6ED8 end:0x805C6FB0
+	.sdata      start:0x805FA7C0 end:0x805FA7C8
+	.sbss       start:0x805FC3E0 end:0x805FC3E8
+
 RVL_SDK/gamespy/common/gsUdpEngine.c:
 	.text       start:0x802FEA0C end:0x802FFBDC
 	.bss        start:0x805C6FB0 end:0x805C6FF0

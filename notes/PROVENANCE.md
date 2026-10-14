@@ -929,3 +929,16 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `qr2.c` is NonMatching (2 instructions, see the note in the source);
   `qr2regkeys.c` is linked (`.data` 0x803B3228-0x803B3700, `.sdata`
   0x805FAC10-0x805FAC88, the key strings found by their bytes).
+
+- **`gamespy/md5c.c`, `common/gsAvailable.c`, `common/revolution/gsSocketRevolution.c`.**
+  `md5c.c` from mkw (CC0, commit `fa127308`), linked; its `.rodata` is `MD5Print`'s
+  `hex_digits` (0x8034DE50-0x8034DE68, kept although `MD5Print` is stripped).
+  `gsAvailable.c` and `gsSocketRevolution.c` from mscharged-decomp (CC0, commit
+  `dfe2446c`; mkw's copies carry padding hacks): `GSIAvailableCheckThink`'s `packet`
+  buffer is 32-byte aligned in this DOL (aligned stack frame); `GSIAvailableCheckThink`
+  (0x802FE834) named from its body and mkw's `gsAvailable.c`. `gsAvailable.c` is linked
+  (`.data` 0x803B0EF8-0x803B0F20, `.bss` 0x805C6ED8-0x805C6FB0, `.sdata`
+  0x805FA7C0-0x805FA7C8, `.sbss` 0x805FC3E0-0x805FC3E8). `gsSocketRevolution.c`
+  covers 0x802FD1B8-0x802FDBC0 (its `gethostbyname` owns the `dnscache` static);
+  `recv` / `recvfrom` pass flags 4 as in mkw, `gsAssert.h` / `gsDebug.h` included;
+  NonMatching (`gethostbyname`, see the source note).
