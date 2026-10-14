@@ -26,6 +26,23 @@ unit (TU). A TU boundary is only proven once the TU is decompiled and matches.
 
 `strlen` (0x8032EEE4, weak) belongs to the runtime's `__mem.c` (see below).
 
+### Game unit boundaries (static initializers)
+
+Every game unit that includes the header with the shared `(0, 1, 0)` vector object gets
+a `__sinit_*` function at the end of its `.text`, with one `.ctors` entry. 293 of the
+300 `.ctors` entries point into game `.text`, so each one marks the end of a unit
+(a range may still hold several units without a static initializer). Each unit also
+has its own `.sdata2` float constants (0.0, 1.0...), its own 12-byte vector in
+`.bss`, and its vtables, class-name strings and `__RTTI__` objects in `.data`/`.sdata`.
+Class names come from those RTTI strings; method and file names are unknown, so
+game units are named `game/unit_<start>.cpp` and virtual functions `vfXX` (vtable
+offset).
+
+| Unit | .text | Content |
+|---|---|---|
+| `game/unit_8001FCA8` (not split yet) | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage factory |
+| `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
+
 ### Game / SDK boundary (0x80232AF8)
 
 - 0x80232AF8 is `PPCMfmsr`, the first SDK function recognized by dtk; the previous

@@ -38,6 +38,11 @@
 
 ## In progress
 
+- Step 6 (game code) started: game unit bounds proven by static initializers
+  (`notes/SPLITS.md`); compiled with `cflags_game` (base flags with `-RTTI on`).
+  `game/unit_80020480.cpp` (CAbstractInput* stages) matches 29 of 31 functions; the two
+  `AnyButtons*::vf0C` loops differ only by the order of three loop increments.
+
 - Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units), MSL_C
   (59 units, 3 small gaps) and RVL_SDK (177 units, about 52 % of SDK code);
   hypotheses from TP / Petari / mscharged-decomp checked against the DOL. Remaining:

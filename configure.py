@@ -321,6 +321,12 @@ cflags_rel = [
     "-sdata2 0",
 ]
 
+# Game code: C++ with RTTI (type_info objects and class names in .data/.sdata)
+cflags_game = [
+    *(flag for flag in cflags_base if flag != "-RTTI off"),
+    "-RTTI on",
+]
+
 # Working hypothesis: game code matches GC 3.0a3 to 3.0a5.2 identically;
 # 3.0a5.2 is chosen (SDK build tag 0x4199_60831). See notes/COMPILER.md.
 config.linker_version = "GC/3.0a5.2"
@@ -361,6 +367,15 @@ def MatchingFor(*versions):
 config.warn_missing_config = True
 config.warn_missing_source = False
 config.libs = [
+    {
+        "lib": "game",
+        "mw_version": config.linker_version,
+        "cflags": cflags_game,
+        "progress_category": "game",
+        "objects": [
+            Object(NonMatching, "game/unit_80020480.cpp"),
+        ],
+    },
     {
         "lib": "RVL_SDK",
         # SDK banners carry the 0x4199_60831 stamp (GC/3.0a5.2); per-object compilers and

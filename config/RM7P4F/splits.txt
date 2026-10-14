@@ -13,6 +13,14 @@ Sections:
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:4
 
+game/unit_80020480.cpp:
+	.text       start:0x80020480 end:0x800214D4
+	.ctors      start:0x80345B44 end:0x80345B48
+	.data       start:0x80355690 end:0x80355940
+	.bss        start:0x803C4C88 end:0x803C4C98
+	.sdata      start:0x805F82A0 end:0x805F82F0
+	.sdata2     start:0x805FC8C8 end:0x805FC8D8
+
 RVL_SDK/base/PPCArch.c:
 	.text       start:0x80232AF8 end:0x80232C5C
 	.data       start:0x803894F0 end:0x80389528
