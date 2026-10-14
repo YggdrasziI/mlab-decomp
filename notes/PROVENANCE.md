@@ -755,3 +755,19 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   0x805FA470-0x805FA4E0, `.sbss` 0x805FC258-0x805FC278, `.sdata2`
   0x80600990-0x806009F0 (our object has 0x1C more `.sdata2`, constants of stripped
   code that the linker drops).
+
+- **`os/OSStateTM.c` (from Petari).** 0x8023DD90-0x8023E484 has the twelve functions of
+  mkw's (RMCP01) `OSStateTM` symbols with the same sizes; the code is Petari's RMGK01
+  path (CC0, commit `601f78cb`, `src/RVL_SDK/os/OSStateTM.c`): the `OSPanic` lines
+  316 / 380 / 788 in the DOL are those of that path. Added `OSSetResetCallback` (same
+  shape as the RMGK01 `OSSetPowerCallback`: default callback when NULL, NULL returned
+  for the default), checked against the DOL. Our headers: `__VIRegs` declared at
+  0xCC002000, `__PIRegs` is `PI_HW_REGS`, `IOS_ERROR_OK` is `IPC_RESULT_OK`,
+  `__OSSetVIForceDimming` takes `u32` as in our `OSStateTM.h`. Petari's extra flags
+  (`no-opt_generateconditionalassignments`, `no-opt_rebuildconditionals`) are not
+  needed here. Names: `OSSetResetCallback`, `OSSetPowerCallback`,
+  `__OSSetIdleLEDMode`, `__OSVIDimReplyHandler` by position and size against mkw and
+  Petari; `StmIm*`/`StmVd*` buffers by relocation pairing. 0x8023E484 (64 bytes,
+  `OSGetTime` scaled to milliseconds) is not in Petari's file and stays outside the
+  split. Data ranges: `.data` 0x80396DC8-0x80396E90, `.bss` 0x8055D980-0x8055DA40,
+  `.sbss` 0x805FBCC0-0x805FBCE0.
