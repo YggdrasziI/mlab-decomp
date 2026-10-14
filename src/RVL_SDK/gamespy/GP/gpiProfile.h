@@ -62,7 +62,8 @@ typedef struct {
 typedef struct GPIProfile {
   int profileId;                       // 0x00 0
   int userId;                          // 0x04 4
-  GPIBuddyStatus* buddyStatus;
+  GPIBuddyStatus* buddyStatus;         // 0x08 8
+  GPIBuddyStatusInfo* buddyStatusInfo; // 0x0C 12
   GPIInfoCache* cache;
   char* authSig;
   int requestCount;

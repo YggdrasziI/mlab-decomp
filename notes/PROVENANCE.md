@@ -641,3 +641,16 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `setVerticalRegs`, `VIResetDimmingCount` from the alignment,
   `__DVDStopMotorCommandBlock` (0x80563450) from relocation pairing. `.data` range
   added to the split (0x80397420-0x80397978).
+
+- **`gamespy/GP/gpiInfo.c` (struct layouts from mkw).** Two structures are the newer
+  GameSpy layout of mkw (doldecomp/mkw, CC0, commit `fa127308`,
+  `lib/gamespy/GP/gpiProfile.h` and `gpiPeer.h`): `GPIProfile` gains
+  `buddyStatusInfo` before `cache` (`cache` at 0x10), and `GPIPeer` replaces `sock`
+  with `ip`/`port` and gains `peerOpQueue` before `pnext` (`profile` at 0x10, `pnext`
+  at 0x54, the offsets read by `gpiProcessGetInfo`). No other linked unit uses these
+  structures. Names from relocation pairing: `gpiGetProfile`, `gpiProfileListAdd`,
+  `gpiAddOperation`, `gpiProcess`, `gpiAppendStringToBuffer`, `gpiAppendIntToBuffer`,
+  `_strlwr` (0x802FDFB4). `.sdata2` range added to the split (0x80600B08-0x80600B10,
+  the float used by `gpiProcessGetInfo`, plus padding). Our object has four extra
+  functions the DOL does not have (`gpiSetInfod`, `gpiSetInfoMask`,
+  `gpiGetInfoNoWait`, `gpiSetInfoCache`); the linker strips them.

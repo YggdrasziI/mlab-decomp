@@ -75,13 +75,16 @@ typedef struct _GPIPeerOpQueue {
 typedef struct GPIPeer_s {
   int state;
   GPIBool initiated;
-  SOCKET sock;
+  // SOCKET sock;
+  unsigned int ip;
+  unsigned short port;
   GPProfile profile;
   time_t timeout;
   int nackCount;
   GPIBuffer inputBuffer;
   GPIBuffer outputBuffer;
   DArray messages;
+  GPIPeerOpQueue peerOpQueue;
   struct GPIPeer_s* pnext;
 } GPIPeer;
 

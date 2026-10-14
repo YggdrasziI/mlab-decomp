@@ -51,14 +51,11 @@
 
 ## To do
 
-- Step 5: RVL_SDK, 7 units left (NonMatching): OSExec,
+- Step 5: RVL_SDK, 6 units left (NonMatching): OSExec,
   dvd,
   mem_list (split covers more than
   the unit),
-  the GameSpy units gpiInfo (99.99 % fuzzy: `GPIProfile` has one more
-  field before `cache`, 0x10 instead of 0xC; callees `fn_8030A3E8` / `fn_803085D8` are
-  `gpiGetProfile` / `gpiAddOperation` by relocation pairing, not renamed yet),
-  gt2Message (only `gti2ReceiveMessages` left, 97 %, see the source note), NATify (99.8 %, one branch in `Think`), natneg (98 %, see the NOT MATCHING note in `NegotiateThink`) (newer/older code than the sources;
+  the GameSpy units gt2Message (only `gti2ReceiveMessages` left, 97 %, see the source note), NATify (99.8 %, one branch in `Think`), natneg (98 %, see the NOT MATCHING note in `NegotiateThink`) (newer/older code than the sources;
   needs hand decompilation). Then the debugger driver block (0x80344FD4-0x80345AD8)
   and the unsplit SDK regions.
 
