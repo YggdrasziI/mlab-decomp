@@ -503,6 +503,11 @@ RVL_SDK/sc/scapi_prdinfo.c:
 	.sdata      start:0x805FA410 end:0x805FA438
 	.sbss       start:0x805FC1A8 end:0x805FC1B0
 
+RVL_SDK/wenc/wenc.c:
+	.text       start:0x8026B174 end:0x8026B44C
+	.rodata     start:0x8034AA98 end:0x8034AAD8
+	.sdata2     start:0x80600920 end:0x80600928
+
 RVL_SDK/arc/arc.c:
 	.text       start:0x8026B44C end:0x8026BDC4
 	.data       start:0x8039FE58 end:0x8039FEC8

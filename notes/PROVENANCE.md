@@ -883,3 +883,10 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   (0x50 bytes), are the `debug_msg.c` units of mscharged-decomp's, Castaway's and
   Petari's WPAD and WUD libraries, at the same places (after `WPADEncrypt.c` and after
   the WUD files). Sources from mscharged-decomp (CC0, commit `dfe2446c`), unchanged.
+
+- **`wenc/wenc.c` (from mscharged-decomp).** 0x8026B174 (728 bytes, a table-driven
+  computation with `memset` and no other call) has the size of `WENCGetEncodeData` in
+  Castaway's symbols and Petari's `wenc.c` (matching for all Petari versions). Source
+  and headers (`revolution/wenc.h`, `revolution/wenc/wenc.h`) from mscharged-decomp
+  (CC0, commit `dfe2446c`), unchanged. Data ranges: `.rodata` 0x8034AA98-0x8034AAD8,
+  `.sdata2` 0x80600920-0x80600928.
