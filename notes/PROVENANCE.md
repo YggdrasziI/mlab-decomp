@@ -877,3 +877,9 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   from 1900 to 2000). oot-vc's splits name this function `__get_time` in a
   `revolution/os/time.dolphin.c` unit at the same place in the OS block (size 0x40);
   oot-vc has no license, so only these names were used, the code was written here.
+
+- **`wpad/debug_msg.c`, `wud/debug_msg.c` (from mscharged-decomp).** `DEBUGPrint`
+  (0x8027D220) and `WUD_DEBUGPrint` (0x80286764), the empty variadic debug prints
+  (0x50 bytes), are the `debug_msg.c` units of mscharged-decomp's, Castaway's and
+  Petari's WPAD and WUD libraries, at the same places (after `WPADEncrypt.c` and after
+  the WUD files). Sources from mscharged-decomp (CC0, commit `dfe2446c`), unchanged.

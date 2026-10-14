@@ -558,6 +558,9 @@ RVL_SDK/wpad/WPADEncrypt.c:
 	.data       start:0x803A07C8 end:0x803A1AF0
 	.sbss       start:0x805FC250 end:0x805FC258
 
+RVL_SDK/wpad/debug_msg.c:
+	.text       start:0x8027D220 end:0x8027D270
+
 RVL_SDK/kpad/KPAD.c:
 	.text       start:0x8027D270 end:0x80280318
 	.data       start:0x803A1AF0 end:0x803A1B48
@@ -587,6 +590,9 @@ RVL_SDK/wud/WUD.c:
 RVL_SDK/wud/WUDHidHost.c:
 	.text       start:0x80286168 end:0x80286764
 	.data       start:0x803A30F0 end:0x803A3370
+
+RVL_SDK/wud/debug_msg.c:
+	.text       start:0x80286764 end:0x802867B4
 
 RVL_SDK/bte/gki_buffer.c:
 	.text       start:0x802867B4 end:0x80287BF8
