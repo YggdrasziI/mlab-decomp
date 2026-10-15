@@ -52,6 +52,7 @@ offset).
 | `game/unit_800444FC.cpp` | 0x800444FC-0x800445E4 | class `NetworkGestureCallback` (RTTI), derived from `XBaseGestureCallback` (functions at 0x8020F498, not split) (matches, linked) |
 | `game/unit_80044C58.cpp` | 0x80044C58-0x80044CDC | constructor and destructor of a 0x148-byte class without vtable, built as an array of two by `fn_80040824` (matches, linked) |
 | `game/unit_80049628.cpp` | 0x80049628-0x800496DC | class `CharacterPartAttachment` (RTTI), derived from `XCharacterPartAttachment` (functions at 0x8020E9CC, not split); the base class's RTTI object and name are emitted in this unit too (matches, linked) |
+| `game/unit_800496DC.cpp` | 0x800496DC-0x800497F4 | class `CompositeCharacterActionSelectionCB` (RTTI), derived from `XBaseActionSelectionCallback` (functions at 0x8020F36C, not split), with a 12-byte selection member (matches, linked) |
 | `game/unit_8006F5A0.cpp` | 0x8006F5A0-0x8006F61C | registers the `"count_deaths"` condition callback (type 22) with `fn_801DC91C` (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
