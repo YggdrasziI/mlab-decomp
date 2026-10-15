@@ -45,6 +45,11 @@
   `game/unit_800214D4.cpp` (input sequence set) matches and is linked.
   The three build-information units at 0x80014230-0x80014350 match and are linked;
   the shared `(0, 1, 0)` vector now lives in `include/game/unk_vec3.h`.
+  `game/unit_80106884.cpp` and `game/unit_8010A634.cpp` match and are linked.
+  `game/unit_80042C18.cpp` (static initializer only) matches but cannot be linked yet:
+  our linker drops an object nothing references, and FORCEACTIVE cannot name its
+  local `__sinit`. Possible fixes to study: FORCEFILES through a custom
+  `ldscript_template`.
   `game/unit_80020480.cpp` (CAbstractInput* stages) matches 29 of 31 functions; the two
   `AnyButtons*::vf0C` loops differ only by the order of three loop increments.
 

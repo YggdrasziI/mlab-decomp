@@ -43,6 +43,9 @@ offset).
 | `game/unit_80014230.cpp` | 0x80014230-0x8001425C | build date string `"Aug 28 2008 (14:30)"` (.rodata 0x803476A8) and the two build numbers 519 / 142835 (.sdata2 0x805FC720) (matches, linked) |
 | `game/unit_8001425C.cpp` | 0x8001425C-0x80014328 | build region word (0 = `NA`, 1 = `EU`; this DOL holds 1) and the `"%s %d: %s@%d (%s)"` build string, type `"REL"` (matches, linked) |
 | `game/unit_80014328.cpp` | 0x80014328-0x80014350 | one function returning 0, used as a function pointer (matches, linked) |
+| `game/unit_80042C18.cpp` | 0x80042C18-0x80042C38 | only the static initializer; code and data match but the object is not linked (nothing references it, see the source comment) |
+| `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
+| `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
 | `game/unit_8001FCA8.cpp` | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage sequence and factory (matches, linked) |
 | `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
 | `game/unit_800214D4.cpp` | 0x800214D4-0x80021594 | the set of input sequences (8 fixed, 100 indexed, 34-entry index table) (matches, linked) |
