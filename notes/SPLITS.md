@@ -45,6 +45,7 @@ offset).
 | `game/unit_8001425C.cpp` | 0x8001425C-0x80014328 | build region word (0 = `NA`, 1 = `EU`; this DOL holds 1) and the `"%s %d: %s@%d (%s)"` build string, type `"REL"` (matches, linked) |
 | `game/unit_80014328.cpp` | 0x80014328-0x80014350 | one function returning 0, used as a function pointer (matches, linked) |
 | `game/unit_80018C04.cpp` | 0x80018C04-0x80018E00 | registers three named animation predicates (`"anim_done"`, `"anim_past_impact_frame"`, `"anim_past_preload_time"`) through `fn_801DC91C`, then calls six other registration functions (NonMatching: `fn_80018CB0` 95.6 %, prologue scheduling) |
+| `game/unit_800197A8.cpp` | 0x800197A8-0x80019CC8 | named script callbacks for props and hazard props (`"prop_play_anim_and_fx_once"`, `"hazard_prop_idle_update"`, `"NavTest"`...) (NonMatching: 12/18, float registers and scheduling) |
 | `game/unit_80019FB0.cpp` | 0x80019FB0-0x8001A17C | launch speed for a projectile between two points at a given angle under gravity (NonMatching, 89.8 %: the `height` / `s` registers are swapped and two stores are reordered) |
 | `game/unit_8001AFB4.cpp` | 0x8001AFB4-0x8001B20C | a stack of states: init, lookup by id, pending state, push and pop (matches, linked) |
 | `game/unit_8001FCA8.cpp` | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage sequence and factory (matches, linked) |

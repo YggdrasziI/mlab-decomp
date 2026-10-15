@@ -50,6 +50,15 @@ game/unit_80018C04.cpp:
 	.bss        start:0x803C4BE8 end:0x803C4BF8
 	.sdata2     start:0x805FC7C0 end:0x805FC7D8
 
+game/unit_800197A8.cpp:
+	.text       start:0x800197A8 end:0x80019CC8
+	.ctors      start:0x80345B24 end:0x80345B28
+	.data       start:0x80355358 end:0x803554D8
+	.bss        start:0x803C4C08 end:0x803C4C18
+	.sdata      start:0x805F8260 end:0x805F8268
+	.sbss       start:0x805FAF70 end:0x805FAF78
+	.sdata2     start:0x805FC7F8 end:0x805FC808
+
 game/unit_80019FB0.cpp:
 	.text       start:0x80019FB0 end:0x8001A17C
 	.ctors      start:0x80345B2C end:0x80345B30

@@ -110,8 +110,11 @@ struct EntityInfo {
     /* 0x0C */ UnkQuat mRot;
     /* 0x1C */ u32 mTypeMask;
     /* 0x20 */ u32 mFlags;
-    /* 0x24 */ u8 unk24[0x34 - 0x24];
+    /* 0x24 */ u8 unk24[0x32 - 0x24];
+    /* 0x32 */ u16 m32;
     /* 0x34 */ u8 mType;
+    /* 0x35 */ u8 unk35[0x3A - 0x35];
+    /* 0x3A */ u8 m3A;
 };
 
 // 0x20-byte record kept twice in UnkEntitySlot (real name unknown).
@@ -141,6 +144,17 @@ public:
     /* 0x20 */ UnkEntitySlotData mPrev;
     /* 0x40 */ u8 mSlot;
     /* 0x41 */ u8 m41;
+};
+
+// Animation objects at Entity::m9C and Entity::mA0 (real types unknown).
+struct UnkEntityAnim {
+    /* 0x00 */ u8 unk0[0xB4];
+    /* 0x0B4 */ void* mB4;
+};
+
+struct UnkEntityAnimState {
+    /* 0x00 */ u8 unk0[0xF0];
+    /* 0xF0 */ u32 mFlags;
 };
 
 // Bone of an entity model (0xC8 bytes, real name unknown).
@@ -250,12 +264,15 @@ public:
 
     /* 0x000 */ // vtable
     /* 0x004 */ EntityInfo* mInfo;
-    /* 0x008 */ u8 unk8[0x88 - 0x8];
+    /* 0x008 */ u8 unk8[0x24 - 0x8];
+    /* 0x024 */ f32 m24; // the frame time, added to timers
+    /* 0x028 */ u8 unk28[0x88 - 0x28];
     /* 0x088 */ void* m88;
     /* 0x08C */ UnkList* m8C;
     /* 0x090 */ u8 unk90[0x94 - 0x90];
     /* 0x094 */ UnkEntity94 m94;
-    /* 0x09C */ u8 unk9C[0xA4 - 0x9C];
+    /* 0x09C */ UnkEntityAnim* m9C;
+    /* 0x0A0 */ UnkEntityAnimState* mA0;
     /* 0x0A4 */ void** mA4;
     /* 0x0A8 */ int mA8;
     /* 0x0AC */ u8 unkAC[0xB0 - 0xAC];
@@ -345,7 +362,12 @@ public:
 
     /* 0x158 */ u8 unk158[0x15C - 0x158];
     /* 0x15C */ u32 m15C;
-    /* 0x160 */ u8 unk160[0x1C8 - 0x160];
+    /* 0x160 */ u8 unk160[0x164 - 0x160];
+    /* 0x164 */ f32 m164; // death count (callbacks "reset_deathcount", "increment_deathcount")
+    /* 0x168 */ int m168;
+    /* 0x16C */ u8 unk16C[0x1AC - 0x16C];
+    /* 0x1AC */ int m1AC;
+    /* 0x1B0 */ u8 unk1B0[0x1C8 - 0x1B0];
     /* 0x1C8 */ UnkEntitySlot mSlot;
     /* 0x20C */ u8 unk20C[0x264 - 0x20C];
 };
@@ -510,8 +532,11 @@ public:
         }
     }
 
-    /* 0x264 */ f32 m264;
-    /* 0x268 */ u32 m268;
+    /* 0x264 */ f32 m264; // state timer
+    /* 0x268 */ u32 m268; // 0 idle, 1 attack
+    /* 0x26C */ u8 unk26C[0x274 - 0x26C];
+    /* 0x274 */ f32 m274; // idle duration
+    /* 0x278 */ f32 m278; // attack duration
 };
 
 // Its destructor is implicit (emitted at the end of its unit).
