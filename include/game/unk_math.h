@@ -35,4 +35,8 @@ inline f32 UnkClamp(f32 value, f32 low, f32 high) {
     return result;
 }
 
+inline f32 UnkLerp(f32 a, f32 b, f32 t) {
+    return a * (1.0f - t) + b * t;
+}
+
 #endif // GAME_UNK_MATH_H

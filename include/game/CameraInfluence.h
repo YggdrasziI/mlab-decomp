@@ -47,7 +47,9 @@ public:
     virtual f32 vf18();
 
     /* 0x0C */ UnkCameraTarget mTarget;
-    /* 0x20 */ u8 unk20[0x58 - 0x20];
+    /* 0x20 */ u8 unk20[0x44 - 0x20];
+    /* 0x44 */ f32 mProgress;
+    /* 0x48 */ u8 unk48[0x58 - 0x48];
 };
 
 // Quaternion helpers at 0x801452A8 and 0x801455E0 (real names unknown).
@@ -76,6 +78,31 @@ public:
 
     /* 0x58 */ UnkVec3 mPos;
     /* 0x64 */ UnkQuat mRot;
+};
+
+// Track data at lbl_803C4298.m8 (real type unknown).
+struct UnkTrackData {
+    /* 0x00 */ u8 unk0[0x80];
+    /* 0x80 */ UnkVec3 mStart;
+    /* 0x8C */ u8 unk8C[0x98 - 0x8C];
+    /* 0x98 */ UnkVec3 mLookAt;
+};
+
+// Object followed by CIFixedTrackPlayer (real type unknown).
+struct UnkTrackFollow {
+    /* 0x00 */ u8 unk0[0x8];
+    /* 0x08 */ UnkVec3 mPos;
+};
+
+class CIFixedTrackPlayer : public CIDynamic {
+public:
+    CIFixedTrackPlayer(int type);
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    virtual void vf10();
+
+    /* 0x58 */ UnkTrackFollow* mFollow;
+    /* 0x5C */ UnkVec3 mPos;
+    /* 0x68 */ UnkVec3 mLookAt;
 };
 
 #endif // GAME_CAMERAINFLUENCE_H
