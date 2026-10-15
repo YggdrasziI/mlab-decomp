@@ -92,6 +92,7 @@ offset).
 | `game/unit_800E3834.cpp` | 0x800E3834-0x800E391C | camera influence `CIPitch` (RTTI), same shape for the pitch (matches, linked) |
 | `game/unit_800E6228.cpp` | 0x800E6228-0x800E6360 | flag helpers on the entity at `lbl_803E6D00.m0->m8` (flags word at `mA4[1]`, masks from `fn_801B94F8`) (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
+| `game/unit_801068A8.cpp` | 0x801068A8-0x80106AA8 | five predicates on an id (ranges and `switch` sets, one returns a hash), registered through `fn_801DC574`-`fn_801DC594` (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
 | `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |
 | `game/unit_80116BE8.cpp` | 0x80116BE8-0x80116CA8 | class `section` (RTTI): constructor, virtual destructor, five pure virtual functions, `"%d/%d"` text of two counters (matches, linked) |
