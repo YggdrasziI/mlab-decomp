@@ -102,6 +102,7 @@ offset).
 | `game/unit_80106AA8.cpp` | 0x80106AA8-0x8010711C | accessors and debug prints for two global register sets (`lbl_803B53A0` + 0x5C8 / + 0x6C8) and for the register set of an object (at 0x58, default set in `.bss`), plus a copy function (matches, linked) |
 | `game/unit_801091B4.cpp` | 0x801091B4-0x801091EC | one function copying `lbl_803C2A20.mDC0` into the `.sbss` global `lbl_805FB218` (the eight empty destructors before it belong to the previous unit, whose static initializer registers them) (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
+| `game/unit_8010FA48.cpp` | 0x8010FA48-0x8010FD14 | wrappers that start or stop objects through the lazily created global manager `lbl_805FBBAC` (`new` of a 1-byte object built by `fn_80209814`) (matches, linked) |
 | `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |
 | `game/unit_80116BE8.cpp` | 0x80116BE8-0x80116CA8 | class `section` (RTTI): constructor, virtual destructor, five pure virtual functions, `"%d/%d"` text of two counters (matches, linked) |
 | `game/unit_80120AAC.cpp` | 0x80120AAC-0x80120D34 | a 16-character text entry buffer allocated on open: typed characters, backspace, space, trailing-space trim, lock flag (matches, linked) |
