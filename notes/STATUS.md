@@ -59,7 +59,7 @@
   has a ray/sphere test over nested collision lists; 0x80098664; larger ones listed by
   calls to `__ct__11Entity_Prop`). Set aside for now: 0x8004B498 (multiple
   inheritance, base in the next unit),
-  0x8010A678 and 0x800DF570 (vector types with inline operators), 0x80006B40 (static
+  0x8010A678 (vector types with inline operators), 0x80006B40 (static
   initializer only, same link issue as 0x80042C18).
 
 - Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units), MSL_C

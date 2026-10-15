@@ -4,7 +4,8 @@
 // Camera influence classes (names from RTTI): CameraInfluence -> CIDynamic ->
 // CIStitching, and more. CameraInfluence is abstract (no vtable of its own in the
 // DOL); its default virtual functions are emitted at 0x8009F594-0x8009F5AC and
-// CIDynamic's implicit destructor at 0x8009E888 (weak copies). Method names unknown
+// 0x800DC504-0x800DC510, and CIDynamic's implicit destructor at 0x8009E888 (weak
+// copies). Method names unknown
 // (vfXX = vtable offset).
 
 #include "game/Entity.h"
@@ -27,8 +28,8 @@ public:
     // Fills the camera position and target; returns whether it applies.
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt) = 0;
     virtual void vf10();
-    virtual f32 vf14() = 0;
-    virtual f32 vf18() = 0;
+    virtual f32 vf14();
+    virtual f32 vf18();
     virtual f32 vf1C();
     virtual int vf20();
 
@@ -157,14 +158,11 @@ public:
 // Set while a CIFixed_DJ1 transition runs (real name unknown).
 extern u8 lbl_805FB1A1;
 
-// Its destructor and vf14 / vf18 are inline (first copies emitted at 0x800DBBE4 and
-// 0x800DC504).
+// Its destructor is inline (first copy emitted at 0x800DBBE4).
 class CIFixed_DJ1 : public CameraInfluence {
 public:
     virtual ~CIFixed_DJ1() {}
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
-    virtual f32 vf14() { return 1.0f; }
-    virtual f32 vf18() { return 1.0f; }
 
     /* 0x0C */ UnkVec3 mPos;
     /* 0x18 */ UnkVec3 mTarget;
@@ -174,6 +172,19 @@ public:
     /* 0x4C */ UnkQuat mStartRot;
     /* 0x5C */ f32 mTimer;
     /* 0x60 */ f32 mDuration;
+};
+
+// Player eye position: the player position raised by height (0x801F5E50; real name
+// unknown).
+UnkVec3 fn_801F5E50(f32 height);
+
+// Its destructor is inline (first copy emitted at 0x800DBC24).
+class CIFixedPlayerTracking_DJ1 : public CameraInfluence {
+public:
+    virtual ~CIFixedPlayerTracking_DJ1() {}
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+
+    /* 0x0C */ UnkVec3 mPos;
 };
 
 #endif // GAME_CAMERAINFLUENCE_H
