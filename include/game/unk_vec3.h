@@ -12,7 +12,23 @@ struct UnkVec3 {
     f32 x, y, z;
     UnkVec3() {}
     UnkVec3(f32 x_, f32 y_, f32 z_) : x(x_), y(y_), z(z_) {}
+
+    UnkVec3 operator-(const UnkVec3& other) const {
+        UnkVec3 result;
+        result.x = x - other.x;
+        result.y = y - other.y;
+        result.z = z - other.z;
+        return result;
+    }
+    f32 LengthSq() const { return x * x + y * y + z * z; }
+    f32 Length() const;
 };
+
+#include "game/unk_math.h"
+
+inline f32 UnkVec3::Length() const {
+    return UnkSqrtf(LengthSq());
+}
 
 static UnkVec3 sUnkVec3(0.0f, 1.0f, 0.0f);
 

@@ -19,4 +19,10 @@ extern void* lbl_805FB6C8;
 // Called with the object at the start of Entity::mA4 and 1.
 extern "C" void fn_801BB478(void* obj, int arg);
 
+// fn_800D5924(fn_800D39BC(lbl_805FB180)) tells whether a condition holds (meaning
+// unknown).
+extern "C" void* fn_800D39BC(void* obj);
+extern "C" int fn_800D5924(void* obj);
+extern void* lbl_805FB180;
+
 #endif // GAME_EXTERNS_H

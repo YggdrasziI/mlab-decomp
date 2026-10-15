@@ -359,4 +359,17 @@ public:
     /* 0x268 */ u32 m268;
 };
 
+// Its destructor is implicit (emitted at the end of its unit).
+class Entity_Challenge_Projector : public Entity_Prop {
+public:
+    Entity_Challenge_Projector(int type, EntityInfo* info, int init);
+    virtual int vf30(void* arg1, void* arg2);
+    virtual void vf20(f32 dt, int arg);
+
+    void fn_8006D248(void* target);
+
+    /* 0x264 */ u8 mNear;
+    /* 0x268 */ void* m268;
+};
+
 #endif // GAME_ENTITY_H
