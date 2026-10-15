@@ -40,7 +40,7 @@ offset).
 
 | Unit | .text | Content |
 |---|---|---|
-| `game/unit_8001FCA8` (not split yet) | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage factory |
+| `game/unit_8001FCA8.cpp` | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage sequence and factory (matches, linked) |
 | `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
 
 ### Game / SDK boundary (0x80232AF8)

@@ -7,6 +7,16 @@
 // use offsets or the address of the original function.
 
 #include "types.h"
+#include <stddef.h>
+
+// Placement new (the stage factory rebuilds stages in place); the compiler checks the
+// returned pointer for null before running the constructor.
+inline void* operator new(size_t, void* p) { return p; }
+
+// Input readers called by UnkInputSource::fn_8001FCA8 (real names and signatures
+// unknown; argument types follow the register use).
+extern "C" f32 fn_80147800(void* handle);
+extern "C" void fn_80147704(void* handle, f32* x, f32* y);
 
 // Three-float vector with an inline constructor. Each game unit that includes this
 // header gets its own (0, 1, 0) copy in .bss, built by the unit's static initializer.
@@ -20,7 +30,7 @@ static UnkVec3 sUnkVec3(0.0f, 1.0f, 0.0f);
 
 // One input source (0xC bytes), refreshed by fn_8001FCA8. Real name unknown.
 struct UnkInputSource {
-    /* 0x0 */ u32 unk0;
+    /* 0x0 */ void* unk0;
     /* 0x4 */ f32 mValue;
     /* 0x8 */ u32 mType;
 
@@ -153,6 +163,25 @@ public:
     virtual void vf10();
 
     /* 0x50 */ f32 m50;
+};
+
+// Non-polymorphic owner of up to ten stages run one after the other (no vtable, no
+// RTTI; real name unknown).
+class UnkInputSequence {
+public:
+    /* 0x00 */ s32 mCount;
+    /* 0x04 */ s32 mIndex;
+    /* 0x08 */ f32 m8;
+    /* 0x0C */ f32 mC;
+    /* 0x10 */ CAbstractInputEventStage* mStages[10];
+    /* 0x38 */ f32 mTimer;
+    /* 0x3C */ f32 m3C;
+    /* 0x40 */ f32 m40;
+    /* 0x44 */ s32 m44;
+
+    f32 fn_80020068();
+    void fn_80020070(f32 dt);
+    void fn_80020334();
 };
 
 #endif // GAME_UNIT_8001FCA8_H

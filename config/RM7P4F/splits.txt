@@ -13,6 +13,14 @@ Sections:
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:4
 
+game/unit_8001FCA8.cpp:
+	.text       start:0x8001FCA8 end:0x80020480
+	.ctors      start:0x80345B40 end:0x80345B44
+	.data       start:0x803555B8 end:0x80355690
+	.bss        start:0x803C4C78 end:0x803C4C88
+	.sdata      start:0x805F8298 end:0x805F82A0
+	.sdata2     start:0x805FC8B8 end:0x805FC8C8
+
 game/unit_80020480.cpp:
 	.text       start:0x80020480 end:0x800214D4
 	.ctors      start:0x80345B44 end:0x80345B48

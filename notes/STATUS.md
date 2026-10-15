@@ -40,6 +40,8 @@
 
 - Step 6 (game code) started: game unit bounds proven by static initializers
   (`notes/SPLITS.md`); compiled with `cflags_game` (base flags with `-RTTI on`).
+  `game/unit_8001FCA8.cpp` (input source update, `CAbstractInputEventStage` base, stage
+  sequence) matches 10/10 functions and is linked: the first linked game unit.
   `game/unit_80020480.cpp` (CAbstractInput* stages) matches 29 of 31 functions; the two
   `AnyButtons*::vf0C` loops differ only by the order of three loop increments.
 

@@ -32,4 +32,5 @@ Notes:
 - "Units" counts units in `objdiff.json`; library units are the ones split by hand in
   `config/RM7P4F/splits.txt` (progress category `sdk`, 634340 bytes of code); the rest
   are dtk `auto_*` objects.
-- Game code: the first unit (`game/unit_80020480.cpp`) is split, 99.94 % fuzzy, not linked yet.
+- Game code: `game/unit_8001FCA8.cpp` is linked (first game unit); `game/unit_80020480.cpp`
+  is split, 29/31 functions, not linked yet.
