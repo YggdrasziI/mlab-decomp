@@ -30,6 +30,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-15 | b5b5648 | 758544 / 3412920 bytes (22.23 %) | 2912 / 12580 | 346 linked / 1044 | Game code: 30 units split, 28 linked: the Entity class family (Entity_Game, Entity_Static, Entity_Dynamic, Entity_Trigger_Script, Entity_ArmWrestleBolt, ExWorldTrackItem, Entity_AstralTile, Entity_BrazierBowl, Entity_SpiritToken, Entity_Hazard_Prop), callbacks, `book` / `section`, small helpers; 21.23 % of code linked |
 | 2026-10-15 | 7311897 | 758980 / 3412920 bytes (22.24 %) | 2919 / 12580 | 347 linked / 1045 | Game code: 32 units split, 29 linked (Entity_Challenge_Projector 5/6 not linked; hash index table linked) |
 | 2026-10-15 | 56d6cae | 762404 / 3412920 bytes (22.34 %) | 2958 / 12580 | 350 linked / 1053 | Game code: 36 units split, 32 linked (added Entity_MysticBrewVortex, Entity_BrainTossTarget, Entity_ArmWrestleHand; Entity_BrainTossHand 7/8 not linked) |
+| 2026-10-15 | e870663 | 764616 / 3412920 bytes (22.40 %) | 2978 / 12580 | 354 linked / 1062 | Callback family (NetworkInput / DebugMenu action selection, PlayerInput gesture), Entity_ReactorLeakHammer; motion recognizer classes identified from RTTI |
 
 Notes:
 

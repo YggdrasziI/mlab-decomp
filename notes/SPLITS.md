@@ -97,7 +97,8 @@ copies in the first unit that needs them (the Entity vtable points into eight ot
 units).
 
 objdiff may report 100 % for a function that loads the wrong float constant from
-.sdata2 (seen in `unit_80076AB8`: 1.0 instead of 0.0). Only linking the unit and the
+.sdata2 (seen in `unit_80076AB8`: 1.0 instead of 0.0) or that calls the wrong function
+(seen in `unit_80098BD8`: the base class constructor instead of the derived one). Only linking the unit and the
 `main.dol` check prove a match, so every matching game unit is linked.
 
 ### Game / SDK boundary (0x80232AF8)
