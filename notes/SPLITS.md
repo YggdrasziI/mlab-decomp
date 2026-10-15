@@ -94,6 +94,7 @@ offset).
 | `game/unit_80116BE8.cpp` | 0x80116BE8-0x80116CA8 | class `section` (RTTI): constructor, virtual destructor, five pure virtual functions, `"%d/%d"` text of two counters (matches, linked) |
 | `game/unit_80120D34.cpp` | 0x80120D34-0x80120DC0 | binary search of a 32-bit hash in a 4274-entry table sorted by hash (0x8036D370), returning an index 0-4273 (matches, linked) |
 | `game/unit_80122A10.cpp` | 0x80122A10-0x80122B5C | reserve / release a slot in the 255-entry active entity id table of the large .bss object at 0x803B53A0 (matches, linked) |
+| `game/unit_801424B8.cpp` | 0x801424B8-0x80142500 | only the global test logger instance (`UnkLogger`, real name unknown: writes `fail.log`); the static initializer builds it and registers its destructor (matches, linked) |
 
 RTTI objects (`__RTTI__*`) and their name strings are emitted as weak data in every
 unit that needs them (for example a derived class's base list). Our object may then
