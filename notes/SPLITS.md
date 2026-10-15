@@ -78,6 +78,7 @@ offset).
 | `game/unit_800B7934.cpp` | 0x800B7934-0x800B7A08 | class `Entity_ArmWrestleBolt` (RTTI), derived from `Entity_Prop` (functions at 0x80069028, not split; implicit destructor inlined here) (matches, linked) |
 | `game/unit_800B7A08.cpp` | 0x800B7A08-0x800B7E34 | class `Entity_ArmWrestleHand` (RTTI), derived from `Entity_Prop`: attaches to a bone of another entity (matches, linked) |
 | `game/unit_800BF654.cpp` | 0x800BF654-0x800BF97C | class `Entity_MysticBrewVortex` (RTTI), derived from `Entity_Prop`: a 0-100 level with hashed events (matches, linked) |
+| `game/unit_800C407C.cpp` | 0x800C407C-0x800C42B8 | class `ExWorldWireTile` (RTTI; its RTTI record is emitted by an earlier unit) derived from `ExWorldTile`: constructor, destructor, `vfBC` (finds its wire by bone id), `vfC0`, `vfD0` (wire length) (NonMatching: `vfBC` 87 %, ctr loop) |
 | `game/unit_800C5E90.cpp` | 0x800C5E90-0x800C5F84 | class `ExWorldTrackItem` (RTTI), derived from `Entity_Prop`, with four new virtual functions (matches, linked) |
 | `game/unit_800D00B4.cpp` | 0x800D00B4-0x800D02C0 | camera influence `CIStitching` (RTTI), derived from `CIDynamic` and the abstract `CameraInfluence`: fixed position and rotation (matches, linked) |
 | `game/unit_800DE5B4.cpp` | 0x800DE5B4-0x800DEC28 | class `SphereGraph` (RTTI): spheres joined by edges; finds the capsule closest to a point. The vtable pointer is at 0x10, after the data members, so they come from a base class. 4/5 functions match; the capsule distance `fn_800DE780` does not (75 %, register reuse), so the unit is not linked |

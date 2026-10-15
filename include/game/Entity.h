@@ -145,7 +145,8 @@ public:
 
 // Bone of an entity model (0xC8 bytes, real name unknown).
 struct UnkBone {
-    /* 0x00 */ u8 unk0[0x5C];
+    /* 0x00 */ u32 m0;
+    /* 0x04 */ u8 unk4[0x5C - 0x4];
     /* 0x5C */ UnkVec3 mPos;
     /* 0x68 */ u8 unk68[0xC8 - 0x68];
 };
@@ -374,16 +375,17 @@ public:
     /* 0x270 */ u8 m270;
 };
 
-// Functions at 0x800C142C-0x800C1DC0 (unit not split yet).
+// Functions at 0x800C13D8-0x800C1DC0 (unit not split yet).
 class ExWorldTile : public Entity_Prop {
 public:
+    ExWorldTile(int type, EntityInfo* info, int init);
     virtual ~ExWorldTile();
     virtual void vfBC();
     virtual void vfC0();
     virtual void vfC4();
     virtual void vfC8();
     virtual void vfCC();
-    virtual void vfD0() = 0;
+    virtual f32 vfD0() = 0;
 };
 
 // Functions at 0x800C4530-0x800C5100 (unit not split yet).
@@ -392,9 +394,32 @@ public:
     ExWorldCurvedTile(int type, EntityInfo* info, int init);
     virtual ~ExWorldCurvedTile();
     virtual void vfBC();
-    virtual void vfD0();
+    virtual f32 vfD0();
     virtual void vfD4();
     virtual void vfD8();
+};
+
+// Wire segment of a level element (real type unknown; 0x4C bytes).
+struct UnkWire {
+    /* 0x00 */ u8 unk0[0x24];
+    /* 0x24 */ int mPointCount;
+    /* 0x28 */ u8 unk28[0x2C - 0x28];
+    /* 0x2C */ u32 mId;
+    /* 0x30 */ u32 mFlags;
+    /* 0x34 */ u8 unk34[0x4C - 0x34];
+};
+
+// Game unit at 0x800C407C-0x800C42B8.
+class ExWorldWireTile : public ExWorldTile {
+public:
+    ExWorldWireTile(int type, EntityInfo* info, int init);
+    virtual ~ExWorldWireTile();
+    virtual void vfBC();
+    virtual void vfC0();
+    virtual f32 vfD0();
+
+    /* 0x264 */ u8 unk264[0x2A0 - 0x264]; // owner class unknown
+    /* 0x2A0 */ UnkWire* mWire;
 };
 
 class Entity_AstralTile : public ExWorldCurvedTile {

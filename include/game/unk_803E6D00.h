@@ -7,10 +7,21 @@
 #include "game/Entity.h"
 #include "types.h"
 
+// Element of UnkGlobals803E6D00Sub::m1A4; the array stride is the global
+// lbl_805FB94C (real type unknown).
+struct UnkWireGroup {
+    /* 0x00 */ u8 unk0[0xA0];
+    /* 0xA0 */ UnkWire* mWires;
+    /* 0xA4 */ u8 mWireCount;
+};
+
 // Object pointed to by lbl_803E6D00.m0 (real type unknown).
 struct UnkGlobals803E6D00Sub {
-    /* 0x0 */ u8 unk0[0x8];
-    /* 0x8 */ Entity* m8;
+    /* 0x000 */ u8 unk0[0x4];
+    /* 0x004 */ int m4;
+    /* 0x008 */ Entity* m8;
+    /* 0x00C */ u8 unkC[0x1A4 - 0xC];
+    /* 0x1A4 */ u8* mWireGroups;
 };
 
 struct UnkGlobals803E6D00 {
