@@ -6,7 +6,7 @@
 // NetworkGestureCallback is in the game unit at 0x800444FC-0x800445E4. Real file
 // names unknown; method names unknown (vfXX = vtable offset).
 
-#include "game/unk_anim.h"
+#include "game/MotionRecognizer.h"
 #include "types.h"
 
 class XBaseGestureCallback {
@@ -42,7 +42,7 @@ public:
     virtual int vf0C(f32 dt);
     virtual void vf10();
 
-    /* 0x048 */ UnkAnimPlayer mAnim;
+    /* 0x048 */ AccelerometerMotionRecognizer mRecognizer;
     /* 0x4CC */ f32 mTimer;
     /* 0x4D0 */ f32 mTimerStart;
 };

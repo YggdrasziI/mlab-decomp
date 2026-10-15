@@ -17,19 +17,19 @@ static inline void SendMessage(u32 flag) {
     }
 }
 
-PlayerInputGestureCallback::PlayerInputGestureCallback() : mAnim(lbl_803C4298.m38) {
+PlayerInputGestureCallback::PlayerInputGestureCallback() : mRecognizer(lbl_803C4298.m38) {
     mTimer = -1.0f;
     mTimerStart = 0.0f;
-    UnkAnimParam param(-1, 0, 0);
-    mAnim.fn_801F8F34(0.7f);
-    mAnim.fn_801F8FA0(1.5f);
-    mAnim.m98 = 0;
-    mAnim.fn_801F8628(&param, 1);
-    mAnim.m94 = 1.0f / 12.0f;
+    UnkMotionParam param(-1, 0, 0);
+    mRecognizer.fn_801F8F34(0.7f);
+    mRecognizer.fn_801F8FA0(1.5f);
+    mRecognizer.m98 = 0;
+    mRecognizer.fn_801F8628(&param, 1);
+    mRecognizer.m94 = 1.0f / 12.0f;
 }
 
 PlayerInputGestureCallback::~PlayerInputGestureCallback() {
-    fn_801B3308()->fn_801B3378(&mAnim);
+    fn_801B3308()->fn_801B3378(&mRecognizer);
 }
 
 int PlayerInputGestureCallback::vf0C(f32 dt) {
@@ -37,18 +37,18 @@ int PlayerInputGestureCallback::vf0C(f32 dt) {
         m44 = 1;
         return m46;
     }
-    if (mAnim.m90 && mAnim.m94 > 0.0f) {
-        mAnim.m8 = mAnim.m94;
+    if (mRecognizer.m90 && mRecognizer.m94 > 0.0f) {
+        mRecognizer.m8 = mRecognizer.m94;
     }
-    if (mAnim.m90) {
+    if (mRecognizer.m90) {
         m44 = 1;
-        fn_801B3308()->fn_801B3378(&mAnim);
+        fn_801B3308()->fn_801B3378(&mRecognizer);
         SendMessage(1);
         return 1;
     }
     if (mTimer < 0.0f) {
         m44 = 1;
-        fn_801B3308()->fn_801B3378(&mAnim);
+        fn_801B3308()->fn_801B3378(&mRecognizer);
         SendMessage(0);
         return 0;
     }
@@ -59,5 +59,5 @@ int PlayerInputGestureCallback::vf0C(f32 dt) {
 void PlayerInputGestureCallback::vf10() {
     m44 = 0;
     mTimer = mTimerStart;
-    fn_801B3308()->fn_801B3310(&mAnim);
+    fn_801B3308()->fn_801B3310(&mRecognizer);
 }

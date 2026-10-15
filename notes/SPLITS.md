@@ -51,7 +51,7 @@ offset).
 | `game/unit_80040638.cpp` | 0x80040638-0x80040824 | class `NetworkInputActionSelectionCallback` (RTTI), derived from `XBaseActionSelectionCallback`: current and queued action selections (matches, linked) |
 | `game/unit_80041874.cpp` | 0x80041874-0x800418E0 | constructor and destructor of a one-byte class without vtable (matches, linked) |
 | `game/unit_80042C18.cpp` | 0x80042C18-0x80042C38 | only the static initializer; code and data match but the object is not linked (nothing references it, see the source comment) |
-| `game/unit_8004421C.cpp` | 0x8004421C-0x800444FC | class `PlayerInputGestureCallback` (RTTI), derived from `XBaseGestureCallback`; embeds a 0x484-byte object (probably an animation player, functions at 0x801F8238) and sends pool-3 messages; `XBaseGestureCallback`'s RTTI is emitted first here (matches, linked) |
+| `game/unit_8004421C.cpp` | 0x8004421C-0x800444FC | class `PlayerInputGestureCallback` (RTTI), derived from `XBaseGestureCallback`; embeds an `AccelerometerMotionRecognizer` (RTTI; Wii Remote gesture recognizer) and sends pool-3 messages; `XBaseGestureCallback`'s RTTI is emitted first here (matches, linked) |
 | `game/unit_800444FC.cpp` | 0x800444FC-0x800445E4 | class `NetworkGestureCallback` (RTTI), derived from `XBaseGestureCallback` (functions at 0x8020F498, not split) (matches, linked) |
 | `game/unit_80044C58.cpp` | 0x80044C58-0x80044CDC | constructor and destructor of a 0x148-byte class without vtable, built as an array of two by `fn_80040824` (matches, linked) |
 | `game/unit_80049628.cpp` | 0x80049628-0x800496DC | class `CharacterPartAttachment` (RTTI), derived from `XCharacterPartAttachment` (functions at 0x8020E9CC, not split); the base class's RTTI object and name are emitted in this unit too (matches, linked) |
@@ -68,6 +68,7 @@ offset).
 | `game/unit_800836A0.cpp` | 0x800836A0-0x80083A6C | abstract class `Entity_BrainTossTarget` (RTTI; two pure virtual functions), derived from `Entity_Prop` (matches, linked) |
 | `game/unit_80086780.cpp` | 0x80086780-0x80086BE8 | class `Entity_BrainTossHand` (RTTI): holds an entity at the hand joint (hash 0x1DC9D499) of its model; 7/8 functions match, one swaps two stack slots (not linked) |
 | `game/unit_8008C9F8.cpp` | 0x8008C9F8-0x8008CBB0 | class `Entity_BrazierBowl` (RTTI), derived from `Entity_Prop`; state and value setters send hashed events through `fn_801BA190` (matches, linked) |
+| `game/unit_80098BD8.cpp` | 0x80098BD8-0x80098DA8 | class `Entity_ReactorLeakHammer` (RTTI), derived from the abstract `Entity_ReactorLeakManipulator`; embeds a `DirectionalSpikeRecognizer` (matches, linked). The two functions at 0x80098BC0-0x80098BD8 are left to the previous unit |
 | `game/unit_8009B19C.cpp` | 0x8009B19C-0x8009B264 | class `Entity_AstralTile` (RTTI), derived from `ExWorldCurvedTile` and `ExWorldTile` (not split); the RTTI, names and base lists of both base classes are emitted first here (matches, linked) |
 | `game/unit_800B7934.cpp` | 0x800B7934-0x800B7A08 | class `Entity_ArmWrestleBolt` (RTTI), derived from `Entity_Prop` (functions at 0x80069028, not split; implicit destructor inlined here) (matches, linked) |
 | `game/unit_800B7A08.cpp` | 0x800B7A08-0x800B7E34 | class `Entity_ArmWrestleHand` (RTTI), derived from `Entity_Prop`: attaches to a bone of another entity (matches, linked) |

@@ -12,6 +12,7 @@
 // they are probably inline functions emitted where first used. They are declared
 // out of line here until those units are decompiled.
 
+#include "game/MotionRecognizer.h"
 #include "game/unk_vec3.h"
 #include "types.h"
 
@@ -598,6 +599,28 @@ public:
 
     /* 0x264 */ Entity* mHeld;
     /* 0x268 */ int m268;
+};
+
+// Abstract base of the reactor leak tools (name from RTTI; implicit constructor and
+// destructor).
+class Entity_ReactorLeakManipulator : public Entity_Prop {
+public:
+    Entity_ReactorLeakManipulator(int type, EntityInfo* info, int init) : Entity_Prop(type, info, init) {}
+    virtual void vfBC() = 0;
+    virtual void vfC0() = 0;
+    virtual u8 vfC4() = 0;
+};
+
+class Entity_ReactorLeakHammer : public Entity_ReactorLeakManipulator {
+public:
+    Entity_ReactorLeakHammer(int type, EntityInfo* info, int init);
+    virtual ~Entity_ReactorLeakHammer();
+    virtual void vfBC();
+    virtual void vfC0();
+    virtual u8 vfC4();
+
+    /* 0x264 */ u32 m264;
+    /* 0x268 */ DirectionalSpikeRecognizer mRecognizer;
 };
 
 #endif // GAME_ENTITY_H
