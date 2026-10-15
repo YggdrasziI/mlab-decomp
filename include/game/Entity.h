@@ -223,4 +223,19 @@ public:
     /* 0x264 */ f32 m264;
 };
 
+class ExWorldTrackItem : public Entity_Prop {
+public:
+    ExWorldTrackItem(int type, EntityInfo* info, int init);
+    virtual ~ExWorldTrackItem();
+    virtual void vfBC();
+    virtual void vfC0();
+    virtual void vfC4();
+    virtual void vfC8();
+
+    /* 0x264 */ f32 m264;
+    /* 0x268 */ u8 m268;
+    /* 0x26C */ u32 m26C;
+    /* 0x270 */ u8 m270;
+};
+
 #endif // GAME_ENTITY_H
