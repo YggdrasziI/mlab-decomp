@@ -14,23 +14,25 @@
 #include "game/unk_vec3.h"
 #include "types.h"
 
-// Result of a UnkCameraTarget query (real type unknown). m4 is the best distance
-// found so far.
-struct UnkCameraTargetHit {
+// Result of a SphereGraph query (real type unknown). m4 is the best distance found
+// so far.
+struct UnkSphereGraphHit {
     /* 0x00 */ f32 m0;
     /* 0x04 */ f32 m4;
     /* 0x08 */ u8 unk8[0x14 - 0x8];
 };
 
-// Member of CIDynamic at 0xC (real type unknown; functions at 0x800DE5B4).
-class UnkCameraTarget {
+// Member of CIDynamic at 0xC; name from RTTI (vtable at 0x8035FDE0), functions at
+// 0x800DE5B4. Members unknown.
+class SphereGraph {
 public:
-    UnkCameraTarget();
-    ~UnkCameraTarget();
+    SphereGraph();
+    virtual ~SphereGraph();
 
-    bool fn_800DE678(UnkVec3 pos, UnkCameraTargetHit* hit, f32 radius);
+    bool fn_800DE678(UnkVec3 pos, UnkSphereGraphHit* hit, f32 radius);
 
-    /* 0x00 */ u8 unk0[0x14];
+    /* 0x00 */ // vtable
+    /* 0x04 */ u8 unk4[0x14 - 0x4];
 };
 
 // Object the camera follows (real type unknown), at UnkCameraController::m2C0.
@@ -70,8 +72,8 @@ public:
     virtual f32 vf14() { return mProgress; }
     virtual f32 vf18();
 
-    /* 0x0C */ UnkCameraTarget mGraph;
-    /* 0x20 */ UnkCameraTargetHit mHit;
+    /* 0x0C */ SphereGraph mGraph;
+    /* 0x20 */ UnkSphereGraphHit mHit;
     /* 0x34 */ f32 mAngle;
     /* 0x38 */ u8 unk38[0x4];
     /* 0x3C */ f32 mTimer;
