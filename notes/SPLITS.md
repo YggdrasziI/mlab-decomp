@@ -83,6 +83,7 @@ offset).
 | `game/unit_800E391C.cpp` | 0x800E391C-0x800E3CF4 | camera influence `CITrackTarget` (RTTI), derived from `CIDynamic`: turns the camera towards a tracked target; 5/6 functions match (not linked) |
 | `game/unit_800E2EBC.cpp` | 0x800E2EBC-0x800E2FE8 | registers `CIWaypointPath::StaticSetPosition` / `StaticSetOrientation` (real names: the strings they are registered under) and a task dispatch on a type byte; the "CompoundTask" string after its data belongs to a function-local static of an inline used elsewhere (matches, linked) |
 | `game/unit_800E2FE8.cpp` | 0x800E2FE8-0x800E3300 | camera influence `CIFixedTrackPlayer` (RTTI), derived from `CIDynamic`: eases the camera between two track points with a cosine curve (matches, linked) |
+| `game/unit_800E3300.cpp` | 0x800E3300-0x800E374C | camera influence `CIDirectionGuide` (RTTI), derived from `CIDynamic`: turns the camera yaw towards the camera direction, aligned with the closest SphereGraph capsule, scaled by the speed of the followed object; 4/5 functions match (`vf0C` 98.4 %, float registers), not linked |
 | `game/unit_800E374C.cpp` | 0x800E374C-0x800E3834 | camera influence `CIDist` (RTTI), derived from `CIDynamic`: feeds a weighted distance to the camera state; implicit destructor emitted last (matches, linked) |
 | `game/unit_800E3834.cpp` | 0x800E3834-0x800E391C | camera influence `CIPitch` (RTTI), same shape for the pitch (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |

@@ -73,6 +73,8 @@ struct UnkCameraSubject {
     /* 0x04 */ UnkVec3* mPos;
     /* 0x08 */ u8 unk8[0x14 - 0x8];
     /* 0x14 */ f32 mRadius;
+    /* 0x18 */ u8 unk18[0x770 - 0x18];
+    /* 0x770 */ UnkVec3 m770;
 };
 
 // Set to stop CIDynamic from holding its blend (real name unknown).
@@ -305,6 +307,18 @@ public:
     /* 0x60 */ f32 mPitch;
     /* 0x64 */ u8 unk64[0x4];
     /* 0x68 */ UnkTrackedTarget mTracked;
+};
+
+// Unit 0x800E3300 (game/unit_800E3300.cpp); implicit destructor (emitted at the end
+// of its unit). Turns the camera yaw towards the camera direction, aligned with the
+// closest SphereGraph capsule.
+class CIDirectionGuide : public CIDynamic {
+public:
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    virtual void vf10();
+    virtual f32 vf14();
+
+    /* 0x58 */ f32 mTurnRate;
 };
 
 #endif // GAME_CAMERAINFLUENCE_H
