@@ -104,6 +104,7 @@ offset).
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
 | `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |
 | `game/unit_80116BE8.cpp` | 0x80116BE8-0x80116CA8 | class `section` (RTTI): constructor, virtual destructor, five pure virtual functions, `"%d/%d"` text of two counters (matches, linked) |
+| `game/unit_80120AAC.cpp` | 0x80120AAC-0x80120D34 | a 16-character text entry buffer allocated on open: typed characters, backspace, space, trailing-space trim, lock flag (matches, linked) |
 | `game/unit_80120D34.cpp` | 0x80120D34-0x80120DC0 | binary search of a 32-bit hash in a 4274-entry table sorted by hash (0x8036D370), returning an index 0-4273 (matches, linked) |
 | `game/unit_8012148C.cpp` | 0x8012148C-0x80121508 | empty methods and forwarders of the object at `lbl_803C2A20 + 0x10` (`Unk8012148C`, real name unknown); the forwarded methods follow at 0x8012189C-0x80121A08 (matches, linked) |
 | `game/unit_80122A10.cpp` | 0x80122A10-0x80122B5C | reserve / release a slot in the 255-entry active entity id table of the large .bss object at 0x803B53A0 (matches, linked) |
