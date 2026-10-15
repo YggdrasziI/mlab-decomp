@@ -52,7 +52,8 @@ the source and dead-stripped by the linker (the build matches).
 - Symbols referenced by this code, identified by position: in each matching function,
   the calls and data accesses of the compiled object and of the original are at the same
   offsets, so each external name maps to exactly one address:
-  `__dl__FPv` (`operator delete`, 0x801D426C, game code), `__dla__FPv`
+  `__dl__FPv` (`operator delete`, 0x801D426C, game code), `__nw__FUl` (`operator new`,
+  0x801D40E0, game code: the `new` expressions of `game/unit_8003F91C.cpp` call it), `__dla__FPv`
   (`operator delete[]`, 0x801D4340, game code), `OSInitAlloc`, `OSCreateHeap`,
   `OSSetCurrentHeap`, `OSAllocFromHeap`, `OSFreeToHeap`, `OSSetArenaLo`,
   `__OSCurrHeap`, and `@stringBase0` (0x80352220, `GCN_mem_alloc.c` string pool).

@@ -41,6 +41,14 @@ struct UnkActionRequest {
     /* 0x2C */ s32 m2C;
 };
 
+// Name holder at XBaseActionSelectionCallback+0xC (real type unknown; 0x40 bytes).
+class UnkCallbackName {
+public:
+    void fn_8022127C(const char* name);
+
+    /* 0x00 */ u8 unk0[0x40];
+};
+
 class XBaseActionSelectionCallback {
 public:
     // Also builds the member at 0xC with the name "NAME THIS CALLBACK!!!".
@@ -52,11 +60,13 @@ public:
     // Copies the selection into the object at m8 (offset 0x38) and sets m4.
     void fn_8020F46C(UnkActionSelection* selection);
 
+    void SetName(const char* name) { mName.fn_8022127C(name); }
+
     /* 0x00 */ // vtable
     /* 0x04 */ u8 m4;
     /* 0x05 */ u8 m5;
     /* 0x08 */ void* m8;
-    /* 0x0C */ u8 unkC[0x40];
+    /* 0x0C */ UnkCallbackName mName;
 };
 
 class CompositeCharacterActionSelectionCB : public XBaseActionSelectionCallback {
@@ -80,6 +90,45 @@ public:
     /* 0x58 */ u8 mHasCurrent;
     /* 0x5C */ UnkActionSelection mNext;
     /* 0x68 */ u8 mHasNext;
+};
+
+// Debug menu driven by DebugMenuActionSelectionCallback (0x9C bytes, functions at
+// 0x8003FB24-0x8004006C, unit not split yet; real name unknown).
+class UnkDebugMenu {
+public:
+    UnkDebugMenu();
+    ~UnkDebugMenu();
+    void fn_8003FC00(void* arg);
+    void fn_8003FC6C(void* arg);
+    void fn_8003FF30();
+    u32 fn_8003FFA4(UnkActionSelection* selection);
+    void fn_8003FFD0();
+    void fn_80040028();
+
+    /* 0x00 */ u8 unk0[0x84];
+    /* 0x84 */ void* m84;
+    /* 0x88 */ u8 unk88[0x98 - 0x88];
+    /* 0x98 */ u8 m98;
+};
+
+// Global object at 0x8047C7D8 (0x18 bytes, real type unknown).
+class UnkFocus {
+public:
+    void* fn_801B41F0();
+
+    /* 0x00 */ u8 unk0[0x18];
+};
+
+extern UnkFocus lbl_8047C7D8;
+
+class DebugMenuActionSelectionCallback : public XBaseActionSelectionCallback {
+public:
+    DebugMenuActionSelectionCallback(void* arg);
+    virtual ~DebugMenuActionSelectionCallback();
+    virtual void vf0C();
+
+    /* 0x4C */ UnkDebugMenu* mMenu;
+    /* 0x50 */ bool mFocused;
 };
 
 #endif // GAME_ACTIONSELECTIONCALLBACK_H

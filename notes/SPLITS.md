@@ -47,6 +47,7 @@ offset).
 | `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
 | `game/unit_800214D4.cpp` | 0x800214D4-0x80021594 | the set of input sequences (8 fixed, 100 indexed, 34-entry index table) (matches, linked) |
 | `game/unit_8002B4D0.cpp` | 0x8002B4D0-0x8002B58C | class `BugCachingChallenge::ButterFly` (RTTI), derived from `BugCachingChallenge::Bug` (functions at 0x800293C8, not split); constructor sets the float at 0x4 to 6.4 (matches, linked) |
+| `game/unit_8003F91C.cpp` | 0x8003F91C-0x8003FB24 | class `DebugMenuActionSelectionCallback` (RTTI), named "Debug menu callback"; owns a 0x9C-byte debug menu object (functions at 0x8003FB24, not split); `XBaseActionSelectionCallback`'s RTTI is emitted first here (matches, linked) |
 | `game/unit_80040638.cpp` | 0x80040638-0x80040824 | class `NetworkInputActionSelectionCallback` (RTTI), derived from `XBaseActionSelectionCallback`: current and queued action selections (matches, linked) |
 | `game/unit_80041874.cpp` | 0x80041874-0x800418E0 | constructor and destructor of a one-byte class without vtable (matches, linked) |
 | `game/unit_80042C18.cpp` | 0x80042C18-0x80042C38 | only the static initializer; code and data match but the object is not linked (nothing references it, see the source comment) |
