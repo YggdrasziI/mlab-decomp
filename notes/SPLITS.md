@@ -56,6 +56,7 @@ offset).
 | `game/unit_80044C58.cpp` | 0x80044C58-0x80044CDC | constructor and destructor of a 0x148-byte class without vtable, built as an array of two by `fn_80040824` (matches, linked) |
 | `game/unit_80049628.cpp` | 0x80049628-0x800496DC | class `CharacterPartAttachment` (RTTI), derived from `XCharacterPartAttachment` (functions at 0x8020E9CC, not split); the base class's RTTI object and name are emitted in this unit too (matches, linked) |
 | `game/unit_800496DC.cpp` | 0x800496DC-0x800497F4 | class `CompositeCharacterActionSelectionCB` (RTTI), derived from `XBaseActionSelectionCallback` (functions at 0x8020F36C, not split), with a 12-byte selection member (matches, linked) |
+| `game/unit_8005230C.cpp` | 0x8005230C-0x800523B8 | releases (explicit virtual destructor, then frees `lbl_805FBBC0`) or keeps the object at `lbl_803C2A20 + 0xDC8`; the first call only sets a static flag (matches, linked) |
 | `game/unit_800523B8.cpp` | 0x800523B8-0x80052504 | 32-bit key for an id: fixed pairs for ids 30-38 in modes 2/3, otherwise the 40-entry table at 0x803881B4 (matches, linked) |
 | `game/unit_8005CA88.cpp` | 0x8005CA88-0x8005CBC4 | class `Entity_Dynamic` (RTTI), derived from `Entity_Game` (matches, linked) |
 | `game/unit_80062C80.cpp` | 0x80062C80-0x8006307C | class `Entity_Game` (RTTI), derived from `Entity` (functions at 0x801B4334, not split; vtable at 0x80383D68); its RTTI and Entity's were emitted by an earlier unit (matches, linked) |
@@ -88,6 +89,7 @@ offset).
 | `game/unit_800E3300.cpp` | 0x800E3300-0x800E374C | camera influence `CIDirectionGuide` (RTTI), derived from `CIDynamic`: turns the camera yaw towards the camera direction, aligned with the closest SphereGraph capsule, scaled by the speed of the followed object; 4/5 functions match (`vf0C` 98.4 %, float registers), not linked |
 | `game/unit_800E374C.cpp` | 0x800E374C-0x800E3834 | camera influence `CIDist` (RTTI), derived from `CIDynamic`: feeds a weighted distance to the camera state; implicit destructor emitted last (matches, linked) |
 | `game/unit_800E3834.cpp` | 0x800E3834-0x800E391C | camera influence `CIPitch` (RTTI), same shape for the pitch (matches, linked) |
+| `game/unit_800E6228.cpp` | 0x800E6228-0x800E6360 | flag helpers on the entity at `lbl_803E6D00.m0->m8` (flags word at `mA4[1]`, masks from `fn_801B94F8`) (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
 | `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |
