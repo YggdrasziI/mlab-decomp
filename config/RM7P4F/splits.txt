@@ -427,6 +427,15 @@ game/unit_801424B8.cpp:
 	.ctors      start:0x80345EF8 end:0x80345EFC
 	.bss        start:0x803F22C8 end:0x803F2830
 
+game/unit_80142500.cpp:
+	.text       start:0x80142500 end:0x80142E94
+	.ctors      start:0x80345EFC end:0x80345F00
+	.data       start:0x80375D98 end:0x80375E08
+	.bss        start:0x803F2830 end:0x803F2890
+	.sdata      start:0x805F90F0 end:0x805F9178
+	.sbss       start:0x805FB458 end:0x805FB468
+	.sdata2     start:0x805FF000 end:0x805FF010
+
 RVL_SDK/base/PPCArch.c:
 	.text       start:0x80232AF8 end:0x80232C5C
 	.data       start:0x803894F0 end:0x80389528

@@ -38,7 +38,7 @@
 
 ## In progress
 
-- Step 6 (game code): 55 game units split, 46 linked (unit table in `notes/SPLITS.md`).
+- Step 6 (game code): 56 game units split, 47 linked (unit table in `notes/SPLITS.md`).
   Unit bounds come from the static initializers (inline functions of a unit may follow
   its `__sinit`); compiled with `cflags_game` (base flags with `-RTTI on`). Shared
   headers: `include/game/unk_vec3.h` (the `(0, 1, 0)` vector), `include/game/externs.h`

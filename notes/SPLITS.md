@@ -95,6 +95,7 @@ offset).
 | `game/unit_80120D34.cpp` | 0x80120D34-0x80120DC0 | binary search of a 32-bit hash in a 4274-entry table sorted by hash (0x8036D370), returning an index 0-4273 (matches, linked) |
 | `game/unit_80122A10.cpp` | 0x80122A10-0x80122B5C | reserve / release a slot in the 255-entry active entity id table of the large .bss object at 0x803B53A0 (matches, linked) |
 | `game/unit_801424B8.cpp` | 0x801424B8-0x80142500 | only the global test logger instance (`UnkLogger`, real name unknown: writes `fail.log`); the static initializer builds it and registers its destructor (matches, linked) |
+| `game/unit_80142500.cpp` | 0x80142500-0x80142E94 | `main` and the platform layer: a timer class over `OSGetTime`, sleep, frame callbacks, MEM allocators for WPAD, system initialization (OS, SC, DVD, fast cast, heaps, KPAD, AI, AX, reset/power callbacks, error handlers), the fatal error screen and the shutdown mode; the static initializer runs the initialization. The exception name table has "isiexti" (missing comma in the original source) and a null 17th entry (matches, linked) |
 
 RTTI objects (`__RTTI__*`) and their name strings are emitted as weak data in every
 unit that needs them (for example a derived class's base list). Our object may then
