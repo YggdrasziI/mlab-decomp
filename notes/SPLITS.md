@@ -58,6 +58,7 @@ offset).
 | `game/unit_80062C80.cpp` | 0x80062C80-0x8006307C | class `Entity_Game` (RTTI), derived from `Entity` (functions at 0x801B4334, not split; vtable at 0x80383D68); its RTTI and Entity's were emitted by an earlier unit (matches, linked) |
 | `game/unit_8006F5A0.cpp` | 0x8006F5A0-0x8006F61C | registers the `"count_deaths"` condition callback (type 22) with `fn_801DC91C` (matches, linked) |
 | `game/unit_8006F61C.cpp` | 0x8006F61C-0x8006F6BC | class `Entity_Static` (RTTI), derived from `Entity_Game`; its implicit destructor is emitted at 0x800630E0 (matches, linked) |
+| `game/unit_8006F6BC.cpp` | 0x8006F6BC-0x8006F794 | class `Entity_Trigger_Script` (RTTI), derived from `Entity_Sensor` (functions at 0x8006D2D0, not split); its RTTI, name and base list are in this unit (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
 | `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |

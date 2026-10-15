@@ -163,4 +163,23 @@ public:
     virtual void vf40();
 };
 
+// Functions at 0x8006D2D0-0x8006DD00 (unit not split yet).
+class Entity_Sensor : public Entity_Static {
+public:
+    Entity_Sensor(int type, EntityInfo* info, int init);
+    virtual ~Entity_Sensor();
+    virtual void vf18();
+    virtual void vf1C();
+    virtual void vf20(f32 dt, int arg);
+    virtual void vf30(void* arg1, void* arg2);
+    virtual void vf40();
+    virtual void vfBC();
+};
+
+class Entity_Trigger_Script : public Entity_Sensor {
+public:
+    Entity_Trigger_Script(int type, EntityInfo* info, int init);
+    virtual ~Entity_Trigger_Script();
+};
+
 #endif // GAME_ENTITY_H
