@@ -272,4 +272,21 @@ public:
     virtual void vfCC();
 };
 
+class Entity_BrazierBowl : public Entity_Prop {
+public:
+    Entity_BrazierBowl(int type, EntityInfo* info, int init);
+    virtual ~Entity_BrazierBowl();
+
+    void fn_8008CAA4();
+    void fn_8008CAB8();
+    void fn_8008CABC();
+    void fn_8008CAC0(f32 value);
+    void fn_8008CAFC(int state);
+    int fn_8008CB28();
+    int fn_8008CB64();
+
+    /* 0x264 */ int mState;
+    /* 0x268 */ f32 mValue;
+};
+
 #endif // GAME_ENTITY_H
