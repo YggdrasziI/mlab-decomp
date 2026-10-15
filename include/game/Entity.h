@@ -224,7 +224,9 @@ public:
     virtual void vfB0();
     virtual UnkEntitySlot* vfB8();
 
-    /* 0x158 */ u8 unk158[0x1C8 - 0x158];
+    /* 0x158 */ u8 unk158[0x15C - 0x158];
+    /* 0x15C */ u32 m15C;
+    /* 0x160 */ u8 unk160[0x1C8 - 0x160];
     /* 0x1C8 */ UnkEntitySlot mSlot;
     /* 0x20C */ u8 unk20C[0x264 - 0x20C];
 };
@@ -396,6 +398,40 @@ public:
 
     /* 0x264 */ f32 mLevel;
     /* 0x268 */ f32 mPrevLevel;
+};
+
+// Object given to Entity_BrainTossTarget::vfBC (real type unknown).
+struct UnkBrainTossThrower {
+    /* 0x00 */ u8 unk0[0xB4];
+    /* 0xB4 */ f32 mRange;
+};
+
+class Entity_BrainTossTarget : public Entity_Prop {
+public:
+    Entity_BrainTossTarget(int type, EntityInfo* info, int init);
+    virtual ~Entity_BrainTossTarget();
+    virtual void vfBC(UnkBrainTossThrower* thrower);
+    virtual void vfC0();
+    virtual int vfC4() = 0;
+    virtual int vfC8() = 0;
+
+    int fn_80083798();
+    void fn_800837A8();
+    int fn_800837C4();
+    void fn_800837F4(f32 time);
+    int fn_800837FC();
+    void fn_8008380C(int enable);
+    int fn_80083820();
+    void fn_80083828(int value);
+    bool fn_80083830();
+    int fn_80083930(UnkVec3* pos);
+
+    /* 0x264 */ UnkBrainTossThrower* mThrower;
+    /* 0x268 */ f32 mTime;
+    /* 0x26C */ f32 mDuration;
+    /* 0x270 */ bool m270;
+    /* 0x274 */ UnkVec3 mTarget;
+    /* 0x280 */ int m280;
 };
 
 #endif // GAME_ENTITY_H

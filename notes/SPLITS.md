@@ -62,6 +62,7 @@ offset).
 | `game/unit_8006F61C.cpp` | 0x8006F61C-0x8006F6BC | class `Entity_Static` (RTTI), derived from `Entity_Game`; its implicit destructor is emitted at 0x800630E0 (matches, linked) |
 | `game/unit_8006F6BC.cpp` | 0x8006F6BC-0x8006F794 | class `Entity_Trigger_Script` (RTTI), derived from `Entity_Sensor` (functions at 0x8006D2D0, not split); its RTTI, name and base list are in this unit (matches, linked) |
 | `game/unit_80076AB8.cpp` | 0x80076AB8-0x80076D38 | class `Entity_SpiritToken` (RTTI), derived from `Entity_Prop`; moves along a path and sends hashed events (matches, linked) |
+| `game/unit_800836A0.cpp` | 0x800836A0-0x80083A6C | abstract class `Entity_BrainTossTarget` (RTTI; two pure virtual functions), derived from `Entity_Prop` (matches, linked) |
 | `game/unit_8008C9F8.cpp` | 0x8008C9F8-0x8008CBB0 | class `Entity_BrazierBowl` (RTTI), derived from `Entity_Prop`; state and value setters send hashed events through `fn_801BA190` (matches, linked) |
 | `game/unit_8009B19C.cpp` | 0x8009B19C-0x8009B264 | class `Entity_AstralTile` (RTTI), derived from `ExWorldCurvedTile` and `ExWorldTile` (not split); the RTTI, names and base lists of both base classes are emitted first here (matches, linked) |
 | `game/unit_800B7934.cpp` | 0x800B7934-0x800B7A08 | class `Entity_ArmWrestleBolt` (RTTI), derived from `Entity_Prop` (functions at 0x80069028, not split; implicit destructor inlined here) (matches, linked) |
