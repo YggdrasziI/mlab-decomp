@@ -116,14 +116,14 @@ game/unit_800523B8.cpp:
 game/unit_8005CA88.cpp:
 	.text       start:0x8005CA88 end:0x8005CBC4
 	.ctors      start:0x80345C18 end:0x80345C1C
-	.data       start:0x80359A28 end:0x80359AE8
+	.data       start:0x80359A28 end:0x80359AE4
 	.bss        start:0x803C54E0 end:0x803C54F0
 	.sdata2     start:0x805FD3E8 end:0x805FD3F0
 
 game/unit_80062C80.cpp:
 	.text       start:0x80062C80 end:0x8006307C
 	.ctors      start:0x80345C20 end:0x80345C24
-	.data       start:0x80359BC8 end:0x80359C88
+	.data       start:0x80359BC8 end:0x80359C84
 	.bss        start:0x803C5690 end:0x803C56A0
 	.sdata2     start:0x805FD450 end:0x805FD458
 
@@ -137,7 +137,7 @@ game/unit_8006F5A0.cpp:
 game/unit_8006F61C.cpp:
 	.text       start:0x8006F61C end:0x8006F6BC
 	.ctors      start:0x80345C40 end:0x80345C44
-	.data       start:0x8035A4C8 end:0x8035A588
+	.data       start:0x8035A4C8 end:0x8035A584
 	.bss        start:0x803C5710 end:0x803C5720
 	.sdata2     start:0x805FD5C0 end:0x805FD5C8
 

@@ -139,7 +139,6 @@ public:
     virtual void vf40();
     virtual void vf78(void* arg);
     virtual UnkEntitySlot* vfB8();
-    virtual void vfBC() = 0;
 
     // Whether these fields belong to Entity or Entity_Game is unknown.
     /* 0x14C */ u32 m14C;
@@ -173,6 +172,7 @@ public:
     virtual void vf20(f32 dt, int arg);
     virtual void vf30(void* arg1, void* arg2);
     virtual void vf40();
+    // New virtual function in this class.
     virtual void vfBC();
 };
 
