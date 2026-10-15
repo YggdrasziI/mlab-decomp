@@ -3,17 +3,10 @@
 // unit and the previous one.
 
 #include "game/Entity.h"
+#include "game/unk_803E6D00.h"
 #include "game/unk_math.h"
 #include "game/unk_vec3.h"
 
-// Timer block in .bss at 0x803E6D00 (0x3298 bytes, real type unknown); 0xC holds
-// the frame time.
-struct UnkTimer {
-    /* 0x0 */ u8 unk0[0xC];
-    /* 0xC */ f32 mDeltaTime;
-};
-
-extern UnkTimer lbl_803E6D00;
 
 // Three distance ratios {0.3, 0.6, 0.9} in .rodata, defined in another unit.
 extern const f32 lbl_803464E4[3];
