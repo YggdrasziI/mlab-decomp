@@ -33,6 +33,21 @@ struct UnkQuat {
     UnkQuat() {}
     UnkQuat(const UnkQuat& other) : x(other.x), y(other.y), z(other.z), w(other.w) {}
 
+    // Interpolation towards other (0x80145F9C; probably a slerp).
+    UnkQuat fn_80145F9C(const UnkQuat* other, f32 t) const;
+
+    f32 LengthSq() const { return x * x + y * y + z * z + w * w; }
+    UnkQuat Normalized() const {
+        f32 inv = UnkInvSqrtf(LengthSq());
+        UnkQuat result;
+        result.x = x * inv;
+        result.y = y * inv;
+        result.z = z * inv;
+        result.w = w * inv;
+        return result;
+    }
+    void Normalize() { *this = Normalized(); }
+
     f32 x, y, z, w;
 };
 

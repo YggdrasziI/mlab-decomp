@@ -154,4 +154,26 @@ public:
     /* 0x18 */ UnkQuat mOrientation;
 };
 
+// Set while a CIFixed_DJ1 transition runs (real name unknown).
+extern u8 lbl_805FB1A1;
+
+// Its destructor and vf14 / vf18 are inline (first copies emitted at 0x800DBBE4 and
+// 0x800DC504).
+class CIFixed_DJ1 : public CameraInfluence {
+public:
+    virtual ~CIFixed_DJ1() {}
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    virtual f32 vf14() { return 1.0f; }
+    virtual f32 vf18() { return 1.0f; }
+
+    /* 0x0C */ UnkVec3 mPos;
+    /* 0x18 */ UnkVec3 mTarget;
+    /* 0x24 */ UnkQuat mRot;
+    /* 0x34 */ UnkVec3 mStartPos;
+    /* 0x40 */ u8 unk40[0x4C - 0x40];
+    /* 0x4C */ UnkQuat mStartRot;
+    /* 0x5C */ f32 mTimer;
+    /* 0x60 */ f32 mDuration;
+};
+
 #endif // GAME_CAMERAINFLUENCE_H
