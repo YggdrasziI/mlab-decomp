@@ -74,7 +74,8 @@ offset).
 | `game/unit_800B7A08.cpp` | 0x800B7A08-0x800B7E34 | class `Entity_ArmWrestleHand` (RTTI), derived from `Entity_Prop`: attaches to a bone of another entity (matches, linked) |
 | `game/unit_800BF654.cpp` | 0x800BF654-0x800BF97C | class `Entity_MysticBrewVortex` (RTTI), derived from `Entity_Prop`: a 0-100 level with hashed events (matches, linked) |
 | `game/unit_800C5E90.cpp` | 0x800C5E90-0x800C5F84 | class `ExWorldTrackItem` (RTTI), derived from `Entity_Prop`, with four new virtual functions (matches, linked) |
-| `game/unit_800D00B4.cpp` | 0x800D00B4-0x800D02C0 | camera influence `CIStitching` (RTTI), derived from `CIDynamic` (0x800DEC28, not split) and the abstract `CameraInfluence`: fixed position and rotation (matches, linked) |
+| `game/unit_800D00B4.cpp` | 0x800D00B4-0x800D02C0 | camera influence `CIStitching` (RTTI), derived from `CIDynamic` and the abstract `CameraInfluence`: fixed position and rotation (matches, linked) |
+| `game/unit_800DEC28.cpp` | 0x800DEC28-0x800DEFB8 | camera influence `CIDynamic` (RTTI), base of most camera influences: queries its `SphereGraph` member (RTTI) and blends its weight in and out (matches, linked) |
 | `game/unit_800DEFB8.cpp` | 0x800DEFB8-0x800DF204 | `CIFixed_DJ1::vf0C` (RTTI class derived from `CameraInfluence`): cosine-eased transition of the camera position and rotation; the vtable is emitted here because the destructor and the other overrides are inline (matches, linked) |
 | `game/unit_800DF204.cpp` | 0x800DF204-0x800DF570 | camera influence `CIFixedEyeLook` (RTTI), derived from `CIDynamic`: eases the eye and the look-at point towards two followed objects (matches, linked) |
 | `game/unit_800DF570.cpp` | 0x800DF570-0x800DF630 | `CIFixedPlayerTracking_DJ1::vf0C` (RTTI class derived from `CameraInfluence`): fixed position looking at the player's eye (matches, linked) |
@@ -114,6 +115,15 @@ MWCC orders the float constants of a unit's .sdata2 by the first textual appeara
 of each literal, even in code it later removes (seen in `unit_800DF204`: the DOL has
 0.0 first, which the source reproduces by initializing a local to 0.0 at the start of
 the function).
+
+Source shapes found while matching `unit_800DEC28` (MWCC GC 3.0a5.2):
+- a test against several constants (`type != 4 && type != 5 && ...`) used as a value
+  compiles to a bit test (`subi`, `cmplwi`, `slw`, `andi.`); the same test in an `if`
+  or a `switch` compiles to a chain of comparisons;
+- `return f(x) == false;` keeps the result of an inline `bool` function and inverts it
+  with `cntlzw`/`srwi`, while `return !f(x);` folds the negation into the branches;
+- a clamp written as a conditional expression and one written with `if`/`else` and a
+  result variable give the same instructions but different float registers.
 
 ### Game / SDK boundary (0x80232AF8)
 
