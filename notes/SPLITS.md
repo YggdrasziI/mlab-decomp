@@ -43,6 +43,10 @@ offset).
 | `game/unit_80014230.cpp` | 0x80014230-0x8001425C | build date string `"Aug 28 2008 (14:30)"` (.rodata 0x803476A8) and the two build numbers 519 / 142835 (.sdata2 0x805FC720) (matches, linked) |
 | `game/unit_8001425C.cpp` | 0x8001425C-0x80014328 | build region word (0 = `NA`, 1 = `EU`; this DOL holds 1) and the `"%s %d: %s@%d (%s)"` build string, type `"REL"` (matches, linked) |
 | `game/unit_80014328.cpp` | 0x80014328-0x80014350 | one function returning 0, used as a function pointer (matches, linked) |
+| `game/unit_8001FCA8.cpp` | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage sequence and factory (matches, linked) |
+| `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
+| `game/unit_800214D4.cpp` | 0x800214D4-0x80021594 | the set of input sequences (8 fixed, 100 indexed, 34-entry index table) (matches, linked) |
+| `game/unit_8002B4D0.cpp` | 0x8002B4D0-0x8002B58C | class `BugCachingChallenge::ButterFly` (RTTI), derived from `BugCachingChallenge::Bug` (functions at 0x800293C8, not split); constructor sets the float at 0x4 to 6.4 (matches, linked) |
 | `game/unit_80041874.cpp` | 0x80041874-0x800418E0 | constructor and destructor of a one-byte class without vtable (matches, linked) |
 | `game/unit_80042C18.cpp` | 0x80042C18-0x80042C38 | only the static initializer; code and data match but the object is not linked (nothing references it, see the source comment) |
 | `game/unit_80044C58.cpp` | 0x80044C58-0x80044CDC | constructor and destructor of a 0x148-byte class without vtable, built as an array of two by `fn_80040824` (matches, linked) |
@@ -51,9 +55,14 @@ offset).
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
 | `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |
-| `game/unit_8001FCA8.cpp` | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage sequence and factory (matches, linked) |
-| `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
-| `game/unit_800214D4.cpp` | 0x800214D4-0x80021594 | the set of input sequences (8 fixed, 100 indexed, 34-entry index table) (matches, linked) |
+
+RTTI objects (`__RTTI__*`) and their name strings are emitted as weak data in every
+unit that needs them (for example a derived class's base list). Our object may then
+hold a copy of a base class's RTTI that the original placed elsewhere; objdiff reports
+lower data match for it, but the linker keeps the first copy and the DOL still matches
+(seen with `BugCachingChallenge::Bug` in `unit_8002B4D0`). When the copy in a unit is
+the first one in link order, it is the one in the DOL (`XCharacterPartAttachment` in
+`unit_80049628`).
 
 ### Game / SDK boundary (0x80232AF8)
 
