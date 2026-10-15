@@ -9,6 +9,7 @@
 void CIFixedEyeLook::vf10() {}
 
 bool CIFixedEyeLook::vf0C(UnkVec3* pos, UnkVec3* target, f32 dt) {
+    f32 weight = 0.0f;
     if (!CIDynamic::vf0C(pos, target, dt)) {
         return false;
     }
@@ -18,7 +19,7 @@ bool CIFixedEyeLook::vf0C(UnkVec3* pos, UnkVec3* target, f32 dt) {
     UnkVec3 start = track->mStart;
     UnkVec3 lookAt = track->mLookAt;
     f32 ease = 0.5f * (1.0f + cosf(angle));
-    f32 weight = UnkLerp(1.0f, 0.0f, ease);
+    weight = UnkLerp(1.0f, 0.0f, ease);
     mPos = (mEye->mPos - start) * weight + start;
     mLookAt = (mLook->mPos - lookAt) * weight + lookAt;
     *pos = mPos;

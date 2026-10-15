@@ -109,6 +109,11 @@ objdiff may report 100 % for a function that loads the wrong float constant from
 (seen in `unit_80098BD8`: the base class constructor instead of the derived one). Only linking the unit and the
 `main.dol` check prove a match, so every matching game unit is linked.
 
+MWCC orders the float constants of a unit's .sdata2 by the first textual appearance
+of each literal, even in code it later removes (seen in `unit_800DF204`: the DOL has
+0.0 first, which the source reproduces by initializing a local to 0.0 at the start of
+the function).
+
 ### Game / SDK boundary (0x80232AF8)
 
 - 0x80232AF8 is `PPCMfmsr`, the first SDK function recognized by dtk; the previous
