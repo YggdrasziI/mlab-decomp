@@ -10,6 +10,7 @@
 
 #include "game/Entity.h"
 #include "game/unk_803C4298.h"
+#include "game/unk_math.h"
 #include "game/unk_vec3.h"
 #include "types.h"
 
@@ -50,7 +51,9 @@ public:
     /* 0x0C */ UnkCameraTarget mTarget;
     /* 0x20 */ u8 unk20[0x44 - 0x20];
     /* 0x44 */ f32 mProgress;
-    /* 0x48 */ u8 unk48[0x58 - 0x48];
+    /* 0x48 */ u8 unk48[0x55 - 0x48];
+    /* 0x55 */ u8 mActive;
+    /* 0x56 */ u8 unk56[0x58 - 0x56];
 };
 
 // Quaternion helpers at 0x801452A8 and 0x801455E0 (real names unknown).
@@ -91,7 +94,10 @@ struct UnkCameraState {
     /* 0x18 */ UnkVec3 mStart;
     /* 0x24 */ u8 unk24[0x30 - 0x24];
     /* 0x30 */ UnkVec3 mLookAt;
-    /* 0x3C */ u8 unk3C[0xC4 - 0x3C];
+    /* 0x3C */ u8 unk3C[0x4C - 0x3C];
+    /* 0x4C */ f32 mYaw;
+    /* 0x50 */ f32 mYawSpeed;
+    /* 0x54 */ u8 unk54[0xC4 - 0x54];
     /* 0xC4 */ f32 mDistance;
     /* 0xC8 */ f32 mDistanceWeight;
     /* 0xCC */ f32 mPitch;
@@ -197,6 +203,43 @@ public:
     /* 0x5C */ UnkTrackFollow* mLook;
     /* 0x60 */ UnkVec3 mPos;
     /* 0x6C */ UnkVec3 mLookAt;
+};
+
+// Angle of (x, y), atan2-like (0x801F60F8; real name unknown).
+f32 fn_801F60F8(f32 y, f32 x);
+
+// Wraps an angle to [-pi, pi] (inline helper; real name unknown).
+inline f32 UnkWrapAngle(f32 angle) {
+    angle = UnkClamp(angle, -6.2831855f, 6.2831855f);
+    if (angle < -3.1415927f) {
+        angle += 6.2831855f;
+    } else if (angle > 3.1415927f) {
+        angle -= 6.2831855f;
+    }
+    return UnkClamp(angle, -3.1415927f, 3.1415927f);
+}
+
+// Target followed by CITrackTarget (real type unknown); fn_801ED788 returns its
+// position.
+struct UnkTrackedTarget {
+    UnkVec3 fn_801ED788() const;
+
+    /* 0x0 */ u8 unk0[0x4];
+};
+
+// Implicit destructor (emitted at the end of its unit).
+class CITrackTarget : public CIDynamic {
+public:
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    virtual void vf10();
+    virtual f32 vf14();
+    virtual f32 vf1C();
+
+    /* 0x58 */ f32 mDeadZone;
+    /* 0x5C */ f32 mTurnRate;
+    /* 0x60 */ f32 mPitch;
+    /* 0x64 */ u8 unk64[0x4];
+    /* 0x68 */ UnkTrackedTarget mTracked;
 };
 
 #endif // GAME_CAMERAINFLUENCE_H

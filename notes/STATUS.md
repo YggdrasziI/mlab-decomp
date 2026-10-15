@@ -50,7 +50,8 @@
   a `Vector3` type exists (probably the shared vector, not renamed yet).
   Not linked: `game/unit_8006CFA4.cpp` (Entity_Challenge_Projector, 5/6; one register
   choice in `vf20`), `game/unit_80086780.cpp` (Entity_BrainTossHand, 7/8; two stack
-  slots swapped in `fn_800869A0`), `game/unit_80020480.cpp` (29/31; the two `AnyButtons*::vf0C` loops differ
+  slots swapped in `fn_800869A0`), `game/unit_800E391C.cpp` (CITrackTarget, 5/6; an
+  lfsu addressing form and one register), `game/unit_80020480.cpp` (29/31; the two `AnyButtons*::vf0C` loops differ
   only by the order of three loop increments) and `game/unit_80042C18.cpp` (static
   initializer only: our linker drops an object nothing references, and FORCEACTIVE
   cannot name its local `__sinit`; FORCEFILES through a custom `ldscript_template` is a
