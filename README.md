@@ -10,6 +10,18 @@ Supported versions:
 
 - `RM7P4F`: Rev 0 (Europe)
 
+Progress
+========
+
+![Current progress](progress/progress.svg)
+
+![Progress over time](progress/history.svg)
+
+The charts are drawn from the objdiff report by `tools/progress_chart.py`. After a
+build, `python tools/progress_chart.py --record` adds the current commit to
+`progress/history.csv` and redraws both charts; commit the `progress/` folder with it.
+The game figures count every unit outside the SDK, including the ones not split yet.
+
 Dependencies
 ============
 

@@ -57,6 +57,16 @@ jobs:
             --binutils /binutils --compilers /compilers
         ninja all_source progress build/${{ matrix.version }}/report.json
 
+    # Draw the progress charts (history.csv is only read, never committed by CI)
+    - name: Progress charts
+      run: python tools/progress_chart.py --report build/${{ matrix.version }}/report.json --out build/${{ matrix.version }}/progress_charts
+
+    - name: Upload progress charts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.version }}_progress
+        path: build/${{ matrix.version }}/progress_charts
+
     # Upload map files
     - name: Upload map
       uses: actions/upload-artifact@v4

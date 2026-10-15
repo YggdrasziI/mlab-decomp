@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="300" viewBox="0 0 760 300" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+<text x="48" y="22" font-size="15" font-weight="600" fill="#57606a">Code progress over time (all code)</text>
+<line x1="48" y1="254.0" x2="740" y2="254.0" stroke="#8c959f" stroke-opacity="0.3"/>
+<text x="42" y="258.0" font-size="11" fill="#57606a" text-anchor="end">0 %</text>
+<line x1="48" y1="217.7" x2="740" y2="217.7" stroke="#8c959f" stroke-opacity="0.3"/>
+<text x="42" y="221.7" font-size="11" fill="#57606a" text-anchor="end">5 %</text>
+<line x1="48" y1="181.3" x2="740" y2="181.3" stroke="#8c959f" stroke-opacity="0.3"/>
+<text x="42" y="185.3" font-size="11" fill="#57606a" text-anchor="end">10 %</text>
+<line x1="48" y1="145.0" x2="740" y2="145.0" stroke="#8c959f" stroke-opacity="0.3"/>
+<text x="42" y="149.0" font-size="11" fill="#57606a" text-anchor="end">15 %</text>
+<line x1="48" y1="108.7" x2="740" y2="108.7" stroke="#8c959f" stroke-opacity="0.3"/>
+<text x="42" y="112.7" font-size="11" fill="#57606a" text-anchor="end">20 %</text>
+<line x1="48" y1="72.3" x2="740" y2="72.3" stroke="#8c959f" stroke-opacity="0.3"/>
+<text x="42" y="76.3" font-size="11" fill="#57606a" text-anchor="end">25 %</text>
+<line x1="48" y1="36.0" x2="740" y2="36.0" stroke="#8c959f" stroke-opacity="0.3"/>
+<text x="42" y="40.0" font-size="11" fill="#57606a" text-anchor="end">30 %</text>
+<polyline points="48.0,254.0 74.6,253.1 101.2,243.7 127.8,240.2 154.5,233.4 181.1,148.8 207.7,148.8 234.3,148.1 260.9,145.6 287.5,145.2 314.2,142.2 340.8,139.2 367.4,138.3 394.0,132.9 420.6,125.4 447.2,122.8 473.8,121.8 500.5,118.3 527.1,111.1 553.7,95.2 580.3,93.8 606.9,92.5 633.5,92.4 660.2,91.7 686.8,91.2 713.4,90.4 740.0,90.4" fill="none" stroke="#a6d96a" stroke-width="2.2"/>
+<circle cx="48.0" cy="254.0" r="2.6" fill="#a6d96a"><title>2026-10-12 0a8441e: 0.00 %</title></circle>
+<circle cx="74.6" cy="253.1" r="2.6" fill="#a6d96a"><title>2026-10-12 a6bbae9: 0.13 %</title></circle>
+<circle cx="101.2" cy="243.7" r="2.6" fill="#a6d96a"><title>2026-10-12 32074d7: 1.42 %</title></circle>
+<circle cx="127.8" cy="240.2" r="2.6" fill="#a6d96a"><title>2026-10-12 d3d2e64: 1.90 %</title></circle>
+<circle cx="154.5" cy="233.4" r="2.6" fill="#a6d96a"><title>2026-10-12 e7b97cc: 2.83 %</title></circle>
+<circle cx="181.1" cy="148.8" r="2.6" fill="#a6d96a"><title>2026-10-12 8e34901: 14.48 %</title></circle>
+<circle cx="207.7" cy="148.8" r="2.6" fill="#a6d96a"><title>2026-10-12 e4fec51: 14.48 %</title></circle>
+<circle cx="234.3" cy="148.1" r="2.6" fill="#a6d96a"><title>2026-10-12 972496c: 14.58 %</title></circle>
+<circle cx="260.9" cy="145.6" r="2.6" fill="#a6d96a"><title>2026-10-13 0c11f92: 14.92 %</title></circle>
+<circle cx="287.5" cy="145.2" r="2.6" fill="#a6d96a"><title>2026-10-13 b4a9fff: 14.97 %</title></circle>
+<circle cx="314.2" cy="142.2" r="2.6" fill="#a6d96a"><title>2026-10-13 12f0315: 15.39 %</title></circle>
+<circle cx="340.8" cy="139.2" r="2.6" fill="#a6d96a"><title>2026-10-13 3997951: 15.80 %</title></circle>
+<circle cx="367.4" cy="138.3" r="2.6" fill="#a6d96a"><title>2026-10-13 88fd0ea: 15.92 %</title></circle>
+<circle cx="394.0" cy="132.9" r="2.6" fill="#a6d96a"><title>2026-10-13 da2b39b: 16.67 %</title></circle>
+<circle cx="420.6" cy="125.4" r="2.6" fill="#a6d96a"><title>2026-10-13 42d5c0d: 17.70 %</title></circle>
+<circle cx="447.2" cy="122.8" r="2.6" fill="#a6d96a"><title>2026-10-14 3aa2574: 18.05 %</title></circle>
+<circle cx="473.8" cy="121.8" r="2.6" fill="#a6d96a"><title>2026-10-14 7b62bb3: 18.19 %</title></circle>
+<circle cx="500.5" cy="118.3" r="2.6" fill="#a6d96a"><title>2026-10-14 1d7e3b7: 18.68 %</title></circle>
+<circle cx="527.1" cy="111.1" r="2.6" fill="#a6d96a"><title>2026-10-14 a7fcbf7: 19.67 %</title></circle>
+<circle cx="553.7" cy="95.2" r="2.6" fill="#a6d96a"><title>2026-10-14 98e0c5c: 21.85 %</title></circle>
+<circle cx="580.3" cy="93.8" r="2.6" fill="#a6d96a"><title>2026-10-15 f9d4e3b: 22.04 %</title></circle>
+<circle cx="606.9" cy="92.5" r="2.6" fill="#a6d96a"><title>2026-10-15 9c1271c: 22.23 %</title></circle>
+<circle cx="633.5" cy="92.4" r="2.6" fill="#a6d96a"><title>2026-10-15 223e3bf: 22.24 %</title></circle>
+<circle cx="660.2" cy="91.7" r="2.6" fill="#a6d96a"><title>2026-10-15 9689ba7: 22.34 %</title></circle>
+<circle cx="686.8" cy="91.2" r="2.6" fill="#a6d96a"><title>2026-10-15 235558f: 22.40 %</title></circle>
+<circle cx="713.4" cy="90.4" r="2.6" fill="#a6d96a"><title>2026-10-15 2804227: 22.52 %</title></circle>
+<circle cx="740.0" cy="90.4" r="2.6" fill="#a6d96a"><title>2026-10-15 233dc2d: 22.52 %</title></circle>
+<rect x="48" y="284" width="10" height="10" rx="1.5" fill="#a6d96a"/>
+<text x="62" y="293" font-size="12" fill="#57606a">matched</text>
+<polyline points="181.1,197.3 207.7,192.4 234.3,180.2 260.9,165.2 287.5,164.1 314.2,160.8 340.8,154.3 367.4,152.9 394.0,142.3 420.6,132.9 447.2,126.8 473.8,125.5 500.5,122.2 527.1,114.9 553.7,101.6 580.3,101.1 606.9,99.7 740.0,97.8" fill="none" stroke="#2da44e" stroke-width="2.2"/>
+<circle cx="181.1" cy="197.3" r="2.6" fill="#2da44e"><title>2026-10-12 8e34901: 7.80 %</title></circle>
+<circle cx="207.7" cy="192.4" r="2.6" fill="#2da44e"><title>2026-10-12 e4fec51: 8.48 %</title></circle>
+<circle cx="234.3" cy="180.2" r="2.6" fill="#2da44e"><title>2026-10-12 972496c: 10.16 %</title></circle>
+<circle cx="260.9" cy="165.2" r="2.6" fill="#2da44e"><title>2026-10-13 0c11f92: 12.22 %</title></circle>
+<circle cx="287.5" cy="164.1" r="2.6" fill="#2da44e"><title>2026-10-13 b4a9fff: 12.37 %</title></circle>
+<circle cx="314.2" cy="160.8" r="2.6" fill="#2da44e"><title>2026-10-13 12f0315: 12.82 %</title></circle>
+<circle cx="340.8" cy="154.3" r="2.6" fill="#2da44e"><title>2026-10-13 3997951: 13.72 %</title></circle>
+<circle cx="367.4" cy="152.9" r="2.6" fill="#2da44e"><title>2026-10-13 88fd0ea: 13.91 %</title></circle>
+<circle cx="394.0" cy="142.3" r="2.6" fill="#2da44e"><title>2026-10-13 da2b39b: 15.37 %</title></circle>
+<circle cx="420.6" cy="132.9" r="2.6" fill="#2da44e"><title>2026-10-13 42d5c0d: 16.67 %</title></circle>
+<circle cx="447.2" cy="126.8" r="2.6" fill="#2da44e"><title>2026-10-14 3aa2574: 17.51 %</title></circle>
+<circle cx="473.8" cy="125.5" r="2.6" fill="#2da44e"><title>2026-10-14 7b62bb3: 17.68 %</title></circle>
+<circle cx="500.5" cy="122.2" r="2.6" fill="#2da44e"><title>2026-10-14 1d7e3b7: 18.14 %</title></circle>
+<circle cx="527.1" cy="114.9" r="2.6" fill="#2da44e"><title>2026-10-14 a7fcbf7: 19.14 %</title></circle>
+<circle cx="553.7" cy="101.6" r="2.6" fill="#2da44e"><title>2026-10-14 98e0c5c: 20.97 %</title></circle>
+<circle cx="580.3" cy="101.1" r="2.6" fill="#2da44e"><title>2026-10-15 f9d4e3b: 21.04 %</title></circle>
+<circle cx="606.9" cy="99.7" r="2.6" fill="#2da44e"><title>2026-10-15 9c1271c: 21.23 %</title></circle>
+<circle cx="740.0" cy="97.8" r="2.6" fill="#2da44e"><title>2026-10-15 233dc2d: 21.49 %</title></circle>
+<rect x="138" y="284" width="10" height="10" rx="1.5" fill="#2da44e"/>
+<text x="152" y="293" font-size="12" fill="#57606a">linked</text>
+<text x="48" y="270" font-size="11" fill="#57606a">2026-10-12</text>
+<text x="740" y="270" font-size="11" fill="#57606a" text-anchor="end">2026-10-15</text>
+</svg>
