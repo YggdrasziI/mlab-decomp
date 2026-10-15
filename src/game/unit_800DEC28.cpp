@@ -59,7 +59,7 @@ bool CIDynamic::vf0C(UnkVec3* pos, UnkVec3* target, f32 dt) {
         mBlend = UnkClampBetween(mBlend, 0.0f, mBlendTime);
         mProgress = mBlend / mBlendTime;
     } else if (m54 && mActive && !hold) {
-        mProgress = UnkClampExpr(mHit.m0 / m48, 0.0f, 1.0f);
+        mProgress = UnkClampExpr(mHit.mDepth / m48, 0.0f, 1.0f);
     } else {
         mProgress = 0.0f;
     }

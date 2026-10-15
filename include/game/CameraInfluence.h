@@ -14,25 +14,57 @@
 #include "game/unk_vec3.h"
 #include "types.h"
 
-// Result of a SphereGraph query (real type unknown). m4 is the best distance found
-// so far.
+// Result of a SphereGraph query (real type unknown): how deep the point is inside
+// the closest capsule, its distance to the capsule axis and the axis direction.
 struct UnkSphereGraphHit {
-    /* 0x00 */ f32 m0;
-    /* 0x04 */ f32 m4;
-    /* 0x08 */ u8 unk8[0x14 - 0x8];
+    /* 0x00 */ f32 mDepth;
+    /* 0x04 */ f32 mDistance;
+    /* 0x08 */ f32 mAxisX;
+    /* 0x0C */ f32 mAxisY;
+    /* 0x10 */ f32 mAxisZ;
 };
 
-// Member of CIDynamic at 0xC; name from RTTI (vtable at 0x8035FDE0), functions at
-// 0x800DE5B4. Members unknown.
-class SphereGraph {
+// SphereGraph node and edge (real types unknown).
+struct UnkSphereGraphNode {
+    /* 0x00 */ u8 unk0[0x4];
+    /* 0x04 */ UnkVec3 mPos;
+    /* 0x10 */ f32 mRadius;
+};
+
+struct UnkSphereGraphEdge {
+    /* 0x0 */ u8 mA;
+    /* 0x1 */ u8 mB;
+};
+
+// Allocator free function (0x801D4980; real name unknown).
+extern "C" void fn_801D4980(void* ptr);
+
+// Read by several constructors, which only clear their members when it is not -1
+// (real name and meaning unknown).
+extern int lbl_805F95F8;
+
+// Data of SphereGraph. The vtable pointer of SphereGraph is at 0x10, after these
+// members, so they come from a base class without virtual functions (real name
+// unknown).
+struct UnkSphereGraphData {
+    /* 0x00 */ int m0;
+    /* 0x04 */ UnkSphereGraphNode* mNodes;
+    /* 0x08 */ int mEdgeCount;
+    /* 0x0C */ UnkSphereGraphEdge* mEdges;
+};
+
+// Spheres joined by edges (capsules); name from RTTI. Unit 0x800DE5B4
+// (game/unit_800DE5B4.cpp). Member of CIDynamic at 0xC.
+class SphereGraph : public UnkSphereGraphData {
 public:
     SphereGraph();
     virtual ~SphereGraph();
 
     bool fn_800DE678(UnkVec3 pos, UnkSphereGraphHit* hit, f32 radius);
+    bool fn_800DE780(const UnkVec3& pos, const UnkVec3& a, const UnkVec3& b, UnkSphereGraphHit* hit,
+                     f32 radius, f32 radiusA, f32 radiusB);
 
-    /* 0x00 */ // vtable
-    /* 0x04 */ u8 unk4[0x14 - 0x4];
+    /* 0x10 */ // vtable
 };
 
 // Object the camera follows (real type unknown), at UnkCameraController::m2C0.

@@ -75,6 +75,7 @@ offset).
 | `game/unit_800BF654.cpp` | 0x800BF654-0x800BF97C | class `Entity_MysticBrewVortex` (RTTI), derived from `Entity_Prop`: a 0-100 level with hashed events (matches, linked) |
 | `game/unit_800C5E90.cpp` | 0x800C5E90-0x800C5F84 | class `ExWorldTrackItem` (RTTI), derived from `Entity_Prop`, with four new virtual functions (matches, linked) |
 | `game/unit_800D00B4.cpp` | 0x800D00B4-0x800D02C0 | camera influence `CIStitching` (RTTI), derived from `CIDynamic` and the abstract `CameraInfluence`: fixed position and rotation (matches, linked) |
+| `game/unit_800DE5B4.cpp` | 0x800DE5B4-0x800DEC28 | class `SphereGraph` (RTTI): spheres joined by edges; finds the capsule closest to a point. The vtable pointer is at 0x10, after the data members, so they come from a base class. 4/5 functions match; the capsule distance `fn_800DE780` does not (75 %, register reuse), so the unit is not linked |
 | `game/unit_800DEC28.cpp` | 0x800DEC28-0x800DEFB8 | camera influence `CIDynamic` (RTTI), base of most camera influences: queries its `SphereGraph` member (RTTI) and blends its weight in and out (matches, linked) |
 | `game/unit_800DEFB8.cpp` | 0x800DEFB8-0x800DF204 | `CIFixed_DJ1::vf0C` (RTTI class derived from `CameraInfluence`): cosine-eased transition of the camera position and rotation; the vtable is emitted here because the destructor and the other overrides are inline (matches, linked) |
 | `game/unit_800DF204.cpp` | 0x800DF204-0x800DF570 | camera influence `CIFixedEyeLook` (RTTI), derived from `CIDynamic`: eases the eye and the look-at point towards two followed objects (matches, linked) |
@@ -124,6 +125,10 @@ Source shapes found while matching `unit_800DEC28` (MWCC GC 3.0a5.2):
   with `cntlzw`/`srwi`, while `return !f(x);` folds the negation into the branches;
 - a clamp written as a conditional expression and one written with `if`/`else` and a
   result variable give the same instructions but different float registers.
+
+A float comparison stored in a local `bool` and then tested compiles to
+`fcmpo`/`mfcr`/`srwi.` (or `extrwi.`) plus a branch; the same comparison written
+directly in the `if` compiles to a plain conditional branch (seen in `unit_800DE5B4`).
 
 ### Game / SDK boundary (0x80232AF8)
 
