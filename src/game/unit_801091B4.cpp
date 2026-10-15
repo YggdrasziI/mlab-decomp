@@ -14,7 +14,8 @@ extern UnkGlobals803C2A20 lbl_803C2A20;
 // Copy of lbl_803C2A20.mDC0 (real name unknown).
 void* lbl_805FB218;
 
-extern "C" int fn_801091B4(void) {
+// The path argument (for example "ui\ScreenSets\ScreenSets.csv") is unused.
+extern "C" int fn_801091B4(const char* path) {
     lbl_805FB218 = lbl_803C2A20.mDC0;
     return 0;
 }

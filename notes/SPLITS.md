@@ -40,6 +40,7 @@ offset).
 
 | Unit | .text | Content |
 |---|---|---|
+| `game/unit_8000C7C8.cpp` | 0x8000C7C8-0x8000CF8C | top-level game flow: delayed event, state stack update, start-up of the global managers, screen set loading (`"ScreenSet load start: zone=%d"`), forwarders (NonMatching: 30/31, `fn_8000C838` 96 %) |
 | `game/unit_80014230.cpp` | 0x80014230-0x8001425C | build date string `"Aug 28 2008 (14:30)"` (.rodata 0x803476A8) and the two build numbers 519 / 142835 (.sdata2 0x805FC720) (matches, linked) |
 | `game/unit_8001425C.cpp` | 0x8001425C-0x80014328 | build region word (0 = `NA`, 1 = `EU`; this DOL holds 1) and the `"%s %d: %s@%d (%s)"` build string, type `"REL"` (matches, linked) |
 | `game/unit_80014328.cpp` | 0x80014328-0x80014350 | one function returning 0, used as a function pointer (matches, linked) |

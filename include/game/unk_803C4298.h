@@ -18,7 +18,9 @@ struct UnkGlobals803C4298 {
     /* 0x00 */ u8 unk0[0x4];
     /* 0x04 */ UnkCamera* mCamera;
     /* 0x08 */ void* m8;
-    /* 0x0C */ u8 unkC[0x38 - 0xC];
+    /* 0x0C */ u8 unkC[0x18 - 0xC];
+    /* 0x18 */ int m18; // a mode (5 and 7 tested)
+    /* 0x1C */ u8 unk1C[0x38 - 0x1C];
     /* 0x38 */ void* m38;
     /* 0x3C */ u8 unk3C[0x168 - 0x3C];
 };

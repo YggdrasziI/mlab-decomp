@@ -373,6 +373,7 @@ config.libs = [
         "cflags": cflags_game,
         "progress_category": "game",
         "objects": [
+            Object(NonMatching, "game/unit_8000C7C8.cpp"),
             Object(Matching, "game/unit_80014230.cpp"),
             Object(Matching, "game/unit_8001425C.cpp"),
             Object(Matching, "game/unit_80014328.cpp"),
