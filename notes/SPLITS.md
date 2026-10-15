@@ -74,6 +74,7 @@ offset).
 | `game/unit_800B7A08.cpp` | 0x800B7A08-0x800B7E34 | class `Entity_ArmWrestleHand` (RTTI), derived from `Entity_Prop`: attaches to a bone of another entity (matches, linked) |
 | `game/unit_800BF654.cpp` | 0x800BF654-0x800BF97C | class `Entity_MysticBrewVortex` (RTTI), derived from `Entity_Prop`: a 0-100 level with hashed events (matches, linked) |
 | `game/unit_800C5E90.cpp` | 0x800C5E90-0x800C5F84 | class `ExWorldTrackItem` (RTTI), derived from `Entity_Prop`, with four new virtual functions (matches, linked) |
+| `game/unit_800D00B4.cpp` | 0x800D00B4-0x800D02C0 | camera influence `CIStitching` (RTTI), derived from `CIDynamic` (0x800DEC28, not split) and the abstract `CameraInfluence`: fixed position and rotation (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
 | `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |
