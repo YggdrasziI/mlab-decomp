@@ -3,10 +3,8 @@
 // previous one.
 
 #include "game/unit_80014230.h"
+#include "game/externs.h"
 #include "game/unk_vec3.h"
-
-// Formatting function (real name and signature unknown).
-extern "C" void fn_80142EF8(char* buf, const char* fmt, ...);
 
 UnkBuildInfo lbl_80354868 = {0xA1A1A1A1, 0xA2A2A2A2, 0xA3A3A3A3, 1};
 

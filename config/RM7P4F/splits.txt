@@ -118,6 +118,14 @@ game/unit_8010FD14.cpp:
 	.sdata      start:0x805F8EE0 end:0x805F8EF0
 	.sdata2     start:0x805FECB0 end:0x805FECB8
 
+game/unit_80116BE8.cpp:
+	.text       start:0x80116BE8 end:0x80116CA8
+	.ctors      start:0x80345E60 end:0x80345E64
+	.data       start:0x8036D008 end:0x8036D028
+	.bss        start:0x803E6AE8 end:0x803E6AF8
+	.sdata      start:0x805F8EF0 end:0x805F8F08
+	.sdata2     start:0x805FECC8 end:0x805FECD0
+
 RVL_SDK/base/PPCArch.c:
 	.text       start:0x80232AF8 end:0x80232C5C
 	.data       start:0x803894F0 end:0x80389528
