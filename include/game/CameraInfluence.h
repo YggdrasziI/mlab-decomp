@@ -14,14 +14,35 @@
 #include "game/unk_vec3.h"
 #include "types.h"
 
+// Result of a UnkCameraTarget query (real type unknown). m4 is the best distance
+// found so far.
+struct UnkCameraTargetHit {
+    /* 0x00 */ f32 m0;
+    /* 0x04 */ f32 m4;
+    /* 0x08 */ u8 unk8[0x14 - 0x8];
+};
+
 // Member of CIDynamic at 0xC (real type unknown; functions at 0x800DE5B4).
 class UnkCameraTarget {
 public:
     UnkCameraTarget();
     ~UnkCameraTarget();
 
+    bool fn_800DE678(UnkVec3 pos, UnkCameraTargetHit* hit, f32 radius);
+
     /* 0x00 */ u8 unk0[0x14];
 };
+
+// Object the camera follows (real type unknown), at UnkCameraController::m2C0.
+struct UnkCameraSubject {
+    /* 0x00 */ u8 unk0[0x4];
+    /* 0x04 */ UnkVec3* mPos;
+    /* 0x08 */ u8 unk8[0x14 - 0x8];
+    /* 0x14 */ f32 mRadius;
+};
+
+// Set to stop CIDynamic from holding its blend (real name unknown).
+extern u8 lbl_805FAF64;
 
 class CameraInfluence {
 public:
@@ -39,19 +60,27 @@ public:
     /* 0x08 */ int mType;
 };
 
-// Functions at 0x800DEC28-0x800DEF98 (unit not split yet); implicit destructor.
+// Unit 0x800DEC28 (game/unit_800DEC28.cpp); implicit destructor.
 class CIDynamic : public CameraInfluence {
 public:
     CIDynamic();
     CIDynamic(int type);
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
-    virtual f32 vf14();
+    // Inline; a copy is emitted at 0x8009F5A8.
+    virtual f32 vf14() { return mProgress; }
     virtual f32 vf18();
 
-    /* 0x0C */ UnkCameraTarget mTarget;
-    /* 0x20 */ u8 unk20[0x44 - 0x20];
+    /* 0x0C */ UnkCameraTarget mGraph;
+    /* 0x20 */ UnkCameraTargetHit mHit;
+    /* 0x34 */ f32 mAngle;
+    /* 0x38 */ u8 unk38[0x4];
+    /* 0x3C */ f32 mTimer;
+    /* 0x40 */ u8 unk40[0x4];
     /* 0x44 */ f32 mProgress;
-    /* 0x48 */ u8 unk48[0x55 - 0x48];
+    /* 0x48 */ f32 m48;
+    /* 0x4C */ f32 mBlendTime;
+    /* 0x50 */ f32 mBlend;
+    /* 0x54 */ u8 m54;
     /* 0x55 */ u8 mActive;
     /* 0x56 */ u8 unk56[0x58 - 0x56];
 };
@@ -106,8 +135,10 @@ struct UnkCameraState {
 
 // Object at lbl_803C4298.m8, probably the camera controller (real type unknown).
 struct UnkCameraController {
-    /* 0x00 */ u8 unk0[0x68];
-    /* 0x68 */ UnkCameraState mState;
+    /* 0x000 */ u8 unk0[0x68];
+    /* 0x068 */ UnkCameraState mState;
+    /* 0x13C */ u8 unk13C[0x2C0 - 0x13C];
+    /* 0x2C0 */ UnkCameraSubject* mSubject;
 };
 
 // Object followed by CIFixedTrackPlayer (real type unknown).
