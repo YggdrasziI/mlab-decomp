@@ -371,6 +371,14 @@ game/unit_800E391C.cpp:
 	.sdata      start:0x805F8D70 end:0x805F8D78
 	.sdata2     start:0x805FE9E0 end:0x805FEA20
 
+game/unit_800E3CF4.cpp:
+	.text       start:0x800E3CF4 end:0x800E42E8
+	.ctors      start:0x80345DFC end:0x80345E00
+	.data       start:0x80360168 end:0x803601B8
+	.bss        start:0x803C70D0 end:0x803C70E0
+	.sdata      start:0x805F8D78 end:0x805F8D80
+	.sdata2     start:0x805FEA20 end:0x805FEA50
+
 game/unit_80106884.cpp:
 	.text       start:0x80106884 end:0x801068A8
 	.ctors      start:0x80345E18 end:0x80345E1C

@@ -336,4 +336,24 @@ public:
     /* 0x20 */ UnkVec3 m20;
 };
 
+// Unit 0x800E3CF4 (game/unit_800E3CF4.cpp); implicit destructor (emitted at the end
+// of its unit). vf0C follows an entity found from a handle (fn_801B7198), or one of
+// its joints, and checks the view with a ray query (fn_800DA8F0).
+class CITrackTargetDan : public CIDynamic {
+public:
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    virtual void vf10();
+    virtual f32 vf1C();
+
+    /* 0x58 */ f32 m58;
+    /* 0x5C */ f32 m5C;
+    /* 0x60 */ f32 m60;
+    /* 0x64 */ f32 m64;
+    /* 0x68 */ int m68;
+    /* 0x6C */ u32 m6C;
+    /* 0x70 */ int m70;
+    /* 0x74 */ u16 m74;
+    /* 0x76 */ u8 m76;
+};
+
 #endif // GAME_CAMERAINFLUENCE_H
