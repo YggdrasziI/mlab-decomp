@@ -46,10 +46,11 @@ offset).
 | `game/unit_80041874.cpp` | 0x80041874-0x800418E0 | constructor and destructor of a one-byte class without vtable (matches, linked) |
 | `game/unit_80042C18.cpp` | 0x80042C18-0x80042C38 | only the static initializer; code and data match but the object is not linked (nothing references it, see the source comment) |
 | `game/unit_80044C58.cpp` | 0x80044C58-0x80044CDC | constructor and destructor of a 0x148-byte class without vtable, built as an array of two by `fn_80040824` (matches, linked) |
+| `game/unit_80049628.cpp` | 0x80049628-0x800496DC | class `CharacterPartAttachment` (RTTI), derived from `XCharacterPartAttachment` (functions at 0x8020E9CC, not split); the base class's RTTI object and name are emitted in this unit too (matches, linked) |
 | `game/unit_8006F5A0.cpp` | 0x8006F5A0-0x8006F61C | registers the `"count_deaths"` condition callback (type 22) with `fn_801DC91C` (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
-| `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
+| `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |
 | `game/unit_8001FCA8.cpp` | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage sequence and factory (matches, linked) |
 | `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
 | `game/unit_800214D4.cpp` | 0x800214D4-0x80021594 | the set of input sequences (8 fixed, 100 indexed, 34-entry index table) (matches, linked) |
