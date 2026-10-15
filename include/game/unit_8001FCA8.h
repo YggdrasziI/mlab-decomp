@@ -9,6 +9,8 @@
 #include "types.h"
 #include <stddef.h>
 
+#include "game/unk_vec3.h"
+
 // Placement new (the stage factory rebuilds stages in place); the compiler checks the
 // returned pointer for null before running the constructor.
 inline void* operator new(size_t, void* p) { return p; }
@@ -17,16 +19,6 @@ inline void* operator new(size_t, void* p) { return p; }
 // unknown; argument types follow the register use).
 extern "C" f32 fn_80147800(void* handle);
 extern "C" void fn_80147704(void* handle, f32* x, f32* y);
-
-// Three-float vector with an inline constructor. Each game unit that includes this
-// header gets its own (0, 1, 0) copy in .bss, built by the unit's static initializer.
-// Real type and object names unknown.
-struct UnkVec3 {
-    f32 x, y, z;
-    UnkVec3(f32 x_, f32 y_, f32 z_) : x(x_), y(y_), z(z_) {}
-};
-
-static UnkVec3 sUnkVec3(0.0f, 1.0f, 0.0f);
 
 // One input source (0xC bytes), refreshed by fn_8001FCA8. Real name unknown.
 struct UnkInputSource {

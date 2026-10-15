@@ -43,6 +43,8 @@
   `game/unit_8001FCA8.cpp` (input source update, `CAbstractInputEventStage` base, stage
   sequence) matches 10/10 functions and is linked: the first linked game unit.
   `game/unit_800214D4.cpp` (input sequence set) matches and is linked.
+  The three build-information units at 0x80014230-0x80014350 match and are linked;
+  the shared `(0, 1, 0)` vector now lives in `include/game/unk_vec3.h`.
   `game/unit_80020480.cpp` (CAbstractInput* stages) matches 29 of 31 functions; the two
   `AnyButtons*::vf0C` loops differ only by the order of three loop increments.
 

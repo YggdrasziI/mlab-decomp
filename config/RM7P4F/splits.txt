@@ -13,6 +13,27 @@ Sections:
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:4
 
+game/unit_80014230.cpp:
+	.text       start:0x80014230 end:0x8001425C
+	.ctors      start:0x80345B08 end:0x80345B0C
+	.rodata     start:0x803476A8 end:0x803476BC
+	.bss        start:0x803C4B98 end:0x803C4BA8
+	.sdata2     start:0x805FC720 end:0x805FC730
+
+game/unit_8001425C.cpp:
+	.text       start:0x8001425C end:0x80014328
+	.ctors      start:0x80345B0C end:0x80345B10
+	.data       start:0x80354868 end:0x80354890
+	.bss        start:0x803C4BA8 end:0x803C4BB8
+	.sdata      start:0x805F8240 end:0x805F8250
+	.sdata2     start:0x805FC730 end:0x805FC738
+
+game/unit_80014328.cpp:
+	.text       start:0x80014328 end:0x80014350
+	.ctors      start:0x80345B10 end:0x80345B14
+	.bss        start:0x803C4BB8 end:0x803C4BC8
+	.sdata2     start:0x805FC738 end:0x805FC740
+
 game/unit_8001FCA8.cpp:
 	.text       start:0x8001FCA8 end:0x80020480
 	.ctors      start:0x80345B40 end:0x80345B44
