@@ -140,4 +140,18 @@ public:
     /* 0x58 */ f32 mPitch;
 };
 
+// Waypoint path camera influence. The two static setters are named by the strings
+// they are registered under ("CIWaypointPath::StaticSetPosition" and
+// "CIWaypointPath::StaticSetOrientation"); their parameter types, the base class and
+// the other members are unknown.
+class CIWaypointPath {
+public:
+    static void StaticSetPosition(const UnkVec3* value, CIWaypointPath* path);
+    static void StaticSetOrientation(const UnkQuat* value, CIWaypointPath* path);
+
+    /* 0x00 */ u8 unk0[0xC];
+    /* 0x0C */ UnkVec3 mPosition;
+    /* 0x18 */ UnkQuat mOrientation;
+};
+
 #endif // GAME_CAMERAINFLUENCE_H
