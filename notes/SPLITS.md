@@ -49,6 +49,7 @@ offset).
 | `game/unit_8002B4D0.cpp` | 0x8002B4D0-0x8002B58C | class `BugCachingChallenge::ButterFly` (RTTI), derived from `BugCachingChallenge::Bug` (functions at 0x800293C8, not split); constructor sets the float at 0x4 to 6.4 (matches, linked) |
 | `game/unit_80041874.cpp` | 0x80041874-0x800418E0 | constructor and destructor of a one-byte class without vtable (matches, linked) |
 | `game/unit_80042C18.cpp` | 0x80042C18-0x80042C38 | only the static initializer; code and data match but the object is not linked (nothing references it, see the source comment) |
+| `game/unit_800444FC.cpp` | 0x800444FC-0x800445E4 | class `NetworkGestureCallback` (RTTI), derived from `XBaseGestureCallback` (functions at 0x8020F498, not split) (matches, linked) |
 | `game/unit_80044C58.cpp` | 0x80044C58-0x80044CDC | constructor and destructor of a 0x148-byte class without vtable, built as an array of two by `fn_80040824` (matches, linked) |
 | `game/unit_80049628.cpp` | 0x80049628-0x800496DC | class `CharacterPartAttachment` (RTTI), derived from `XCharacterPartAttachment` (functions at 0x8020E9CC, not split); the base class's RTTI object and name are emitted in this unit too (matches, linked) |
 | `game/unit_8006F5A0.cpp` | 0x8006F5A0-0x8006F61C | registers the `"count_deaths"` condition callback (type 22) with `fn_801DC91C` (matches, linked) |
