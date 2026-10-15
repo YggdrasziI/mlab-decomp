@@ -54,6 +54,7 @@ offset).
 | `game/unit_80049628.cpp` | 0x80049628-0x800496DC | class `CharacterPartAttachment` (RTTI), derived from `XCharacterPartAttachment` (functions at 0x8020E9CC, not split); the base class's RTTI object and name are emitted in this unit too (matches, linked) |
 | `game/unit_800496DC.cpp` | 0x800496DC-0x800497F4 | class `CompositeCharacterActionSelectionCB` (RTTI), derived from `XBaseActionSelectionCallback` (functions at 0x8020F36C, not split), with a 12-byte selection member (matches, linked) |
 | `game/unit_800523B8.cpp` | 0x800523B8-0x80052504 | 32-bit key for an id: fixed pairs for ids 30-38 in modes 2/3, otherwise the 40-entry table at 0x803881B4 (matches, linked) |
+| `game/unit_8005CA88.cpp` | 0x8005CA88-0x8005CBC4 | class `Entity_Dynamic` (RTTI), derived from `Entity_Game` (matches, linked) |
 | `game/unit_80062C80.cpp` | 0x80062C80-0x8006307C | class `Entity_Game` (RTTI), derived from `Entity` (functions at 0x801B4334, not split; vtable at 0x80383D68); its RTTI and Entity's were emitted by an earlier unit (matches, linked) |
 | `game/unit_8006F5A0.cpp` | 0x8006F5A0-0x8006F61C | registers the `"count_deaths"` condition callback (type 22) with `fn_801DC91C` (matches, linked) |
 | `game/unit_8006F61C.cpp` | 0x8006F61C-0x8006F6BC | class `Entity_Static` (RTTI), derived from `Entity_Game`; its implicit destructor is emitted at 0x800630E0 (matches, linked) |

@@ -54,6 +54,16 @@ public:
     /* 0x41 */ u8 m41;
 };
 
+// Member of Entity at 0x94 (real type unknown; the Entity constructor clears its
+// first two words). Its size is unknown.
+class UnkEntity94 {
+public:
+    void fn_801EC080(Entity* entity);
+
+    /* 0x0 */ u32 m0;
+    /* 0x4 */ u32 m4;
+};
+
 class Entity {
 public:
     Entity(int type, EntityInfo* info, int init);
@@ -113,7 +123,9 @@ public:
     /* 0x004 */ EntityInfo* mInfo;
     /* 0x008 */ u8 unk8[0x88 - 0x8];
     /* 0x088 */ void* m88;
-    /* 0x08C */ u8 unk8C[0x14C - 0x8C];
+    /* 0x08C */ u8 unk8C[0x94 - 0x8C];
+    /* 0x094 */ UnkEntity94 m94;
+    /* 0x09C */ u8 unk9C[0x14C - 0x9C];
 };
 
 class Entity_Game : public Entity {
@@ -139,6 +151,14 @@ public:
 class Entity_Static : public Entity_Game {
 public:
     Entity_Static(int type, EntityInfo* info, int init);
+    virtual void vf20(f32 dt, int arg);
+    virtual void vf40();
+};
+
+class Entity_Dynamic : public Entity_Game {
+public:
+    Entity_Dynamic(int type, EntityInfo* info, int init);
+    virtual ~Entity_Dynamic();
     virtual void vf20(f32 dt, int arg);
     virtual void vf40();
 };
