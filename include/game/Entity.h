@@ -135,4 +135,12 @@ public:
     /* 0x154 */ s32 m154;
 };
 
+// The destructor is implicit: the original emits it in another unit (0x800630E0).
+class Entity_Static : public Entity_Game {
+public:
+    Entity_Static(int type, EntityInfo* info, int init);
+    virtual void vf20(f32 dt, int arg);
+    virtual void vf40();
+};
+
 #endif // GAME_ENTITY_H
