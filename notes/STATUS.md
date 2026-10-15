@@ -38,7 +38,7 @@
 
 ## In progress
 
-- Step 6 (game code): 61 game units split, 51 linked (unit table in `notes/SPLITS.md`).
+- Step 6 (game code): 75 game units split, 59 linked (unit table in `notes/SPLITS.md`).
   Unit bounds come from the static initializers (inline functions of a unit may follow
   its `__sinit`); compiled with `cflags_game` (base flags with `-RTTI on`). Shared
   headers: `include/game/unk_vec3.h` (the `(0, 1, 0)` vector), `include/game/externs.h`
@@ -47,7 +47,8 @@
   ExWorldTile...), with virtual functions named after their vtable offsets; callback
   headers (`ActionSelectionCallback.h`, `GestureCallback.h`), the camera influences
   (`CameraInfluence.h`) and the Wii Remote motion
-  recognizers (`MotionRecognizer.h`). RTTI also names a `RingBuffer<Vector3>` class, so
+  recognizers (`MotionRecognizer.h`), `CombatCallback.h` and `InventoryBook.h` (with
+  `book.h`, now eight pure virtual functions). RTTI also names a `RingBuffer<Vector3>` class, so
   a `Vector3` type exists (probably the shared vector, not renamed yet).
   Not linked: `game/unit_8006CFA4.cpp` (Entity_Challenge_Projector, 5/6; one register
   choice in `vf20`), `game/unit_80086780.cpp` (Entity_BrainTossHand, 7/8; two stack
@@ -60,7 +61,18 @@
   only by the order of three loop increments) and `game/unit_80042C18.cpp` (static
   initializer only: our linker drops an object nothing references, and FORCEACTIVE
   cannot name its local `__sinit`; FORCEFILES through a custom `ldscript_template` is a
-  possible fix).
+  possible fix). Also not linked: `game/unit_80019FB0.cpp` (launch speed, 89.8 %;
+  float registers), `game/unit_800418E0.cpp` (CombatOMaticDamageCallback, 3/4; an
+  indirect ctr call and a dead compare), `game/unit_80018C04.cpp` (4/5; prologue
+  scheduling), `game/unit_800C407C.cpp` (ExWorldWireTile, 4/5; ctr loop),
+  `game/unit_8007A394.cpp` (6/9; a pair copy and float registers) and
+  `game/unit_80075434.cpp` (4/5; one stack store placement).
+  Lessons from this pass (all checked by builds): string and float literals are
+  pooled in parse order, so an unused static function can give the pool its DOL order
+  (the original files likely had dead code); base-class RTTI copies emitted in a
+  derived unit are dropped by the linker; switches whose cases are listed in
+  descending order (with an empty `case 4`) give the DOL's compare trees; dead
+  compare trees come from an inline function with a `switch` whose result is unused.
   Next: the remaining Entity_Prop-derived units (0x800B1EDC Entity_GrowJuiceHeartVine
   has a ray/sphere test over nested collision lists; 0x80098664; larger ones listed by
   calls to `__ct__11Entity_Prop`). Set aside for now: 0x8004B498 (multiple
