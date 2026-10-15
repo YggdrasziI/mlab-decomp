@@ -15,3 +15,6 @@ block_relocations:
 # A u16 character table holds 0x8056 0x58F0 side by side; dtk read it as a pointer
 # into the AXAux buffers.
 - source: .rodata:0x8034F28C
+# Image data at 0x80377938 holds the word 0x80023880; dtk read it as a pointer into
+# the static initializer of game/unit_800232A4.cpp.
+- source: .data:0x80379478

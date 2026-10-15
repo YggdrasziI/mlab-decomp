@@ -49,6 +49,7 @@ offset).
 | `game/unit_8001FCA8.cpp` | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage sequence and factory (matches, linked) |
 | `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
 | `game/unit_800214D4.cpp` | 0x800214D4-0x80021594 | the set of input sequences (8 fixed, 100 indexed, 34-entry index table) (matches, linked) |
+| `game/unit_800232A4.cpp` | 0x800232A4-0x80023884 | queries and actions on the object returned by `fn_80021750`: state checks, counters, events chosen by its mode (switches written with descending cases and an empty `case 4`), `"dirt_fling"` (matches, linked) |
 | `game/unit_8002B4D0.cpp` | 0x8002B4D0-0x8002B58C | class `BugCachingChallenge::ButterFly` (RTTI), derived from `BugCachingChallenge::Bug` (functions at 0x800293C8, not split); constructor sets the float at 0x4 to 6.4 (matches, linked) |
 | `game/unit_8003F91C.cpp` | 0x8003F91C-0x8003FB24 | class `DebugMenuActionSelectionCallback` (RTTI), named "Debug menu callback"; owns a 0x9C-byte debug menu object (functions at 0x8003FB24, not split); `XBaseActionSelectionCallback`'s RTTI is emitted first here (matches, linked) |
 | `game/unit_80040638.cpp` | 0x80040638-0x80040824 | class `NetworkInputActionSelectionCallback` (RTTI), derived from `XBaseActionSelectionCallback`: current and queued action selections (matches, linked) |
