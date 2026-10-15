@@ -26,11 +26,12 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-14 | a208594 | 637472 / 3412920 bytes (18.68 %) | 2361 / 12580 | 277 linked / 981 | RVL_SDK: MIX (`mix`, `remote`, newer than mscharged-decomp's) and DSP (`dsp`, `dsp_debug`, `dsp_task` from `__DSPHandler`) split and linked; GameSpy gt2Message / NATify / natneg still not matching; 18.14 % of code linked |
 | 2026-10-14 | fd99a1a | 671420 / 3412920 bytes (19.67 %) | 2530 / 12580 | 296 linked / 973 | RVL_SDK unsplit regions found by a size-sequence search over the reference clones and linked: esp, KPAD, OSStateTM, OSLaunch, mtx/mtxvec/mtx44, mem_expHeap/frameHeap/allocator, ai, AX, AXAlloc, AXAux, AXOut, AXSPB, OSSemaphore, GXFrameBuf, GXLight, scapi_prdinfo extended; 19.14 % of code linked |
 | 2026-10-14 | 49c4b6a | 745680 / 3412920 bytes (21.85 %) | 2755 / 12580 | 318 linked / 993 | Smallest gaps first: time.dolphin, WPAD/WUD debug_msg, wenc, AXFXReverbHiExp(+Dpl2); then GameSpy from mkw (GP x13, gsUdpEngine, qr2regkeys, md5c, gsAvailable linked; qr2, gsPlatformSocket, gsPlatformUtil, gsMemory split NonMatching); 20.97 % of code linked |
+| 2026-10-15 | 9438006 | 752116 / 3412920 bytes (22.04 %) | 2809 / 12580 | 325 linked / 1001 | Game code: 8 units split (7 match, 6 linked): CAbstractInputEventStage base and sequences, input sequence set, build information (date "Aug 28 2008 (14:30)", build 519 / 142835), two small helpers; 21.04 % of code linked |
 
 Notes:
 
 - "Units" counts units in `objdiff.json`; library units are the ones split by hand in
   `config/RM7P4F/splits.txt` (progress category `sdk`, 634340 bytes of code); the rest
   are dtk `auto_*` objects.
-- Game code: `game/unit_8001FCA8.cpp` is linked (first game unit); `game/unit_80020480.cpp`
-  is split, 29/31 functions, not linked yet.
+- Game code: see the unit table in `notes/SPLITS.md`; `game/unit_80020480.cpp` (29/31
+  functions) and `game/unit_80042C18.cpp` (static initializer only) are not linked yet.
