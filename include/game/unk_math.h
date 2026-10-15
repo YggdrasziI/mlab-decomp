@@ -22,4 +22,17 @@ inline double UnkSqrtf(f32 x) {
     return result;
 }
 
+// Clamp to [low, high].
+inline f32 UnkClamp(f32 value, f32 low, f32 high) {
+    f32 result;
+    if (value < low) {
+        result = low;
+    } else if (value > high) {
+        result = high;
+    } else {
+        result = value;
+    }
+    return result;
+}
+
 #endif // GAME_UNK_MATH_H

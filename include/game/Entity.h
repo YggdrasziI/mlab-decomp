@@ -17,6 +17,15 @@
 
 class Entity;
 
+// Pointer list (real name unknown): data at 0xC, count at 0x10.
+struct UnkList {
+    void* First() { return mCount == 0 ? 0 : mData[0]; }
+
+    /* 0x00 */ u8 unk0[0xC];
+    /* 0x0C */ void** mData;
+    /* 0x10 */ u32 mCount;
+};
+
 // Per-entity state block pointed to by Entity::mInfo (real name unknown).
 struct EntityInfo {
     /* 0x00 */ UnkVec3 mPos;
@@ -126,7 +135,8 @@ public:
     /* 0x004 */ EntityInfo* mInfo;
     /* 0x008 */ u8 unk8[0x88 - 0x8];
     /* 0x088 */ void* m88;
-    /* 0x08C */ u8 unk8C[0x94 - 0x8C];
+    /* 0x08C */ UnkList* m8C;
+    /* 0x090 */ u8 unk90[0x94 - 0x90];
     /* 0x094 */ UnkEntity94 m94;
     /* 0x09C */ u8 unk9C[0xA4 - 0x9C];
     /* 0x0A4 */ void** mA4;
@@ -370,6 +380,22 @@ public:
 
     /* 0x264 */ u8 mNear;
     /* 0x268 */ void* m268;
+};
+
+class Entity_MysticBrewVortex : public Entity_Prop {
+public:
+    Entity_MysticBrewVortex(int type, EntityInfo* info, int init);
+    virtual ~Entity_MysticBrewVortex();
+
+    void fn_800BF6FC();
+    void fn_800BF700();
+    void fn_800BF710(f32 delta);
+    void* fn_800BF7F0();
+    f32 fn_800BF870();
+    f32 fn_800BF878(f32 delta);
+
+    /* 0x264 */ f32 mLevel;
+    /* 0x268 */ f32 mPrevLevel;
 };
 
 #endif // GAME_ENTITY_H
