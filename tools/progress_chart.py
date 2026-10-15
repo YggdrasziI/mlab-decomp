@@ -2,6 +2,8 @@
 """Draw progress charts from the objdiff report, without decomp.dev.
 
 Outputs (SVG, readable on GitHub in light and dark themes):
+  progress/treemap.svg   one rectangle per unit, sized by code, colored by fuzzy match
+                         (same idea as the decomp.dev overview image)
   progress/progress.svg  current state: bars per category and a map of every unit
   progress/history.svg   matched and linked code over time (progress/history.csv)
 
@@ -150,6 +152,85 @@ def draw_progress(report, path):
         f.write("\n".join([head, bg, title] + out + ["</svg>"]) + "\n")
 
 
+def squarify(items, x, y, w, h):
+    """Squarified treemap layout: items are (size, payload), sorted by size descending."""
+    out = []
+    items = [it for it in items if it[0] > 0]
+    total = float(sum(s for s, _ in items))
+    if not items or w <= 0 or h <= 0:
+        return out
+    scale = w * h / total
+    areas = [(s * scale, p) for s, p in items]
+
+    def worst(row, side):
+        s = sum(a for a, _ in row)
+        big = max(a for a, _ in row)
+        small = min(a for a, _ in row)
+        return max(side * side * big / (s * s), (s * s) / (side * side * small))
+
+    i = 0
+    while i < len(areas):
+        side = min(w, h)
+        row = [areas[i]]
+        i += 1
+        while i < len(areas) and worst(row + [areas[i]], side) <= worst(row, side):
+            row.append(areas[i])
+            i += 1
+        s = sum(a for a, _ in row)
+        if w >= h:
+            rw = s / h
+            cy = y
+            for a, p in row:
+                out.append((x, cy, rw, a / rw, p))
+                cy += a / rw
+            x += rw
+            w -= rw
+        else:
+            rh = s / w
+            cx = x
+            for a, p in row:
+                out.append((cx, y, a / rh, rh, p))
+                cx += a / rh
+            y += rh
+            h -= rh
+    return out
+
+
+def match_color(percent):
+    """Red (0 %) to yellow to green (100 %); a full match is pure green."""
+    hue = 120.0 * max(0.0, min(percent, 100.0)) / 100.0
+    light = 38 if percent >= 100.0 else 45
+    return f"hsl({hue:.0f}, 100%, {light}%)"
+
+
+def draw_treemap(report, path):
+    width, height = 840, 420
+    units = []
+    for unit in report.get("units", []):
+        size = int(unit.get("measures", {}).get("total_code", 0) or 0)
+        if size:
+            units.append((size, unit))
+    units.sort(key=lambda it: it[0], reverse=True)
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
+        '<defs><linearGradient id="shade" x1="0" y1="0" x2="1" y2="1">'
+        '<stop offset="0" stop-color="#fff" stop-opacity="0.12"/>'
+        '<stop offset="1" stop-color="#000" stop-opacity="0.28"/></linearGradient></defs>',
+    ]
+    for x, y, w, h, unit in squarify(units, 0, 0, width, height):
+        m = unit["measures"]
+        fuzzy = pct(m, "fuzzy_match_percent")
+        name = unit.get("name", "")
+        name = name[len("main/"):] if name.startswith("main/") else name
+        title = escape("{}: {:.2f} % ({} bytes)".format(name, fuzzy, m.get("total_code", 0)))
+        rect = f'x="{x:.2f}" y="{y:.2f}" width="{w:.2f}" height="{h:.2f}"'
+        out.append(f'<g><title>{title}</title><rect {rect} fill="{match_color(fuzzy)}"/>'
+                   f'<rect {rect} fill="url(#shade)" stroke="#000" stroke-opacity="0.45" stroke-width="0.6"/></g>')
+    out.append("</svg>")
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(out) + "\n")
+
+
 def read_history(path):
     if not os.path.exists(path):
         return []
@@ -267,9 +348,10 @@ def main():
         backfill(history_path)
     rows = record(report, history_path) if args.record else read_history(history_path)
 
+    draw_treemap(report, os.path.join(args.out, "treemap.svg"))
     draw_progress(report, os.path.join(args.out, "progress.svg"))
     draw_history(rows, os.path.join(args.out, "history.svg"))
-    print("wrote progress.svg and history.svg to", args.out)
+    print("wrote treemap.svg, progress.svg and history.svg to", args.out)
 
 
 if __name__ == "__main__":
