@@ -66,14 +66,30 @@ public:
     /* 0x41 */ u8 m41;
 };
 
-// Member of Entity at 0x94 (real type unknown; the Entity constructor clears its
-// first two words). Its size is unknown.
+// Bone of an entity model (0xC8 bytes, real name unknown).
+struct UnkBone {
+    /* 0x00 */ u8 unk0[0x5C];
+    /* 0x5C */ UnkVec3 mPos;
+    /* 0x68 */ u8 unk68[0xC8 - 0x68];
+};
+
+// Member of Entity at 0x94, probably the model or skeleton (real type unknown; the
+// Entity constructor clears its first two words). Its size is unknown.
 class UnkEntity94 {
 public:
     void fn_801EC080(Entity* entity);
+    // Index of a bone (the argument is probably its name).
+    int fn_801EC880(void* name);
 
     /* 0x0 */ u32 m0;
-    /* 0x4 */ u32 m4;
+    /* 0x4 */ UnkBone* mBones;
+};
+
+// Node of the entity list at Entity::mB0 (real name unknown).
+struct UnkEntityNode {
+    /* 0x0 */ u32 m0;
+    /* 0x4 */ Entity* mEntity;
+    /* 0x8 */ UnkEntityNode* mNext;
 };
 
 class Entity {
@@ -106,7 +122,7 @@ public:
     virtual int vf68();
     virtual int vf6C();
     virtual int vf70();
-    virtual void vf74();
+    virtual void vf74(f32 dt);
     virtual void vf78(void* arg);
     virtual void vf7C();
     virtual void vf80();
@@ -123,6 +139,9 @@ public:
     virtual void vfAC();
     virtual void vfB0();
     virtual int vfB4();
+
+    void fn_801B50B0(Entity* child);
+    u32 fn_801B5420(Entity* child, int arg, UnkVec3 target, UnkVec3 offset, int arg5);
 
     void SetType(int type) {
         if (mInfo != 0) {
@@ -141,7 +160,9 @@ public:
     /* 0x09C */ u8 unk9C[0xA4 - 0x9C];
     /* 0x0A4 */ void** mA4;
     /* 0x0A8 */ int mA8;
-    /* 0x0AC */ u8 unkAC[0x14C - 0xAC];
+    /* 0x0AC */ u8 unkAC[0xB0 - 0xAC];
+    /* 0x0B0 */ UnkEntityNode* mB0;
+    /* 0x0B4 */ u8 unkB4[0x14C - 0xB4];
 };
 
 class Entity_Game : public Entity {
@@ -216,7 +237,7 @@ public:
     virtual void vf50();
     virtual void vf54(void* arg);
     virtual void vf58();
-    virtual void vf74();
+    virtual void vf74(f32 dt);
     virtual void vf80();
     virtual void vf84();
     virtual void vf88();
@@ -432,6 +453,39 @@ public:
     /* 0x270 */ bool m270;
     /* 0x274 */ UnkVec3 mTarget;
     /* 0x280 */ int m280;
+};
+
+// Entity carrying the hand (real class unknown; fn_800B7464 returns the float at
+// 0x2F4).
+class UnkArmWrestler : public Entity {
+public:
+    f32 fn_800B7464();
+};
+
+class Entity_ArmWrestleHand : public Entity_Prop {
+public:
+    Entity_ArmWrestleHand(int type, EntityInfo* info, int init);
+    virtual ~Entity_ArmWrestleHand();
+    virtual void vf20(f32 dt, int arg);
+
+    void Detach() {
+        if (mHolder != 0) {
+            mHolder->fn_801B50B0(this);
+            mInfo->mFlags |= 1;
+            mHolder = 0;
+        }
+    }
+
+    void fn_800B7B08(int arg, void* boneName);
+    void fn_800B7B50();
+    void fn_800B7C64(f32 value);
+    int fn_800B7C74(UnkArmWrestler* holder, void* boneName);
+
+    /* 0x264 */ f32 m264;
+    /* 0x268 */ UnkArmWrestler* mHolder;
+    /* 0x26C */ int mBone;
+    /* 0x270 */ int m270;
+    /* 0x274 */ UnkVec3 mOffset;
 };
 
 #endif // GAME_ENTITY_H

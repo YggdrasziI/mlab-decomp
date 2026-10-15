@@ -46,9 +46,7 @@ Entity_BrainTossTarget::Entity_BrainTossTarget(int type, EntityInfo* info, int i
     mTime = 0.0f;
     mDuration = 0.0f;
     m270 = false;
-    UnkVec3 zero;
-    zero.x = zero.y = zero.z = 0.0f;
-    mTarget = zero;
+    mTarget = UnkVec3Zero();
     m280 = 0;
 }
 

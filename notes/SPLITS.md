@@ -66,6 +66,7 @@ offset).
 | `game/unit_8008C9F8.cpp` | 0x8008C9F8-0x8008CBB0 | class `Entity_BrazierBowl` (RTTI), derived from `Entity_Prop`; state and value setters send hashed events through `fn_801BA190` (matches, linked) |
 | `game/unit_8009B19C.cpp` | 0x8009B19C-0x8009B264 | class `Entity_AstralTile` (RTTI), derived from `ExWorldCurvedTile` and `ExWorldTile` (not split); the RTTI, names and base lists of both base classes are emitted first here (matches, linked) |
 | `game/unit_800B7934.cpp` | 0x800B7934-0x800B7A08 | class `Entity_ArmWrestleBolt` (RTTI), derived from `Entity_Prop` (functions at 0x80069028, not split; implicit destructor inlined here) (matches, linked) |
+| `game/unit_800B7A08.cpp` | 0x800B7A08-0x800B7E34 | class `Entity_ArmWrestleHand` (RTTI), derived from `Entity_Prop`: attaches to a bone of another entity (matches, linked) |
 | `game/unit_800BF654.cpp` | 0x800BF654-0x800BF97C | class `Entity_MysticBrewVortex` (RTTI), derived from `Entity_Prop`: a 0-100 level with hashed events (matches, linked) |
 | `game/unit_800C5E90.cpp` | 0x800C5E90-0x800C5F84 | class `ExWorldTrackItem` (RTTI), derived from `Entity_Prop`, with four new virtual functions (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |

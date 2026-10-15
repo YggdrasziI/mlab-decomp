@@ -12,6 +12,7 @@ struct UnkVec3 {
     f32 x, y, z;
     UnkVec3() {}
     UnkVec3(f32 x_, f32 y_, f32 z_) : x(x_), y(y_), z(z_) {}
+    UnkVec3(const UnkVec3& other) : x(other.x), y(other.y), z(other.z) {}
 
     UnkVec3 operator-(const UnkVec3& other) const {
         UnkVec3 result;
@@ -20,11 +21,18 @@ struct UnkVec3 {
         result.z = z - other.z;
         return result;
     }
+    bool operator==(const UnkVec3& other) const { return x == other.x && y == other.y && z == other.z; }
     f32 LengthSq() const { return x * x + y * y + z * z; }
     f32 Length() const;
 };
 
 #include "game/unk_math.h"
+
+inline UnkVec3 UnkVec3Zero() {
+    UnkVec3 v;
+    v.x = v.y = v.z = 0.0f;
+    return v;
+}
 
 inline f32 UnkVec3::Length() const {
     return UnkSqrtf(LengthSq());
