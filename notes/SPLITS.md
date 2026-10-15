@@ -45,6 +45,7 @@ offset).
 | `game/unit_80014328.cpp` | 0x80014328-0x80014350 | one function returning 0, used as a function pointer (matches, linked) |
 | `game/unit_80018C04.cpp` | 0x80018C04-0x80018E00 | registers three named animation predicates (`"anim_done"`, `"anim_past_impact_frame"`, `"anim_past_preload_time"`) through `fn_801DC91C`, then calls six other registration functions (NonMatching: `fn_80018CB0` 95.6 %, prologue scheduling) |
 | `game/unit_80019FB0.cpp` | 0x80019FB0-0x8001A17C | launch speed for a projectile between two points at a given angle under gravity (NonMatching, 89.8 %: the `height` / `s` registers are swapped and two stores are reordered) |
+| `game/unit_8001AFB4.cpp` | 0x8001AFB4-0x8001B20C | a stack of states: init, lookup by id, pending state, push and pop (matches, linked) |
 | `game/unit_8001FCA8.cpp` | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage sequence and factory (matches, linked) |
 | `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
 | `game/unit_800214D4.cpp` | 0x800214D4-0x80021594 | the set of input sequences (8 fixed, 100 indexed, 34-entry index table) (matches, linked) |
