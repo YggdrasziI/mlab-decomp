@@ -26,11 +26,72 @@ struct UnkList {
     /* 0x10 */ u32 mCount;
 };
 
+// Four-float rotation, probably a quaternion (the Entity constructor sets it to
+// (0, 0, 0, 1)). Real name unknown.
+struct UnkQuat {
+    UnkQuat() {}
+    UnkQuat(const UnkQuat& other) : x(other.x), y(other.y), z(other.z), w(other.w) {}
+
+    f32 x, y, z, w;
+};
+
+// 3x4 transform: three basis vectors then the translation (real name unknown).
+struct UnkMtx34 {
+    UnkVec3 Transform(const UnkVec3& v) const {
+        UnkVec3 result;
+        result.x = m[0] * v.x + m[3] * v.y + m[6] * v.z + m[9];
+        result.y = m[1] * v.x + m[4] * v.y + m[7] * v.z + m[10];
+        result.z = m[2] * v.x + m[5] * v.y + m[8] * v.z + m[11];
+        return result;
+    }
+
+    f32 m[12];
+};
+
+// Model data returned through Entity::vf10 (real names unknown).
+struct UnkJoint {
+    /* 0x00 */ u8 unk0[0x24];
+    /* 0x24 */ UnkVec3 mPos;
+};
+
+struct UnkJointName {
+    /* 0x0 */ u32 mHash;
+    /* 0x4 */ u32 m4;
+};
+
+struct UnkModelData {
+    int FindJoint(u32 hash) {
+        for (int i = 0; i < mJointNameCount; i++) {
+            if (mJointNames[i].mHash == hash) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /* 0x0 */ u32 m0;
+    /* 0x4 */ UnkJoint* mJoints;
+    /* 0x8 */ int mJointNameCount;
+    /* 0xC */ UnkJointName* mJointNames;
+};
+
+struct UnkModel {
+    int FindJoint(u32 hash) {
+        for (int i = 0; i < mData->mJointNameCount; i++) {
+            if (mData->mJointNames[i].mHash == hash) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /* 0x0 */ UnkModelData* mData;
+};
+
 // Per-entity state block pointed to by Entity::mInfo (real name unknown).
 struct EntityInfo {
     /* 0x00 */ UnkVec3 mPos;
-    /* 0x0C */ UnkVec3 m0C;
-    /* 0x18 */ f32 m18;
+    /* 0x0C */ UnkQuat mRot;
     /* 0x1C */ u32 mTypeMask;
     /* 0x20 */ u32 mFlags;
     /* 0x24 */ u8 unk24[0x34 - 0x24];
@@ -97,7 +158,7 @@ public:
     Entity(int type, EntityInfo* info, int init);
     virtual ~Entity();
     virtual void* vf0C();
-    virtual void* vf10();
+    virtual UnkModel* vf10();
     virtual void vf14(void* arg);
     virtual void vf18(void* arg);
     virtual void vf1C();
@@ -141,6 +202,26 @@ public:
     virtual int vfB4();
 
     void fn_801B50B0(Entity* child);
+    UnkMtx34* fn_801B50FC();
+
+    void SetPosition(const UnkVec3& pos) {
+        mInfo->mPos = pos;
+        mInfo->mFlags |= 0x8000;
+        mInfo->mFlags |= 0x10000000;
+        mInfo->mFlags |= 0x4000;
+        mInfo->mFlags |= 0x10000000;
+    }
+    void SetRotation(const UnkQuat& rot) {
+        mInfo->mRot = rot;
+        mInfo->mFlags |= 0x8000;
+        mInfo->mFlags |= 0x10000000;
+        mInfo->mFlags |= 0x4000;
+        mInfo->mFlags |= 0x10000000;
+    }
+    UnkQuat GetWorldRotation() {
+        fn_801B50FC();
+        return mInfo->mRot;
+    }
     u32 fn_801B5420(Entity* child, int arg, UnkVec3 target, UnkVec3 offset, int arg5);
 
     void SetType(int type) {
@@ -486,6 +567,37 @@ public:
     /* 0x26C */ int mBone;
     /* 0x270 */ int m270;
     /* 0x274 */ UnkVec3 mOffset;
+};
+
+class Entity_BrainTossHand : public Entity_Prop {
+public:
+    Entity_BrainTossHand(int type, EntityInfo* info, int init);
+    virtual ~Entity_BrainTossHand();
+
+    int fn_8008682C();
+    void fn_80086834(Entity* held);
+    Entity* fn_80086844();
+    UnkVec3 fn_8008684C();
+    void fn_800869A0();
+
+    // Two inline variants: fn_8008684C and fn_800869A0 allocate the joint lookup
+    // registers differently, so they do not share one inline function.
+    UnkVec3 GetHandPosition() {
+        UnkModel* model = vf10();
+        UnkVec3 pos = model->mData->mJoints[model->FindJoint(0x1DC9D499)].mPos;
+        pos = fn_801B50FC()->Transform(pos);
+        return pos;
+    }
+
+    UnkVec3 GetHandPos() {
+        UnkModelData* data = vf10()->mData;
+        UnkVec3 pos = data->mJoints[data->FindJoint(0x1DC9D499)].mPos;
+        pos = fn_801B50FC()->Transform(pos);
+        return pos;
+    }
+
+    /* 0x264 */ Entity* mHeld;
+    /* 0x268 */ int m268;
 };
 
 #endif // GAME_ENTITY_H
