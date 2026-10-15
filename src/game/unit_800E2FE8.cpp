@@ -17,7 +17,7 @@ bool CIFixedTrackPlayer::vf0C(UnkVec3* pos, UnkVec3* target, f32 dt) {
     if (!CIDynamic::vf0C(pos, target, dt)) {
         return false;
     }
-    UnkTrackData* track = (UnkTrackData*)lbl_803C4298.m8;
+    UnkCameraState* track = &((UnkCameraController*)lbl_803C4298.m8)->mState;
     f32 progress = mProgress;
     f32 angle = 1.5707964f * (2.0f * progress);
     UnkVec3 start = track->mStart;

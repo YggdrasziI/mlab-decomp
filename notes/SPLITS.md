@@ -76,6 +76,8 @@ offset).
 | `game/unit_800C5E90.cpp` | 0x800C5E90-0x800C5F84 | class `ExWorldTrackItem` (RTTI), derived from `Entity_Prop`, with four new virtual functions (matches, linked) |
 | `game/unit_800D00B4.cpp` | 0x800D00B4-0x800D02C0 | camera influence `CIStitching` (RTTI), derived from `CIDynamic` (0x800DEC28, not split) and the abstract `CameraInfluence`: fixed position and rotation (matches, linked) |
 | `game/unit_800E2FE8.cpp` | 0x800E2FE8-0x800E3300 | camera influence `CIFixedTrackPlayer` (RTTI), derived from `CIDynamic`: eases the camera between two track points with a cosine curve (matches, linked) |
+| `game/unit_800E374C.cpp` | 0x800E374C-0x800E3834 | camera influence `CIDist` (RTTI), derived from `CIDynamic`: feeds a weighted distance to the camera state; implicit destructor emitted last (matches, linked) |
+| `game/unit_800E3834.cpp` | 0x800E3834-0x800E391C | camera influence `CIPitch` (RTTI), same shape for the pitch (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
 | `game/unit_8010FD14.cpp` | 0x8010FD14-0x8010FDA4 | class `book` (RTTI): constructor, virtual destructor, vtable with nine pure virtual functions (matches, linked) |

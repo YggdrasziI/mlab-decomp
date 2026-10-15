@@ -80,12 +80,27 @@ public:
     /* 0x64 */ UnkQuat mRot;
 };
 
-// Track data at lbl_803C4298.m8 (real type unknown).
-struct UnkTrackData {
-    /* 0x00 */ u8 unk0[0x80];
-    /* 0x80 */ UnkVec3 mStart;
-    /* 0x8C */ u8 unk8C[0x98 - 0x8C];
-    /* 0x98 */ UnkVec3 mLookAt;
+// Camera state blended from the influences (real type unknown; functions at
+// 0x800E2DF4-0x800E2E9C). The distance and pitch are weighted averages.
+struct UnkCameraState {
+    void fn_800E2DF4(f32 distance, f32 weight);
+    void fn_800E2E48(f32 pitch, f32 weight);
+
+    /* 0x00 */ u8 unk0[0x18];
+    /* 0x18 */ UnkVec3 mStart;
+    /* 0x24 */ u8 unk24[0x30 - 0x24];
+    /* 0x30 */ UnkVec3 mLookAt;
+    /* 0x3C */ u8 unk3C[0xC4 - 0x3C];
+    /* 0xC4 */ f32 mDistance;
+    /* 0xC8 */ f32 mDistanceWeight;
+    /* 0xCC */ f32 mPitch;
+    /* 0xD0 */ f32 mPitchWeight;
+};
+
+// Object at lbl_803C4298.m8, probably the camera controller (real type unknown).
+struct UnkCameraController {
+    /* 0x00 */ u8 unk0[0x68];
+    /* 0x68 */ UnkCameraState mState;
 };
 
 // Object followed by CIFixedTrackPlayer (real type unknown).
@@ -103,6 +118,26 @@ public:
     /* 0x58 */ UnkTrackFollow* mFollow;
     /* 0x5C */ UnkVec3 mPos;
     /* 0x68 */ UnkVec3 mLookAt;
+};
+
+// Implicit destructor (emitted at the end of its unit).
+class CIDist : public CIDynamic {
+public:
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    virtual void vf10();
+    virtual f32 vf14();
+
+    /* 0x58 */ f32 mDistance;
+};
+
+// Implicit destructor (emitted at the end of its unit).
+class CIPitch : public CIDynamic {
+public:
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    virtual void vf10();
+    virtual f32 vf14();
+
+    /* 0x58 */ f32 mPitch;
 };
 
 #endif // GAME_CAMERAINFLUENCE_H
