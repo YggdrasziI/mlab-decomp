@@ -182,4 +182,45 @@ public:
     virtual ~Entity_Trigger_Script();
 };
 
+// Functions at 0x80069028-0x8006C000 (unit not split yet). The destructor is
+// implicit (derived destructors inline it). vfB0 and vfB8 are emitted at
+// 0x800505B0 and 0x800505A8, probably inline functions (vfB8 returns &mSlot).
+class Entity_Prop : public Entity_Static {
+public:
+    Entity_Prop(int type, EntityInfo* info, int init);
+    virtual void vf14(void* arg);
+    virtual void vf18();
+    virtual void vf1C();
+    virtual void vf20(f32 dt, int arg);
+    virtual void vf28();
+    virtual void vf30(void* arg1, void* arg2);
+    virtual void vf40();
+    virtual void* vf44();
+    virtual int vf4C();
+    virtual void vf50();
+    virtual void vf54(void* arg);
+    virtual void vf58();
+    virtual void vf74();
+    virtual void vf80();
+    virtual void vf84();
+    virtual void vf88();
+    virtual void vf90();
+    virtual void vfB0();
+    virtual UnkEntitySlot* vfB8();
+
+    /* 0x158 */ u8 unk158[0x1C8 - 0x158];
+    /* 0x1C8 */ UnkEntitySlot mSlot;
+    /* 0x20C */ u8 unk20C[0x264 - 0x20C];
+};
+
+class Entity_ArmWrestleBolt : public Entity_Prop {
+public:
+    Entity_ArmWrestleBolt(int type, EntityInfo* info, int init);
+    virtual ~Entity_ArmWrestleBolt();
+
+    void fn_800B79D8(f32 value);
+
+    /* 0x264 */ f32 m264;
+};
+
 #endif // GAME_ENTITY_H
