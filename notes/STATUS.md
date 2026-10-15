@@ -38,7 +38,7 @@
 
 ## In progress
 
-- Step 6 (game code): 32 game units split, 29 linked (unit table in `notes/SPLITS.md`).
+- Step 6 (game code): 36 game units split, 32 linked (unit table in `notes/SPLITS.md`).
   Unit bounds come from the static initializers (inline functions of a unit may follow
   its `__sinit`); compiled with `cflags_game` (base flags with `-RTTI on`). Shared
   headers: `include/game/unk_vec3.h` (the `(0, 1, 0)` vector), `include/game/externs.h`
@@ -46,12 +46,15 @@
   (Entity, Entity_Game, Entity_Static, Entity_Dynamic, Entity_Sensor, Entity_Prop,
   ExWorldTile...), with virtual functions named after their vtable offsets.
   Not linked: `game/unit_8006CFA4.cpp` (Entity_Challenge_Projector, 5/6; one register
-  choice in `vf20`), `game/unit_80020480.cpp` (29/31; the two `AnyButtons*::vf0C` loops differ
+  choice in `vf20`), `game/unit_80086780.cpp` (Entity_BrainTossHand, 7/8; two stack
+  slots swapped in `fn_800869A0`), `game/unit_80020480.cpp` (29/31; the two `AnyButtons*::vf0C` loops differ
   only by the order of three loop increments) and `game/unit_80042C18.cpp` (static
   initializer only: our linker drops an object nothing references, and FORCEACTIVE
   cannot name its local `__sinit`; FORCEFILES through a custom `ldscript_template` is a
   possible fix).
-  Next: the remaining small units. Set aside for now: 0x80098BC0
+  Next: the remaining Entity_Prop-derived units (0x800B1EDC Entity_GrowJuiceHeartVine
+  has a ray/sphere test over nested collision lists; 0x80098664; larger ones listed by
+  calls to `__ct__11Entity_Prop`). Set aside for now: 0x80098BC0
   (Entity_ReactorLeakHammer, unknown member type at 0x268), 0x8004B498 (multiple
   inheritance, base in the next unit), 0x800E374C / 0x800E3834 (vtables elsewhere),
   0x8010A678 and 0x800DF570 (vector types with inline operators), 0x80006B40 (static
