@@ -54,6 +54,7 @@ offset).
 | `game/unit_80049628.cpp` | 0x80049628-0x800496DC | class `CharacterPartAttachment` (RTTI), derived from `XCharacterPartAttachment` (functions at 0x8020E9CC, not split); the base class's RTTI object and name are emitted in this unit too (matches, linked) |
 | `game/unit_800496DC.cpp` | 0x800496DC-0x800497F4 | class `CompositeCharacterActionSelectionCB` (RTTI), derived from `XBaseActionSelectionCallback` (functions at 0x8020F36C, not split), with a 12-byte selection member (matches, linked) |
 | `game/unit_800523B8.cpp` | 0x800523B8-0x80052504 | 32-bit key for an id: fixed pairs for ids 30-38 in modes 2/3, otherwise the 40-entry table at 0x803881B4 (matches, linked) |
+| `game/unit_80062C80.cpp` | 0x80062C80-0x8006307C | class `Entity_Game` (RTTI), derived from `Entity` (functions at 0x801B4334, not split; vtable at 0x80383D68); its RTTI and Entity's were emitted by an earlier unit (matches, linked) |
 | `game/unit_8006F5A0.cpp` | 0x8006F5A0-0x8006F61C | registers the `"count_deaths"` condition callback (type 22) with `fn_801DC91C` (matches, linked) |
 | `game/unit_80106884.cpp` | 0x80106884-0x801068A8 | a function-pointer wrapper around `fn_801039C0` (matches, linked) |
 | `game/unit_8010A634.cpp` | 0x8010A634-0x8010A678 | 80-entry size table and its lookup, used as a function pointer (matches, linked) |
@@ -68,6 +69,13 @@ lower data match for it, but the linker keeps the first copy and the DOL still m
 (seen with `BugCachingChallenge::Bug` in `unit_8002B4D0`). When the copy in a unit is
 the first one in link order, it is the one in the DOL (`XCharacterPartAttachment` in
 `unit_80049628`).
+
+A unit does not always end at its static initializer: MWCC emits inline functions
+used by the unit after it. `fn_80062C7C` (an empty inline constructor passed to
+`__construct_array` by the static initializer just before it) belongs to the unit
+that ends at 0x80062C80. Inline virtual functions are likewise emitted as weak
+copies in the first unit that needs them (the Entity vtable points into eight other
+units).
 
 ### Game / SDK boundary (0x80232AF8)
 
