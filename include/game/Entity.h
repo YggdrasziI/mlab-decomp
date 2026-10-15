@@ -238,4 +238,38 @@ public:
     /* 0x270 */ u8 m270;
 };
 
+// Functions at 0x800C142C-0x800C1DC0 (unit not split yet).
+class ExWorldTile : public Entity_Prop {
+public:
+    virtual ~ExWorldTile();
+    virtual void vfBC();
+    virtual void vfC0();
+    virtual void vfC4();
+    virtual void vfC8();
+    virtual void vfCC();
+    virtual void vfD0() = 0;
+};
+
+// Functions at 0x800C4530-0x800C5100 (unit not split yet).
+class ExWorldCurvedTile : public ExWorldTile {
+public:
+    ExWorldCurvedTile(int type, EntityInfo* info, int init);
+    virtual ~ExWorldCurvedTile();
+    virtual void vfBC();
+    virtual void vfD0();
+    virtual void vfD4();
+    virtual void vfD8();
+};
+
+class Entity_AstralTile : public ExWorldCurvedTile {
+public:
+    Entity_AstralTile(int type, EntityInfo* info, int init);
+    virtual ~Entity_AstralTile();
+    virtual void vfBC();
+    virtual void vfC0();
+    virtual void vfC4();
+    virtual void vfC8();
+    virtual void vfCC();
+};
+
 #endif // GAME_ENTITY_H
