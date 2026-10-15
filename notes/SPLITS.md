@@ -59,6 +59,7 @@ offset).
 | `game/unit_8006F5A0.cpp` | 0x8006F5A0-0x8006F61C | registers the `"count_deaths"` condition callback (type 22) with `fn_801DC91C` (matches, linked) |
 | `game/unit_8006F61C.cpp` | 0x8006F61C-0x8006F6BC | class `Entity_Static` (RTTI), derived from `Entity_Game`; its implicit destructor is emitted at 0x800630E0 (matches, linked) |
 | `game/unit_8006F6BC.cpp` | 0x8006F6BC-0x8006F794 | class `Entity_Trigger_Script` (RTTI), derived from `Entity_Sensor` (functions at 0x8006D2D0, not split); its RTTI, name and base list are in this unit (matches, linked) |
+| `game/unit_80076AB8.cpp` | 0x80076AB8-0x80076D38 | class `Entity_SpiritToken` (RTTI), derived from `Entity_Prop`; moves along a path and sends hashed events (matches, linked) |
 | `game/unit_8008C9F8.cpp` | 0x8008C9F8-0x8008CBB0 | class `Entity_BrazierBowl` (RTTI), derived from `Entity_Prop`; state and value setters send hashed events through `fn_801BA190` (matches, linked) |
 | `game/unit_8009B19C.cpp` | 0x8009B19C-0x8009B264 | class `Entity_AstralTile` (RTTI), derived from `ExWorldCurvedTile` and `ExWorldTile` (not split); the RTTI, names and base lists of both base classes are emitted first here (matches, linked) |
 | `game/unit_800B7934.cpp` | 0x800B7934-0x800B7A08 | class `Entity_ArmWrestleBolt` (RTTI), derived from `Entity_Prop` (functions at 0x80069028, not split; implicit destructor inlined here) (matches, linked) |
@@ -83,6 +84,10 @@ used by the unit after it. `fn_80062C7C` (an empty inline constructor passed to
 that ends at 0x80062C80. Inline virtual functions are likewise emitted as weak
 copies in the first unit that needs them (the Entity vtable points into eight other
 units).
+
+objdiff may report 100 % for a function that loads the wrong float constant from
+.sdata2 (seen in `unit_80076AB8`: 1.0 instead of 0.0). Only linking the unit and the
+`main.dol` check prove a match, so every matching game unit is linked.
 
 ### Game / SDK boundary (0x80232AF8)
 

@@ -12,13 +12,16 @@
 // they are probably inline functions emitted where first used. They are declared
 // out of line here until those units are decompiled.
 
+#include "game/unk_vec3.h"
 #include "types.h"
 
 class Entity;
 
 // Per-entity state block pointed to by Entity::mInfo (real name unknown).
 struct EntityInfo {
-    /* 0x00 */ f32 m0[7];
+    /* 0x00 */ UnkVec3 mPos;
+    /* 0x0C */ UnkVec3 m0C;
+    /* 0x18 */ f32 m18;
     /* 0x1C */ u32 mTypeMask;
     /* 0x20 */ u32 mFlags;
     /* 0x24 */ u8 unk24[0x34 - 0x24];
@@ -287,6 +290,28 @@ public:
 
     /* 0x264 */ int mState;
     /* 0x268 */ f32 mValue;
+};
+
+// Path followed by Entity_SpiritToken (real name unknown; function at 0x8010B200).
+class UnkPath {
+public:
+    // Position at parameter t (0 to 1).
+    UnkVec3 fn_8010B200(f32 t);
+};
+
+class Entity_SpiritToken : public Entity_Prop {
+public:
+    Entity_SpiritToken(int type, EntityInfo* info, int init);
+    virtual ~Entity_SpiritToken();
+
+    void fn_80076B5C(f32 duration, UnkPath* path);
+    u8 fn_80076B9C();
+    void fn_80076BA4(f32 dt);
+
+    /* 0x264 */ f32 mDuration;
+    /* 0x268 */ f32 mTime;
+    /* 0x26C */ u8 mMoving;
+    /* 0x270 */ UnkPath* mPath;
 };
 
 #endif // GAME_ENTITY_H

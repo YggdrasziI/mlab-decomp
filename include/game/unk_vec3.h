@@ -10,6 +10,7 @@
 // Real type and object names unknown.
 struct UnkVec3 {
     f32 x, y, z;
+    UnkVec3() {}
     UnkVec3(f32 x_, f32 y_, f32 z_) : x(x_), y(y_), z(z_) {}
 };
 
