@@ -25,4 +25,20 @@ extern "C" void* fn_800D39BC(void* obj);
 extern "C" int fn_800D5924(void* obj);
 extern void* lbl_805FB180;
 
+// Message object from pool 3 (fn_802209D8 calls a registered allocator; real names
+// unknown).
+struct UnkMessage {
+    /* 0x00 */ u32 m0;
+    /* 0x04 */ u32 m4;
+    /* 0x08 */ u32 m8;
+    /* 0x0C */ u32 mC;
+    /* 0x10 */ u32 m10;
+    /* 0x14 */ u32 m14;
+    /* 0x18 */ u8 unk18[0x24 - 0x18];
+    /* 0x24 */ u32 m24;
+};
+extern "C" UnkMessage* fn_802209D8(int pool);
+extern "C" u32 fn_80220A2C();
+extern "C" u32 fn_80220890(UnkMessage* message, int arg);
+
 #endif // GAME_EXTERNS_H

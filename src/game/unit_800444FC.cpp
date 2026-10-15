@@ -11,7 +11,7 @@ NetworkGestureCallback::NetworkGestureCallback() {
 
 NetworkGestureCallback::~NetworkGestureCallback() {}
 
-int NetworkGestureCallback::vf0C() {
+int NetworkGestureCallback::vf0C(f32 dt) {
     m44 = 1;
     m47 = 0;
     return 0;
