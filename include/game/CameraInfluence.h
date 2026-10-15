@@ -187,4 +187,16 @@ public:
     /* 0x0C */ UnkVec3 mPos;
 };
 
+// Implicit destructor (emitted at the end of its unit).
+class CIFixedEyeLook : public CIDynamic {
+public:
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    virtual void vf10();
+
+    /* 0x58 */ UnkTrackFollow* mEye;
+    /* 0x5C */ UnkTrackFollow* mLook;
+    /* 0x60 */ UnkVec3 mPos;
+    /* 0x6C */ UnkVec3 mLookAt;
+};
+
 #endif // GAME_CAMERAINFLUENCE_H
