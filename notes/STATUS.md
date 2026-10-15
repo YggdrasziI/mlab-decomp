@@ -38,20 +38,20 @@
 
 ## In progress
 
-- Step 6 (game code) started: game unit bounds proven by static initializers
-  (`notes/SPLITS.md`); compiled with `cflags_game` (base flags with `-RTTI on`).
-  `game/unit_8001FCA8.cpp` (input source update, `CAbstractInputEventStage` base, stage
-  sequence) matches 10/10 functions and is linked: the first linked game unit.
-  `game/unit_800214D4.cpp` (input sequence set) matches and is linked.
-  The three build-information units at 0x80014230-0x80014350 match and are linked;
-  the shared `(0, 1, 0)` vector now lives in `include/game/unk_vec3.h`.
-  `game/unit_80106884.cpp` and `game/unit_8010A634.cpp` match and are linked.
-  `game/unit_80042C18.cpp` (static initializer only) matches but cannot be linked yet:
-  our linker drops an object nothing references, and FORCEACTIVE cannot name its
-  local `__sinit`. Possible fixes to study: FORCEFILES through a custom
-  `ldscript_template`.
-  `game/unit_80020480.cpp` (CAbstractInput* stages) matches 29 of 31 functions; the two
-  `AnyButtons*::vf0C` loops differ only by the order of three loop increments.
+- Step 6 (game code): 30 game units split, 28 linked (unit table in `notes/SPLITS.md`).
+  Unit bounds come from the static initializers (inline functions of a unit may follow
+  its `__sinit`); compiled with `cflags_game` (base flags with `-RTTI on`). Shared
+  headers: `include/game/unk_vec3.h` (the `(0, 1, 0)` vector), `include/game/externs.h`
+  (not yet decompiled functions) and `include/game/Entity.h`: the Entity class family
+  (Entity, Entity_Game, Entity_Static, Entity_Dynamic, Entity_Sensor, Entity_Prop,
+  ExWorldTile...), with virtual functions named after their vtable offsets.
+  Not linked: `game/unit_80020480.cpp` (29/31; the two `AnyButtons*::vf0C` loops differ
+  only by the order of three loop increments) and `game/unit_80042C18.cpp` (static
+  initializer only: our linker drops an object nothing references, and FORCEACTIVE
+  cannot name its local `__sinit`; FORCEFILES through a custom `ldscript_template` is a
+  possible fix).
+  Next: the remaining small units, starting with the Entity-derived ones (0x80098BC0
+  Entity_ReactorLeakHammer needs its 0x268 member type).
 
 - Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units), MSL_C
   (59 units, 3 small gaps) and RVL_SDK (177 units, about 52 % of SDK code);
