@@ -28,6 +28,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-14 | 49c4b6a | 745680 / 3412920 bytes (21.85 %) | 2755 / 12580 | 318 linked / 993 | Smallest gaps first: time.dolphin, WPAD/WUD debug_msg, wenc, AXFXReverbHiExp(+Dpl2); then GameSpy from mkw (GP x13, gsUdpEngine, qr2regkeys, md5c, gsAvailable linked; qr2, gsPlatformSocket, gsPlatformUtil, gsMemory split NonMatching); 20.97 % of code linked |
 | 2026-10-15 | 9438006 | 752116 / 3412920 bytes (22.04 %) | 2809 / 12580 | 325 linked / 1001 | Game code: 8 units split (7 match, 6 linked): CAbstractInputEventStage base and sequences, input sequence set, build information (date "Aug 28 2008 (14:30)", build 519 / 142835), two small helpers; 21.04 % of code linked |
 | 2026-10-15 | b5b5648 | 758544 / 3412920 bytes (22.23 %) | 2912 / 12580 | 346 linked / 1044 | Game code: 30 units split, 28 linked: the Entity class family (Entity_Game, Entity_Static, Entity_Dynamic, Entity_Trigger_Script, Entity_ArmWrestleBolt, ExWorldTrackItem, Entity_AstralTile, Entity_BrazierBowl, Entity_SpiritToken, Entity_Hazard_Prop), callbacks, `book` / `section`, small helpers; 21.23 % of code linked |
+| 2026-10-15 | 7311897 | 758980 / 3412920 bytes (22.24 %) | 2919 / 12580 | 347 linked / 1045 | Game code: 32 units split, 29 linked (Entity_Challenge_Projector 5/6 not linked; hash index table linked) |
 
 Notes:
 
