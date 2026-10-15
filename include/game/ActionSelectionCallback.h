@@ -15,9 +15,30 @@ public:
     UnkActionSelection();
     ~UnkActionSelection();
 
+    // Both write 0x4, 0x8 then 0x0, as in the DOL.
+    void Set(s32 a, u8 b, s32 c) {
+        m4 = b;
+        m8 = c;
+        m0 = a;
+    }
+    UnkActionSelection& operator=(const UnkActionSelection& other) {
+        m4 = other.m4;
+        m8 = other.m8;
+        m0 = other.m0;
+        return *this;
+    }
+
     /* 0x0 */ s32 m0;
     /* 0x4 */ u8 m4;
     /* 0x8 */ s32 m8;
+};
+
+// Object given to vf10 (real type unknown).
+struct UnkActionRequest {
+    /* 0x00 */ u8 unk0[0x24];
+    /* 0x24 */ s32 m24;
+    /* 0x28 */ u8 unk28[0x2C - 0x28];
+    /* 0x2C */ s32 m2C;
 };
 
 class XBaseActionSelectionCallback {
@@ -26,7 +47,7 @@ public:
     XBaseActionSelectionCallback(void* arg);
     virtual ~XBaseActionSelectionCallback();
     virtual void vf0C() = 0;
-    virtual void vf10();
+    virtual void vf10(UnkActionRequest* request);
 
     // Copies the selection into the object at m8 (offset 0x38) and sets m4.
     void fn_8020F46C(UnkActionSelection* selection);
@@ -46,6 +67,19 @@ public:
 
     /* 0x4C */ UnkActionSelection mSelection;
     /* 0x58 */ u8 mPending;
+};
+
+class NetworkInputActionSelectionCallback : public XBaseActionSelectionCallback {
+public:
+    NetworkInputActionSelectionCallback(void* arg);
+    virtual ~NetworkInputActionSelectionCallback();
+    virtual void vf0C();
+    virtual void vf10(UnkActionRequest* request);
+
+    /* 0x4C */ UnkActionSelection mCurrent;
+    /* 0x58 */ u8 mHasCurrent;
+    /* 0x5C */ UnkActionSelection mNext;
+    /* 0x68 */ u8 mHasNext;
 };
 
 #endif // GAME_ACTIONSELECTIONCALLBACK_H
