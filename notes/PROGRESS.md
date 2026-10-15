@@ -33,6 +33,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-15 | 235558f | 764616 / 3412920 bytes (22.40 %) | 2978 / 12580 | 354 linked / 1062 | Callback family (NetworkInput / DebugMenu action selection, PlayerInput gesture), Entity_ReactorLeakHammer; motion recognizer classes identified from RTTI |
 | 2026-10-15 | 2804227 | 768500 / 3412920 bytes (22.52 %) | 3019 / 12580 | 362 linked / 1071 | Camera influences: CIStitching, CIFixedTrackPlayer, CIDist, CIPitch, CIFixed_DJ1, CIFixedPlayerTracking_DJ1, CIFixedEyeLook, CIWaypointPath registration linked; CITrackTarget 5/6; 44 of 49 game units linked |
 | 2026-10-15 | 713ccd7 | 769412 / 3412920 bytes (22.54 %) | 3024 / 12580 | 363 linked / 1070 | CIDynamic (base of the camera influences) linked, 21.52 % of code linked; its member type is `SphereGraph` (RTTI); 45 of 50 game units linked |
+| 2026-10-15 | bd17980 | 770524 / 3412920 bytes (22.58 %) | 3037 / 12580 | 363 linked / 1062 | Camera units split: SphereGraph 4/5, CIDirectionGuide 4/5 (98.4 % vf0C), CIFree (vf24), CITrackTargetDan (small functions); 54 game units split, 45 linked |
 
 Notes:
 
