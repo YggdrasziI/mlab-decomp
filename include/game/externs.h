@@ -16,4 +16,7 @@ extern "C" void fn_801BA190(void* mgr, void* sender, int arg2, u32 hash, int arg
                             int arg7);
 extern void* lbl_805FB6C8;
 
+// Called with the object at the start of Entity::mA4 and 1.
+extern "C" void fn_801BB478(void* obj, int arg);
+
 #endif // GAME_EXTERNS_H

@@ -74,13 +74,13 @@ public:
     virtual void* vf0C();
     virtual void* vf10();
     virtual void vf14(void* arg);
-    virtual void vf18();
+    virtual void vf18(void* arg);
     virtual void vf1C();
     virtual void vf20(f32 dt, int arg);
     virtual void vf24();
     virtual void vf28();
     virtual void vf2C();
-    virtual void vf30(void* arg1, void* arg2);
+    virtual int vf30(void* arg1, void* arg2);
     virtual void vf34();
     virtual void vf38();
     virtual void vf3C();
@@ -128,7 +128,10 @@ public:
     /* 0x088 */ void* m88;
     /* 0x08C */ u8 unk8C[0x94 - 0x8C];
     /* 0x094 */ UnkEntity94 m94;
-    /* 0x09C */ u8 unk9C[0x14C - 0x9C];
+    /* 0x09C */ u8 unk9C[0xA4 - 0x9C];
+    /* 0x0A4 */ void** mA4;
+    /* 0x0A8 */ int mA8;
+    /* 0x0AC */ u8 unkAC[0x14C - 0xAC];
 };
 
 class Entity_Game : public Entity {
@@ -136,9 +139,9 @@ public:
     Entity_Game(int type, EntityInfo* info, int init);
     virtual ~Entity_Game();
     virtual void vf14(void* arg);
-    virtual void vf18();
+    virtual void vf18(void* arg);
     virtual void vf20(f32 dt, int arg);
-    virtual void vf30(void* arg1, void* arg2);
+    virtual int vf30(void* arg1, void* arg2);
     virtual void vf40();
     virtual void vf78(void* arg);
     virtual UnkEntitySlot* vfB8();
@@ -170,10 +173,10 @@ class Entity_Sensor : public Entity_Static {
 public:
     Entity_Sensor(int type, EntityInfo* info, int init);
     virtual ~Entity_Sensor();
-    virtual void vf18();
+    virtual void vf18(void* arg);
     virtual void vf1C();
     virtual void vf20(f32 dt, int arg);
-    virtual void vf30(void* arg1, void* arg2);
+    virtual int vf30(void* arg1, void* arg2);
     virtual void vf40();
     // New virtual function in this class.
     virtual void vfBC();
@@ -192,11 +195,11 @@ class Entity_Prop : public Entity_Static {
 public:
     Entity_Prop(int type, EntityInfo* info, int init);
     virtual void vf14(void* arg);
-    virtual void vf18();
+    virtual void vf18(void* arg);
     virtual void vf1C();
     virtual void vf20(f32 dt, int arg);
     virtual void vf28();
-    virtual void vf30(void* arg1, void* arg2);
+    virtual int vf30(void* arg1, void* arg2);
     virtual void vf40();
     virtual void* vf44();
     virtual int vf4C();
@@ -312,6 +315,48 @@ public:
     /* 0x268 */ f32 mTime;
     /* 0x26C */ u8 mMoving;
     /* 0x270 */ UnkPath* mPath;
+};
+
+struct UnkVec4 {
+    UnkVec4(const UnkVec3& v, f32 w_) : x(v.x), y(v.y), z(v.z), w(w_) {}
+
+    f32 x, y, z, w;
+};
+
+// Global object at 0x8047C760 (0x30 bytes) that hands out the handles kept in
+// Entity::mA8 (real name unknown).
+class UnkHazardManager {
+public:
+    void fn_801C80E0(void* arg, UnkVec4* pos, int* handle);
+    void fn_801C83AC(int handle);
+    void fn_801C849C(int handle);
+
+    /* 0x00 */ u8 unk0[0x30];
+};
+
+extern UnkHazardManager lbl_8047C760;
+
+// Its destructor is implicit (emitted at the end of its unit).
+class Entity_Hazard_Prop : public Entity_Prop {
+public:
+    Entity_Hazard_Prop(int type, EntityInfo* info, int init);
+    virtual int vf30(void* arg1, void* arg2);
+    virtual void vf20(f32 dt, int arg);
+    virtual void vf14(void* arg);
+    virtual void vf18(void* arg);
+
+    void fn_8006CD70(void* arg);
+    void fn_8006CE08();
+
+    void ReleaseHandle() {
+        if (mA8 != 0) {
+            lbl_8047C760.fn_801C849C(mA8);
+            mA8 = 0;
+        }
+    }
+
+    /* 0x264 */ f32 m264;
+    /* 0x268 */ u32 m268;
 };
 
 #endif // GAME_ENTITY_H

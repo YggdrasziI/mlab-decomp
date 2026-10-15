@@ -20,7 +20,7 @@ void Entity_Game::vf20(f32 dt, int arg) {
     }
 }
 
-void Entity_Game::vf30(void* arg1, void* arg2) {
+int Entity_Game::vf30(void* arg1, void* arg2) {
     UnkEntitySlot* slot = vfB8();
     if (slot != 0) {
         slot->Reset();
@@ -29,7 +29,7 @@ void Entity_Game::vf30(void* arg1, void* arg2) {
     m150 = 1;
     m154 = -1;
     mInfo->mFlags |= 0x200000;
-    Entity::vf30(arg1, arg2);
+    return Entity::vf30(arg1, arg2);
 }
 
 void Entity_Game::vf14(void* arg) {
@@ -41,8 +41,8 @@ void Entity_Game::vf14(void* arg) {
     Entity::vf14(arg);
 }
 
-void Entity_Game::vf18() {
-    Entity::vf18();
+void Entity_Game::vf18(void* arg) {
+    Entity::vf18(arg);
     UnkEntitySlot* slot = vfB8();
     if (slot != 0) {
         slot->fn_80122B00(this);
