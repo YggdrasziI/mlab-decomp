@@ -31,6 +31,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-15 | 223e3bf | 758980 / 3412920 bytes (22.24 %) | 2919 / 12580 | 347 linked / 1045 | Game code: 32 units split, 29 linked (Entity_Challenge_Projector 5/6 not linked; hash index table linked) |
 | 2026-10-15 | 9689ba7 | 762404 / 3412920 bytes (22.34 %) | 2958 / 12580 | 350 linked / 1053 | Game code: 36 units split, 32 linked (added Entity_MysticBrewVortex, Entity_BrainTossTarget, Entity_ArmWrestleHand; Entity_BrainTossHand 7/8 not linked) |
 | 2026-10-15 | 235558f | 764616 / 3412920 bytes (22.40 %) | 2978 / 12580 | 354 linked / 1062 | Callback family (NetworkInput / DebugMenu action selection, PlayerInput gesture), Entity_ReactorLeakHammer; motion recognizer classes identified from RTTI |
+| 2026-10-15 | 2804227 | 768500 / 3412920 bytes (22.52 %) | 3019 / 12580 | 362 linked / 1071 | Camera influences: CIStitching, CIFixedTrackPlayer, CIDist, CIPitch, CIFixed_DJ1, CIFixedPlayerTracking_DJ1, CIFixedEyeLook, CIWaypointPath registration linked; CITrackTarget 5/6; 44 of 49 game units linked |
 
 Notes:
 

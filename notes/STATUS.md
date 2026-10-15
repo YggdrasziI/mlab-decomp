@@ -38,14 +38,15 @@
 
 ## In progress
 
-- Step 6 (game code): 40 game units split, 36 linked (unit table in `notes/SPLITS.md`).
+- Step 6 (game code): 49 game units split, 44 linked (unit table in `notes/SPLITS.md`).
   Unit bounds come from the static initializers (inline functions of a unit may follow
   its `__sinit`); compiled with `cflags_game` (base flags with `-RTTI on`). Shared
   headers: `include/game/unk_vec3.h` (the `(0, 1, 0)` vector), `include/game/externs.h`
   (not yet decompiled functions) and `include/game/Entity.h`: the Entity class family
   (Entity, Entity_Game, Entity_Static, Entity_Dynamic, Entity_Sensor, Entity_Prop,
   ExWorldTile...), with virtual functions named after their vtable offsets; callback
-  headers (`ActionSelectionCallback.h`, `GestureCallback.h`) and the Wii Remote motion
+  headers (`ActionSelectionCallback.h`, `GestureCallback.h`), the camera influences
+  (`CameraInfluence.h`) and the Wii Remote motion
   recognizers (`MotionRecognizer.h`). RTTI also names a `RingBuffer<Vector3>` class, so
   a `Vector3` type exists (probably the shared vector, not renamed yet).
   Not linked: `game/unit_8006CFA4.cpp` (Entity_Challenge_Projector, 5/6; one register
