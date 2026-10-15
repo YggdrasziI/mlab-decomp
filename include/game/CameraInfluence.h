@@ -321,4 +321,19 @@ public:
     /* 0x58 */ f32 mTurnRate;
 };
 
+// Unit 0x800DF630 (game/unit_800DF630.cpp). Its destructor is inline (first copy
+// emitted at 0x800DBBA4). vf0C and fn_800DF7C4 read the controller (fn_801B9B98).
+class CIFree : public CameraInfluence {
+public:
+    virtual ~CIFree() {}
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    // Places the camera at pos, facing along rot.
+    virtual void vf24(const UnkVec3* pos, const UnkQuat* rot);
+
+    /* 0x0C */ f32 mYaw;
+    /* 0x10 */ f32 mPitch;
+    /* 0x14 */ UnkVec3 mPos;
+    /* 0x20 */ UnkVec3 m20;
+};
+
 #endif // GAME_CAMERAINFLUENCE_H

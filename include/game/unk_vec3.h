@@ -28,6 +28,12 @@ struct UnkVec3 {
         result.z = z + other.z;
         return result;
     }
+    UnkVec3& operator+=(const UnkVec3& other) {
+        x += other.x;
+        y += other.y;
+        z += other.z;
+        return *this;
+    }
     UnkVec3 operator*(f32 s) const {
         UnkVec3 result;
         result.x = x * s;
