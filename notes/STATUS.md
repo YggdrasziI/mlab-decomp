@@ -68,7 +68,8 @@
   `game/unit_80075434.cpp` (4/5; one stack store placement),
   `game/unit_80030604.cpp` (Sewer item subclasses, 37/38; one register in
   `SewerFish::vf10`), `game/unit_800C42B8.cpp` (ExWorldWireTrack, 10/10; this build
-  emits RTTI data that the DOL has in an earlier unit), `game/unit_8009BE14.cpp`
+  emits RTTI data that the DOL has in the BuzzsawTrack unit near 0x8009F66C, which
+  should be dropped by the linker once that unit is compiled), `game/unit_8009BE14.cpp`
   (AstralTrack, 8/9; two registers in `vf2C`), `game/unit_80120DC0.cpp` (LoadProgressProjectile,
   3/4; the position copy in `vf0C`), `game/unit_8010B16C.cpp` (UnkPath, 2/4; loop
   registers), `game/unit_80116CA8.cpp` (progress bar, 3/6; register numbering),
