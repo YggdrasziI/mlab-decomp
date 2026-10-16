@@ -116,7 +116,7 @@ void fn_80063388(int enable) {
     }
 }
 
-// NonMatching (~83 %): our build folds the type test into one range compare and
+// NonMatching (90 %): our build folds the type test into one range compare and
 // reuses the first null test of light; the DOL tests each again.
 UnkLight* fn_800633D4(UnkLight* light) {
     if (light == 0) {
