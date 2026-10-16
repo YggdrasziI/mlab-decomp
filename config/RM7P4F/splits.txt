@@ -607,6 +607,14 @@ game/unit_80120D34.cpp:
 	.bss        start:0x803E6BD0 end:0x803E6BE0
 	.sdata2     start:0x805FED50 end:0x805FED58
 
+game/unit_80120DC0.cpp:
+	.text       start:0x80120DC0 end:0x801210E4
+	.ctors      start:0x80345E98 end:0x80345E9C
+	.data       start:0x80375900 end:0x80375950
+	.bss        start:0x803E6BE0 end:0x803E6BF0
+	.sdata      start:0x805F8FB8 end:0x805F8FC8
+	.sdata2     start:0x805FED58 end:0x805FED68
+
 game/unit_8012148C.cpp:
 	.text       start:0x8012148C end:0x80121508
 	.ctors      start:0x80345EA0 end:0x80345EA4

@@ -120,6 +120,7 @@ offset).
 | `game/unit_8011D1C0.cpp` | 0x8011D1C0-0x8011D5C4 | class `Journal` (RTTI) derived from `book`: four sections `Badges`, `Statistics`, `QuestLog`, `Recipes` (RTTI) chosen by name hash (matches, linked) |
 | `game/unit_80120AAC.cpp` | 0x80120AAC-0x80120D34 | a 16-character text entry buffer allocated on open: typed characters, backspace, space, trailing-space trim, lock flag (matches, linked) |
 | `game/unit_80120D34.cpp` | 0x80120D34-0x80120DC0 | binary search of a 32-bit hash in a 4274-entry table sorted by hash (0x8036D370), returning an index 0-4273 (matches, linked) |
+| `game/unit_80120DC0.cpp` | 0x80120DC0-0x801210E4 | load progress item `LoadProgressProjectile` (RTTI), derived from the abstract `LoadProgressItem` (RTTI): moves an actor along six markers as the progress goes from 0 to 100; factory `fn_80120FD8` (NonMatching: 3/4, `vf0C` 94.6 %) |
 | `game/unit_8012148C.cpp` | 0x8012148C-0x80121508 | empty methods and forwarders of the object at `lbl_803C2A20 + 0x10` (`Unk8012148C`, real name unknown); the forwarded methods follow at 0x8012189C-0x80121A08 (matches, linked) |
 | `game/unit_80122A10.cpp` | 0x80122A10-0x80122B5C | reserve / release a slot in the 255-entry active entity id table of the large .bss object at 0x803B53A0 (matches, linked) |
 | `game/unit_801424B8.cpp` | 0x801424B8-0x80142500 | only the global test logger instance (`UnkLogger`, real name unknown: writes `fail.log`); the static initializer builds it and registers its destructor (matches, linked) |
