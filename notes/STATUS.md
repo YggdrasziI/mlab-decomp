@@ -88,8 +88,7 @@
   inheritance, base in the next unit),
   0x8010A678 (vector types with inline operators), 0x8003107C (a polygon over an MSL
   `vector` of 2D points: push_back with the inlined vector growth and its
-  "vector length error" checks), 0x8006F794 (only an MSL tree node destroy
-  template, recursion inlined three levels, plus the static initializer).
+  "vector length error" checks).
 
 - Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units), MSL_C
   (59 units, 3 small gaps) and RVL_SDK (177 units, about 52 % of SDK code);

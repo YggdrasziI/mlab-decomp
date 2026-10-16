@@ -411,6 +411,7 @@ config.libs = [
             Object(Matching, "game/unit_8006F5A0.cpp"),
             Object(Matching, "game/unit_8006F61C.cpp"),
             Object(Matching, "game/unit_8006F6BC.cpp"),
+            Object(Matching, "game/unit_8006F794.cpp"),
             Object(Matching, "game/unit_800747DC.cpp"),
             Object(NonMatching, "game/unit_80075434.cpp"),
             Object(Matching, "game/unit_80076AB8.cpp"),
