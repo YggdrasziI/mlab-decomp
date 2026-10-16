@@ -81,7 +81,10 @@
   calls to `__ct__11Entity_Prop`). Set aside for now: 0x8004B498 (multiple
   inheritance, base in the next unit),
   0x8010A678 (vector types with inline operators), 0x80006B40 (static
-  initializer only, same link issue as 0x80042C18).
+  initializer only, same link issue as 0x80042C18), 0x8003107C (a polygon over an MSL
+  `vector` of 2D points: push_back with the inlined vector growth and its
+  "vector length error" checks), 0x8006F794 (only an MSL tree node destroy
+  template, recursion inlined three levels, plus the static initializer).
 
 - Step 3: TU-level splits. Done: Runtime.PPCEABI.H (9 units), MetroTRK (29 units), MSL_C
   (59 units, 3 small gaps) and RVL_SDK (177 units, about 52 % of SDK code);
