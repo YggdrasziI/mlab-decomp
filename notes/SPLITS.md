@@ -119,6 +119,7 @@ offset).
 | `game/unit_80116BE8.cpp` | 0x80116BE8-0x80116CA8 | class `section` (RTTI): constructor, virtual destructor, five pure virtual functions, `"%d/%d"` text of two counters (matches, linked) |
 | `game/unit_8011A3BC.cpp` | 0x8011A3BC-0x8011A778 | class `InventoryBook` (RTTI) derived from `book`: four sections `Creatures`, `Ingredients`, `IngredientSelection`, `Parts` (RTTI) chosen by name hash (matches, linked; `book` has eight pure virtual functions, not nine) |
 | `game/unit_8011D1C0.cpp` | 0x8011D1C0-0x8011D5C4 | class `Journal` (RTTI) derived from `book`: four sections `Badges`, `Statistics`, `QuestLog`, `Recipes` (RTTI) chosen by name hash (matches, linked) |
+| `game/unit_80116CA8.cpp` | 0x80116CA8-0x80117090 | vertical progress bar built from three actors found by hash (`UnkProgressBar`, real name unknown) (NonMatching: 3/6, register numbering) |
 | `game/unit_80120AAC.cpp` | 0x80120AAC-0x80120D34 | a 16-character text entry buffer allocated on open: typed characters, backspace, space, trailing-space trim, lock flag (matches, linked) |
 | `game/unit_80120D34.cpp` | 0x80120D34-0x80120DC0 | binary search of a 32-bit hash in a 4274-entry table sorted by hash (0x8036D370), returning an index 0-4273 (matches, linked) |
 | `game/unit_80120DC0.cpp` | 0x80120DC0-0x801210E4 | load progress item `LoadProgressProjectile` (RTTI), derived from the abstract `LoadProgressItem` (RTTI): moves an actor along six markers as the progress goes from 0 to 100; factory `fn_80120FD8` (NonMatching: 3/4, `vf0C` 94.6 %) |

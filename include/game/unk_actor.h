@@ -13,7 +13,9 @@ struct UnkActorBase {
     /* 0x14 */ u8 unk14[0x68 - 0x14];
     /* 0x68 */ UnkVec3 mPos;
     /* 0x74 */ UnkVec3 m74;
-    /* 0x80 */ u8 unk80[0x138 - 0x80];
+    /* 0x80 */ u8 unk80[0xA0 - 0x80];
+    /* 0xA0 */ f32 mA0;
+    /* 0xA4 */ u8 unkA4[0x138 - 0xA4];
 };
 
 class UnkActor : public UnkActorBase {
