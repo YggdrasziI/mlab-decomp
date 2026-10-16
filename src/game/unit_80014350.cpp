@@ -560,10 +560,11 @@ void fn_80015378(const UnkScriptContext* ctx) {
 }
 
 void fn_80015404(const UnkScriptContext* ctx) {
+    u8 shake = 0;
+    UnkCreature* player;
     UnkCreature* creature = ctx->mEntity;
     if (creature != 0) {
-        u8 shake = 0;
-        UnkCreature* player = (UnkCreature*)lbl_803B53A0.mD614;
+        player = (UnkCreature*)lbl_803B53A0.mD614;
         f32 dt = creature->m24;
         player->mC40 += dt;
         dt = creature->m24;

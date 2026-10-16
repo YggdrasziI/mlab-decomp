@@ -78,7 +78,9 @@
   `game/unit_80122B5C.cpp` (stick input, 9/11; float registers),
   `game/unit_8006307C.cpp` (Entity_Light, 13/14; folded compares in `fn_800633D4`),
   `game/unit_80018E00.cpp` (camera callbacks, 27/28; `fn_80019268` loads two entity
-  fields in the other order).
+  fields in the other order), `game/unit_80014350.cpp` (creature state callbacks,
+  43/44; register numbering in `fn_80015404`), `game/unit_80016400.cpp` (character
+  state callbacks, 46/47; float registers in `fn_800182A4`).
   Lessons from this pass (all checked by builds): a load through a `const T*`
   parameter may be scheduled above the prologue stores (the stack stores cannot alias
   it), a load through a `T*` cannot: the named script callbacks take a const context
@@ -86,6 +88,12 @@
   `unit_80018E00`; flags, -proc models and compiler versions do not change it);
   in the same way a load through a const `this` can be reused where one through a
   non-const `this` is reloaded (the ring head read by `UnkTileRing::GetHead() const`);
+  the declaration order of locals sets their register numbers (a result declared
+  before the entity pointer, for example); the address of a real member of a global
+  (`lbl_803B53A0.mD5F0`, `lbl_803C4298.mStick`) keeps only the base in a register as
+  in the DOL, where a cast of the base plus an offset is kept whole; small functions
+  defined earlier in the file are inlined by `-inline auto` (`fn_80016CEC`), and a
+  slightly larger body keeps a call where the DOL has one (`fn_80016DB0`);
   .bss objects are laid out in declaration order, including the `sUnkVec3` that
   `Entity.h` pulls in through `unk_vec3.h`; `-inline auto,deferred` (per unit)
   inlines functions defined later in the file and emits functions in reverse order of
