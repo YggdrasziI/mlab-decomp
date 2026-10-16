@@ -84,6 +84,12 @@
   derived unit are dropped by the linker; switches whose cases are listed in
   descending order (with an empty `case 4`) give the DOL's compare trees; dead
   compare trees come from an inline function with a `switch` whose result is unused.
+  Next candidates looked at and left for later: 0x80074CC8 (code entry over a
+  `MiniGame` object, vtable 0x8035A89C owned elsewhere; uses deferred inlining),
+  0x80117090 / 0x80117AE4 / 0x8011A778 / 0x8011C460 / 0x8011D5C4 / 0x8011F410 (the
+  other book sections; each has one or two large functions), 0x800A34C0 (an
+  ExWorldWireTile subclass with an MSL map lookup), 0x8010C750 (callbacks plus a
+  large spawn function), 0x8007CED8 / 0x80010AC0 (bit and float heavy).
   Next: the remaining Entity_Prop-derived units (0x800B1EDC Entity_GrowJuiceHeartVine
   has a ray/sphere test over nested collision lists; 0x80098664; larger ones listed by
   calls to `__ct__11Entity_Prop`). Set aside for now: 0x8004B498 (multiple
