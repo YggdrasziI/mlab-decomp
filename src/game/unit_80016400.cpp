@@ -832,7 +832,8 @@ int fn_800182A4(const UnkScriptContext* ctx) {
             pad.z = 0.0f;
             fn_801243B8(&mtx, &stick, &stick);
             stick.z = 0.0f;
-            if ((pad.y < -0.5f && pad.y < pad.x) || (stick.y < -0.5f && stick.y < stick.x)) {
+            f32 py = pad.y;
+            if ((py < -0.5f && py < pad.x) || (stick.y < -0.5f && stick.y < stick.x)) {
                 if (creature->mA00 != 0 && (mask & 4)) {
                     fn_800D675C(creature->mA00, 2, 0);
                 }
