@@ -17,7 +17,7 @@ void fn_801B2C08(void* obj, int arg, f32 value);
 void* fn_8018D1E4(void* obj);
 void* fn_80198F1C(void* obj, u32 hash);
 void fn_801AB80C(void* obj, f32 value);
-void fn_8019BBA4(UnkSewerActor* actor, void* obj, int arg);
+void fn_8019BBA4(UnkActor* actor, void* obj, int arg);
 extern void* lbl_805FB654;
 }
 

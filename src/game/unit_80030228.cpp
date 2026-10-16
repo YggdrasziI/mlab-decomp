@@ -6,7 +6,7 @@
 
 extern "C" {
 u32 fn_80143460(void);
-void fn_8019BC80(UnkSewerActor* actor, int arg);
+void fn_8019BC80(UnkActor* actor, int arg);
 void fn_8018F618(void* obj, int arg);
 void fn_80190658(void* obj, u32 hash);
 }
@@ -26,7 +26,7 @@ SewerItem::SewerItem() {
 
 SewerItem::~SewerItem() {}
 
-void SewerItem::fn_800302B0(UnkSewerActor* actor) {
+void SewerItem::fn_800302B0(UnkActor* actor) {
     mActor = actor;
     m24 = 0;
     mActive = 0;

@@ -6,35 +6,11 @@
 // "SewerFish" (RTTI), defined in the unit at 0x80030604-0x8003107C. Real file
 // names unknown; method names unknown (vfXX = vtable offset).
 
+#include "game/unk_actor.h"
 #include "game/unk_vec3.h"
 
 struct UnkVec2 {
     f32 x, y;
-};
-
-// Actor that shows a sewer item: its vtable pointer is at 0x138 (real type unknown).
-struct UnkSewerActorBase {
-    /* 0x00 */ void* m0;
-    /* 0x04 */ u8 unk4[0x10 - 0x4];
-    /* 0x10 */ int m10;
-    /* 0x14 */ u8 unk14[0x68 - 0x14];
-    /* 0x68 */ UnkVec3 mPos;
-    /* 0x74 */ UnkVec3 m74;
-    /* 0x80 */ u8 unk80[0x138 - 0x80];
-};
-
-class UnkSewerActor : public UnkSewerActorBase {
-public:
-    virtual void vf08();
-    virtual void vf0C();
-    virtual void vf10();
-    virtual void vf14();
-    virtual void vf18();
-    virtual void vf1C();
-    virtual void vf20();
-    virtual void vf24();
-    virtual void vf28();
-    virtual void vf2C(int arg);
 };
 
 class SewerItem {
@@ -49,12 +25,12 @@ public:
     virtual void vf18();
     virtual void vf1C(f32 arg);
 
-    void fn_800302B0(UnkSewerActor* actor);
+    void fn_800302B0(UnkActor* actor);
     void fn_80030348(SewerItem* other);
     void fn_80030414(const UnkVec2* pos, f32 arg);
 
     /* 0x00 */ // vtable
-    /* 0x04 */ UnkSewerActor* mActor;
+    /* 0x04 */ UnkActor* mActor;
     /* 0x08 */ SewerItem* mPrev;
     /* 0x0C */ SewerItem* mNext;
     /* 0x10 */ int m10;
