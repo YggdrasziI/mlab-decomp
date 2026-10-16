@@ -17,7 +17,6 @@ public:
     virtual void vf10();
     virtual void vf14();
     virtual void vf18();
-    virtual void vf1C();
 
     u8 unk[0x134C - sizeof(section)];
 };
@@ -30,11 +29,26 @@ public:
     virtual void vf10();
     virtual void vf14();
     virtual void vf18();
-    virtual void vf1C();
 
     u8 unk[0x50 - sizeof(section)];
 };
 
+// Quest of the quest manager (real type unknown).
+struct UnkQuest {
+    /* 0x00 */ u32 mNameHash;
+    /* 0x04 */ u8 unk4[0x8 - 0x4];
+    /* 0x08 */ int mState;
+    /* 0x0C */ int mProgress;
+    /* 0x10 */ int mGoal;
+};
+
+// Texture returned by fn_80109330 (real type unknown; reference counted).
+struct UnkTexture {
+    /* 0x00 */ u8 unk0[0x24];
+    /* 0x24 */ int mRefCount;
+};
+
+// Unit 0x8011EA20 (game/unit_8011EA20.cpp).
 class QuestLog : public section {
 public:
     QuestLog();
@@ -43,9 +57,27 @@ public:
     virtual void vf10();
     virtual void vf14();
     virtual void vf18();
-    virtual void vf1C();
 
-    u8 unk[0x34 - sizeof(section)];
+    static UnkTexture* fn_8011ECCC(s8 icon);
+    static UnkTexture* fn_8011ED38(s8 icon);
+    int fn_8011EDAC();
+    const char* fn_8011EDE0();
+    const char* fn_8011EEF4();
+    int fn_8011EFB8();
+    int fn_8011EFE0(int index);
+    int fn_8011EFFC(int index);
+    int fn_8011F080(int index);
+    char* fn_8011F104(int index);
+    int fn_8011F1C4();
+    UnkTexture* fn_8011F1D8();
+    const char* fn_8011F1E0(int index);
+    int fn_8011F2FC();
+    const char* fn_8011F32C();
+
+    /* 0x1C */ char mProgressText[3][5];
+    /* 0x2B */ u8 mHasMainQuest;
+    /* 0x2C */ int mQuestCount;
+    /* 0x30 */ UnkTexture* mIcon;
 };
 
 class Recipes : public section {
@@ -56,7 +88,6 @@ public:
     virtual void vf10();
     virtual void vf14();
     virtual void vf18();
-    virtual void vf1C();
 
     u8 unk[0xA68C - sizeof(section)];
 };

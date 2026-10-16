@@ -76,7 +76,9 @@
   `game/unit_8013EB1C.cpp` (name entry, 8/9; transform scheduling),
   `game/unit_80122B5C.cpp` (stick input, 9/11; float registers),
   `game/unit_8006307C.cpp` (Entity_Light, 13/14; folded compares in `fn_800633D4`).
-  Lessons from this pass (all checked by builds): string and float literals are
+  Lessons from this pass (all checked by builds): `-inline auto,deferred` (per unit)
+  inlines functions defined later in the file and emits functions in reverse order of
+  definition (QuestLog needs it; switching all game code to it breaks other units); string and float literals are
   pooled in parse order, so an unused static function can give the pool its DOL order
   (the original files likely had dead code); base-class RTTI copies emitted in a
   derived unit are dropped by the linker; switches whose cases are listed in
