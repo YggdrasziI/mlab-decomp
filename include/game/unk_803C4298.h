@@ -5,6 +5,8 @@
 // by decompiled code are known.
 
 #include "game/unk_vec3.h"
+
+struct UnkMtx34;
 #include "types.h"
 
 // Object at lbl_803C4298.m4, probably the camera (real type unknown).
@@ -26,6 +28,9 @@ public:
     virtual void vf2C(const UnkVec3* eye, const UnkVec3* target);
     // Sets the interpolation time.
     virtual void vf30(f32 time);
+    virtual void vf34();
+    // Gets the camera matrix.
+    virtual void vf38(UnkMtx34* mtx);
 
     /* 0x00 */ // vtable
     /* 0x04 */ UnkVec3* mPos;
@@ -40,7 +45,9 @@ struct UnkGlobals803C4298 {
     /* 0x08 */ void* m8;
     /* 0x0C */ u8 unkC[0x18 - 0xC];
     /* 0x18 */ int m18; // a mode (5 and 7 tested)
-    /* 0x1C */ u8 unk1C[0x38 - 0x1C];
+    /* 0x1C */ u8 m1C;
+    /* 0x1D */ u8 unk1D[0x20 - 0x1D];
+    /* 0x20 */ u8 mStick[0x38 - 0x20]; // stick input object (see unit_80122B5C.cpp)
     /* 0x38 */ void* m38;
     /* 0x3C */ u8 unk3C[0x168 - 0x3C];
 };

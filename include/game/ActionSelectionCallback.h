@@ -116,7 +116,8 @@ class UnkFocus {
 public:
     void* fn_801B41F0();
 
-    /* 0x00 */ u8 unk0[0x18];
+    /* 0x00 */ u8 m0;
+    /* 0x01 */ u8 unk1[0x18 - 0x1];
 };
 
 extern UnkFocus lbl_8047C7D8;

@@ -13,52 +13,8 @@
 #include "game/unk_803B53A0.h"
 #include "game/unk_803C4298.h"
 #include "game/unk_actor.h"
+#include "game/unk_creature.h"
 #include "game/unk_vec3.h"
-
-// Creature entity used by these callbacks (real type unknown). The player creature
-// is lbl_803B53A0.mD614.
-class UnkCreature : public Entity {
-public:
-    /* 0x14C */ u8 unk14C[0x158 - 0x14C];
-    /* 0x158 */ int m158;
-    /* 0x15C */ u8 unk15C[0x6B0 - 0x15C];
-    /* 0x6B0 */ f32 m6B0; // shake gauge
-    /* 0x6B4 */ int m6B4; // shake count; also an event hash
-    /* 0x6B8 */ u8 unk6B8[0x838 - 0x6B8];
-    /* 0x838 */ u32 m838;
-    /* 0x83C */ u8 unk83C[0x844 - 0x83C];
-    /* 0x844 */ UnkVec3 m844;
-    /* 0x850 */ u8 unk850[0x87C - 0x850];
-    /* 0x87C */ int m87C; // patrol mode
-    /* 0x880 */ int m880; // patrol loop mode
-    /* 0x884 */ int* m884; // patrol path (directions, -1 terminated)
-    /* 0x888 */ u32 m888;
-    /* 0x88C */ int m88C; // patrol index
-    /* 0x890 */ int m890; // patrol length
-    /* 0x894 */ u8 m894; // patrol forward
-    /* 0x895 */ u8 m895;
-    /* 0x896 */ u8 unk896[0x9D8 - 0x896];
-    /* 0x9D8 */ u32 m9D8;
-    /* 0x9DC */ u8 unk9DC[0x9E4 - 0x9DC];
-    /* 0x9E4 */ f32 m9E4; // timer
-    /* 0x9E8 */ u8 unk9E8[0x9F4 - 0x9E8];
-    /* 0x9F4 */ f32 m9F4;
-    /* 0x9F8 */ u8 unk9F8[0xA00 - 0x9F8];
-    /* 0xA00 */ void* mA00; // movement controller
-    /* 0xA04 */ u8 unkA04[0xBDF - 0xA04];
-    /* 0xBDF */ u8 mBDF;
-    /* 0xBE0 */ u8 unkBE0[0xC40 - 0xBE0];
-    /* 0xC40 */ f32 mC40;
-    /* 0xC44 */ f32 mC44;
-    /* 0xC48 */ u8 unkC48[0xC80 - 0xC48];
-    /* 0xC80 */ u8 mC80;
-    /* 0xC81 */ u8 unkC81;
-    /* 0xC82 */ u8 mC82;
-
-    u32 HasType(u32 mask) const { return mInfo->mTypeMask & mask; }
-    f32 GetC44() const { return mC44; }
-    f32 GetC40() const { return mC40; }
-};
 
 struct UnkScriptContext {
     /* 0x00 */ u8 unk0[0x10];
@@ -193,7 +149,7 @@ int fn_800160C4(const UnkScriptContext* ctx);
 }
 
 static inline void* GetD5F0() {
-    return (u8*)&lbl_803B53A0 + 0xD5F0;
+    return lbl_803B53A0.mD5F0;
 }
 
 // Passes a copy of the vector (the DOL copies it on the stack first).

@@ -229,7 +229,7 @@ int fn_80122F30(int button) {
 }
 
 u32 fn_80122FA0(int button) {
-    if (lbl_8047C7D8.unk0[0]) {
+    if (lbl_8047C7D8.m0) {
         return 0;
     }
     if (fn_8000C30C(&lbl_803C4298)) {
