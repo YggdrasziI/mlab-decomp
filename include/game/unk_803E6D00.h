@@ -22,6 +22,8 @@ struct UnkGlobals803E6D00Sub {
     /* 0x008 */ Entity* m8;
     /* 0x00C */ u8 unkC[0x1A4 - 0xC];
     /* 0x1A4 */ u8* mWireGroups;
+    /* 0x1A8 */ u8 unk1A8[0x1B0 - 0x1A8];
+    /* 0x1B0 */ struct UnkZoneData** mZones;
 };
 
 struct UnkGlobals803E6D00 {

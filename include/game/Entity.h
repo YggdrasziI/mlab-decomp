@@ -110,7 +110,8 @@ struct EntityInfo {
     /* 0x0C */ UnkQuat mRot;
     /* 0x1C */ u32 mTypeMask;
     /* 0x20 */ u32 mFlags;
-    /* 0x24 */ u8 unk24[0x32 - 0x24];
+    /* 0x24 */ u8 unk24[0x30 - 0x24];
+    /* 0x30 */ u16 m30;
     /* 0x32 */ u16 m32;
     /* 0x34 */ u8 mType;
     /* 0x35 */ u8 unk35[0x3A - 0x35];
@@ -270,7 +271,7 @@ public:
     /* 0x02C */ u8 unk2C[0x88 - 0x2C];
     /* 0x088 */ void* m88;
     /* 0x08C */ UnkList* m8C;
-    /* 0x090 */ u8 unk90[0x94 - 0x90];
+    /* 0x090 */ void* m90;
     /* 0x094 */ UnkEntity94 m94;
     /* 0x09C */ UnkEntityAnim* m9C;
     /* 0x0A0 */ UnkEntityAnimState* mA0;
@@ -299,12 +300,24 @@ public:
     /* 0x154 */ s32 m154;
 };
 
-// The destructor is implicit: the original emits it in another unit (0x800630E0).
+// The destructor is implicit: the original emits it in the Entity_Light unit
+// (0x800630E0).
 class Entity_Static : public Entity_Game {
 public:
     Entity_Static(int type, EntityInfo* info, int init);
     virtual void vf20(f32 dt, int arg);
     virtual void vf40();
+};
+
+// Unit 0x8006307C (game/unit_8006307C.cpp); implicit destructor (emitted at the end
+// of its unit).
+class Entity_Light : public Entity_Static {
+public:
+    Entity_Light(int type, EntityInfo* info, int init);
+    virtual void vf14(void* arg);
+    virtual void vf18(void* arg);
+    virtual void vf20(f32 dt, int arg);
+    virtual void vf40() { Entity::vf40(); }
 };
 
 class Entity_Dynamic : public Entity_Game {

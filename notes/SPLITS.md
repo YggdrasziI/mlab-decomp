@@ -71,6 +71,7 @@ offset).
 | `game/unit_800523B8.cpp` | 0x800523B8-0x80052504 | 32-bit key for an id: fixed pairs for ids 30-38 in modes 2/3, otherwise the 40-entry table at 0x803881B4 (matches, linked) |
 | `game/unit_8005CA88.cpp` | 0x8005CA88-0x8005CBC4 | class `Entity_Dynamic` (RTTI), derived from `Entity_Game` (matches, linked) |
 | `game/unit_80062C80.cpp` | 0x80062C80-0x8006307C | class `Entity_Game` (RTTI), derived from `Entity` (functions at 0x801B4334, not split; vtable at 0x80383D68); its RTTI and Entity's were emitted by an earlier unit (matches, linked) |
+| `game/unit_8006307C.cpp` | 0x8006307C-0x800636A0 | class `Entity_Light` (RTTI) derived from `Entity_Static`, with `Entity_Static`'s implicit destructor emitted here, and helpers for the light named `"attached"` (color, range, zone registration) (NonMatching: 13/14, `fn_800633D4`) |
 | `game/unit_8006CCC4.cpp` | 0x8006CCC4-0x8006CFA4 | class `Entity_Hazard_Prop` (RTTI), derived from `Entity_Prop`; implicit destructor emitted at the end; handles from the global object at 0x8047C760 (matches, linked) |
 | `game/unit_8006CFA4.cpp` | 0x8006CFA4-0x8006D2D0 | class `Entity_Challenge_Projector` (RTTI); 5/6 functions match, `vf20` differs by one register choice (not linked) |
 | `game/unit_8006F5A0.cpp` | 0x8006F5A0-0x8006F61C | registers the `"count_deaths"` condition callback (type 22) with `fn_801DC91C` (matches, linked) |
