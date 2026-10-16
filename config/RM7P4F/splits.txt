@@ -205,6 +205,13 @@ game/unit_800496DC.cpp:
 	.sdata      start:0x805F8680 end:0x805F8688
 	.sdata2     start:0x805FD1F8 end:0x805FD200
 
+game/unit_80051EEC.cpp:
+	.text       start:0x80051EEC end:0x8005230C
+	.ctors      start:0x80345C08 end:0x80345C0C
+	.bss        start:0x803C53E8 end:0x803C5478
+	.sdata      start:0x805F8740 end:0x805F8750
+	.sdata2     start:0x805FD2E8 end:0x805FD2F0
+
 game/unit_8005230C.cpp:
 	.text       start:0x8005230C end:0x800523B8
 	.ctors      start:0x80345C0C end:0x80345C10

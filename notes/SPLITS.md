@@ -66,6 +66,7 @@ offset).
 | `game/unit_80044C58.cpp` | 0x80044C58-0x80044CDC | constructor and destructor of a 0x148-byte class without vtable, built as an array of two by `fn_80040824` (matches, linked) |
 | `game/unit_80049628.cpp` | 0x80049628-0x800496DC | class `CharacterPartAttachment` (RTTI), derived from `XCharacterPartAttachment` (functions at 0x8020E9CC, not split); the base class's RTTI object and name are emitted in this unit too (matches, linked) |
 | `game/unit_800496DC.cpp` | 0x800496DC-0x800497F4 | class `CompositeCharacterActionSelectionCB` (RTTI), derived from `XBaseActionSelectionCallback` (functions at 0x8020F36C, not split), with a 12-byte selection member (matches, linked) |
+| `game/unit_80051EEC.cpp` | 0x80051EEC-0x8005230C | text providers returning strings for the text system (line breaks, current item name and value through the localized text lookup, counters, build string); the strings `""`, `"Not found"` and `"NOT FOUND"` it returns belong to another unit (NonMatching: 10/11, two registers in `fn_8005224C`) |
 | `game/unit_8005230C.cpp` | 0x8005230C-0x800523B8 | releases (explicit virtual destructor, then frees `lbl_805FBBC0`) or keeps the object at `lbl_803C2A20 + 0xDC8`; the first call only sets a static flag (matches, linked) |
 | `game/unit_800523B8.cpp` | 0x800523B8-0x80052504 | 32-bit key for an id: fixed pairs for ids 30-38 in modes 2/3, otherwise the 40-entry table at 0x803881B4 (matches, linked) |
 | `game/unit_8005CA88.cpp` | 0x8005CA88-0x8005CBC4 | class `Entity_Dynamic` (RTTI), derived from `Entity_Game` (matches, linked) |
