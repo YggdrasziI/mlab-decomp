@@ -84,7 +84,9 @@
   derived unit are dropped by the linker; switches whose cases are listed in
   descending order (with an empty `case 4`) give the DOL's compare trees; dead
   compare trees come from an inline function with a `switch` whose result is unused.
-  Next candidates looked at and left for later: 0x80074CC8 (code entry over a
+  Good next target: 0x80018E00-0x800197A8 (27 camera and prop script callbacks
+  registered by fn_800195A4; needs virtual functions on the camera object at
+  lbl_803C4298.m4). Next candidates looked at and left for later: 0x80074CC8 (code entry over a
   `MiniGame` object, vtable 0x8035A89C owned elsewhere; uses deferred inlining),
   0x80117090 / 0x80117AE4 / 0x8011A778 / 0x8011C460 / 0x8011D5C4 / 0x8011F410 (the
   other book sections; each has one or two large functions), 0x800A34C0 (an
