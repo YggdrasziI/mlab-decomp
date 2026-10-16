@@ -118,7 +118,8 @@ public:
     /* 0x50 */ f32 mBlend;
     /* 0x54 */ u8 m54;
     /* 0x55 */ u8 mActive;
-    /* 0x56 */ u8 unk56[0x58 - 0x56];
+    /* 0x56 */ u8 m56;
+    /* 0x57 */ u8 unk57;
 };
 
 // Quaternion helpers at 0x801452A8 and 0x801455E0 (real names unknown).
@@ -159,7 +160,8 @@ struct UnkCameraState {
     /* 0x18 */ UnkVec3 mStart;
     /* 0x24 */ u8 unk24[0x30 - 0x24];
     /* 0x30 */ UnkVec3 mLookAt;
-    /* 0x3C */ u8 unk3C[0x4C - 0x3C];
+    /* 0x3C */ u8 unk3C[0x48 - 0x3C];
+    /* 0x48 */ f32 m48;
     /* 0x4C */ f32 mYaw;
     /* 0x50 */ f32 mYawSpeed;
     /* 0x54 */ u8 unk54[0xC4 - 0x54];
@@ -171,7 +173,9 @@ struct UnkCameraState {
 
 // Object at lbl_803C4298.m8, probably the camera controller (real type unknown).
 struct UnkCameraController {
-    /* 0x000 */ u8 unk0[0x68];
+    /* 0x000 */ u8 unk0[0x50];
+    /* 0x050 */ UnkVec3 m50;
+    /* 0x05C */ u8 unk5C[0x68 - 0x5C];
     /* 0x068 */ UnkCameraState mState;
     /* 0x13C */ u8 unk13C[0x2C0 - 0x13C];
     /* 0x2C0 */ UnkCameraSubject* mSubject;
@@ -270,6 +274,18 @@ public:
     /* 0x5C */ UnkTrackFollow* mLook;
     /* 0x60 */ UnkVec3 mPos;
     /* 0x6C */ UnkVec3 mLookAt;
+};
+
+// Unit 0x800DFFA4 (game/unit_800DFFA4.cpp); implicit destructor (emitted at the end
+// of its unit). Places the camera at an offset from the controller's eye point,
+// optionally pulled in by a ray query (fn_800DA8F0).
+class CIPlayerOffset : public CIDynamic {
+public:
+    virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
+    virtual void vf10();
+
+    /* 0x58 */ UnkVec3 mOffset;
+    /* 0x64 */ UnkVec3 mPos;
 };
 
 // Angle of (x, y), atan2-like (0x801F60F8; real name unknown).
