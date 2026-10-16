@@ -5,14 +5,14 @@
 // are registered in a static table. Bounds come from the static initializers of
 // this unit and the previous one.
 
-#include "game/Entity.h"
-#include "game/externs.h"
-
 class UnkSmasher;
 
-// Registered smashers, by slot.
+// Registered smashers, by slot (declared before the headers that define sUnkVec3,
+// which follows it in .bss).
 static UnkSmasher* lbl_803C6A88[3];
 
+#include "game/Entity.h"
+#include "game/externs.h"
 #include "game/unk_vec3.h"
 
 // Real names unknown.
@@ -102,13 +102,13 @@ UnkSmasher::~UnkSmasher() {
 
 extern "C" {
 
-void fn_80093D3C(UnkSmasherContext* ctx);
-void fn_80093D9C(UnkSmasherContext* ctx);
-void fn_80093DFC(UnkSmasherContext* ctx);
-void fn_80093E5C(UnkSmasherContext* ctx);
-void fn_80093F0C(UnkSmasherContext* ctx);
-int fn_80093FBC(UnkSmasherContext* ctx);
-int fn_8009402C(UnkSmasherContext* ctx);
+void fn_80093D3C(const UnkSmasherContext* ctx);
+void fn_80093D9C(const UnkSmasherContext* ctx);
+void fn_80093DFC(const UnkSmasherContext* ctx);
+void fn_80093E5C(const UnkSmasherContext* ctx);
+void fn_80093F0C(const UnkSmasherContext* ctx);
+int fn_80093FBC(const UnkSmasherContext* ctx);
+int fn_8009402C(const UnkSmasherContext* ctx);
 
 void fn_80093934(void) {
     fn_801DC91C("RobotEvolutionExperiment_SmasherIdling", 78, (void*)fn_80093D3C);
@@ -208,21 +208,21 @@ UnkSmasher* fn_80093CF0(UnkSmasherOwner* owner) {
     return 0;
 }
 
-void fn_80093D3C(UnkSmasherContext* ctx) {
+void fn_80093D3C(const UnkSmasherContext* ctx) {
     UnkSmasher* smasher = FindSmasher(ctx->mOwner);
     if (smasher != 0) {
         smasher->mState = 0;
     }
 }
 
-void fn_80093D9C(UnkSmasherContext* ctx) {
+void fn_80093D9C(const UnkSmasherContext* ctx) {
     UnkSmasher* smasher = FindSmasher(ctx->mOwner);
     if (smasher != 0) {
         smasher->mState = 1;
     }
 }
 
-void fn_80093DFC(UnkSmasherContext* ctx) {
+void fn_80093DFC(const UnkSmasherContext* ctx) {
     UnkSmasher* smasher = FindSmasher(ctx->mOwner);
     if (smasher != 0) {
         smasher->mState = 2;
@@ -231,7 +231,7 @@ void fn_80093DFC(UnkSmasherContext* ctx) {
 
 // NonMatching (97.3 %, like fn_80093F0C): the DOL schedules the ctx->mOwner load
 // before `i = 0`; same instructions otherwise.
-void fn_80093E5C(UnkSmasherContext* ctx) {
+void fn_80093E5C(const UnkSmasherContext* ctx) {
     UnkSmasher* smasher = FindSmasher(ctx->mOwner);
     if (smasher != 0) {
         UnkLocator* locator = smasher->mHitLocator;
@@ -240,7 +240,7 @@ void fn_80093E5C(UnkSmasherContext* ctx) {
     }
 }
 
-void fn_80093F0C(UnkSmasherContext* ctx) {
+void fn_80093F0C(const UnkSmasherContext* ctx) {
     UnkSmasher* smasher = FindSmasher(ctx->mOwner);
     if (smasher != 0) {
         UnkVec4 pos(smasher->mHitLocator->mPos, 0.0f);
@@ -248,7 +248,7 @@ void fn_80093F0C(UnkSmasherContext* ctx) {
     }
 }
 
-int fn_80093FBC(UnkSmasherContext* ctx) {
+int fn_80093FBC(const UnkSmasherContext* ctx) {
     UnkSmasher* smasher = FindSmasher(ctx->mOwner);
     if (smasher != 0 && smasher->mImpact) {
         return 1;
@@ -256,7 +256,7 @@ int fn_80093FBC(UnkSmasherContext* ctx) {
     return 0;
 }
 
-int fn_8009402C(UnkSmasherContext* ctx) {
+int fn_8009402C(const UnkSmasherContext* ctx) {
     UnkSmasher* smasher = FindSmasher(ctx->mOwner);
     if (smasher != 0 && smasher->mHitSomething) {
         return 1;
