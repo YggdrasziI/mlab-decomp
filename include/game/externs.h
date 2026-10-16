@@ -12,7 +12,7 @@ extern "C" void fn_80142EF8(char* buf, const char* fmt, ...);
 
 // Sends an event identified by a 32-bit hash (called about 300 times, always with the
 // manager object lbl_805FB6C8 as first argument).
-extern "C" void fn_801BA190(void* mgr, void* sender, int arg2, u32 hash, int arg4, int arg5, int arg6,
+extern "C" void fn_801BA190(void* mgr, void* sender, void* arg2, u32 hash, int arg4, int arg5, int arg6,
                             int arg7);
 extern void* lbl_805FB6C8;
 

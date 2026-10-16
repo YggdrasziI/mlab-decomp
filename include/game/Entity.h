@@ -266,7 +266,8 @@ public:
     /* 0x004 */ EntityInfo* mInfo;
     /* 0x008 */ u8 unk8[0x24 - 0x8];
     /* 0x024 */ f32 m24; // the frame time, added to timers
-    /* 0x028 */ u8 unk28[0x88 - 0x28];
+    /* 0x028 */ f32 m28; // the current time (timers store m28 + delay)
+    /* 0x02C */ u8 unk2C[0x88 - 0x2C];
     /* 0x088 */ void* m88;
     /* 0x08C */ UnkList* m8C;
     /* 0x090 */ u8 unk90[0x94 - 0x90];
@@ -360,12 +361,19 @@ public:
     virtual void vfB0();
     virtual UnkEntitySlot* vfB8();
 
-    /* 0x158 */ u8 unk158[0x15C - 0x158];
-    /* 0x15C */ u32 m15C;
-    /* 0x160 */ u8 unk160[0x164 - 0x160];
+    // Script parameters: their meaning depends on the callbacks that use them.
+    /* 0x158 */ f32 m158;
+    /* 0x15C */ union {
+        u32 m15C;
+        f32 m15CFloat;
+    };
+    /* 0x160 */ f32 m160;
     /* 0x164 */ f32 m164; // death count (callbacks "reset_deathcount", "increment_deathcount")
     /* 0x168 */ int m168;
-    /* 0x16C */ u8 unk16C[0x1AC - 0x16C];
+    /* 0x16C */ int m16C;
+    /* 0x170 */ int m170;
+    /* 0x174 */ int m174;
+    /* 0x178 */ u8 unk178[0x1AC - 0x178];
     /* 0x1AC */ int m1AC;
     /* 0x1B0 */ u8 unk1B0[0x1C8 - 0x1B0];
     /* 0x1C8 */ UnkEntitySlot mSlot;
