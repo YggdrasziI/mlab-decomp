@@ -4,8 +4,8 @@
 // "PlayerInCombatRange"...), registered through fn_801DC91C, and the shake helpers
 // they share. Bounds come from the static initializers of this unit and the previous
 // one.
-// NonMatching: fn_80014A38 (99.8 %, the two timer loads of a compare are swapped) and
-// fn_80015404 (97.2 %, callee-saved register numbering).
+// NonMatching: fn_80015404 (97.2 %, callee-saved register numbering). Several loads
+// only match through const accessors (see unit_80018E00.cpp).
 
 #include "game/Entity.h"
 #include "game/externs.h"
@@ -56,6 +56,8 @@ public:
     /* 0xC82 */ u8 mC82;
 
     u32 HasType(u32 mask) const { return mInfo->mTypeMask & mask; }
+    f32 GetC44() const { return mC44; }
+    f32 GetC40() const { return mC40; }
 };
 
 struct UnkScriptContext {
@@ -395,7 +397,7 @@ void fn_80014A38(const UnkScriptContext* ctx) {
     }
     if (creature->m87C != 0) {
         if (creature->mA00 != 0 &&
-            (!fn_800D56E0(creature->mA00) || creature->mC40 > creature->mC44)) {
+            (!fn_800D56E0(creature->mA00) || creature->GetC40() > creature->GetC44())) {
             fn_800D5D5C(creature->mA00, 0);
             fn_801BA190(lbl_805FB6C8, creature, 0, 0x705B8B52, 0, 0, 0, 0);
         } else {
