@@ -208,7 +208,7 @@ public:
     virtual void* vf44();
     virtual void vf48();
     virtual int vf4C();
-    virtual void vf50();
+    virtual void vf50(Entity* source, int arg2, int arg3, f32 arg4, UnkVec3* pos);
     virtual void vf54(void* arg);
     virtual void vf58();
     virtual int vf5C();
@@ -270,7 +270,8 @@ public:
     /* 0x008 */ u8 unk8[0x24 - 0x8];
     /* 0x024 */ f32 m24; // the frame time, added to timers
     /* 0x028 */ f32 m28; // the current time (timers store m28 + delay)
-    /* 0x02C */ u8 unk2C[0x88 - 0x2C];
+    /* 0x02C */ u32 m2C;
+    /* 0x030 */ u8 unk30[0x88 - 0x30];
     /* 0x088 */ void* m88;
     /* 0x08C */ UnkList* m8C;
     /* 0x090 */ void* m90;
@@ -365,7 +366,7 @@ public:
     virtual void vf40();
     virtual void* vf44();
     virtual int vf4C();
-    virtual void vf50();
+    virtual void vf50(Entity* source, int arg2, int arg3, f32 arg4, UnkVec3* pos);
     virtual void vf54(void* arg);
     virtual void vf58();
     virtual void vf74(f32 dt);

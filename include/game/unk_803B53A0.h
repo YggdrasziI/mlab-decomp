@@ -9,7 +9,8 @@
 class Entity;
 
 struct UnkGameState {
-    /* 0x0000 */ u8 unk0[0x1C0];
+    /* 0x0000 */ u8 unk0[0x140];
+    /* 0x0140 */ Entity* m140[32];
     /* 0x01C0 */ u8 mEntityCount;
     /* 0x01C4 */ Entity* mEntities[255];
     /* 0x05C0 */ u8 unk5C0[0xD614 - 0x5C0];
