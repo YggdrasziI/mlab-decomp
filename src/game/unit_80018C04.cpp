@@ -32,7 +32,7 @@ struct UnkAnimContext {
     /* 0x10 */ UnkAnimTarget* mTarget;
 };
 
-typedef int (*UnkNamedPredicate)(UnkAnimContext* ctx);
+typedef int (*UnkNamedPredicate)(const UnkAnimContext* ctx);
 
 // Real names unknown.
 extern "C" {
@@ -52,9 +52,9 @@ void fn_8006F5A0();
 
 extern "C" {
 
-int fn_80018C84(UnkAnimContext* ctx);
-int fn_80018CB0(UnkAnimContext* ctx);
-int fn_80018D64(UnkAnimContext* ctx);
+int fn_80018C84(const UnkAnimContext* ctx);
+int fn_80018CB0(const UnkAnimContext* ctx);
+int fn_80018D64(const UnkAnimContext* ctx);
 
 void fn_80018C04(void) {
     fn_801DC91C("anim_done", 29, fn_80018C84);
@@ -68,7 +68,7 @@ void fn_80018C04(void) {
     fn_800197A8();
 }
 
-int fn_80018C84(UnkAnimContext* ctx) {
+int fn_80018C84(const UnkAnimContext* ctx) {
     UnkAnimTarget* target = ctx->mTarget;
     if (target != 0 && (target->mA0->mFlags & 0x10)) {
         return 1;
@@ -76,9 +76,7 @@ int fn_80018C84(UnkAnimContext* ctx) {
     return 0;
 }
 
-// NonMatching (95.6 %): the DOL loads ctx->mTarget between the r31 and r30 saves of
-// the prologue (the scheduling order noted in unit_80077B50.cpp); same instructions.
-int fn_80018CB0(UnkAnimContext* ctx) {
+int fn_80018CB0(const UnkAnimContext* ctx) {
     UnkAnimTarget* target = ctx->mTarget;
     if (target != 0) {
         UnkAnimOwner* owner = target->m9C;
@@ -95,7 +93,7 @@ int fn_80018CB0(UnkAnimContext* ctx) {
     return 0;
 }
 
-int fn_80018D64(UnkAnimContext* ctx) {
+int fn_80018D64(const UnkAnimContext* ctx) {
     UnkAnimTarget* target = ctx->mTarget;
     if (target != 0 && target->mA0 != 0) {
         f32 time = fn_8018BE78(target->mA0);

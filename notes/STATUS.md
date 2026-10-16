@@ -63,8 +63,7 @@
   linker script template `config/RM7P4F/ldscript.tpl` (nothing references them and
   FORCEACTIVE cannot name a local `__sinit`). Also not linked: `game/unit_80019FB0.cpp` (launch speed, 89.8 %;
   float registers), `game/unit_800418E0.cpp` (CombatOMaticDamageCallback, 3/4; an
-  indirect ctr call and a dead compare), `game/unit_80018C04.cpp` (4/5; prologue
-  scheduling), `game/unit_800C407C.cpp` (ExWorldWireTile, 4/5; ctr loop),
+  indirect ctr call and a dead compare), `game/unit_800C407C.cpp` (ExWorldWireTile, 4/5; ctr loop),
   `game/unit_8007A394.cpp` (6/9; a pair copy and float registers) and
   `game/unit_80075434.cpp` (4/5; one stack store placement),
   `game/unit_80030604.cpp` (Sewer item subclasses, 37/38; one register in
@@ -76,9 +75,15 @@
   `game/unit_8013EB1C.cpp` (name entry, 8/9; transform scheduling),
   `game/unit_80122B5C.cpp` (stick input, 9/11; float registers),
   `game/unit_8006307C.cpp` (Entity_Light, 13/14; folded compares in `fn_800633D4`),
-  `game/unit_80018E00.cpp` (camera callbacks, 24/28; loads scheduled before the
-  register saves, like `unit_80018C04`).
-  Lessons from this pass (all checked by builds): `-inline auto,deferred` (per unit)
+  `game/unit_80018E00.cpp` (camera callbacks, 27/28; `fn_80019268` loads two entity
+  fields in the other order).
+  Lessons from this pass (all checked by builds): a load through a `const T*`
+  parameter may be scheduled above the prologue stores (the stack stores cannot alias
+  it), a load through a `T*` cannot: the named script callbacks take a const context
+  (this fixed `unit_80018C04`, `unit_80077B50`, `unit_800938A4` and three functions of
+  `unit_80018E00`; flags, -proc models and compiler versions do not change it);
+  .bss objects are laid out in declaration order, including the `sUnkVec3` that
+  `Entity.h` pulls in through `unk_vec3.h`; `-inline auto,deferred` (per unit)
   inlines functions defined later in the file and emits functions in reverse order of
   definition (QuestLog needs it; switching all game code to it breaks other units); string and float literals are
   pooled in parse order, so an unused static function can give the pool its DOL order

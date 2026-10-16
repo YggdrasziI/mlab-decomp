@@ -3,10 +3,10 @@
 // "SetCameraMode", "set_camera_location", "send_event", "should_igc_abort"...),
 // registered through fn_801DC91C. Bounds come from the static initializers of this
 // unit and the previous one.
-// NonMatching: fn_80018FEC, fn_800190E4, fn_80019268 and fn_800194BC (94-98 %)
-// differ only by scheduling: the DOL loads the first field of the context or the
-// entity before saving the callee-saved registers (same issue as unit_80018C04;
-// flags, -proc models and compiler versions tried).
+// The callbacks take a const context: a load through a const pointer may be
+// scheduled above the prologue stores, as in the DOL.
+// NonMatching: fn_80019268 (99.9 %) loads entity->m170 before entity->m16C (the DOL
+// loads them the other way round); fn_800195A4 only differs by string relocations.
 
 #include "game/Entity.h"
 #include "game/externs.h"
@@ -41,8 +41,8 @@ UnkQuat fn_80145B00(const UnkQuat* rot);
 UnkVec3 fn_801454CC(const UnkQuat* rot);
 void fn_8006D3C8(void* obj, int arg);
 void fn_801BA2FC(void* mgr, u32 hash, void* sender, u32 arg, int arg4, int arg5);
-void fn_801BBAEC(void* ctx, u32 arg0, u32 arg1);
-void fn_801BBB0C(void* ctx, u32 arg0, u32 arg1);
+void fn_801BBAEC(const void* ctx, u32 arg0, u32 arg1);
+void fn_801BBB0C(const void* ctx, u32 arg0, u32 arg1);
 void fn_80121898(const char* text, u32 color);
 extern u8 lbl_805FB1A1;
 
@@ -52,28 +52,28 @@ Entity_Prop* lbl_805FAF60;
 u8 lbl_805FAF64;
 int lbl_805FAF68;
 
-int fn_80018E00(UnkScriptContext* ctx);
-void fn_80018E54(UnkScriptContext* ctx);
-void fn_80018E6C(UnkScriptContext* ctx);
-void fn_80018EB4(UnkScriptContext* ctx);
-void fn_80018F40(UnkScriptContext* ctx);
-void fn_80018FB4(UnkScriptContext* ctx);
-void fn_80018FEC(UnkScriptContext* ctx);
-void fn_80019044(UnkScriptContext* ctx);
-void fn_800190C8(UnkScriptContext* ctx);
-void fn_800190E4(UnkScriptContext* ctx);
-void fn_80019268(UnkScriptContext* ctx);
-void fn_80019420(UnkScriptContext* ctx);
-void fn_80019438(UnkScriptContext* ctx);
-void fn_80019458(UnkScriptContext* ctx);
-void fn_80019464(UnkScriptContext* ctx);
-void fn_80019470(UnkScriptContext* ctx);
+int fn_80018E00(const UnkScriptContext* ctx);
+void fn_80018E54(const UnkScriptContext* ctx);
+void fn_80018E6C(const UnkScriptContext* ctx);
+void fn_80018EB4(const UnkScriptContext* ctx);
+void fn_80018F40(const UnkScriptContext* ctx);
+void fn_80018FB4(const UnkScriptContext* ctx);
+void fn_80018FEC(const UnkScriptContext* ctx);
+void fn_80019044(const UnkScriptContext* ctx);
+void fn_800190C8(const UnkScriptContext* ctx);
+void fn_800190E4(const UnkScriptContext* ctx);
+void fn_80019268(const UnkScriptContext* ctx);
+void fn_80019420(const UnkScriptContext* ctx);
+void fn_80019438(const UnkScriptContext* ctx);
+void fn_80019458(const UnkScriptContext* ctx);
+void fn_80019464(const UnkScriptContext* ctx);
+void fn_80019470(const UnkScriptContext* ctx);
 void fn_80019480(UnkScriptContext* ctx);
-void fn_800194BC(UnkScriptContext* ctx);
-void fn_80019548(UnkScriptContext* ctx);
-void fn_80019554(UnkScriptContext* ctx);
-void fn_8001957C(UnkScriptContext* ctx);
-int fn_80019594(UnkScriptContext* ctx);
+void fn_800194BC(const UnkScriptContext* ctx);
+void fn_80019548(const UnkScriptContext* ctx);
+void fn_80019554(const UnkScriptContext* ctx);
+void fn_8001957C(const UnkScriptContext* ctx);
+int fn_80019594(const UnkScriptContext* ctx);
 }
 
 static inline void SetCameraLocation(u32 locationHash, u32 targetHash) {
@@ -107,7 +107,7 @@ static inline void ClearIgcMode() {
 
 extern "C" {
 
-int fn_80018E00(UnkScriptContext* ctx) {
+int fn_80018E00(const UnkScriptContext* ctx) {
     if (fn_801B9B40((int)lbl_803C4298.m38) & 0x80) {
         fn_801B9BC4((int)lbl_803C4298.m38, 5);
         return 1;
@@ -115,12 +115,12 @@ int fn_80018E00(UnkScriptContext* ctx) {
     return 0;
 }
 
-void fn_80018E54(UnkScriptContext* ctx) {
+void fn_80018E54(const UnkScriptContext* ctx) {
     lbl_805FAF60 = ctx->mEntity;
     lbl_805FAF68++;
 }
 
-void fn_80018E6C(UnkScriptContext* ctx) {
+void fn_80018E6C(const UnkScriptContext* ctx) {
     if (lbl_805FAF60 == ctx->mEntity) {
         lbl_805FAF60 = 0;
     }
@@ -132,7 +132,7 @@ void fn_80018E6C(UnkScriptContext* ctx) {
     }
 }
 
-void fn_80018EB4(UnkScriptContext* ctx) {
+void fn_80018EB4(const UnkScriptContext* ctx) {
     UnkCamera* camera = lbl_803C4298.mCamera;
     u32 hash = ctx->mArg0;
     if (camera == 0) {
@@ -149,7 +149,7 @@ void fn_80018EB4(UnkScriptContext* ctx) {
     }
 }
 
-void fn_80018F40(UnkScriptContext* ctx) {
+void fn_80018F40(const UnkScriptContext* ctx) {
     UnkCamera* camera = lbl_803C4298.mCamera;
     if (camera == 0) {
         return;
@@ -166,7 +166,7 @@ void fn_80018F40(UnkScriptContext* ctx) {
     }
 }
 
-void fn_80018FB4(UnkScriptContext* ctx) {
+void fn_80018FB4(const UnkScriptContext* ctx) {
     if (lbl_805FAF68 > 1) {
         return;
     }
@@ -176,15 +176,15 @@ void fn_80018FB4(UnkScriptContext* ctx) {
     }
 }
 
-void fn_80018FE8(UnkScriptContext* ctx) {}
+void fn_80018FE8(const UnkScriptContext* ctx) {}
 
-void fn_80018FEC(UnkScriptContext* ctx) {
+void fn_80018FEC(const UnkScriptContext* ctx) {
     lbl_803C4298.mCamera->vf30(ctx->mArg0);
 }
 
-void fn_80019040(UnkScriptContext* ctx) {}
+void fn_80019040(const UnkScriptContext* ctx) {}
 
-void fn_80019044(UnkScriptContext* ctx) {
+void fn_80019044(const UnkScriptContext* ctx) {
     Entity_Prop* entity = ctx->mEntity;
     if (entity != 0 && (entity->mInfo->mTypeMask & 0x100)) {
         if (entity != 0 && lbl_805FAF68 == 1 && entity->m174 != 0) {
@@ -195,19 +195,19 @@ void fn_80019044(UnkScriptContext* ctx) {
     }
 }
 
-void fn_800190C4(UnkScriptContext* ctx) {}
+void fn_800190C4(const UnkScriptContext* ctx) {}
 
-void fn_800190C8(UnkScriptContext* ctx) {
+void fn_800190C8(const UnkScriptContext* ctx) {
     lbl_803C4298.mCamera->vf20();
 }
 
-void fn_800190E4(UnkScriptContext* ctx) {
+void fn_800190E4(const UnkScriptContext* ctx) {
     u32 location = ctx->mArg0;
     u32 target = ctx->mArg1;
     SetCameraLocation(location, target);
 }
 
-void fn_80019268(UnkScriptContext* ctx) {
+void fn_80019268(const UnkScriptContext* ctx) {
     Entity_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         u32 location = entity->m16C;
@@ -217,26 +217,26 @@ void fn_80019268(UnkScriptContext* ctx) {
     }
 }
 
-void fn_80019420(UnkScriptContext* ctx) {
+void fn_80019420(const UnkScriptContext* ctx) {
     Entity_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         fn_8006D3C8(entity, 0);
     }
 }
 
-void fn_80019438(UnkScriptContext* ctx) {
+void fn_80019438(const UnkScriptContext* ctx) {
     fn_801BA2FC(lbl_805FB6C8, ctx->mArg0, ctx->mEntity, ctx->mArg1, 0, 0);
 }
 
-void fn_80019458(UnkScriptContext* ctx) {
+void fn_80019458(const UnkScriptContext* ctx) {
     fn_801BBAEC(ctx, ctx->mArg0, ctx->mArg1);
 }
 
-void fn_80019464(UnkScriptContext* ctx) {
+void fn_80019464(const UnkScriptContext* ctx) {
     fn_801BBB0C(ctx, ctx->mArg0, ctx->mArg1);
 }
 
-void fn_80019470(UnkScriptContext* ctx) {
+void fn_80019470(const UnkScriptContext* ctx) {
     fn_80121898("ping", 0xA4FFFF);
 }
 
@@ -255,7 +255,7 @@ void fn_80019480(UnkScriptContext* ctx) {
     }
 }
 
-void fn_800194BC(UnkScriptContext* ctx) {
+void fn_800194BC(const UnkScriptContext* ctx) {
     Entity_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         u32 event = entity->m15C;
@@ -270,24 +270,24 @@ void fn_800194BC(UnkScriptContext* ctx) {
     }
 }
 
-void fn_80019548(UnkScriptContext* ctx) {
+void fn_80019548(const UnkScriptContext* ctx) {
     lbl_805FAF64 = 1;
 }
 
-void fn_80019554(UnkScriptContext* ctx) {
+void fn_80019554(const UnkScriptContext* ctx) {
     Entity_Prop* entity = ctx->mEntity;
     if (entity != 0 && 0.0 != entity->m160) {
         lbl_805FAF64 = 1;
     }
 }
 
-void fn_8001957C(UnkScriptContext* ctx) {
+void fn_8001957C(const UnkScriptContext* ctx) {
     if (lbl_805FAF68 <= 0) {
         lbl_805FAF64 = 0;
     }
 }
 
-int fn_80019594(UnkScriptContext* ctx) {
+int fn_80019594(const UnkScriptContext* ctx) {
     return lbl_805FB1A1 == 0;
 }
 

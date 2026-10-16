@@ -36,29 +36,27 @@ int fn_80079190(void);
 
 extern "C" {
 
-void fn_80077B50(UnkScriptContext* ctx) {
+void fn_80077B50(const UnkScriptContext* ctx) {
     UnkScriptTarget* target = ctx->mTarget;
     fn_80079C78(target);
     target->mState = 3;
 }
 
-void fn_80077B88(UnkScriptContext* ctx) {
+void fn_80077B88(const UnkScriptContext* ctx) {
     UnkScriptTarget* target = ctx->mTarget;
     fn_80079C78(target);
     fn_80079CBC(target);
 }
 
-int fn_80077BC0(UnkScriptContext* ctx) {
+int fn_80077BC0(const UnkScriptContext* ctx) {
     return fn_8007B194(ctx->mTarget);
 }
 
-// NONMATCHING: the DOL loads ctx->mTarget before saving the link register (a
-// scheduling order seen only five times in the DOL); same instructions otherwise.
-int fn_80077BC8(UnkScriptContext* ctx) {
+int fn_80077BC8(const UnkScriptContext* ctx) {
     return fn_8007B318(ctx->mTarget) == 0;
 }
 
-int fn_80077BF4(UnkScriptContext* ctx) {
+int fn_80077BF4(const UnkScriptContext* ctx) {
     UnkScriptTarget* target = ctx->mTarget;
     if (fn_8007B318(target) == 1) {
         return 1;
@@ -66,7 +64,7 @@ int fn_80077BF4(UnkScriptContext* ctx) {
     return fn_8007B318(target) == 2;
 }
 
-int fn_80077C48(UnkScriptContext* ctx) {
+int fn_80077C48(const UnkScriptContext* ctx) {
     return 0;
 }
 
@@ -78,35 +76,35 @@ int fn_80077C88(UnkScriptContext* ctx) {
     return fn_8007C11C(ctx->mTarget) > 3;
 }
 
-int fn_80077CC0(UnkScriptContext* ctx) {
+int fn_80077CC0(const UnkScriptContext* ctx) {
     return fn_8007C124(ctx->mTarget);
 }
 
-int fn_80077CC8(UnkScriptContext* ctx) {
+int fn_80077CC8(const UnkScriptContext* ctx) {
     return fn_8007C080(ctx->mTarget);
 }
 
-int fn_80077CD0(UnkScriptContext* ctx) {
+int fn_80077CD0(const UnkScriptContext* ctx) {
     return fn_8007C110(ctx->mTarget);
 }
 
-int fn_80077CD8(UnkScriptContext* ctx) {
+int fn_80077CD8(const UnkScriptContext* ctx) {
     return fn_80079190();
 }
 
-int fn_80077CDC(UnkScriptContext* ctx) {
+int fn_80077CDC(const UnkScriptContext* ctx) {
     return fn_8007C12C(ctx->mTarget);
 }
 
-int fn_80077CE4(UnkScriptContext* ctx) {
+int fn_80077CE4(const UnkScriptContext* ctx) {
     return fn_8007C140(ctx->mTarget);
 }
 
-int fn_80077CEC(UnkScriptContext* ctx) {
+int fn_80077CEC(const UnkScriptContext* ctx) {
     return fn_8007C278(ctx->mTarget);
 }
 
-int fn_80077CF4(UnkScriptContext* ctx) {
+int fn_80077CF4(const UnkScriptContext* ctx) {
     return fn_8007C3B0(ctx->mTarget);
 }
 
