@@ -6,6 +6,7 @@
 
 #include "game/Entity.h"
 #include "game/unk_actor.h"
+#include "game/unk_text.h"
 #include "game/unk_vec3.h"
 
 // Widget showing the typed name (real type unknown).
@@ -14,13 +15,6 @@ struct UnkTextWidget {
     /* 0x17C */ UnkMtx34 mMtx;
     /* 0x1AC */ u8 unk1AC[0x1D4 - 0x1AC];
     /* 0x1D4 */ UnkVec3 mTextEnd;
-};
-
-// Localized text table (real type unknown).
-struct UnkTextTable {
-    /* 0x0 */ const char** mTexts;
-    /* 0x4 */ u8 unk4[0xC - 0x4];
-    /* 0xC */ u32 mCount;
 };
 
 // Save data (real type unknown).
@@ -36,9 +30,7 @@ struct UnkScreenSet {
 
 extern "C" {
 extern UnkScreenSet* lbl_805FB654;
-extern UnkTextTable* lbl_805FB910;
 extern UnkSaveData lbl_80556E80;
-extern char lbl_805F8200[8];
 
 void* fn_80198E34(void* screens, u32 hash);
 void* fn_80199AEC(void* screen, u32 hash);

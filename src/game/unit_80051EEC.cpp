@@ -3,6 +3,7 @@
 // name and value, counters and the build string). Bounds come from the static
 // initializers of this unit and the previous one.
 
+#include "game/unk_text.h"
 #include "game/unk_vec3.h"
 #include "types.h"
 
@@ -25,13 +26,6 @@ struct UnkItemDatabase {
     /* 0xC */ UnkItemData* mData;
 };
 
-// Localized text table (real type unknown).
-struct UnkTextTable {
-    /* 0x0 */ const char** mTexts;
-    /* 0x4 */ u8 unk4[0xC - 0x4];
-    /* 0xC */ u32 mCount;
-};
-
 // Object at lbl_805FBBC8 (real type unknown).
 struct UnkCounterOwner {
     /* 0x00 */ u8 unk0[0x68];
@@ -44,19 +38,12 @@ struct UnkSelection {
     /* 0x128 */ int m128;
 };
 
-int fn_80120D34(u32 hash);
 void fn_8001426C(char* buf);
 
 extern "C" {
 extern UnkSelection* lbl_805FBBE0;
 extern UnkItemDatabase* lbl_805FBBC0;
 extern UnkCounterOwner* lbl_805FBBC8;
-extern UnkTextTable* lbl_805FB90C;
-extern UnkTextTable* lbl_805FB910;
-// Strings emitted by another unit ("", "Not found", "NOT FOUND").
-extern char lbl_805F8200[8];
-extern char lbl_80354800[];
-extern char lbl_8035480C[];
 
 const char* fn_8022E3DC(UnkSelection* selection);
 const char* fn_8022E170(UnkSelection* selection);
@@ -70,28 +57,6 @@ char* itoa(int value, char* str, int base);
 }
 
 static char lbl_803C53E8[0x80];
-
-static inline const char* GetText(u32 hash) {
-    u32 index = fn_80120D34(hash);
-    if (index == 0xFFFFFFFF) {
-        return lbl_80354800;
-    }
-    if ((index & 0x80000000) && lbl_805FB90C != 0) {
-        UnkTextTable* table = lbl_805FB90C;
-        if (table->mTexts != 0 && (index & 0x7FFFFFFF) < table->mCount) {
-            return table->mTexts[index & 0x7FFFFFFF];
-        }
-        return lbl_805F8200;
-    }
-    UnkTextTable* table = lbl_805FB910;
-    if (table->mTexts != 0 && index < table->mCount) {
-        return table->mTexts[index];
-    }
-    if (index == 0xFFFFFFFF) {
-        return lbl_8035480C;
-    }
-    return lbl_805F8200;
-}
 
 extern "C" {
 
