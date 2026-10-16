@@ -76,6 +76,7 @@ offset).
 | `game/unit_8006F5A0.cpp` | 0x8006F5A0-0x8006F61C | registers the `"count_deaths"` condition callback (type 22) with `fn_801DC91C` (matches, linked) |
 | `game/unit_8006F61C.cpp` | 0x8006F61C-0x8006F6BC | class `Entity_Static` (RTTI), derived from `Entity_Game`; its implicit destructor is emitted at 0x800630E0 (matches, linked) |
 | `game/unit_8006F6BC.cpp` | 0x8006F6BC-0x8006F794 | class `Entity_Trigger_Script` (RTTI), derived from `Entity_Sensor` (functions at 0x8006D2D0, not split); its RTTI, name and base list are in this unit (matches, linked) |
+| `game/unit_800747DC.cpp` | 0x800747DC-0x80074CC8 | global helpers called by scripts: a hash to slot switch, sending the hashes of the set game flags, forwarders to the game state object (`fn_800701A4`) (matches, linked) |
 | `game/unit_80075434.cpp` | 0x80075434-0x800756E0 | static table of 20 clamped values with threshold conditions parsed from `"<"`, `"<="`, `">"`, `">="` (NonMatching: `fn_80075590` 96.7 %, one stack store placed before the loop guard) |
 | `game/unit_80076AB8.cpp` | 0x80076AB8-0x80076D38 | class `Entity_SpiritToken` (RTTI), derived from `Entity_Prop`; moves along a path and sends hashed events (matches, linked) |
 | `game/unit_80077B50.cpp` | 0x80077B50-0x80077D1C | 17 named callbacks registered by the next unit through `fn_801DC91C`, each working on the object at 0x10 of its argument; 16/17 match (`fn_80077BC8`: one load scheduled before the link register save), not linked. `unk_vec3.h` must be included after the code: the pool has 1.0 before 0.0 |
