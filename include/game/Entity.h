@@ -149,7 +149,9 @@ public:
 
 // Animation objects at Entity::m9C and Entity::mA0 (real types unknown).
 struct UnkEntityAnim {
-    /* 0x00 */ u8 unk0[0xB4];
+    /* 0x00 */ u8 unk0[0x8];
+    /* 0x08 */ u32 m8; // hash of the sensor type
+    /* 0x0C */ u8 unkC[0xB4 - 0xC];
     /* 0x0B4 */ void* mB4;
 };
 
@@ -386,7 +388,10 @@ public:
     /* 0x16C */ int m16C;
     /* 0x170 */ int m170;
     /* 0x174 */ int m174;
-    /* 0x178 */ u8 unk178[0x1AC - 0x178];
+    /* 0x178 */ u8 unk178[0x184 - 0x178];
+    /* 0x184 */ u32 m184;
+    /* 0x188 */ u32 m188;
+    /* 0x18C */ u8 unk18C[0x1AC - 0x18C];
     /* 0x1AC */ int m1AC;
     /* 0x1B0 */ u8 unk1B0[0x1C8 - 0x1B0];
     /* 0x1C8 */ UnkEntitySlot mSlot;

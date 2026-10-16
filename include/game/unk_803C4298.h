@@ -8,8 +8,28 @@
 #include "types.h"
 
 // Object at lbl_803C4298.m4, probably the camera (real type unknown).
-struct UnkCamera {
-    /* 0x00 */ u8 unk0[0xF0];
+class UnkCamera {
+public:
+    virtual void vf08();
+    // Sets the camera mode (5, 6 and 7 used by script callbacks).
+    virtual void vf0C(int mode);
+    // Clears the camera mode.
+    virtual void vf10();
+    virtual void vf14();
+    virtual void vf18();
+    virtual void vf1C(const UnkVec3* pos);
+    // Returns to the fixed camera.
+    virtual void vf20();
+    virtual void vf24();
+    virtual void vf28();
+    // Places the camera at eye looking at target.
+    virtual void vf2C(const UnkVec3* eye, const UnkVec3* target);
+    // Sets the interpolation time.
+    virtual void vf30(f32 time);
+
+    /* 0x00 */ // vtable
+    /* 0x04 */ UnkVec3* mPos;
+    /* 0x08 */ u8 unk8[0xF0 - 0x8];
     /* 0xF0 */ UnkVec3 mUp;
     /* 0xFC */ u8 mFC;
 };

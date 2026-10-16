@@ -26,7 +26,7 @@ public:
 };
 
 extern "C" {
-extern u8 lbl_805FAF64;
+extern "C" u8 lbl_805FAF64;
 
 void fn_80147704(int channel, f32* x, f32* y);
 u32 fn_801B9B98(int channel);
