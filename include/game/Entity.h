@@ -444,7 +444,7 @@ public:
     virtual void vfBC();
     virtual f32 vfD0();
     virtual void vfD4();
-    virtual void vfD8();
+    virtual UnkVec3 vfD8(f32 t);
 };
 
 // Wire segment of a level element (real type unknown; 0x4C bytes).

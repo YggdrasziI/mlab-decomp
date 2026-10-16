@@ -21,8 +21,6 @@ ExWorldWireTrack::ExWorldWireTrack() {}
 
 ExWorldWireTrack::~ExWorldWireTrack() {}
 
-// NonMatching (97.8 %): the DOL loads mTiles.mHead once for the empty check and the
-// index; this build loads it again for the index (several inline spellings tried).
 void ExWorldWireTrack::vf0C(void* owner) {
     ExWorldTrack::vf0C(owner);
     fn_8010B5A0(&mPath, static_cast<ExWorldWireTile*>(mTiles.First())->mWire);

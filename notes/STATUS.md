@@ -67,8 +67,9 @@
   `game/unit_8007A394.cpp` (6/9; a pair copy and float registers) and
   `game/unit_80075434.cpp` (4/5; one stack store placement),
   `game/unit_80030604.cpp` (Sewer item subclasses, 37/38; one register in
-  `SewerFish::vf10`), `game/unit_800C42B8.cpp` (ExWorldWireTrack, 9/10; the ring
-  head is loaded twice in `vf0C`), `game/unit_80120DC0.cpp` (LoadProgressProjectile,
+  `SewerFish::vf10`), `game/unit_800C42B8.cpp` (ExWorldWireTrack, 10/10; this build
+  emits RTTI data that the DOL has in an earlier unit), `game/unit_8009BE14.cpp`
+  (AstralTrack, 8/9; two registers in `vf2C`), `game/unit_80120DC0.cpp` (LoadProgressProjectile,
   3/4; the position copy in `vf0C`), `game/unit_8010B16C.cpp` (UnkPath, 2/4; loop
   registers), `game/unit_80116CA8.cpp` (progress bar, 3/6; register numbering),
   `game/unit_80051EEC.cpp` (text providers, 10/11; two registers),
@@ -82,6 +83,8 @@
   it), a load through a `T*` cannot: the named script callbacks take a const context
   (this fixed `unit_80018C04`, `unit_80077B50`, `unit_800938A4` and three functions of
   `unit_80018E00`; flags, -proc models and compiler versions do not change it);
+  in the same way a load through a const `this` can be reused where one through a
+  non-const `this` is reloaded (the ring head read by `UnkTileRing::GetHead() const`);
   .bss objects are laid out in declaration order, including the `sUnkVec3` that
   `Entity.h` pulls in through `unk_vec3.h`; `-inline auto,deferred` (per unit)
   inlines functions defined later in the file and emits functions in reverse order of
