@@ -17,7 +17,6 @@ public:
     virtual void vf10();
     virtual void vf14();
     virtual void vf18();
-    virtual void vf1C();
 
     u8 unk[0x54 - sizeof(section)];
 };
@@ -30,7 +29,6 @@ public:
     virtual void vf10();
     virtual void vf14();
     virtual void vf18();
-    virtual void vf1C();
 
     u8 unk[0x14E0 - sizeof(section)];
 };
@@ -43,7 +41,6 @@ public:
     virtual void vf10();
     virtual void vf14();
     virtual void vf18();
-    virtual void vf1C();
 
     u8 unk[0x1C - sizeof(section)];
 };
@@ -56,7 +53,6 @@ public:
     virtual void vf10();
     virtual void vf14();
     virtual void vf18();
-    virtual void vf1C();
 
     u8 unk[0x2DE8 - sizeof(section)];
 };
