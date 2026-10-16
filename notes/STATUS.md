@@ -66,7 +66,9 @@
   indirect ctr call and a dead compare), `game/unit_80018C04.cpp` (4/5; prologue
   scheduling), `game/unit_800C407C.cpp` (ExWorldWireTile, 4/5; ctr loop),
   `game/unit_8007A394.cpp` (6/9; a pair copy and float registers) and
-  `game/unit_80075434.cpp` (4/5; one stack store placement).
+  `game/unit_80075434.cpp` (4/5; one stack store placement),
+  `game/unit_80030604.cpp` (Sewer item subclasses, 37/38; one register in
+  `SewerFish::vf10`).
   Lessons from this pass (all checked by builds): string and float literals are
   pooled in parse order, so an unused static function can give the pool its DOL order
   (the original files likely had dead code); base-class RTTI copies emitted in a

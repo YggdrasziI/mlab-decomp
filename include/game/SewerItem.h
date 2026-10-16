@@ -15,9 +15,12 @@ struct UnkVec2 {
 // Actor that shows a sewer item: its vtable pointer is at 0x138 (real type unknown).
 struct UnkSewerActorBase {
     /* 0x00 */ void* m0;
-    /* 0x04 */ u8 unk4[0x68 - 0x4];
+    /* 0x04 */ u8 unk4[0x10 - 0x4];
+    /* 0x10 */ int m10;
+    /* 0x14 */ u8 unk14[0x68 - 0x14];
     /* 0x68 */ UnkVec3 mPos;
-    /* 0x74 */ u8 unk74[0x138 - 0x74];
+    /* 0x74 */ UnkVec3 m74;
+    /* 0x80 */ u8 unk80[0x138 - 0x80];
 };
 
 class UnkSewerActor : public UnkSewerActorBase {
@@ -62,6 +65,68 @@ public:
     /* 0x24 */ int m24;
     /* 0x28 */ f32 mRadiusSq;
     /* 0x2C */ UnkVec3 mHome;
+};
+
+class SewerBottle : public SewerItem {
+public:
+    SewerBottle();
+    virtual ~SewerBottle() {}
+    virtual int vf0C(UnkVec3 pos) { return SewerItem::vf0C(pos); }
+    virtual void vf10() { SewerItem::vf10(); }
+    virtual void vf18();
+    virtual void vf1C(f32 arg) { SewerItem::vf1C(arg); }
+    virtual SewerItem* vf14() { return SewerItem::vf14(); }
+};
+
+class SewerMetal : public SewerItem {
+public:
+    SewerMetal();
+    virtual ~SewerMetal() {}
+    virtual int vf0C(UnkVec3 pos) { return SewerItem::vf0C(pos); }
+    virtual void vf10() { SewerItem::vf10(); }
+    virtual void vf18();
+    virtual void vf1C(f32 arg) { SewerItem::vf1C(arg); }
+    virtual SewerItem* vf14() { return SewerItem::vf14(); }
+};
+
+class SewerRing : public SewerItem {
+public:
+    SewerRing();
+    virtual ~SewerRing() {}
+    virtual int vf0C(UnkVec3 pos) { return SewerItem::vf0C(pos); }
+    virtual void vf10() { SewerItem::vf10(); }
+    virtual void vf18();
+    virtual void vf1C(f32 arg) { SewerItem::vf1C(arg); }
+    virtual SewerItem* vf14() { return SewerItem::vf14(); }
+};
+
+class SewerBubble : public SewerItem {
+public:
+    SewerBubble();
+    virtual ~SewerBubble() {}
+    void SetM38(int value);
+    virtual int vf0C(UnkVec3 pos) { return 0; }
+    virtual void vf10() { SewerItem::vf10(); }
+    virtual void vf18();
+    virtual void vf1C(f32 arg);
+    virtual SewerItem* vf14() { return SewerItem::vf14(); }
+
+    /* 0x38 */ int m38;
+};
+
+class SewerFish : public SewerItem {
+public:
+    SewerFish();
+    virtual ~SewerFish() {}
+    virtual int vf0C(UnkVec3 pos);
+    virtual void vf10();
+    virtual SewerItem* vf14();
+    virtual void vf18();
+    virtual void vf1C(f32 arg);
+
+    /* 0x38 */ int mState;
+    /* 0x3C */ int m3C;
+    /* 0x40 */ int mSound;
 };
 
 #endif // GAME_SEWERITEM_H
