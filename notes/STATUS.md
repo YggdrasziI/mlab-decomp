@@ -72,7 +72,8 @@
   head is loaded twice in `vf0C`), `game/unit_80120DC0.cpp` (LoadProgressProjectile,
   3/4; the position copy in `vf0C`), `game/unit_8010B16C.cpp` (UnkPath, 2/4; loop
   registers), `game/unit_80116CA8.cpp` (progress bar, 3/6; register numbering),
-  `game/unit_80051EEC.cpp` (text providers, 10/11; two registers).
+  `game/unit_80051EEC.cpp` (text providers, 10/11; two registers),
+  `game/unit_8013EB1C.cpp` (name entry, 8/9; transform scheduling).
   Lessons from this pass (all checked by builds): string and float literals are
   pooled in parse order, so an unused static function can give the pool its DOL order
   (the original files likely had dead code); base-class RTTI copies emitted in a
