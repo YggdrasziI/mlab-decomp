@@ -6,9 +6,8 @@
 // "hazard_prop_idle_*" / "hazard_prop_attack_*" states), registered through
 // fn_801DC91C. Bounds come from the static initializers of this unit and the
 // previous one.
-// NonMatching: fn_80019954 / fn_800199CC (one float register), fn_80019A9C and
-// fn_80019AD8 (order of the 0.0f load and float registers) and fn_80019C18
-// (scheduling of the key setup) differ; the other functions match.
+// The callbacks take a const context (see unit_80018E00.cpp); fn_80019A9C writes
+// its result through a const_cast.
 
 #include "game/Entity.h"
 #include "game/externs.h"
@@ -56,23 +55,23 @@ void fn_801E0054(void* registers, Entity* entity, int index);
 void fn_801ED314(UnkNavKey* key, int arg);
 void fn_801B8734(Entity* entity, UnkNavKey key, f32 arg);
 
-void fn_80019930(UnkPropContext* ctx);
-void fn_80019950(UnkPropContext* ctx);
-void fn_80019954(UnkPropContext* ctx);
-void fn_800199A8(UnkPropContext* ctx);
-void fn_800199C8(UnkPropContext* ctx);
-void fn_800199CC(UnkPropContext* ctx);
-void fn_80019A20(UnkPropContext* ctx);
-void fn_80019A38(UnkPropContext* ctx);
-void fn_80019A9C(UnkPropContext* ctx);
-int fn_80019AD8(UnkPropContext* ctx);
-void fn_80019B04(UnkPropContext* ctx);
-int fn_80019B60(UnkPropContext* ctx);
-void fn_80019BA0(UnkPropContext* ctx);
-void fn_80019BB4(UnkPropContext* ctx);
-void fn_80019BCC(UnkPropContext* ctx);
-void fn_80019BEC(UnkPropContext* ctx);
-void fn_80019C18(UnkPropContext* ctx);
+void fn_80019930(const UnkPropContext* ctx);
+void fn_80019950(const UnkPropContext* ctx);
+void fn_80019954(const UnkPropContext* ctx);
+void fn_800199A8(const UnkPropContext* ctx);
+void fn_800199C8(const UnkPropContext* ctx);
+void fn_800199CC(const UnkPropContext* ctx);
+void fn_80019A20(const UnkPropContext* ctx);
+void fn_80019A38(const UnkPropContext* ctx);
+void fn_80019A9C(const UnkPropContext* ctx);
+int fn_80019AD8(const UnkPropContext* ctx);
+void fn_80019B04(const UnkPropContext* ctx);
+int fn_80019B60(const UnkPropContext* ctx);
+void fn_80019BA0(const UnkPropContext* ctx);
+void fn_80019BB4(const UnkPropContext* ctx);
+void fn_80019BCC(const UnkPropContext* ctx);
+void fn_80019BEC(const UnkPropContext* ctx);
+void fn_80019C18(const UnkPropContext* ctx);
 
 void fn_800197A8(void) {
     fn_801DC91C("prop_play_anim_and_fx_once", 78, (void*)fn_80019A38);
@@ -95,7 +94,7 @@ void fn_800197A8(void) {
     lbl_805FAF70 = 0;
 }
 
-void fn_80019930(UnkPropContext* ctx) {
+void fn_80019930(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         entity->m264 = 0.0f;
@@ -103,19 +102,20 @@ void fn_80019930(UnkPropContext* ctx) {
     }
 }
 
-void fn_80019950(UnkPropContext* ctx) {}
+void fn_80019950(const UnkPropContext* ctx) {}
 
-void fn_80019954(UnkPropContext* ctx) {
+void fn_80019954(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         entity->m264 += entity->m24;
-        if (entity->m274 <= entity->m264) {
+        f32 limit = entity->m274;
+        if (entity->m264 >= limit) {
             fn_801BA190(lbl_805FB6C8, entity, 0, 0x1FF53675, 0, 0, 0, 0);
         }
     }
 }
 
-void fn_800199A8(UnkPropContext* ctx) {
+void fn_800199A8(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         entity->m264 = 0.0f;
@@ -123,26 +123,27 @@ void fn_800199A8(UnkPropContext* ctx) {
     }
 }
 
-void fn_800199C8(UnkPropContext* ctx) {}
+void fn_800199C8(const UnkPropContext* ctx) {}
 
-void fn_800199CC(UnkPropContext* ctx) {
+void fn_800199CC(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         entity->m264 += entity->m24;
-        if (entity->m278 <= entity->m264) {
+        f32 limit = entity->m278;
+        if (entity->m264 >= limit) {
             fn_801BA190(lbl_805FB6C8, entity, 0, 0xE9BAFAD5, 0, 0, 0, 0);
         }
     }
 }
 
-void fn_80019A20(UnkPropContext* ctx) {
+void fn_80019A20(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         fn_8006ED68(entity, entity->m168);
     }
 }
 
-void fn_80019A38(UnkPropContext* ctx) {
+void fn_80019A38(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         fn_80069350(entity, 0, 0, 1);
@@ -152,24 +153,25 @@ void fn_80019A38(UnkPropContext* ctx) {
     }
 }
 
-void fn_80019A9C(UnkPropContext* ctx) {
+void fn_80019A9C(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     f32 result = 0.0f;
     if (entity != 0) {
         UnkScriptValue value = ctx->mValue;
-        result = value.mFloat - entity->m24;
+        f32 time = entity->m24;
+        result = value.mFloat - time;
     }
     UnkScriptValue out;
     out.mFloat = result;
-    ctx->mValue = out;
+    const_cast<UnkPropContext*>(ctx)->mValue = out;
 }
 
-int fn_80019AD8(UnkPropContext* ctx) {
+int fn_80019AD8(const UnkPropContext* ctx) {
     UnkScriptValue value = ctx->mValue;
     return value.mFloat <= 0.0f;
 }
 
-void fn_80019B04(UnkPropContext* ctx) {
+void fn_80019B04(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         UnkScopedGuard guard;
@@ -177,7 +179,7 @@ void fn_80019B04(UnkPropContext* ctx) {
     }
 }
 
-int fn_80019B60(UnkPropContext* ctx) {
+int fn_80019B60(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0 && entity->mA0 != 0 && (entity->mA0->mFlags & 0x10)) {
         entity->m15C |= 1;
@@ -186,35 +188,35 @@ int fn_80019B60(UnkPropContext* ctx) {
     return 0;
 }
 
-void fn_80019BA0(UnkPropContext* ctx) {
+void fn_80019BA0(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         fn_80069FDC(entity);
     }
 }
 
-void fn_80019BB4(UnkPropContext* ctx) {
+void fn_80019BB4(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         entity->m164 = 0.0f;
     }
 }
 
-void fn_80019BCC(UnkPropContext* ctx) {
+void fn_80019BCC(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0) {
         entity->m164 += 1.0f;
     }
 }
 
-void fn_80019BEC(UnkPropContext* ctx) {
+void fn_80019BEC(const UnkPropContext* ctx) {
     Entity_Hazard_Prop* entity = ctx->mEntity;
     if (entity != 0 && (entity->mInfo->mTypeMask & 0x100)) {
         fn_801E0054(&entity->mSlot.mCur.m0[2], entity, entity->m1AC);
     }
 }
 
-void fn_80019C18(UnkPropContext* ctx) {
+void fn_80019C18(const UnkPropContext* ctx) {
     f32 radius = 2.0f;
     Entity_Hazard_Prop* entity = ctx->mEntity;
     UnkNavKey key;

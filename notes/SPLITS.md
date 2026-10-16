@@ -47,7 +47,7 @@ offset).
 | `game/unit_80014328.cpp` | 0x80014328-0x80014350 | one function returning 0, used as a function pointer (matches, linked) |
 | `game/unit_80018C04.cpp` | 0x80018C04-0x80018E00 | registers three named animation predicates (`"anim_done"`, `"anim_past_impact_frame"`, `"anim_past_preload_time"`) through `fn_801DC91C`, then calls six other registration functions |
 | `game/unit_80018E00.cpp` | 0x80018E00-0x800197A8 | camera and in-game cutscene script callbacks (`acquire_camera_semaphore`, `set_igc_mode`, `SetCameraMode`, `set_camera_location`, `send_event`, `should_igc_abort`...) (NonMatching: 27/28, `fn_80019268` loads two entity fields in the other order) |
-| `game/unit_800197A8.cpp` | 0x800197A8-0x80019CC8 | named script callbacks for props and hazard props (`"prop_play_anim_and_fx_once"`, `"hazard_prop_idle_update"`, `"NavTest"`...) (NonMatching: 12/18, float registers and scheduling) |
+| `game/unit_800197A8.cpp` | 0x800197A8-0x80019CC8 | named script callbacks for props and hazard props (`"prop_play_anim_and_fx_once"`, `"hazard_prop_idle_update"`, `"NavTest"`...) |
 | `game/unit_80019CC8.cpp` | 0x80019CC8-0x80019FB0 | script callbacks for props sending up to three delayed events (`"check_delayed_timer"`, `"send_delayed_event_to_zone"`, `"reset_trigger_send_delayed_events"`); timers are `Entity::m28` plus a delay (matches, linked) |
 | `game/unit_80019FB0.cpp` | 0x80019FB0-0x8001A17C | launch speed for a projectile between two points at a given angle under gravity (NonMatching, 89.8 %: the `height` / `s` registers are swapped and two stores are reordered) |
 | `game/unit_8001AFB4.cpp` | 0x8001AFB4-0x8001B20C | a stack of states: init, lookup by id, pending state, push and pop (matches, linked) |
