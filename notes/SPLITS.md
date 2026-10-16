@@ -40,6 +40,7 @@ offset).
 
 | Unit | .text | Content |
 |---|---|---|
+| `game/unit_80006B40.cpp` | 0x80006B40-0x80006B60 | first unit of .text: only the static initializer (matches, linked; kept by FORCEFILES in `config/RM7P4F/ldscript.tpl`) |
 | `game/unit_8000C7C8.cpp` | 0x8000C7C8-0x8000CF8C | top-level game flow: delayed event, state stack update, start-up of the global managers, screen set loading (`"ScreenSet load start: zone=%d"`), forwarders (NonMatching: 30/31, `fn_8000C838` 96 %) |
 | `game/unit_80014230.cpp` | 0x80014230-0x8001425C | build date string `"Aug 28 2008 (14:30)"` (.rodata 0x803476A8) and the two build numbers 519 / 142835 (.sdata2 0x805FC720) (matches, linked) |
 | `game/unit_8001425C.cpp` | 0x8001425C-0x80014328 | build region word (0 = `NA`, 1 = `EU`; this DOL holds 1) and the `"%s %d: %s@%d (%s)"` build string, type `"REL"` (matches, linked) |
@@ -60,7 +61,7 @@ offset).
 | `game/unit_80040638.cpp` | 0x80040638-0x80040824 | class `NetworkInputActionSelectionCallback` (RTTI), derived from `XBaseActionSelectionCallback`: current and queued action selections (matches, linked) |
 | `game/unit_80041874.cpp` | 0x80041874-0x800418E0 | constructor and destructor of a one-byte class without vtable (matches, linked) |
 | `game/unit_800418E0.cpp` | 0x800418E0-0x80041AB4 | class `CombatOMaticDamageCallback` (RTTI) derived from `XBaseCombatCallback` (RTTI, emitted here): constructor, destructor, two virtual functions (NonMatching: `vf0C` 86 %, an indirect call through ctr and a dead compare) |
-| `game/unit_80042C18.cpp` | 0x80042C18-0x80042C38 | only the static initializer; code and data match but the object is not linked (nothing references it, see the source comment) |
+| `game/unit_80042C18.cpp` | 0x80042C18-0x80042C38 | only the static initializer (matches, linked; kept by FORCEFILES in `config/RM7P4F/ldscript.tpl` since nothing references it) |
 | `game/unit_8004421C.cpp` | 0x8004421C-0x800444FC | class `PlayerInputGestureCallback` (RTTI), derived from `XBaseGestureCallback`; embeds an `AccelerometerMotionRecognizer` (RTTI; Wii Remote gesture recognizer) and sends pool-3 messages; `XBaseGestureCallback`'s RTTI is emitted first here (matches, linked) |
 | `game/unit_800444FC.cpp` | 0x800444FC-0x800445E4 | class `NetworkGestureCallback` (RTTI), derived from `XBaseGestureCallback` (functions at 0x8020F498, not split) (matches, linked) |
 | `game/unit_80044C58.cpp` | 0x80044C58-0x80044CDC | constructor and destructor of a 0x148-byte class without vtable, built as an array of two by `fn_80040824` (matches, linked) |

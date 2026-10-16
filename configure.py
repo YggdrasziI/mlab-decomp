@@ -373,6 +373,7 @@ config.libs = [
         "cflags": cflags_game,
         "progress_category": "game",
         "objects": [
+            Object(Matching, "game/unit_80006B40.cpp"),
             Object(NonMatching, "game/unit_8000C7C8.cpp"),
             Object(Matching, "game/unit_80014230.cpp"),
             Object(Matching, "game/unit_8001425C.cpp"),
@@ -393,7 +394,7 @@ config.libs = [
             Object(Matching, "game/unit_80040638.cpp"),
             Object(Matching, "game/unit_80041874.cpp"),
             Object(NonMatching, "game/unit_800418E0.cpp"),
-            Object(NonMatching, "game/unit_80042C18.cpp"),
+            Object(Matching, "game/unit_80042C18.cpp"),
             Object(Matching, "game/unit_8004421C.cpp"),
             Object(Matching, "game/unit_800444FC.cpp"),
             Object(Matching, "game/unit_80044C58.cpp"),

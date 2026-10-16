@@ -58,10 +58,10 @@
   input function not written), `game/unit_800E3300.cpp` (CIDirectionGuide, 4/5; float
   registers in `vf0C`), `game/unit_800DE5B4.cpp` (SphereGraph, 4/5; the capsule
   distance keeps loads in registers where the original reloads them), `game/unit_80020480.cpp` (29/31; the two `AnyButtons*::vf0C` loops differ
-  only by the order of three loop increments) and `game/unit_80042C18.cpp` (static
-  initializer only: our linker drops an object nothing references, and FORCEACTIVE
-  cannot name its local `__sinit`; FORCEFILES through a custom `ldscript_template` is a
-  possible fix). Also not linked: `game/unit_80019FB0.cpp` (launch speed, 89.8 %;
+  only by the order of three loop increments). Units with only a static initializer
+  (`game/unit_80006B40.cpp`, `game/unit_80042C18.cpp`) are kept by FORCEFILES in the
+  linker script template `config/RM7P4F/ldscript.tpl` (nothing references them and
+  FORCEACTIVE cannot name a local `__sinit`). Also not linked: `game/unit_80019FB0.cpp` (launch speed, 89.8 %;
   float registers), `game/unit_800418E0.cpp` (CombatOMaticDamageCallback, 3/4; an
   indirect ctr call and a dead compare), `game/unit_80018C04.cpp` (4/5; prologue
   scheduling), `game/unit_800C407C.cpp` (ExWorldWireTile, 4/5; ctr loop),
@@ -86,8 +86,7 @@
   has a ray/sphere test over nested collision lists; 0x80098664; larger ones listed by
   calls to `__ct__11Entity_Prop`). Set aside for now: 0x8004B498 (multiple
   inheritance, base in the next unit),
-  0x8010A678 (vector types with inline operators), 0x80006B40 (static
-  initializer only, same link issue as 0x80042C18), 0x8003107C (a polygon over an MSL
+  0x8010A678 (vector types with inline operators), 0x8003107C (a polygon over an MSL
   `vector` of 2D points: push_back with the inlined vector growth and its
   "vector length error" checks), 0x8006F794 (only an MSL tree node destroy
   template, recursion inlined three levels, plus the static initializer).

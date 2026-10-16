@@ -4,6 +4,6 @@
 
 #include "game/unk_vec3.h"
 
-// NONMATCHING (link only): code and data match, but nothing references this object
-// and its static initializer is a local symbol, so the linker drops the whole object
-// (FORCEACTIVE cannot name a local symbol). The original linker kept it.
+// Nothing references this object and its static initializer is a local symbol
+// (FORCEACTIVE cannot name it), so the linker would drop it: the linker script
+// template config/RM7P4F/ldscript.tpl keeps it with FORCEFILES.

@@ -13,6 +13,12 @@ Sections:
 	.sdata2     type:rodata align:32
 	.sbss2      type:bss align:4
 
+game/unit_80006B40.cpp:
+	.text       start:0x80006B40 end:0x80006B60
+	.ctors      start:0x80345AE4 end:0x80345AE8
+	.bss        start:0x803B5380 end:0x803B5390
+	.sdata2     start:0x805FC5F8 end:0x805FC600
+
 game/unit_8000C7C8.cpp:
 	.text       start:0x8000C7C8 end:0x8000CF8C
 	.ctors      start:0x80345AF4 end:0x80345AF8
