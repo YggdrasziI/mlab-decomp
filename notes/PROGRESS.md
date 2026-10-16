@@ -35,11 +35,12 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-15 | 713ccd7 | 769412 / 3412920 bytes (22.54 %) | 3024 / 12580 | 363 linked / 1070 | CIDynamic (base of the camera influences) linked, 21.52 % of code linked; its member type is `SphereGraph` (RTTI); 45 of 50 game units linked |
 | 2026-10-15 | bd17980 | 770524 / 3412920 bytes (22.58 %) | 3037 / 12580 | 363 linked / 1062 | Camera units split: SphereGraph 4/5, CIDirectionGuide 4/5 (98.4 % vf0C), CIFree (vf24), CITrackTargetDan (small functions); 54 game units split, 45 linked |
 | 2026-10-15 | 230d2ce | 783364 / 3412920 bytes (22.95 %) | 3233 / 12580 | 377 linked / 1087 | Game code: 75 units split, 59 linked; smallest units first: register set accessors (35 functions), state stack, text entry, door registry, manager wrappers, InventoryBook, game mode helpers; 6 more NonMatching units |
+| 2026-10-16 | fd59fc1 | 805140 / 3412920 bytes (23.59 %) | 3477 / 12580 | 388 linked / 1102 | Game code: 97 units split, 70 linked (SewerItem, delayed event callbacks, CIPlayerOffset, online errors, button sequence, script helpers, tree destroy, QuestLog, two sinit-only units kept by FORCEFILES); 22.14 % of code linked |
 
 Notes:
 
 - "Units" counts units in `objdiff.json`; library units are the ones split by hand in
   `config/RM7P4F/splits.txt` (progress category `sdk`, 634340 bytes of code); the rest
   are dtk `auto_*` objects.
-- Game code: see the unit table in `notes/SPLITS.md`; `game/unit_80020480.cpp` (29/31
-  functions) and `game/unit_80042C18.cpp` (static initializer only) are not linked yet.
+- Game code: see the unit table in `notes/SPLITS.md` and the NonMatching list in
+  `notes/STATUS.md`.
