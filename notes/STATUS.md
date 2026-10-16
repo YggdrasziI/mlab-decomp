@@ -70,7 +70,8 @@
   `game/unit_80030604.cpp` (Sewer item subclasses, 37/38; one register in
   `SewerFish::vf10`), `game/unit_800C42B8.cpp` (ExWorldWireTrack, 9/10; the ring
   head is loaded twice in `vf0C`), `game/unit_80120DC0.cpp` (LoadProgressProjectile,
-  3/4; the position copy in `vf0C`).
+  3/4; the position copy in `vf0C`), `game/unit_8010B16C.cpp` (UnkPath, 2/4; loop
+  registers).
   Lessons from this pass (all checked by builds): string and float literals are
   pooled in parse order, so an unused static function can give the pool its DOL order
   (the original files likely had dead code); base-class RTTI copies emitted in a

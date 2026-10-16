@@ -430,8 +430,16 @@ public:
 };
 
 // Wire segment of a level element (real type unknown; 0x4C bytes).
+// Point of a wire (0x28 bytes, real name unknown).
+struct UnkWirePoint {
+    /* 0x00 */ u8 unk0[0xC];
+    /* 0x0C */ UnkVec3 mPos;
+    /* 0x18 */ u8 unk18[0x28 - 0x18];
+};
+
 struct UnkWire {
-    /* 0x00 */ u8 unk0[0x24];
+    /* 0x00 */ UnkWirePoint* mPoints;
+    /* 0x04 */ u8 unk4[0x24 - 0x4];
     /* 0x24 */ int mPointCount;
     /* 0x28 */ u8 unk28[0x2C - 0x28];
     /* 0x2C */ u32 mId;
@@ -480,11 +488,33 @@ public:
     /* 0x268 */ f32 mValue;
 };
 
-// Path followed by Entity_SpiritToken (real name unknown; function at 0x8010B200).
+// Straight piece of an UnkPath (0x1C bytes, real name unknown).
+struct UnkPathSegment {
+    /* 0x00 */ UnkVec3 mStart;
+    /* 0x0C */ UnkVec3 mDir;
+    /* 0x18 */ f32 mLength;
+};
+
+// Polyline built from a wire, followed by Entity_SpiritToken (real name unknown;
+// unit at 0x8010B16C).
 class UnkPath {
 public:
+    UnkPath();
+    ~UnkPath();
     // Position at parameter t (0 to 1).
     UnkVec3 fn_8010B200(f32 t);
+    // Builds the segments from the points of a wire.
+    void fn_8010B2D8(UnkWire* wire);
+
+    void Clear() {
+        mSegments = 0;
+        mCount = 0;
+        mLength = 0.0f;
+    }
+
+    /* 0x0 */ UnkPathSegment* mSegments;
+    /* 0x4 */ u32 mCount;
+    /* 0x8 */ f32 mLength;
 };
 
 class Entity_SpiritToken : public Entity_Prop {
