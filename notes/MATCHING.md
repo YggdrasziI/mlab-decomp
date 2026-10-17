@@ -34,6 +34,13 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   `vf0C` of `unit_80040090`).
 - `u32 % (int)(float)` gives the DOL's call-first order with an inline `fctiwz`; a
   `(u32)` cast of the float calls `__cvt_fp2unsigned` before the call (`fn_8003CE20`).
+- An empty `__sinit` (a lone `blr`) comes from a global object whose class has an empty
+  inline constructor, in a unit that does not include `unk_vec3.h` (`unit_801604FC`).
+- Two identical loops with different register numbers: the second function may just
+  call the first, which is inlined (`fn_80160AFC` calls `fn_80160A28`).
+- Locals that look like an 8-byte array may be a 12-byte struct: the stack order only
+  matched with the callback output typed as the 12-byte parameter struct
+  (`fn_801606A4`).
 - A local pointer computed before the updates can change register allocation of the
   whole tail (`fn_80044634`: `u8* p = base + used;` before `free -= size; used += size;`).
 
