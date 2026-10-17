@@ -41,6 +41,15 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Locals that look like an 8-byte array may be a 12-byte struct: the stack order only
   matched with the callback output typed as the 12-byte parameter struct
   (`fn_801606A4`).
+- An all-zero object the DOL keeps in `.sdata`/`.data` needs `#pragma explicit_zero_data
+  on` around its definition (`lbl_805F8200` in `unit_80010B5C`); objects are emitted in
+  definition order, so define it after the functions whose literals come before it.
+- A string literal that the DOL places before an earlier function's jump table is a
+  named file-scope array defined before that function (`sDiscReadError`).
+- `cntlzw`/`srwi.` on a call result before an `&&`: a `bool b = f() == 0;` local tested
+  as `!b` (`fn_80010CAC`).
+- A counted loop whose counter is not used and counts down with `subic.`: `int n = 4;
+  ... do { } while (--n);`, with `n` declared at the top of the block.
 - A local pointer computed before the updates can change register allocation of the
   whole tail (`fn_80044634`: `u8* p = base + used;` before `free -= size; used += size;`).
 

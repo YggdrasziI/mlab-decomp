@@ -3,7 +3,8 @@
 
 // Localized text lookup (real names unknown). fn_80120D34 maps a text hash to an
 // index; indices with the top bit set use the table at lbl_805FB90C, the others the
-// table at lbl_805FB910. The strings returned on failure are emitted by another unit.
+// table at lbl_805FB910. The empty string lbl_805F8200 is defined in unit_80010B5C.cpp;
+// the other strings returned on failure are emitted by another unit.
 
 #include "types.h"
 
