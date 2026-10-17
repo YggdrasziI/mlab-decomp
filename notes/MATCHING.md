@@ -25,6 +25,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   before the entity pointer, for example).
 - Stack slots: the first declared local gets the higher address; compiler
   temporaries created later get lower ones.
+- A pointer to a member at a non-zero offset taken with a null check: an explicit
+  `if (p) q = &p->m; else q = 0;` gives the DOL's `addi`/`b`/`li 0` form; a ternary or
+  an implicit base-class conversion adds a second compare (`fn_8003FC6C`).
 - A local pointer computed before the updates can change register allocation of the
   whole tail (`fn_80044634`: `u8* p = base + used;` before `free -= size; used += size;`).
 

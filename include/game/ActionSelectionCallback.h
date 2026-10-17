@@ -92,8 +92,18 @@ public:
     /* 0x68 */ u8 mHasNext;
 };
 
-// Debug menu driven by DebugMenuActionSelectionCallback (0x9C bytes, functions at
-// 0x8003FB24-0x8004006C, unit not split yet; real name unknown).
+class UnkDebugMenu;
+class UnkMenu;
+
+// User data of one debug menu line (real type unknown).
+struct UnkDebugMenuEntry {
+    /* 0x0 */ UnkDebugMenu* mOwner;
+    /* 0x4 */ void* mAction;
+    /* 0x8 */ s32 mIndex;
+};
+
+// Debug menu driven by DebugMenuActionSelectionCallback (0x9C bytes, game unit at
+// 0x8003FB24-0x80040090; real name unknown).
 class UnkDebugMenu {
 public:
     UnkDebugMenu();
@@ -102,12 +112,14 @@ public:
     void fn_8003FC6C(void* arg);
     void fn_8003FF30();
     u32 fn_8003FFA4(UnkActionSelection* selection);
-    void fn_8003FFD0();
+    s32 fn_8003FFD0() const;
     void fn_80040028();
 
-    /* 0x00 */ u8 unk0[0x84];
-    /* 0x84 */ void* m84;
-    /* 0x88 */ u8 unk88[0x98 - 0x88];
+    /* 0x00 */ UnkDebugMenuEntry mEntries[10];
+    /* 0x78 */ u8 unk78[0x84 - 0x78];
+    /* 0x84 */ UnkMenu* m84;
+    /* 0x88 */ u8 mHasSelection;
+    /* 0x8C */ UnkActionSelection mSelection;
     /* 0x98 */ u8 m98;
 };
 
@@ -115,6 +127,8 @@ public:
 class UnkFocus {
 public:
     void* fn_801B41F0();
+    void fn_801B4090(UnkMenu* menu);
+    void fn_801B40E4();
 
     /* 0x00 */ u8 m0;
     /* 0x01 */ u8 unk1[0x18 - 0x1];
