@@ -61,6 +61,10 @@ public:
     void fn_8020F46C(UnkActionSelection* selection);
 
     void SetName(const char* name) { mName.fn_8022127C(name); }
+    // Takes a temporary selection (stack slot below the named ones, as in the DOL).
+    void Select(const UnkActionSelection& selection) {
+        fn_8020F46C((UnkActionSelection*)&selection);
+    }
 
     /* 0x00 */ // vtable
     /* 0x04 */ u8 m4;
@@ -90,6 +94,18 @@ public:
     /* 0x58 */ u8 mHasCurrent;
     /* 0x5C */ UnkActionSelection mNext;
     /* 0x68 */ u8 mHasNext;
+};
+
+class PlayerInputActionSelectionCallback : public XBaseActionSelectionCallback {
+public:
+    PlayerInputActionSelectionCallback(void* arg);
+    virtual ~PlayerInputActionSelectionCallback();
+    virtual void vf0C();
+
+    // Stick direction as a bit mask (1, 2: y up/down; 4, 8: x left/right).
+    u32 fn_80040550();
+
+    /* 0x4C */ f32 m4C;
 };
 
 class UnkDebugMenu;
