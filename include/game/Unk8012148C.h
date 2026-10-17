@@ -12,7 +12,7 @@ public:
     ~Unk8012148C();
 
     void fn_8012148C();
-    void fn_80121490();
+    void fn_80121490(f32 x, f32 y, f32 z);
     void fn_80121494();
     void fn_801214D8(f32 a, f32 b);
     void fn_801214DC();
