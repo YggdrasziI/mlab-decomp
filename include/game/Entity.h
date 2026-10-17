@@ -7,7 +7,8 @@
 // 0x80062C80-0x8006307C. Real file names unknown; method names and most signatures
 // unknown (vfXX = vtable offset, parameters follow the register use).
 //
-// Several Entity virtual functions are emitted in other units (0x8000C7A0,
+// Several Entity virtual functions are emitted in other units (0x8000C7A0 (vf44,
+// defined in game/unit_8000C478.cpp),
 // 0x800084A0, 0x80058B5C, 0x80015800, 0x80050588-0x800505A0, 0x8004B570-0x8004B57C):
 // they are probably inline functions emitted where first used. They are declared
 // out of line here until those units are decompiled.
@@ -205,7 +206,9 @@ public:
     virtual void vf38();
     virtual void vf3C();
     virtual void vf40();
-    virtual void* vf44();
+    // Point of this entity seen from another one (the base returns m18; Entity_Prop
+    // ignores the arguments too).
+    virtual UnkVec3* vf44(const UnkVec3* from, Entity* fromEntity);
     virtual void vf48();
     virtual int vf4C();
     virtual void vf50(Entity* source, int arg2, int arg3, f32 arg4, UnkVec3* pos);
@@ -267,7 +270,8 @@ public:
 
     /* 0x000 */ // vtable
     /* 0x004 */ EntityInfo* mInfo;
-    /* 0x008 */ u8 unk8[0x24 - 0x8];
+    /* 0x008 */ u8 unk8[0x18 - 0x8];
+    /* 0x018 */ UnkVec3 m18; // returned by vf44
     /* 0x024 */ f32 m24; // the frame time, added to timers
     /* 0x028 */ f32 m28; // the current time (timers store m28 + delay)
     /* 0x02C */ u32 m2C;
@@ -364,7 +368,7 @@ public:
     virtual void vf28();
     virtual int vf30(void* arg1, void* arg2);
     virtual void vf40();
-    virtual void* vf44();
+    virtual UnkVec3* vf44(const UnkVec3* from, Entity* fromEntity);
     virtual int vf4C();
     virtual void vf50(Entity* source, int arg2, int arg3, f32 arg4, UnkVec3* pos);
     virtual void vf54(void* arg);

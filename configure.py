@@ -374,6 +374,7 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "game/unit_80006B40.cpp"),
+            Object(NonMatching, "game/unit_8000C478.cpp"),
             Object(NonMatching, "game/unit_8000C7C8.cpp"),
             Object(Matching, "game/unit_80014230.cpp"),
             Object(Matching, "game/unit_8001425C.cpp"),
