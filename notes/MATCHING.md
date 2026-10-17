@@ -21,6 +21,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 
 ## Registers and stack
 
+- A run of widget lookups `w = find(screen, hash); if (w) set(w, ...);` with the
+  screen and the widgets in the wrong saved registers: give each lookup its own
+  local (or its own block) instead of reusing one variable (`fn_8013C6CC`).
 - The declaration order of locals sets their register numbers (a result declared
   before the entity pointer, for example).
 - Stack slots: the first declared local gets the higher address; compiler
@@ -128,5 +131,3 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   our compile removes.
 - Identity matrix built on the stack as four 12-byte temporaries in row order, each
   copied into the matrix right after it (`fn_8012112C`): no spelling found.
-- Float compares merged without reloads (`bne` three times on one compare, 0x8013C600):
-  probably the repeated-compare slip above, not tried yet on that unit.
