@@ -45,4 +45,4 @@ Notes:
   `config/RM7P4F/splits.txt` (progress category `sdk`, 634340 bytes of code); the rest
   are dtk `auto_*` objects.
 - Game code: see the unit table in `notes/SPLITS.md` and the NonMatching list in
-  `notes/STATUS.md`.
+  `TASKS.md`.
