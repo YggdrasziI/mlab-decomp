@@ -32,6 +32,8 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   temporary in the DOL (lowest stack slot, below the named locals of later blocks):
   pass it through an inline taking a `const&` (`XBaseActionSelectionCallback::Select`,
   `vf0C` of `unit_80040090`).
+- `u32 % (int)(float)` gives the DOL's call-first order with an inline `fctiwz`; a
+  `(u32)` cast of the float calls `__cvt_fp2unsigned` before the call (`fn_8003CE20`).
 - A local pointer computed before the updates can change register allocation of the
   whole tail (`fn_80044634`: `u8* p = base + used;` before `free -= size; used += size;`).
 
