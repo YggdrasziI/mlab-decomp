@@ -4,6 +4,11 @@
 // copied into the save data. Bounds come from the static initializers of this unit
 // and the previous one.
 
+// Typed name. Defined before the includes: .bss objects are emitted in definition
+// order and the DOL has this buffer before the sUnkVec3 of unk_vec3.h (checked by the
+// main.dol link).
+static char lbl_803F2230[16];
+
 #include "game/Entity.h"
 #include "game/unk_actor.h"
 #include "game/unk_text.h"
@@ -40,7 +45,6 @@ void fn_80123A88(void);
 char* strcpy(char* dst, const char* src);
 }
 
-static char lbl_803F2230[16];
 
 extern "C" {
 u32 lbl_805FB408;
@@ -134,8 +138,6 @@ void fn_8013ED6C(void) {
     }
 }
 
-// NonMatching (83 %): the DOL schedules the x part of the transform first and
-// stores the cursor x and y before computing the rest.
 void fn_8013EDFC(void) {
     void* screens = lbl_805FB654->mScreens;
     if (screens != 0) {
@@ -147,7 +149,8 @@ void fn_8013EDFC(void) {
                 if (lbl_803F2230[0] == 0) {
                     cursor->mPos = UnkVec3(lbl_805F90C0, lbl_805F90C4, lbl_805F90C8);
                 } else {
-                    UnkVec3 end = text->mMtx.Transform(text->mTextEnd);
+                    UnkVec3 end;
+                    text->mMtx.Transform(text->mTextEnd, &end);
                     cursor->mPos = UnkVec3(end.x + 2.0f, lbl_805F90C4, lbl_805F90C8);
                 }
             }

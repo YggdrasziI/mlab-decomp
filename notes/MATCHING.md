@@ -55,6 +55,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 
 ## Floats
 
+- A matrix-vector product whose scheduling and stack slots did not match as
+  `UnkVec3 end = mtx.Transform(v);` matches when written through a pointer,
+  `UnkVec3 end; mtx.Transform(v, &end);` (`fn_8013EDFC`, `fn_80139CC4`).
 - A float member tested as `if (x)` compiles to `fcmpu x, 0` (member loaded first);
   `x != 0.0f` loads the constant first (`fn_8000C604`).
 - Vector temporaries filled by chained assignment (`v.x = v.y = v.z = 1.0f`) are
@@ -86,7 +89,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 ## Data layout
 
 - `.bss` objects are laid out in declaration order, including the `sUnkVec3` that
-  `Entity.h` pulls in through `unk_vec3.h`.
+  `Entity.h` pulls in through `unk_vec3.h`. An object the DOL places before that
+  `sUnkVec3` is defined before the include (`unit_8013EB1C`); objdiff pairs the
+  symbols by name and still shows 100 %, only the `main.dol` link catches it.
 - Units with only a static initializer (`unit_80006B40`, `unit_80042C18`) are kept by
   FORCEFILES in `config/RM7P4F/ldscript.tpl` (nothing references them and
   FORCEACTIVE cannot name a local `__sinit`).

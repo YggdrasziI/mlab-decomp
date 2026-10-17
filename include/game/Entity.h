@@ -61,6 +61,13 @@ struct UnkMtx34 {
         result.z = m[2] * v.x + m[5] * v.y + m[8] * v.z + m[11];
         return result;
     }
+    // Same product written through a pointer: no temporary, so the caller's stack
+    // slots and scheduling differ (the cursor functions of the code entry screens).
+    void Transform(const UnkVec3& v, UnkVec3* out) const {
+        out->x = m[0] * v.x + m[3] * v.y + m[6] * v.z + m[9];
+        out->y = m[1] * v.x + m[4] * v.y + m[7] * v.z + m[10];
+        out->z = m[2] * v.x + m[5] * v.y + m[8] * v.z + m[11];
+    }
 
     f32 m[12];
 };
