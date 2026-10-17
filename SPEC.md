@@ -61,6 +61,12 @@ Evidence and the full candidate analysis are in `notes/COMPILER.md`.
 - Real names only from evidence: RTTI class names, strings, symbols of other projects
   on the same library. `wiki/monster-lab-wiki` gives candidate names, never evidence.
 - Code, comments, notes and commit messages are in English.
+- Shared game headers in `include/game/`: `unk_vec3.h` (the shared `(0, 1, 0)` vector
+  each including unit builds), `externs.h` (functions not decompiled yet), `Entity.h`
+  (Entity family: Entity, Entity_Game, Entity_Static, Entity_Dynamic, Entity_Sensor,
+  Entity_Prop, ExWorldTile...), callbacks (`ActionSelectionCallback.h`,
+  `GestureCallback.h`, `CombatCallback.h`), `CameraInfluence.h`,
+  `MotionRecognizer.h`, `InventoryBook.h` and `book.h`.
 
 ## Repository layout
 
