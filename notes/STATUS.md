@@ -38,7 +38,7 @@
 
 ## In progress
 
-- Step 6 (game code): 75 game units split, 59 linked (unit table in `notes/SPLITS.md`).
+- Step 6 (game code): 106 game units split, 76 linked (unit table in `notes/SPLITS.md`).
   Unit bounds come from the static initializers (inline functions of a unit may follow
   its `__sinit`); compiled with `cflags_game` (base flags with `-RTTI on`). Shared
   headers: `include/game/unk_vec3.h` (the `(0, 1, 0)` vector), `include/game/externs.h`
@@ -50,6 +50,19 @@
   recognizers (`MotionRecognizer.h`), `CombatCallback.h` and `InventoryBook.h` (with
   `book.h`, now eight pure virtual functions). RTTI also names a `RingBuffer<Vector3>` class, so
   a `Vector3` type exists (probably the shared vector, not renamed yet).
+  Session 2026-10-17: `game/unit_801F59F0.cpp` (message block) linked with
+  `-ipa file`, the only setting found that emits generated destructors in
+  registration order (with the usual flags they come out reversed; `-ipa file` on all
+  game code reverses the inline functions of other units, so it stays per unit);
+  `Entity::vf44` takes two arguments (unused by Entity and Entity_Prop) and returns
+  `&m18`. New NonMatching units: `game/unit_801210E4.cpp` (7/8, identity matrix
+  temporaries on the stack), `game/unit_8000C478.cpp` (4/5, one float register),
+  `game/unit_800445E4.cpp` (HudPowerMeter, 6/7, GX register scheduling).
+  Lessons: a float member tested as `if (x)` gives `fcmpu x, 0` (member first) where
+  `x != 0.0f` loads the constant first; vector temporaries filled by chained
+  assignment (`v.x = v.y = v.z = 1.0f`) store z, y, x; raw GX FIFO writes follow the
+  DOL when the register value is the argument of an inline function (value computed
+  before the command byte).
   Not linked: `game/unit_8006CFA4.cpp` (Entity_Challenge_Projector, 5/6; one register
   choice in `vf20`), `game/unit_80086780.cpp` (Entity_BrainTossHand, 7/8; two stack
   slots swapped in `fn_800869A0`), `game/unit_800E391C.cpp` (CITrackTarget, 5/6; an

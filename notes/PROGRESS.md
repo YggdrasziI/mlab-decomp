@@ -37,6 +37,7 @@ also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log 
 | 2026-10-15 | 230d2ce | 783364 / 3412920 bytes (22.95 %) | 3233 / 12580 | 377 linked / 1087 | Game code: 75 units split, 59 linked; smallest units first: register set accessors (35 functions), state stack, text entry, door registry, manager wrappers, InventoryBook, game mode helpers; 6 more NonMatching units |
 | 2026-10-16 | fd59fc1 | 805140 / 3412920 bytes (23.59 %) | 3477 / 12580 | 388 linked / 1102 | Game code: 97 units split, 70 linked (SewerItem, delayed event callbacks, CIPlayerOffset, online errors, button sequence, script helpers, tree destroy, QuestLog, two sinit-only units kept by FORCEFILES); 22.14 % of code linked |
 | 2026-10-16 | 9592c8a | 826236 / 3412920 bytes (24.21 %) | 3610 / 12580 | 101 game units split, 74 linked | Script callback contexts taken as `const` pointers (loads scheduled above the prologue, as in the DOL): unit_80018C04, unit_80077B50, unit_800938A4, unit_800197A8 linked; new splits AstralTrack (8/9), creature state callbacks 0x80014350 (43/44), character state callbacks 0x80016400 (46/47); 22.27 % of code linked |
+| 2026-10-17 | b343472 | 834744 / 3412920 bytes (24.46 %) | 3676 / 12580 | 106 game units split, 76 linked | Message block unit 0x801F59F0 linked (`-ipa file` for the destructor order); new NonMatching splits: full-screen quad 0x801210E4 (7/8), pooled object 0x8000C478 (4/5), HudPowerMeter and GX texture set-up 0x800445E4 (6/7); 22.48 % of code linked |
 
 Notes:
 
