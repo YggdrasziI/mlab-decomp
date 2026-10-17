@@ -24,6 +24,15 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - A run of widget lookups `w = find(screen, hash); if (w) set(w, ...);` with the
   screen and the widgets in the wrong saved registers: give each lookup its own
   local (or its own block) instead of reusing one variable (`fn_8013C6CC`).
+- `if (a == 0 || f() == 0) return;` compiles to `bne` over a `b` to the epilogue; the
+  DOL's two `beq` come from two separate early returns (`fn_8013DE7C`,
+  `fn_8013CFA8`).
+- A global pointer the DOL reloads after every call must stay a global in the source:
+  passing it to an inline helper keeps it in a saved register (`fn_8013CFA8`).
+- A loop `m = t->models[i]; f(t, i, 0); g(m);` whose saved registers came out in the
+  wrong order matches as an inline helper doing the three steps (`ReleaseModel`).
+- A constant the DOL keeps in `f31` across a call is a local `f32` variable
+  (`f32 duration = 5.0f;`).
 - The declaration order of locals sets their register numbers (a result declared
   before the entity pointer, for example).
 - Stack slots: the first declared local gets the higher address; compiler
@@ -100,6 +109,11 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 
 ## Data layout
 
+- A struct copied with a word loop to the stack and then member by member (with
+  spills) matches when the words are separate members, not an array
+  (`UnkOpponentData`, `fn_8013CA74`).
+- A static initializer that addresses each object with its own `lis` instead of one
+  .bss base needs `#pragma pool_data off` (`unit_8013CA74`).
 - `.bss` objects are laid out in declaration order, including the `sUnkVec3` that
   `Entity.h` pulls in through `unk_vec3.h`. An object the DOL places before that
   `sUnkVec3` is defined before the include (`unit_8013EB1C`); objdiff pairs the
@@ -127,6 +141,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 
 ## Unsolved patterns
 
+- `.bss` order against initialization order (`unit_8013CA74`, and every DOL static
+  initializer that builds a registered object and `sUnkVec3`): the DOL initializes
+  `sUnkVec3` first but places it after the object and its destructor chain. All the
+  GC 3.0 and Wii 1.x compilers tried lay .bss out in definition order (also with
+  an `extern` declared first, copy-initialization, `-inline deferred`); `-common on`
+  moves the object out of the unit.
 - GameSpy units: empty debug branches keep a jump and a dead compare in the DOL that
   our compile removes.
 - Identity matrix built on the stack as four 12-byte temporaries in row order, each

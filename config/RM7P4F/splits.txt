@@ -806,6 +806,15 @@ game/unit_8013C600.cpp:
 	.sbss       start:0x805FB390 end:0x805FB398
 	.sdata2     start:0x805FEFA0 end:0x805FEFB0
 
+game/unit_8013CA74.cpp:
+	.text       start:0x8013CA74 end:0x8013E4D0
+	.ctors      start:0x80345EE4 end:0x80345EE8
+	.data       start:0x80375D70 end:0x80375D80
+	.bss        start:0x803F2088 end:0x803F2210
+	.sdata      start:0x805F9080 end:0x805F90A0
+	.sbss       start:0x805FB398 end:0x805FB3F0
+	.sdata2     start:0x805FEFB0 end:0x805FEFC0
+
 game/unit_8013E4D0.cpp:
 	.text       start:0x8013E4D0 end:0x8013EB1C
 	.ctors      start:0x80345EE8 end:0x80345EEC
