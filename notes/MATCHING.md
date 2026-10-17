@@ -55,6 +55,15 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 
 ## Floats
 
+- A float returned by a call, stored to a global and passed on: `g = f(); h(w, g);`
+  with `f` returning `f32` gives the DOL's `stfs` then `frsp` (MWCC rounds the
+  returned value again for the argument); an `f64` return gives `frsp` first
+  (`fn_8013E4D0`).
+- Three `bne` on one `fcmpu` (no reload in between): the source compares the same
+  value three times, a copy-paste slip such as `-1.0f == x && -1.0f == x && -1.0f
+  == x` (`fn_8013E898`).
+- A copy of a global `const UnkVec3` loaded x, z, y before `+=`: build it with the
+  three-float constructor, `UnkVec3 v(k.x, k.y, k.z); pos += v;` (`fn_8013E898`).
 - A matrix-vector product whose scheduling and stack slots did not match as
   `UnkVec3 end = mtx.Transform(v);` matches when written through a pointer,
   `UnkVec3 end; mtx.Transform(v, &end);` (`fn_8013EDFC`, `fn_80139CC4`).
@@ -119,4 +128,5 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   our compile removes.
 - Identity matrix built on the stack as four 12-byte temporaries in row order, each
   copied into the matrix right after it (`fn_8012112C`): no spelling found.
-- Float compares merged without reloads (`bne` three times on one compare, 0x8013C600).
+- Float compares merged without reloads (`bne` three times on one compare, 0x8013C600):
+  probably the repeated-compare slip above, not tried yet on that unit.
