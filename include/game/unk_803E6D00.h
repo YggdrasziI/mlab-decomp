@@ -10,12 +10,15 @@
 // Element of UnkGlobals803E6D00Sub::m1A4; the array stride is the global
 // lbl_805FB94C (real type unknown).
 struct UnkWireGroup {
-    /* 0x000 */ u8 unk0[0x98];
+    /* 0x000 */ u8 unk0[0x94];
+    /* 0x094 */ int mEntityCount2;
     /* 0x098 */ int mEntityCount;
     /* 0x09C */ u8 unk9C[0xA0 - 0x9C];
     /* 0x0A0 */ UnkWire* mWires;
     /* 0x0A4 */ u8 mWireCount;
-    /* 0x0A5 */ u8 unkA5[0x12C - 0xA5];
+    /* 0x0A5 */ u8 unkA5[0x120 - 0xA5];
+    /* 0x120 */ Entity** mEntities2;
+    /* 0x124 */ u8 unk124[0x12C - 0x124];
     /* 0x12C */ Entity** mEntities;
 };
 
@@ -28,6 +31,12 @@ struct UnkGlobals803E6D00Sub {
     /* 0x1A4 */ u8* mWireGroups;
     /* 0x1A8 */ u8 unk1A8[0x1B0 - 0x1A8];
     /* 0x1B0 */ struct UnkZoneData** mZones;
+    /* 0x1B4 */ u8 unk1B4[0x1E0 - 0x1B4];
+    /* 0x1E0 */ int m1E0;
+    /* 0x1E4 */ u8 unk1E4[0x1E8 - 0x1E4];
+    /* 0x1E8 */ u32 m1E8;
+    /* 0x1EC */ u8 unk1EC[0x1F4 - 0x1EC];
+    /* 0x1F4 */ struct UnkStateStack* m1F4;
 };
 
 struct UnkGlobals803E6D00 {
