@@ -114,6 +114,16 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   them; weak functions after the `__sinit` belong to the unit before them.
 - Base-class RTTI copies emitted in a derived unit are dropped by the linker.
 
+- MSL map destructors (`unit_8009F66C`, `unit_8006F794`): only `-ipa file` (per unit)
+  gives the DOL's shape, the recursive node destruction inlined three levels deep and
+  the element destructor chains inlined in full; `inline_depth`, `inline_max_size`,
+  `nobottomup` and `deferred` each fix one function and break another. With it,
+  implicit destructors of templates are inlined too. A template function shared by
+  two units must have the same mangled name in both (the earlier unit emits it, an
+  explicit instantiation is enough).
+- A constructor makes the compiler emit unreferenced weak copies of the members'
+  inline destructors; the linker strips them (they are not in the DOL).
+
 ## Data layout
 
 - A struct copied with a word loop to the stack and then member by member (with
@@ -129,6 +139,13 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   FORCEFILES in `config/RM7P4F/ldscript.tpl` (nothing references them and
   FORCEACTIVE cannot name a local `__sinit`).
 
+- The vtable pointer goes where the first virtual function is declared among the
+  data members: a base whose members come before the vtable (`MiniGame` at +4,
+  `ExWorldTileSetPool` at +0xC) declares those members first.
+- Five `beq` on one pointer before a member's destructor body are five nested
+  destructor calls (one `this` test each): the MSL tree owner is three classes below
+  `__tree` (`include/msl_tree.h`).
+
 ## Control flow
 
 - Switches whose cases are listed in descending order (with an empty `case 4`) give
@@ -136,6 +153,16 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   `switch` whose result is unused.
 - `if (ok) { ...; return x; } return 0;` versus an early `return 0` changes which
   path falls through (`fn_801F5BB8`).
+
+- Two copies of the same code in a switch are two separate groups of `case` labels
+  (CW does not merge them; `fn_800A0FB4`).
+- A search loop returning true from inside with `li r3,0` set before the loop: a
+  `bool found = false;` set and `break`, then `return found;` (`BuzzsawTileSetPool::vf20`).
+- Calls through a member object's vtable, with `this + offset` recomputed for each
+  call: the source goes through an inline accessor returning a base pointer
+  (`BuzzSawExperiment::GetTrack`); a local pointer keeps it in a saved register.
+- A clamp followed by `frsp` before a second clamp: the first one compares floats but
+  returns a double (`UnkClampD` in `unit_8009F66C`).
 
 ## Bit fields and hardware registers
 
