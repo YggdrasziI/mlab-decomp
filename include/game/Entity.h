@@ -159,7 +159,9 @@ public:
 struct UnkEntityAnim {
     /* 0x00 */ u8 unk0[0x8];
     /* 0x08 */ u32 m8; // hash of the sensor type
-    /* 0x0C */ u8 unkC[0xB4 - 0xC];
+    /* 0x0C */ u8 unkC[0x48 - 0xC];
+    /* 0x48 */ void* mSet; // animation set searched by fn_801AC2FC
+    /* 0x4C */ u8 unk4C[0xB4 - 0x4C];
     /* 0x0B4 */ void* mB4;
 };
 
