@@ -21,6 +21,13 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 
 ## Registers and stack
 
+- An 8-byte struct the DOL returns through a hidden pointer in r3 (the caller passes
+  a stack slot) is returned in r3/r4 by this build unless the struct has a
+  user-defined copy constructor (`UnkTreeRange` in `unit_800A34C0`).
+- A constant stored through a call result (`vf10()->m->f = 0;`) is kept in a saved
+  register across the call; storing through a local pointer first
+  (`p = vf10()->m; p->f = 0;`) gives the DOL's `li r0` after the call
+  (`unit_800A34C0`).
 - A run of widget lookups `w = find(screen, hash); if (w) set(w, ...);` with the
   screen and the widgets in the wrong saved registers: give each lookup its own
   local (or its own block) instead of reusing one variable (`fn_8013C6CC`).
