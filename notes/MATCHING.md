@@ -41,7 +41,8 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - A constant the DOL keeps in `f31` across a call is a local `f32` variable
   (`f32 duration = 5.0f;`).
 - The declaration order of locals sets their register numbers (a result declared
-  before the entity pointer, for example).
+  before the entity pointer, for example). A local declared at the top of its block
+  but assigned later takes a different saved register (`flag` in `fn_800D8280`).
 - Stack slots: the first declared local gets the higher address; compiler
   temporaries created later get lower ones.
 - A pointer to a member at a non-zero offset taken with a null check: an explicit
@@ -153,6 +154,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   `switch` whose result is unused.
 - `if (ok) { ...; return x; } return 0;` versus an early `return 0` changes which
   path falls through (`fn_801F5BB8`).
+- A `b` over unreachable code (a call and a test) right after a member is set to 0:
+  write the store, then the `if (member != 0) { ... }` test; CW folds the condition
+  but keeps the dead block (constructor of `unit_800D7F24`).
+- Search loops whose count the DOL reloads every iteration (no ctr loop) and whose
+  group index stays in a register (`li 0` / `mullw`): not reproduced yet
+  (`fn_800D8724`, `ExWorldWireTile::vfBC`).
 
 - Two copies of the same code in a switch are two separate groups of `case` labels
   (CW does not merge them; `fn_800A0FB4`).
