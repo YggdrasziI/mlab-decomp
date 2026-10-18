@@ -63,6 +63,10 @@ version of each library against this DOL.
   CC0 references lack a source.
 - `zeldaret/oot-vc` (no license file): reuse allowed by the owner on 2026-10-14 (close
   RVL SDK build: MTX, time.dolphin, OS...), same conditions.
+- `yannicksuter/smstrikers-decomp` (GC folder; its MSL C++ headers are marked as
+  reconstructed proprietary runtime material, not CC0): reuse of
+  `include/PowerPC_EABI_Support/MSL_C++/MSL_Common/msl_tree.h` allowed by the owner on
+  2026-10-18 (MSL red-black tree for the game maps).
 - Any other project without a known license needs the owner's approval first.
 - Every reuse is logged in `notes/PROVENANCE.md` (file, commit, changes, license or
   its absence).

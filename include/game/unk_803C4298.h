@@ -31,6 +31,12 @@ public:
     virtual void vf34();
     // Gets the camera matrix.
     virtual void vf38(UnkMtx34* mtx);
+    virtual void vf3C();
+    virtual void vf40();
+    virtual void vf44();
+    virtual void vf48();
+    virtual void vf4C();
+    virtual void vf50(int arg);
 
     /* 0x00 */ // vtable
     /* 0x04 */ UnkVec3* mPos;

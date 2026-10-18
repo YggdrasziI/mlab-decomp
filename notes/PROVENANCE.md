@@ -956,3 +956,16 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   callback table in `.bss` (0x805C6D08) and the platform files call through it; the
   references' versions do not, so these units stay NonMatching (notes in the sources).
   Two `const time_t*` casts added in `gsPlatformUtil.c` (code stripped in the DOL).
+
+- **`include/msl_tree.h` (from smstrikers-decomp, owner's approval of 2026-10-18).**
+  Started from `include/PowerPC_EABI_Support/MSL_C++/MSL_Common/msl_tree.h` and
+  `utility.h` of smstrikers-decomp (commit `d1f357ff`; its MSL files carry no CC0
+  grant): `__red_black_tree` (`balance_insert`, `rotate_left`/`rotate_right`), the
+  `compressed_pair_imp` pair, `__tree::destroy`/`insert_node_at`/`find`-style search,
+  `pair`, `allocator`. Changed to fit this DOL: `balance_insert` keeps the grandparent
+  in a local; the node owner sits three classes below `__tree` (the map destructors
+  test `this` five times); the destructor tests the root without a local;
+  `compressed_pair_imp` value-initializes its members; `insert_node_at` checks
+  `size == 0xFFFFFFFF`, frees the node through a holder used by pointer and reaches
+  its first message through `__msl_error`; added `find_insert_pos_multi`,
+  `insert_multi`, `equal_range`, `iterator` and `make_pair` from the DOL code.
