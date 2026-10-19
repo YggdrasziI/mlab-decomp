@@ -43,6 +43,8 @@ struct UnkGlobals803E6D00 {
     /* 0x0 */ UnkGlobals803E6D00Sub* m0;
     /* 0x4 */ u8 unk4[0xC - 0x4];
     /* 0xC */ f32 mDeltaTime;
+    /* 0x10 */ u8 unk10[0xE0 - 0x10];
+    /* 0xE0 */ struct UnkZoneRef* mE0; // current zone (zone id at 0x18)
 };
 
 extern UnkGlobals803E6D00 lbl_803E6D00;

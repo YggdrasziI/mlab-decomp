@@ -118,12 +118,22 @@ struct EntityInfo {
     /* 0x0C */ UnkQuat mRot;
     /* 0x1C */ u32 mTypeMask;
     /* 0x20 */ u32 mFlags;
-    /* 0x24 */ u8 unk24[0x30 - 0x24];
+    /* 0x24 */ f32 m24;
+    /* 0x28 */ u32 m28;
+    /* 0x2C */ u32 m2C;
     /* 0x30 */ u16 m30;
     /* 0x32 */ u16 m32;
     /* 0x34 */ u8 mType;
-    /* 0x35 */ u8 unk35[0x3A - 0x35];
+    // Separate bytes: the copy in fn_8010C90C copies them one by one.
+    /* 0x35 */ u8 m35;
+    /* 0x36 */ u8 m36;
+    /* 0x37 */ u8 m37;
+    /* 0x38 */ u8 m38;
+    /* 0x39 */ u8 m39;
     /* 0x3A */ u8 m3A;
+    /* 0x3B */ u8 m3B;
+    /* 0x3C */ u8 m3C;
+    /* 0x3D */ u8 m3D;
 };
 
 // 0x20-byte record kept twice in UnkEntitySlot (real name unknown).
@@ -279,12 +289,14 @@ public:
 
     /* 0x000 */ // vtable
     /* 0x004 */ EntityInfo* mInfo;
-    /* 0x008 */ u8 unk8[0x18 - 0x8];
+    /* 0x008 */ UnkVec3 m8; // set to (1, 1, 1) on spawn (fn_8010C90C), probably a scale
+    /* 0x014 */ u8 unk14[0x18 - 0x14];
     /* 0x018 */ UnkVec3 m18; // returned by vf44
     /* 0x024 */ f32 m24; // the frame time, added to timers
     /* 0x028 */ f32 m28; // the current time (timers store m28 + delay)
     /* 0x02C */ u32 m2C;
-    /* 0x030 */ u8 unk30[0x88 - 0x30];
+    /* 0x030 */ int m30; // id given by fn_8010CBFC
+    /* 0x034 */ u8 unk34[0x88 - 0x34];
     /* 0x088 */ void* m88;
     /* 0x08C */ UnkList* m8C;
     /* 0x090 */ void* m90;
@@ -295,7 +307,11 @@ public:
     /* 0x0A8 */ int mA8;
     /* 0x0AC */ u8 unkAC[0xB0 - 0xAC];
     /* 0x0B0 */ UnkEntityNode* mB0;
-    /* 0x0B4 */ u8 unkB4[0x14C - 0xB4];
+    /* 0x0B4 */ u8 unkB4[0xBC - 0xB4];
+    /* 0x0BC */ void* mBC; // pool entry it was taken from (fn_8010C90C)
+    /* 0x0C0 */ u8 unkC0[0xC8 - 0xC0];
+    /* 0x0C8 */ UnkVec3 mC8; // spawn position (fn_8010C90C)
+    /* 0x0D4 */ u8 unkD4[0x14C - 0xD4];
 };
 
 class Entity_Game : public Entity {
