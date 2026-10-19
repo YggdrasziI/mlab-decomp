@@ -3,12 +3,18 @@
 
 // Class "InventoryBook" (RTTI) and its four sections "Creatures", "Ingredients",
 // "IngredientSelection" and "Parts" (RTTI names; sizes from the allocations in the
-// InventoryBook constructor). The sections' functions are at 0x80117090-0x8011A3BC
-// and from 0x8011A778 (units not split yet). Real file names unknown.
+// InventoryBook constructor). Creatures is game unit 0x80117090; the other sections'
+// functions are at 0x80117AE4-0x8011A3BC and from 0x8011A778 (units not split yet).
+// Real file names unknown.
 
 #include "game/book.h"
 #include "game/section.h"
 
+class UnkActor;
+struct UnkStands;
+
+// Creatures section (game unit 0x80117090): pages through the player's creatures and
+// shows the current one on the stands model.
 class Creatures : public section {
 public:
     Creatures();
@@ -18,7 +24,33 @@ public:
     virtual void vf14();
     virtual void vf18();
 
-    u8 unk[0x54 - sizeof(section)];
+    void fn_8011726C(int delta);
+    void fn_80117320(int index);
+    f32 fn_801173A0();
+    f32 fn_801173B8();
+    f32 fn_801173D0();
+    f32 fn_801173E8();
+    f32 fn_80117400();
+    f32 fn_80117418();
+    void fn_80117430();
+    void fn_80117844();
+    int fn_80117948();
+    const char* fn_80117970();
+    int fn_801179C0();
+    void fn_801179C8();
+    int fn_80117ABC();
+
+    /* 0x1C */ u8 unk1C[0x20 - 0x1C];
+    /* 0x20 */ void* mCreature;
+    /* 0x24 */ UnkActor* mActor;
+    /* 0x28 */ UnkStands* mStands;
+    /* 0x2C */ int mIndex;
+    /* 0x30 */ int mShownIndex;
+    /* 0x34 */ int mCount;
+    /* 0x38 */ int mShown;
+    /* 0x3C */ int mOpened;
+    /* 0x40 */ char mName[0x10];
+    /* 0x50 */ int mTimer;
 };
 
 class Ingredients : public section {
