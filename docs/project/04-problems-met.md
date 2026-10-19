@@ -40,6 +40,7 @@ live in [`TASKS.md`](../../TASKS.md), [`notes/SPLITS.md`](../../notes/SPLITS.md)
 | Problem | Lesson |
 |---|---|
 | Fuzzy score 98.7 % but the DOL differs | compare the linked bytes; score variants by differing words |
+| A function at 100 % in objdiff loaded 0.0 where the DOL loads 1.0 (objdiff does not compare the values behind constant relocations) | the `.sdata2` order looked wrong; reading the constant values in the DOL showed the vector was (1, 1, 1), not zero |
 | A DOL byte diff showed "0 words differ" for a NonMatching unit | its assembly is what gets linked: use the objdiff report until the unit is switched to `Matching` |
 | Long sessions of guessing | time-box, record the gap, move on; the next unit often teaches the answer |
 | Names that "look right" from a fan wiki | the wiki is a source of ideas, never evidence; unknown names stay address-based |

@@ -160,6 +160,15 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Four float reads stored straight into a struct (not through constructor arguments,
   which are evaluated right to left): assign the members one by one
   (`fn_8009875C`).
+- A struct assignment whose float members the DOL copies with `lfs`/`stfs`: the
+  implicit assignment of a struct of `UnkVec3`/`UnkQuat` copies them as words
+  (`lwz`/`stw`), and placement `new` with the copy constructor adds a null check.
+  Copying the members one by one (floats as floats) matches (`UnkCopyInfo` in
+  `unit_8010C750`).
+- objdiff does not compare the values behind constant relocations: a function at
+  100 % can load 0.0 where the DOL loads 1.0. Check the `.sdata2` values (and the
+  linked `main.dol`) when the pool order looks wrong; here the "zero" vector was
+  `(1, 1, 1)` (`fn_8010C90C`).
 - A struct copied with a word loop to the stack and then member by member (with
   spills) matches when the words are separate members, not an array
   (`UnkOpponentData`, `fn_8013CA74`).
