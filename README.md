@@ -20,11 +20,6 @@ and the daily workflow.
 Progress
 ========
 
-![Progress treemap](progress/treemap.svg)
-
-Each rectangle is a unit, sized by its code and colored by its fuzzy match (red 0 %,
-green 100 %), like the decomp.dev overview image.
-
 ![Current progress](progress/progress.svg)
 
 ![Progress over time](progress/history.svg)
