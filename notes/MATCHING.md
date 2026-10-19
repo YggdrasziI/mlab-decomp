@@ -153,6 +153,13 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - While a unit is `NonMatching` its assembly is linked, so a `main.dol` byte diff
   says nothing about it: score variants with the objdiff report, and switch to
   `Matching` only to compare the linked bytes.
+- An index register numbered like the DOL (`mulli r0` for the index, the array base in
+  `r3`): store the call result in a local (`int index = model->fn(...);`) before
+  indexing; a pointer to the member object (`UnkEntity94* model = &m94;`) also keeps
+  the stack stores of a dead vector copy (`fn_80098700`).
+- Four float reads stored straight into a struct (not through constructor arguments,
+  which are evaluated right to left): assign the members one by one
+  (`fn_8009875C`).
 - A struct copied with a word loop to the stack and then member by member (with
   spills) matches when the words are separate members, not an array
   (`UnkOpponentData`, `fn_8013CA74`).
@@ -214,6 +221,13 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   GC 3.0 and Wii 1.x compilers tried lay .bss out in definition order (also with
   an `extern` declared first, copy-initialization, `-inline deferred`); `-common on`
   moves the object out of the unit.
+- Function-local static before `sUnkVec3` (`sOff` in `fn_800988F0`): the DOL places
+  the guarded local static first; this build emits it after the header's object, also
+  when the static is moved into an inline function defined before the include (it
+  becomes weak). Probably the same cause as the pattern above.
+- An inlined member function whose stack temporaries come out in the opposite order
+  of its out-of-line copy (`fn_8009875C` inlined in `fn_800988F0`): not reproduced
+  (shared inline helper, getter inline, color by value tried).
 - GameSpy units: empty debug branches keep a jump and a dead compare in the DOL that
   our compile removes.
 - Identity matrix built on the stack as four 12-byte temporaries in row order, each

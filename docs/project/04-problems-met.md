@@ -20,7 +20,7 @@ live in [`TASKS.md`](../../TASKS.md), [`notes/SPLITS.md`](../../notes/SPLITS.md)
 | A split that builds proves nothing about file boundaries | rule: a boundary counts only once the unit matches |
 | Units with only a static initializer are not referenced, the linker drops them | solved: `FORCEFILES` in `config/RM7P4F/ldscript.tpl` |
 | **Link-order cycle**: `unit_80014230` has `.rodata` after the tables of later units although its `.text` comes first, so their `.rodata` cannot be split (`unit_8009F66C`, `unit_800B1498`) | worked around: the tables stay in the unsplit `.rodata` and the source declares them `extern`; `unit_800B1498` matches and links that way |
-| **`.bss` order versus initialization order**: in several units the original places the shared vector last in `.bss` but initializes it first; every compiler tried lays `.bss` out in definition order | open, blocks linking of `unit_8013CA74` and `unit_8009F66C` |
+| **`.bss` order versus initialization order**: in several units the original places the shared vector last in `.bss`, after an object of the unit (a registered object, or a function-local static); every compiler tried lays `.bss` out in definition order | open, blocks linking of `unit_8013CA74`, `unit_8009F66C` and `unit_80098664` |
 | Weak (inline) functions and RTTI emitted in one unit in the original, another in ours (`unit_800C42B8` emits RTTI data that the DOL has in `unit_8009F66C`) | waits for the other unit |
 | objdiff pairs symbols by name: a wrong `.bss` order can show 100 % and still break the link | always check the linked `main.dol`, not only the report |
 
