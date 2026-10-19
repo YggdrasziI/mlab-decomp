@@ -3,6 +3,7 @@
 // 0x10 in its argument. Bounds come from the static initializers of this unit and
 // the previous one.
 
+#include "game/unk_vec3.mch"
 #include "types.h"
 
 // Object at 0x10 in the callback argument (real type unknown); 0x290 holds a state.

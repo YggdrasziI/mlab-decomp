@@ -2,6 +2,7 @@
 // sequences. Bounds come from the unit's static initializer and its own .sdata2
 // constants.
 
+#include "game/unk_vec3.mch"
 #include "game/unit_800214D4.h"
 
 void UnkInputSequenceSet::fn_800214D4() {

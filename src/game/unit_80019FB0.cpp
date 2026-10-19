@@ -1,6 +1,7 @@
 // Game unit at 0x80019FB0-0x8001A17C (real file name unknown). Bounds come from the
 // static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 
 inline f32 UnkSqrtfF(f32 x) {

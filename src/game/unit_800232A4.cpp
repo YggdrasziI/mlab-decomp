@@ -3,6 +3,7 @@
 // its mode at 0xE8). Bounds come from the static initializers of this unit and the
 // previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 
 // Object returned by fn_80021750 (real type unknown).

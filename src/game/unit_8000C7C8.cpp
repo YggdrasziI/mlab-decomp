@@ -4,6 +4,7 @@
 // forwarders to the managers. Bounds come from the static initializers of this unit
 // and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_803B53A0.h"
 #include "game/unk_803C4298.h"
 #include "game/unk_803E6D00.h"

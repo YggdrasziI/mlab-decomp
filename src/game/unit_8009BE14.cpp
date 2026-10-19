@@ -2,6 +2,7 @@
 // (RTTI "AstralTrack", derived from "ExWorldCurvedTrack" and "ExWorldTrack"). Bounds
 // come from the static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/ExWorldTrack.h"
 
 extern "C" {

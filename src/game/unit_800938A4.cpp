@@ -5,15 +5,16 @@
 // are registered in a static table. Bounds come from the static initializers of
 // this unit and the previous one.
 
-class UnkSmasher;
-
-// Registered smashers, by slot (declared before the headers that define sUnkVec3,
-// which follows it in .bss).
-static UnkSmasher* lbl_803C6A88[3];
+#include "game/unk_vec3.mch"
 
 #include "game/Entity.h"
 #include "game/externs.h"
 #include "game/unk_vec3.h"
+
+class UnkSmasher;
+
+// Registered smashers, by slot.
+static UnkSmasher* lbl_803C6A88[3];
 
 // Real names unknown.
 struct UnkSmasherAnimState;

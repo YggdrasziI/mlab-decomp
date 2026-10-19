@@ -4,6 +4,7 @@
 // progress goes from 0 to 100. Bounds come from the static initializers of this
 // unit and the previous one. Method names unknown (vfXX = vtable offset).
 
+#include "game/unk_vec3.mch"
 #include "game/unk_actor.h"
 #include "game/unk_vec3.h"
 

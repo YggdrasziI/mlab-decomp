@@ -3,6 +3,7 @@
 // (the previous unit ends with an inline constructor emitted after its static
 // initializer, at 0x80062C7C).
 
+#include "game/unk_vec3.mch"
 #include "game/Entity.h"
 #include "game/unk_vec3.h"
 

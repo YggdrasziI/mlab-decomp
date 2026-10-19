@@ -2,6 +2,7 @@
 // static initializer of the shared vector. Bounds come from the static initializers
 // of this unit and the next one; it is the first unit of .text.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 
 // Nothing references this object and its static initializer is a local symbol

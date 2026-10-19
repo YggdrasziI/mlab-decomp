@@ -6,18 +6,17 @@
 // XNonInventoryMonster used for the opponent (built by the static initializer).
 // Bounds come from the static initializers of this unit and the previous one.
 //
-// NONMATCHING (link order): every function matches but fn_8013E0EC (99.9 %, one
-// register), and the .bss order differs. The DOL initializes sUnkVec3 before the
-// opponent monster but places it after the monster and its destructor chain; this
-// compiler (every GC 3.0 and Wii 1.x version tried) lays .bss out in definition order,
-// so no order of the definitions gives both.
+// NONMATCHING: every function matches but fn_8013E0EC (99.9 %, one register). The
+// precompiled header gives the DOL's .bss order (sUnkVec3 initialized first, placed
+// last).
 
-// Opponent and team names. Defined before the includes because the DOL has them
-// before the sUnkVec3 of unk_vec3.h.
-static char sOpponentName[16];
-static char sTeamName[32];
+#include "game/unk_vec3.mch"
 
 #include "types.h"
+
+// Opponent and team names.
+static char sOpponentName[16];
+static char sTeamName[32];
 
 // The DOL's static initializer addresses sUnkVec3, the opponent monster and its
 // destructor chain with one lis each instead of one shared .bss base: only

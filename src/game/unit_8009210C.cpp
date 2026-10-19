@@ -5,15 +5,16 @@
 // registered in a static table. Bounds come from the static initializers of this unit
 // and the previous one.
 
-class UnkRobot;
-
-// Registered robots, by slot (declared before the headers that define sUnkVec3, which
-// follows it in .bss).
-static UnkRobot* lbl_803C6A70[3];
+#include "game/unk_vec3.mch"
 
 #include "game/Entity.h"
 #include "game/externs.h"
 #include "game/unk_vec3.h"
+
+class UnkRobot;
+
+// Registered robots, by slot.
+static UnkRobot* lbl_803C6A70[3];
 
 // Reference counted object held by a robot (real type unknown).
 struct UnkRobotRef {

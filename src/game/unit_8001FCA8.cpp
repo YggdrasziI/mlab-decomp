@@ -2,6 +2,7 @@
 // update, the CAbstractInputEventStage base and the stage sequence. Bounds come
 // from the unit's static initializer and its own .sdata2 constants.
 
+#include "game/unk_vec3.mch"
 #include "game/unit_8001FCA8.h"
 
 #include <math.h>

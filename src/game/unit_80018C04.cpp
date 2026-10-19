@@ -2,6 +2,7 @@
 // animation predicates through fn_801DC91C, then calls other registration functions.
 // Bounds come from the static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 
 // Object at 0xA0 in the callback target: animation state (real type unknown).

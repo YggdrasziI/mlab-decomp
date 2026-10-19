@@ -3,13 +3,14 @@
 // blinking cursor actor at its rest position and saves the team into a 0x3F record.
 // Bounds come from the static initializers of this unit and the previous one.
 
-// Shown name. Defined before the includes: the DOL has it before the sUnkVec3 of
-// unk_vec3.h in .bss.
-static char sText[16];
+#include "game/unk_vec3.mch"
 
 #include "game/externs.h"
 #include "game/unk_actor.h"
 #include "game/unk_vec3.h"
+
+// Shown name.
+static char sText[16];
 
 // Team member (real type unknown).
 struct UnkMember {

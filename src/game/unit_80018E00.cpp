@@ -8,6 +8,7 @@
 // NonMatching: fn_80019268 (99.9 %) loads entity->m170 before entity->m16C (the DOL
 // loads them the other way round); fn_800195A4 only differs by string relocations.
 
+#include "game/unk_vec3.mch"
 #include "game/Entity.h"
 #include "game/externs.h"
 #include "game/unk_803C4298.h"

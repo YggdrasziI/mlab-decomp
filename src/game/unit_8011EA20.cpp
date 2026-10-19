@@ -4,6 +4,7 @@
 // gives names, states and "%d/%d" progress texts. Bounds come from the static
 // initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/Journal.h"
 #include "game/externs.h"
 #include "game/unk_text.h"

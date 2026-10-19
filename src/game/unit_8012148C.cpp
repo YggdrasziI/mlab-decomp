@@ -2,6 +2,7 @@
 // forwarders of Unk8012148C. Bounds come from the static initializers of this unit
 // and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/Unk8012148C.h"
 #include "game/unk_vec3.h"
 

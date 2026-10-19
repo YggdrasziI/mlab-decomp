@@ -6,6 +6,7 @@
 // static initializers of this unit and the previous one.
 // NonMatching: fn_800182A4 (99.8 %, float registers of the direction tests).
 
+#include "game/unk_vec3.mch"
 #include "game/ActionSelectionCallback.h"
 #include "game/externs.h"
 #include "game/unk_803B53A0.h"

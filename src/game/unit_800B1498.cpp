@@ -8,6 +8,7 @@
 // .rodata unsplit: unit_80014230 has .rodata after them while its .text comes first
 // (dtk reports a link order cycle, as for unit_8009F66C).
 
+#include "game/unk_vec3.mch"
 #include "game/Entity.h"
 #include "game/unk_sphere.h"
 #include "game/unk_vec3.h"

@@ -4,15 +4,14 @@
 // copied into the save data. Bounds come from the static initializers of this unit
 // and the previous one.
 
-// Typed name. Defined before the includes: .bss objects are emitted in definition
-// order and the DOL has this buffer before the sUnkVec3 of unk_vec3.h (checked by the
-// main.dol link).
-static char lbl_803F2230[16];
-
+#include "game/unk_vec3.mch"
 #include "game/Entity.h"
 #include "game/unk_actor.h"
 #include "game/unk_text.h"
 #include "game/unk_vec3.h"
+
+// Typed name.
+static char lbl_803F2230[16];
 
 // Widget showing the typed name (real type unknown).
 struct UnkTextWidget {

@@ -7,6 +7,7 @@
 // Built with -ipa file like the unit at 0x8009F66C: the recursion is then inlined
 // three levels deep, as in the DOL.
 
+#include "game/unk_vec3.mch"
 #include "game/BuzzSawExperiment.h"
 #include "game/unk_vec3.h"
 

@@ -5,6 +5,7 @@
 // static initializer of the previous unit registers; the end is this unit's static
 // initializer.
 
+#include "game/unk_vec3_rvl.mch"
 #include <revolution/dvd.h>
 #include <revolution/os.h>
 #include <revolution/wpad/WPAD.h>

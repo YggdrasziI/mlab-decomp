@@ -1,0 +1,2 @@
+// Precompiled into build/<version>/include/game/unk_vec3.mch (see configure.py).
+#include "game/unk_vec3.h"

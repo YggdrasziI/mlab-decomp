@@ -6,6 +6,7 @@
 // NonMatching: fn_80116D40 (97.6 %), fn_80116E54 (99.5 %) and fn_80116F08 (98.7 %)
 // differ only by register numbering (mostly float registers).
 
+#include "game/unk_vec3.mch"
 #include "game/unk_actor.h"
 #include "game/unk_vec3.h"
 

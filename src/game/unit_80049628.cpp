@@ -3,6 +3,7 @@
 // unit and the previous one. The RTTI of the base class XCharacterPartAttachment is
 // also emitted here.
 
+#include "game/unk_vec3.mch"
 #include "game/CharacterPartAttachment.h"
 #include "game/unk_vec3.h"
 

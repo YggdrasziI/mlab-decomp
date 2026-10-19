@@ -331,6 +331,22 @@ cflags_game = [
 # 3.0a5.2 is chosen (SDK build tag 0x4199_60831). See notes/COMPILER.md.
 config.linker_version = "GC/3.0a5.2"
 
+# Precompiled header of the shared game header. Objects that a unit gets from a
+# precompiled header are emitted after the unit's own objects, which gives the DOL's
+# .bss order (the shared (0, 1, 0) vector last); see notes/MATCHING.md.
+config.precompiled_headers = [
+    {
+        "source": "game/unk_vec3.pch++",
+        "mw_version": config.linker_version,
+        "cflags": [*cflags_game],
+    },
+    {
+        "source": "game/unk_vec3_rvl.pch++",
+        "mw_version": config.linker_version,
+        "cflags": [*cflags_game],
+    },
+]
+
 
 # Helper function for Dolphin libraries
 def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:

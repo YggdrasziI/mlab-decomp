@@ -2,6 +2,7 @@
 // DebugMenuActionSelectionCallback class. Bounds come from the static initializers
 // of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/ActionSelectionCallback.h"
 #include "game/unk_vec3.h"
 

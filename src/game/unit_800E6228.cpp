@@ -2,6 +2,7 @@
 // entity at lbl_803E6D00.m0->m8. Bounds come from the static initializers of this
 // unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_803E6D00.h"
 #include "game/unk_vec3.h"
 

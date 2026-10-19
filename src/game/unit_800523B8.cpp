@@ -1,6 +1,7 @@
 // Game unit at 0x800523B8-0x80052504 (real file name unknown): a 32-bit key for an
 // id. Bounds come from the static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 
 // 41 keys in another unit's data (0x803881B4); real name unknown.

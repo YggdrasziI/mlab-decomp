@@ -2,6 +2,7 @@
 // drawn by the top-level game flow (object at lbl_805FAEB0) with its render state
 // set up. Bounds come from the static initializers of this unit and the previous one.
 
+#include "game/unk_vec3_rvl.mch"
 #include <revolution/gx/GXHardware.h>
 #include "game/Unk8012148C.h"
 #include "game/unk_vec3.h"

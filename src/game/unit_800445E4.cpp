@@ -3,6 +3,7 @@
 // to the GX FIFO. Bounds come from the static initializers of this unit and the
 // previous one.
 
+#include "game/unk_vec3_rvl.mch"
 #include <revolution/gx/GXHardware.h>
 #include "game/unk_vec3.h"
 

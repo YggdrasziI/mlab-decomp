@@ -11,6 +11,7 @@
 // The static initializer addresses each object with its own lis.
 #pragma pool_data off
 
+#include "game/unk_vec3.mch"
 #include "game/BuzzSawExperiment.h"
 #include "game/unk_803C4298.h"
 #include "game/unk_803E6D00.h"

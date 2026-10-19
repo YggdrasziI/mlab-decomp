@@ -6,6 +6,7 @@
 // them), fn_8007A4B4 and fn_8007A598 (float register numbers) differ; the other
 // functions match.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 
 // Image description at 0x4 in UnkImage (passed to fn_80079440).

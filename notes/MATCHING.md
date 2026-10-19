@@ -165,10 +165,21 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   (`UnkOpponentData`, `fn_8013CA74`).
 - A static initializer that addresses each object with its own `lis` instead of one
   .bss base needs `#pragma pool_data off` (`unit_8013CA74`).
-- `.bss` objects are laid out in declaration order, including the `sUnkVec3` that
-  `Entity.h` pulls in through `unk_vec3.h`. An object the DOL places before that
-  `sUnkVec3` is defined before the include (`unit_8013EB1C`); objdiff pairs the
-  symbols by name and still shows 100 %, only the `main.dol` link catches it.
+- **Precompiled header.** In every game unit of the DOL the shared `(0, 1, 0)` vector
+  of `unk_vec3.h` is the last `.bss` object, although its initializer runs first.
+  mwcc lays out `.bss` in definition order, except that objects coming from a
+  precompiled header are emitted after the unit's own objects (tested with every GC
+  3.0 version; flags such as `-ipa file` or `-inline deferred` change nothing). So the
+  game was built with a precompiled header: every game unit that has the vector
+  starts with `#include "game/unk_vec3.mch"` (built from
+  `include/game/unk_vec3.pch++`), or `game/unk_vec3_rvl.mch` when it includes Wii
+  SDK headers (that variant puts the SDK's `types.h` first, as those units did
+  before). It must be the first `#include`; units without the vector (only a static
+  initializer of their own, `unit_801604FC`...) must not use it. It fixed the order
+  of a registered object (`unit_8013CA74`), function-local statics
+  (`unit_80098664`, `unit_8009F66C`) and replaced the old workaround of defining
+  objects before the includes. objdiff pairs `.bss` symbols by name, so only the
+  `main.dol` link shows a wrong order.
 - Units with only a static initializer (`unit_80006B40`, `unit_80042C18`) are kept by
   FORCEFILES in `config/RM7P4F/ldscript.tpl` (nothing references them and
   FORCEACTIVE cannot name a local `__sinit`).
@@ -215,16 +226,6 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 
 ## Unsolved patterns
 
-- `.bss` order against initialization order (`unit_8013CA74`, and every DOL static
-  initializer that builds a registered object and `sUnkVec3`): the DOL initializes
-  `sUnkVec3` first but places it after the object and its destructor chain. All the
-  GC 3.0 and Wii 1.x compilers tried lay .bss out in definition order (also with
-  an `extern` declared first, copy-initialization, `-inline deferred`); `-common on`
-  moves the object out of the unit.
-- Function-local static before `sUnkVec3` (`sOff` in `fn_800988F0`): the DOL places
-  the guarded local static first; this build emits it after the header's object, also
-  when the static is moved into an inline function defined before the include (it
-  becomes weak). Probably the same cause as the pattern above.
 - An inlined member function whose stack temporaries come out in the opposite order
   of its out-of-line copy (`fn_8009875C` inlined in `fn_800988F0`): not reproduced
   (shared inline helper, getter inline, color by value tried).

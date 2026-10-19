@@ -4,6 +4,7 @@
 // the previous static initializer are left to the previous unit (probably its
 // inline functions).
 
+#include "game/unk_vec3.mch"
 #include "game/Entity.h"
 #include "game/unk_vec3.h"
 

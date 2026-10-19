@@ -3,6 +3,7 @@
 // forwarders to the game state object returned by fn_800701A4). Bounds come from the
 // static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 #include "types.h"
 

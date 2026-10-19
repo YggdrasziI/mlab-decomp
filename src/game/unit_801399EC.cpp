@@ -5,16 +5,17 @@
 // follows the empty function at 0x801399E8, which the previous unit's static
 // initializer uses; the end is this unit's static initializer.
 
-// Typed digits and the text shown. Defined before the includes: the DOL has them
-// before the sUnkVec3 of unk_vec3.h in .bss.
-static char sDigits[16];
-static char sText[16];
+#include "game/unk_vec3_rvl.mch"
 
 #include <revolution/os.h>
 
 #include "game/Entity.h"
 #include "game/unk_actor.h"
 #include "game/unk_vec3.h"
+
+// Typed digits and the text shown.
+static char sDigits[16];
+static char sText[16];
 
 // Widget showing the typed code (real type unknown).
 struct UnkTextWidget {

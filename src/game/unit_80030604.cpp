@@ -2,6 +2,7 @@
 // subclasses SewerBottle, SewerMetal, SewerRing, SewerBubble and SewerFish (RTTI).
 // Bounds come from the static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/SewerItem.h"
 #include "game/unk_803C4298.h"
 

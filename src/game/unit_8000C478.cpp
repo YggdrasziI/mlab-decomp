@@ -2,6 +2,7 @@
 // unit's static initializer (0x8000C380) is followed by the destructor it registers
 // (0x8000C41C); this unit's static initializer ends at 0x8000C7C8.
 
+#include "game/unk_vec3.mch"
 #include "game/Entity.h"
 #include "game/unk_803E6D00.h"
 #include "game/unk_vec3.h"

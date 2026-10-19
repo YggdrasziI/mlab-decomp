@@ -9,6 +9,7 @@
 // The callbacks take a const context (see unit_80018E00.cpp); fn_80019A9C writes
 // its result through a const_cast.
 
+#include "game/unk_vec3.mch"
 #include "game/Entity.h"
 #include "game/externs.h"
 #include "game/unk_vec3.h"

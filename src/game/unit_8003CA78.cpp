@@ -4,6 +4,7 @@
 // initializer. The unit at 0x80039CF8 builds arrays of this class with
 // __construct_array.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_actor.h"
 #include "game/externs.h"
 #include "game/unk_vec3.h"

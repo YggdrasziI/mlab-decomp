@@ -4,6 +4,7 @@
 // 50000-59999, 80430) and reports the state to the callers. Bounds come from the
 // static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 #include "types.h"
 

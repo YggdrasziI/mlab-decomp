@@ -2,6 +2,7 @@
 // CIFixedPlayerTracking_DJ1::vf0C, a fixed camera looking at the player. Bounds come
 // from the static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/CameraInfluence.h"
 #include "game/unk_vec3.h"
 

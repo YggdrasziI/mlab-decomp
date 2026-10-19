@@ -3,6 +3,7 @@
 // multimap is instantiated here (the next unit calls it too). Bounds come from the
 // static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/BuzzSawExperiment.h"
 #include "game/unk_vec3.h"
 

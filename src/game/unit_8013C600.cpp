@@ -4,6 +4,7 @@
 // shows a "0:%0.02d" timer on the screen 0x43538242. Bounds come from the static
 // initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/externs.h"
 #include "game/unk_actor.h"
 #include "game/unk_vec3.h"

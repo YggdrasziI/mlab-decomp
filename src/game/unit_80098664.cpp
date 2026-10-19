@@ -4,6 +4,7 @@
 // The two per-difficulty tables at 0x80347150-0x80347170 belong here but stay in
 // .rodata unsplit (link order cycle with unit_80014230, as for unit_8009F66C).
 
+#include "game/unk_vec3.mch"
 #include "game/Entity.h"
 #include "game/unk_vec3.h"
 
@@ -87,8 +88,7 @@ void Entity_ReactorLeakLight::fn_8009875C(const UnkColor& color) {
 
 // 99.95 %: in the inlined copy of fn_8009875C the DOL gives the four parameter reads
 // and the two colors the opposite stack slots of the out-of-line copy (first read
-// lowest); this build uses the same order in both. The unit also cannot link: the
-// DOL places sOff before sUnkVec3 in .bss (see notes/MATCHING.md, unsolved patterns).
+// lowest); this build uses the same order in both.
 void Entity_ReactorLeakLight::fn_800988F0(int count) {
     static UnkColor sOff(0.2f, 0.2f, 0.2f, 1.0f);
     UnkColor color = sOff;

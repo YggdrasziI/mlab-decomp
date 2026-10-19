@@ -3,6 +3,7 @@
 // name and value, counters and the build string). Bounds come from the static
 // initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_text.h"
 #include "game/unk_vec3.h"
 #include "types.h"

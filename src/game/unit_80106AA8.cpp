@@ -4,6 +4,7 @@
 // set of an object. Bounds come from the static initializers of this unit and the
 // previous one.
 
+#include "game/unk_vec3.mch"
 #include "types.h"
 
 // Register set (0x100 bytes; the accessors are at 0x801DFE94-0x801E0040, unit not

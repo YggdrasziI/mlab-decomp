@@ -1,6 +1,7 @@
 // Game unit at 0x80106884-0x801068A8 (real file name unknown). Bounds come from the
 // static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 
 // In the previous unit (real name and signature unknown).

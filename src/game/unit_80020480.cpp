@@ -2,6 +2,7 @@
 // CAbstractInput* event stages. Bounds come from the unit's static initializer
 // and its own .sdata2 constants; class names from RTTI.
 
+#include "game/unk_vec3.mch"
 #include "game/unit_8001FCA8.h"
 
 CAbstractInputButtonJustReleased::CAbstractInputButtonJustReleased() {}

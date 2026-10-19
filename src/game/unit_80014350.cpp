@@ -7,6 +7,7 @@
 // NonMatching: fn_80015404 (97.2 %, callee-saved register numbering). Several loads
 // only match through const accessors (see unit_80018E00.cpp).
 
+#include "game/unk_vec3.mch"
 #include "game/Entity.h"
 #include "game/externs.h"
 #include "game/unit_800214D4.h"

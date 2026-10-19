@@ -2,6 +2,7 @@
 // influence, base of most others. Bounds come from the static initializer of this
 // unit and the start of the CIFixed_DJ1 unit.
 
+#include "game/unk_vec3.mch"
 #include "game/CameraInfluence.h"
 #include "game/unk_vec3.h"
 

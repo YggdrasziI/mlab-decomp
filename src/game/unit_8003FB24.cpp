@@ -2,6 +2,7 @@
 // of DebugMenuActionSelectionCallback. The start is the end of the previous unit (its
 // static initializer at 0x8003FB04); the end is this unit's static initializer.
 
+#include "game/unk_vec3.mch"
 #include "game/ActionSelectionCallback.h"
 #include "game/externs.h"
 #include "game/unk_vec3.h"

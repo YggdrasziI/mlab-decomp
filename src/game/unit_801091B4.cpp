@@ -2,6 +2,7 @@
 // unit's inline destructors end at 0x801091B4 (its static initializer registers
 // them), and this unit's static initializer ends at 0x801091EC.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 
 // Global block at 0x803C2A20 (real type unknown).

@@ -2,6 +2,7 @@
 // stop objects through a lazily created global manager (lbl_805FBBAC). Bounds come
 // from the static initializers of this unit and the previous one.
 
+#include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
 
 // Object handled by the manager (real type unknown).

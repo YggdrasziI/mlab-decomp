@@ -2,6 +2,7 @@
 // influence. Bounds come from the static initializers of this unit and the previous
 // one. NOT FINISHED: vf0C (0x800DFC44) and fn_800DF7C4 are not written yet.
 
+#include "game/unk_vec3.mch"
 #include "game/CameraInfluence.h"
 #include "game/unk_vec3.h"
 #include <math.h>
