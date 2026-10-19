@@ -203,6 +203,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   0x18 bytes, in .bss) (`fn_80121B08`).
 - A `switch` with cases 1 and 2 whose compare tree starts at 1: add `case 0:` with
   the default label (`fn_80121B08`, also `fn_801091EC`).
+- A value kept in r4 (not r0) across a call that takes this object in r3: the
+  callee takes it as a second argument (`fn_8004D760(stands, creature)` in
+  `unit_80117090`); add the parameter.
+- An array searched through a pointer to its start, with the count read at an
+  offset from that pointer: the array and its count form a sub-struct with its own
+  inline search method (`UnkCreatureList::IndexOf`).
 - A struct copied with a word loop to the stack and then member by member (with
   spills) matches when the words are separate members, not an array
   (`UnkOpponentData`, `fn_8013CA74`).
