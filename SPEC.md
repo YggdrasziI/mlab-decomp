@@ -80,6 +80,7 @@ src/  include/  libs/     sources and headers (game, SDK, runtime, MSL, TRK)
 tools/                    shared scripts (progress charts, report and asm helpers)
 progress/                 progress charts and history (README images)
 notes/                    reference documentation (see CLAUDE.md routing table)
+docs/                     learning guide: general concepts and how this project works
 wiki/monster-lab-wiki/    game knowledge for naming (not evidence)
 .claude/skills/           project workflows (decomp-manager, decomp-unit,
                           unit-readiness)

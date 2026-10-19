@@ -10,6 +10,13 @@ Supported versions:
 
 - `RM7P4F`: Rev 0 (Europe)
 
+Learning guide
+==============
+
+[`docs/`](docs/README.md) explains how matching decompilation works, in general and in
+this project: concepts, tools, steps taken, a unit from start to finish, problems met
+and the daily workflow.
+
 Progress
 ========
 
