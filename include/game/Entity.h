@@ -412,8 +412,33 @@ public:
     /* 0x20C */ u8 unk20C[0x264 - 0x20C];
 };
 
-// Sphere tested by Entity_GrowJuiceHeartVine (defined in unit_800B1EDC.cpp).
+// Sphere tested by the GrowJuice heart and vine (defined in game/unk_sphere.h).
 struct UnkSphere;
+class Entity_GrowJuiceHeartVine;
+
+// Heart of the GrowJuice experiment: a 0-1 level (m268) with three states (m26C) that
+// sends events to itself and to its linked vine (the vine links back to it through
+// fn_800B1F80; callbacks "GrowJuiceHeart_*" registered at 0x800FE574).
+class Entity_GrowJuiceHeart : public Entity_Prop {
+public:
+    Entity_GrowJuiceHeart(int type, EntityInfo* info, int init);
+    virtual ~Entity_GrowJuiceHeart();
+    virtual void vf20(f32 dt, int arg);
+
+    void fn_800B154C(Entity_GrowJuiceHeartVine* vine);
+    void fn_800B1564();
+    void fn_800B1674(f32 dt);
+    void fn_800B170C();
+    void fn_800B179C();
+    u32 fn_800B1A20(UnkSphere* other);
+    int fn_800B1AD0(UnkSphere* other, UnkVec3* hitPos);
+    f32 fn_800B1D90();
+    void fn_800B1D98();
+
+    /* 0x264 */ Entity_GrowJuiceHeartVine* mVine;
+    /* 0x268 */ f32 mLevel;
+    /* 0x26C */ int mState;
+};
 
 class Entity_GrowJuiceHeartVine : public Entity_Prop {
 public:
@@ -421,12 +446,12 @@ public:
     virtual ~Entity_GrowJuiceHeartVine();
     virtual void vf20(f32 dt, int arg);
 
-    void fn_800B1F80(void* owner);
+    void fn_800B1F80(Entity_GrowJuiceHeart* heart);
     void fn_800B1F88();
     u32 fn_800B2054(UnkSphere* other);
     int fn_800B20A4(UnkSphere* other, UnkVec3* hitPos);
 
-    /* 0x264 */ void* m264; // object of the unit at 0x800B1498 (type unknown)
+    /* 0x264 */ Entity_GrowJuiceHeart* m264;
 };
 
 class Entity_ArmWrestleBolt : public Entity_Prop {
