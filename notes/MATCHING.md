@@ -140,6 +140,19 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 
 ## Data layout
 
+- A vector assigned from a member through a stack temporary (copied to the stack,
+  then to the local): `pos = UnkVec3(obj->m27C);` (copy constructor temporary)
+  (`fn_800B182C`).
+- Two stack temporaries in swapped slots: a named local (`UnkVec3 d = a - b;`) gets
+  its slot before the temporaries of later expressions; writing it as an
+  expression (`(a - b).LengthSq()`) makes it a temporary with a lower slot
+  (`fn_800B182C`).
+- A unit whose .rodata cannot be split (link order cycle) can still match and link:
+  its tables stay in the unsplit .rodata and the source declares them `extern`
+  (`unit_800B1498`).
+- While a unit is `NonMatching` its assembly is linked, so a `main.dol` byte diff
+  says nothing about it: score variants with the objdiff report, and switch to
+  `Matching` only to compare the linked bytes.
 - A struct copied with a word loop to the stack and then member by member (with
   spills) matches when the words are separate members, not an array
   (`UnkOpponentData`, `fn_8013CA74`).
