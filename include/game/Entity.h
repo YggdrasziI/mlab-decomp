@@ -412,6 +412,23 @@ public:
     /* 0x20C */ u8 unk20C[0x264 - 0x20C];
 };
 
+// Sphere tested by Entity_GrowJuiceHeartVine (defined in unit_800B1EDC.cpp).
+struct UnkSphere;
+
+class Entity_GrowJuiceHeartVine : public Entity_Prop {
+public:
+    Entity_GrowJuiceHeartVine(int type, EntityInfo* info, int init);
+    virtual ~Entity_GrowJuiceHeartVine();
+    virtual void vf20(f32 dt, int arg);
+
+    void fn_800B1F80(void* owner);
+    void fn_800B1F88();
+    u32 fn_800B2054(UnkSphere* other);
+    int fn_800B20A4(UnkSphere* other, UnkVec3* hitPos);
+
+    /* 0x264 */ void* m264; // object of the unit at 0x800B1498 (type unknown)
+};
+
 class Entity_ArmWrestleBolt : public Entity_Prop {
 public:
     Entity_ArmWrestleBolt(int type, EntityInfo* info, int init);
