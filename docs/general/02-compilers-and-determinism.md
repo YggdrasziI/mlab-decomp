@@ -40,6 +40,27 @@ An optimising compiler has freedom. The source steers the choices it makes:
 So two pieces of source that are *equivalent* for a human may compile to different
 bytes. The goal is to find the one that gives the original bytes.
 
+## The build setup counts too
+
+"Same source, compiler and flags" also means the same **way of building**. Things
+outside the source text can change the output:
+
+- **Precompiled headers.** Large projects often precompile their common headers once
+  and load the result at the start of every file. A compiler may treat what comes
+  from a precompiled header differently from what it parses directly; for example,
+  global objects defined in it may be emitted after the file's own objects instead
+  of before them. If every file of a binary shows the same "impossible" data order,
+  suspect the build setup.
+- **Include order and prefix files**: a header included first, or a prefix file the
+  IDE added to every file, can define macros and types that change code shape.
+- **Per-file options**: an IDE project can give single files their own optimisation
+  or inlining settings.
+- **Link order**: the order of the object files decides where each unit's code and
+  data land.
+
+The way to find such things is the same as for compiler versions: small test files
+compiled both ways, compared byte by byte.
+
 ## Identifying the compiler
 
 You cannot match anything before you know the compiler. The usual evidence:
