@@ -188,6 +188,21 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   .data); when the DOL has them in another order, an unused static function using
   them first gives the order (`UnusedArchiveNames` in `unit_801091EC`). `static const
   char* const` pointers are not folded: they become .sdata2 objects.
+- A character the DOL reloads after the stores of a copy loop: the source pointer
+  is `char*`, not `const char*` (mwcc assumes stores do not change data read through
+  a pointer to const) (`fn_80121508`).
+- A global reloaded after a call to `strlen` where this build keeps it in a
+  register: declare `strlen` yourself (`unsigned long strlen(const char*)`) instead of
+  including `<string.h>`, whose declaration lets mwcc assume the call does not
+  touch memory (`fn_80121508`).
+- `lis r9` then `addi r31, r9` for a global's address: the source uses the global
+  directly (the compiler keeps the common address in a saved register); a local
+  `T* g = &global;` gives `lis r31` (`fn_80121508`).
+- An external object of 8 bytes or less is addressed through r13 (small data) unless
+  its declared size matches the real one: declare the full size (`UnkScreenSize`,
+  0x18 bytes, in .bss) (`fn_80121B08`).
+- A `switch` with cases 1 and 2 whose compare tree starts at 1: add `case 0:` with
+  the default label (`fn_80121B08`, also `fn_801091EC`).
 - A struct copied with a word loop to the stack and then member by member (with
   spills) matches when the words are separate members, not an array
   (`UnkOpponentData`, `fn_8013CA74`).
