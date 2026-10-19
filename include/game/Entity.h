@@ -421,7 +421,9 @@ public:
     /* 0x178 */ u8 unk178[0x184 - 0x178];
     /* 0x184 */ u32 m184;
     /* 0x188 */ u32 m188;
-    /* 0x18C */ u8 unk18C[0x1AC - 0x18C];
+    /* 0x18C */ u8 unk18C[0x1A4 - 0x18C];
+    /* 0x1A4 */ u32 m1A4; // animation count (BuzzsawObstacle picks one at random)
+    /* 0x1A8 */ u8 unk1A8[0x1AC - 0x1A8];
     /* 0x1AC */ int m1AC;
     /* 0x1B0 */ u8 unk1B0[0x1C8 - 0x1B0];
     /* 0x1C8 */ UnkEntitySlot mSlot;
