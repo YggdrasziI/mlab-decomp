@@ -176,6 +176,18 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   100 % can load 0.0 where the DOL loads 1.0. Check the `.sdata2` values (and the
   linked `main.dol`) when the pool order looks wrong; here the "zero" vector was
   `(1, 1, 1)` (`fn_8010C90C`).
+- A `while (test) { advance; }` loop is laid out as a branch to the test at the
+  bottom; a test that needs a flag variable (`int free = 0; if (...) free = 1;`)
+  gives the DOL's `li 0` / `li 1` / `cmpwi` (`fn_80109600`).
+- Function bodies that are identical in the DOL but use different registers when one
+  of them goes through an inline helper: write the loop out in the function instead
+  of calling the helper (`fn_80109A20`).
+- `a = b = x;` stores b first: swap the chain when the DOL stores the other global
+  first (`fn_80109A20`).
+- String literals are pooled in parse order (small ones in .sdata, others in
+  .data); when the DOL has them in another order, an unused static function using
+  them first gives the order (`UnusedArchiveNames` in `unit_801091EC`). `static const
+  char* const` pointers are not folded: they become .sdata2 objects.
 - A struct copied with a word loop to the stack and then member by member (with
   spills) matches when the words are separate members, not an array
   (`UnkOpponentData`, `fn_8013CA74`).
