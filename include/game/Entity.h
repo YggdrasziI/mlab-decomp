@@ -778,6 +778,23 @@ public:
     /* 0x268 */ int m268;
 };
 
+// RGBA color as four floats (real name unknown; defined in unit_80098664.cpp).
+struct UnkColor;
+
+// Light of the reactor leak experiment: tints a node of its model (name from RTTI;
+// the factory allocates 0x268 bytes).
+class Entity_ReactorLeakLight : public Entity_Prop {
+public:
+    Entity_ReactorLeakLight(int type, EntityInfo* info, int init);
+    virtual ~Entity_ReactorLeakLight();
+
+    void fn_80098700();
+    void fn_8009875C(const UnkColor& color);
+    void fn_800988F0(int count);
+
+    /* 0x264 */ u8 unk264[0x268 - 0x264];
+};
+
 // Abstract base of the reactor leak tools (name from RTTI; implicit constructor and
 // destructor).
 class Entity_ReactorLeakManipulator : public Entity_Prop {
