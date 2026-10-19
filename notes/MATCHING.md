@@ -96,7 +96,8 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - A float member tested as `if (x)` compiles to `fcmpu x, 0` (member loaded first);
   `x != 0.0f` loads the constant first (`fn_8000C604`).
 - Vector temporaries filled by chained assignment (`v.x = v.y = v.z = 1.0f`) are
-  stored z, y, x (`fn_8000C508`).
+  stored z, y, x (`fn_8000C508`); the three-float constructor
+  (`UnkVec3(1.0f, 1.0f, 1.0f)`) stores x, y, z (`BuzzsawGate::vfBC`).
 - A `frsp` after a select means the value went through a `double`: an inline helper
   returning `double` reproduces it (`UnkMaxD` in `unit_8000C478`).
 - A 0.0 constant the DOL loads inside a loop (not hoisted) and shares with a result
@@ -139,6 +140,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   inline destructors; the linker strips them (they are not in the DOL).
 
 ## Data layout
+
+- Vtables (with their class name strings and base lists) are emitted in reverse order
+  of the class declarations: declare the classes so that the last one declared is the
+  first vtable in the DOL (`unit_800A5BCC`).
+- A 0 entry in a vtable is a pure virtual function (`BuzzsawItem::vfC4`); the class
+  can still have an out-of-line constructor called by derived classes.
 
 - A vector assigned from a member through a stack temporary (copied to the stack,
   then to the local): `pos = UnkVec3(obj->m27C);` (copy constructor temporary)
