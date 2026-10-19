@@ -52,6 +52,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   temporary in the DOL (lowest stack slot, below the named locals of later blocks):
   pass it through an inline taking a `const&` (`XBaseActionSelectionCallback::Select`,
   `vf0C` of `unit_80040090`).
+- A list element taken through an inline accessor and null-checked: when the
+  pointer's register is numbered last instead of first, store the accessor result in
+  a `void*` local, test that, and cast it to a second local (`fn_800B20A4`).
+- Arguments of an inlined call are evaluated right to left: two member loads in the
+  wrong order can mean the inline takes its parameters in the other order
+  (`SweepSpheres` in `unit_800B1EDC`).
 - `u32 % (int)(float)` gives the DOL's call-first order with an inline `fctiwz`; a
   `(u32)` cast of the float calls `__cvt_fp2unsigned` before the call (`fn_8003CE20`).
 - An empty `__sinit` (a lone `blr`) comes from a global object whose class has an empty
@@ -93,6 +99,13 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   stored z, y, x (`fn_8000C508`).
 - A `frsp` after a select means the value went through a `double`: an inline helper
   returning `double` reproduces it (`UnkMaxD` in `unit_8000C478`).
+- A 0.0 constant the DOL loads inside a loop (not hoisted) and shares with a result
+  variable: the variable is initialized to `0.0f` in the loop (`f32 t = 0.0f;` before
+  an inline that may leave it unchanged) (`fn_800B20A4`).
+- `d = b * b - a * c;` whose result took the register of `a * c`: `d = b * b;
+  d -= a * c;` keeps it in the register of `b * b` (`fn_800B20A4`).
+- A sized `.sdata2` symbol that covers a literal and its padding (size 0x8 for a
+  float) leaves the section below 100 % in the report; give it the literal's size.
 - Constants are pooled in `.sdata2` in parse order: the shared `(0, 1, 0)` vector of
   `unk_vec3.h` puts 0.0 and 1.0 first when the header is included first. An unused
   static function can give the pool its DOL order (the original files likely had
