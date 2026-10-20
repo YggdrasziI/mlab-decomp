@@ -7,7 +7,8 @@
 #include "game/externs.h"
 #include "game/unk_vec3.h"
 
-Entity_Hazard_Prop::Entity_Hazard_Prop(int type, EntityInfo* info, int init) : Entity_Prop(type, info, init) {
+Entity_Hazard_Prop::Entity_Hazard_Prop(int type, EntityInfo* info, int init, int arg4)
+    : Entity_Prop(type, info, init) {
     SetType(15);
 }
 

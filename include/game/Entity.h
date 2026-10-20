@@ -660,7 +660,8 @@ extern UnkHazardManager lbl_8047C760;
 // Its destructor is implicit (emitted at the end of its unit).
 class Entity_Hazard_Prop : public Entity_Prop {
 public:
-    Entity_Hazard_Prop(int type, EntityInfo* info, int init);
+    // Both callers pass -1 as a fourth argument, which the constructor ignores.
+    Entity_Hazard_Prop(int type, EntityInfo* info, int init, int arg4 = -1);
     virtual int vf30(void* arg1, void* arg2);
     virtual void vf20(f32 dt, int arg);
     virtual void vf14(void* arg);
