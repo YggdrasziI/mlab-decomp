@@ -158,6 +158,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   `__sinit` in reverse order of use. When the DOL has them in registration order,
   `-ipa file` (per unit) is the only setting found that does it (`unit_801F59F0`);
   on all game code it reverses the inline functions of other units.
+- The order of those destructors follows the order in which the objects are
+  defined; the class definitions, `extern` declarations, template or plain classes
+  and `-inline deferred` do not change it (`unit_801088C0`, still unsolved).
 - Inline functions used by a unit are emitted after the function that first needs
   them; weak functions after the `__sinit` belong to the unit before them.
 - Base-class RTTI copies emitted in a derived unit are dropped by the linker.
@@ -258,6 +261,10 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - A struct copied with a word loop to the stack and then member by member (with
   spills) matches when the words are separate members, not an array
   (`UnkOpponentData`, `fn_8013CA74`).
+- A sum of many call results (`fn_801D2BF8()->mXX + ...`) is reassociated by mwcc:
+  parentheses do not change the code. Successive `n += ...;` statements keep the
+  DOL's add-after-each-call order (`GetBlockCount` in `unit_801088C0`). Operands of
+  equal weight are evaluated right first (`a() * b()` calls `b` first).
 - A static initializer that addresses each object with its own `lis` instead of one
   .bss base needs `#pragma pool_data off` (`unit_8013CA74`).
 - **Precompiled header.** In every game unit of the DOL the shared `(0, 1, 0)` vector
