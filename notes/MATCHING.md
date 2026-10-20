@@ -90,6 +90,11 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   ... do { } while (--n);`, with `n` declared at the top of the block.
 - A local pointer computed before the updates can change register allocation of the
   whole tail (`fn_80044634`: `u8* p = base + used;` before `free -= size; used += size;`).
+- `u8 flag = x == 1;` gives `srwi` with a register order the DOL does not use;
+  a `bool` member, set before the other member update and read back from the
+  member (`mFlag = mTab == 1; mTab += d;`), matches (`fn_80118FC0`). A getter
+  `return a - b * 4;` with the operands in the wrong registers matches as
+  `int r = a; r -= b * 4; return r;` (`fn_80119538`).
 
 ## Floats
 
@@ -133,6 +138,11 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - `-inline auto,deferred` (per unit) inlines functions defined later in the file and
   emits functions in reverse order of definition (QuestLog, `unit_8011EA20`).
   Switching all game code to it breaks other units.
+- A function too large for `-inline auto` that the DOL inlines anyway: write its
+  body as calls to the smaller functions it dispatches to (each inlined in turn), so
+  it fits the size limit (`fn_80118858` in `unit_80117AE4`). The `inline` keyword
+  drops the out-of-line copy the DOL also has, and `#pragma inline_max_size` had no
+  effect.
 - Generated destructors registered by a static initializer are emitted after
   `__sinit` in reverse order of use. When the DOL has them in registration order,
   `-ipa file` (per unit) is the only setting found that does it (`unit_801F59F0`);
