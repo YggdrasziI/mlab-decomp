@@ -10,6 +10,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   callbacks take a const context (fixed `unit_80018C04`, `unit_80077B50`,
   `unit_800938A4` and three functions of `unit_80018E00`; flags, `-proc` models and
   compiler versions do not change this).
+- A virtual whose first member load sits above the prologue (`lfs` before `stwu`):
+  declare it `const` in the whole hierarchy (`ExWorldTile::vfD0() const`,
+  `unit_800C4530`; mangled names become `...CFv`).
 - In the same way a load through a const `this` can be reused where one through a
   non-const `this` is reloaded (`UnkTileRing::GetHead() const`).
 - The address of a real member of a global (`lbl_803B53A0.mD5F0`,
@@ -271,6 +274,15 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Calls through a member object's vtable, with `this + offset` recomputed for each
   call: the source goes through an inline accessor returning a base pointer
   (`BuzzSawExperiment::GetTrack`); a local pointer keeps it in a saved register.
+- A square root rounded once (`fmul` then a single `frsp` into f1): an inline
+  returning `f32`; `UnkSqrtf` returns a double and gives two `frsp` when the caller
+  returns a float (`ExWorldCurvedTile::vfD0`).
+- An `frsp` on a float value just before it scales a vector: the value comes from an
+  inline returning a double (`UnkRatio` in `unit_800C4530`); a `double` local instead
+  pools a double constant.
+- Results written back into a vector's own stack slots without a temporary:
+  subtract component by component (`v.x -= c.x; ...`); `v = v - c` adds temporaries
+  and enlarges the frame.
 - A clamp followed by `frsp` before a second clamp: the first one compares floats but
   returns a double (`UnkClampD` in `unit_8009F66C`).
 
