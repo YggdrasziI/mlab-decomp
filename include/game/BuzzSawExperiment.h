@@ -18,7 +18,7 @@ public:
     virtual ~MiniGame();
     virtual void vf0C() = 0;
     virtual void vf10() = 0;
-    virtual void vf14() = 0;
+    virtual void vf14(f32 dt) = 0;
     virtual void vf18() = 0;
     virtual void vf1C() = 0;
     virtual void vf20(f32 dt);
@@ -50,7 +50,7 @@ public:
     Experiment(int arg);
     virtual ~Experiment();
     virtual void vf0C();
-    virtual void vf14();
+    virtual void vf14(f32 dt);
     virtual void vf20(f32 dt);
     virtual void vf44();
     virtual void vf54();
@@ -165,7 +165,7 @@ public:
     virtual ~BuzzSawExperiment();
     virtual void vf0C();
     virtual void vf10();
-    virtual void vf14();
+    virtual void vf14(f32 dt);
     virtual void vf18();
     virtual void vf1C();
     virtual void vf2C();

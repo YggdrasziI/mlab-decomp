@@ -608,8 +608,8 @@ void BuzzSawExperiment::vf0C() {
     MoveCameraEntity();
 }
 
-void BuzzSawExperiment::vf14() {
-    Experiment::vf14();
+void BuzzSawExperiment::vf14(f32 dt) {
+    Experiment::vf14(dt);
 }
 
 void BuzzSawExperiment::vf10() {}
