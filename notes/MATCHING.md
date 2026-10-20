@@ -24,6 +24,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - A member the DOL reloads where this build reuses the register of an earlier
   inlined load: read it through a local reference (`int& tailRef = mTail;`,
   `UnkDvdRequestQueue::PopBack`).
+- Fields of a stack copy of a struct reloaded after each call where this build keeps
+  them in saved registers: the copy is passed by reference to an inline function
+  (`UnkBadge::Init(const UnkBadgeInfo&)` in `unit_8011C460`).
 - A global accessed with `lis`/`@l` instead of `@sda21` is larger than 8 bytes:
   declare it as an array or struct (the texture cache `lbl_8040ADF0[8]` in
   `unit_800445E4`).
