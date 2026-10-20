@@ -22,6 +22,7 @@ class Entity;
 // Pointer list (real name unknown): data at 0xC, count at 0x10.
 struct UnkList {
     void* First() { return mCount == 0 ? 0 : mData[0]; }
+    void* Get(u32 i) { return i >= mCount ? 0 : mData[i]; }
 
     /* 0x00 */ u8 unk0[0xC];
     /* 0x0C */ void** mData;
@@ -426,7 +427,9 @@ public:
     /* 0x178 */ u8 unk178[0x184 - 0x178];
     /* 0x184 */ u32 m184;
     /* 0x188 */ u32 m188;
-    /* 0x18C */ u8 unk18C[0x1A4 - 0x18C];
+    /* 0x18C */ u8 unk18C[0x194 - 0x18C];
+    /* 0x194 */ UnkList** m194; // m1A4 lists of collision groups
+    /* 0x198 */ u8 unk198[0x1A4 - 0x198];
     /* 0x1A4 */ u32 m1A4; // animation count (BuzzsawObstacle picks one at random)
     /* 0x1A8 */ u8 unk1A8[0x1AC - 0x1A8];
     /* 0x1AC */ int m1AC;

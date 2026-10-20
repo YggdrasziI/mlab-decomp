@@ -16,7 +16,9 @@ struct UnkGameState {
     /* 0x05C0 */ u8 unk5C0[0x5C8 - 0x5C0];
     /* 0x05C8 */ u8 m5C8[0x7CC - 0x5C8]; // object passed to fn_80012B5C / fn_80012CB0
     /* 0x07CC */ f32 m7CC;
-    /* 0x07D0 */ u8 unk7D0[0xD5F0 - 0x7D0];
+    /* 0x07D0 */ u8 unk7D0[0xFE0 - 0x7D0];
+    /* 0x0FE0 */ int mFE0;
+    /* 0x0FE4 */ u8 unkFE4[0xD5F0 - 0xFE4];
     /* 0xD5F0 */ u8 mD5F0[0xD614 - 0xD5F0]; // object passed to fn_800D83A8 / fn_800D87EC
     /* 0xD614 */ Entity* mD614;
     /* 0xD618 */ u8 unkD618[0xD638 - 0xD618];

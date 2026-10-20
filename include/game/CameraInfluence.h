@@ -201,6 +201,7 @@ public:
 // Implicit destructor (emitted at the end of its unit).
 class CIDist : public CIDynamic {
 public:
+    CIDist() { mType = 5; }
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
     virtual void vf10();
     virtual f32 vf14();
@@ -211,6 +212,7 @@ public:
 // Implicit destructor (emitted at the end of its unit).
 class CIPitch : public CIDynamic {
 public:
+    CIPitch() { mType = 4; }
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
     virtual void vf10();
     virtual f32 vf14();
@@ -267,6 +269,7 @@ public:
 // Implicit destructor (emitted at the end of its unit).
 class CIFixedEyeLook : public CIDynamic {
 public:
+    CIFixedEyeLook() { mType = 0; }
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
     virtual void vf10();
 
@@ -281,6 +284,7 @@ public:
 // optionally pulled in by a ray query (fn_800DA8F0).
 class CIPlayerOffset : public CIDynamic {
 public:
+    CIPlayerOffset() { mType = 2; }
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
     virtual void vf10();
 
@@ -313,6 +317,7 @@ struct UnkTrackedTarget {
 // Implicit destructor (emitted at the end of its unit).
 class CITrackTarget : public CIDynamic {
 public:
+    CITrackTarget() { mType = 8; }
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
     virtual void vf10();
     virtual f32 vf14();
@@ -330,6 +335,7 @@ public:
 // closest SphereGraph capsule.
 class CIDirectionGuide : public CIDynamic {
 public:
+    CIDirectionGuide() { mType = 3; }
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
     virtual void vf10();
     virtual f32 vf14();
@@ -357,6 +363,7 @@ public:
 // its joints, and checks the view with a ray query (fn_800DA8F0).
 class CITrackTargetDan : public CIDynamic {
 public:
+    CITrackTargetDan() { mType = 9; }
     virtual bool vf0C(UnkVec3* pos, UnkVec3* target, f32 dt);
     virtual void vf10();
     virtual f32 vf1C();

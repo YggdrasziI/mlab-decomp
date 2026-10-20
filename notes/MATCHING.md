@@ -54,6 +54,14 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   wrong order matches as an inline helper doing the three steps (`ReleaseModel`).
 - A constant the DOL keeps in `f31` across a call is a local `f32` variable
   (`f32 duration = 5.0f;`).
+- A bounds-checked getter whose DOL code loads the element after the `li 0` branch is
+  written `i >= count ? 0 : data[i]` (`UnkList::Get`, `unit_8012F6B0`).
+- Placement new on a pointer tested once: the DOL's `cmpwi cr1` before a switch and
+  `beq cr1` in each case come from `if (p != 0) switch (...) { new (p) T; }`; without
+  the outer test each case gets its own `cmpwi` (`fn_8012F818`).
+- Several saved registers in the wrong order in a loop over a switch (case
+  constants and vtables hoisted): declaring the loop pointer before the count and the
+  index at the top of the function fixed `fn_8012FD0C`; script the permutations.
 - The declaration order of locals sets their register numbers (a result declared
   before the entity pointer, for example). A local declared at the top of its block
   but assigned later takes a different saved register (`flag` in `fn_800D8280`).
