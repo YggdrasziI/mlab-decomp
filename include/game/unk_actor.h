@@ -27,7 +27,7 @@ public:
     virtual void vf0C();
     virtual void vf10();
     virtual void vf14();
-    virtual void vf18();
+    virtual void vf18(f32 value);
     virtual void vf1C();
     virtual void vf20();
     virtual void vf24();

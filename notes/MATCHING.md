@@ -68,6 +68,10 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - `if (g != 0) { delete g; g = 0; }` with the cleanup in an inline destructor gives the
   DOL's saved registers; the same code written out before `delete` numbers them
   differently (`fn_8001EF50`).
+- Small local arrays initialized with constants are copied from compiler-made
+  `.sdata2` objects of the array's full size; dtk splits them into 4-byte symbols, so
+  `symbols.txt` must give each one the array size for `.sdata2` to match
+  (`unit_8001A17C`).
 - The declaration order of locals sets their register numbers (a result declared
   before the entity pointer, for example). A local declared at the top of its block
   but assigned later takes a different saved register (`flag` in `fn_800D8280`).
