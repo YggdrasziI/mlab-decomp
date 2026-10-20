@@ -15,6 +15,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - The address of a real member of a global (`lbl_803B53A0.mD5F0`,
   `lbl_803C4298.mStick`) keeps only the base in a register, as in the DOL; a cast of
   the base plus an offset is kept whole.
+- A compare CW folds (`i <= tail` where both come from the same member load) but the
+  DOL keeps (`cmpw r7,r7`): pass the index to the inline function by `const int&`
+  and copy it into a local (`UnkDvdRequestQueue::Contains`, `unit_801E47D8`).
+- A member the DOL reloads where this build reuses the register of an earlier
+  inlined load: read it through a local reference (`int& tailRef = mTail;`,
+  `UnkDvdRequestQueue::PopBack`).
 - A global accessed with `lis`/`@l` instead of `@sda21` is larger than 8 bytes:
   declare it as an array or struct (the texture cache `lbl_8040ADF0[8]` in
   `unit_800445E4`).
