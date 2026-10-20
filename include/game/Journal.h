@@ -4,8 +4,7 @@
 // Class "Journal" (RTTI) and its four sections "Badges", "Statistics", "QuestLog"
 // and "Recipes" (RTTI names; sizes from the allocations in the Journal
 // constructor). Badges is game unit 0x8011C460, Statistics 0x8011D5C4, QuestLog
-// 0x8011EA20; Recipes' functions are from 0x8011F410 (unit not split yet). Real file
-// names unknown.
+// 0x8011EA20 and Recipes 0x8011F410. Real file names unknown.
 
 #include "game/book.h"
 #include "game/section.h"
@@ -165,6 +164,33 @@ public:
     /* 0x30 */ UnkTexture* mIcon;
 };
 
+// Recipe shown by the Recipes section (0x3C bytes, real type unknown): a monster
+// breed for one slot, with three icons loaded in the background.
+struct UnkRecipe {
+    UnkRecipe()
+        : mIcon(0), mIconRequest(0), mName(0), mType(-1), mElement(-1), mBreed(0), mDescId(-1),
+          mIngredientIcon(0), mIngredientRequest(0), mIngredientName(0), mPartIcon(0),
+          mPartRequest(0), mPartName(0), mOwned(0), mSlot(0.0f) {}
+
+    /* 0x00 */ UnkTexture* mIcon;
+    /* 0x04 */ UnkTexture* mIconRequest;
+    /* 0x08 */ const char* mName;
+    /* 0x0C */ int mType;
+    /* 0x10 */ int mElement;
+    /* 0x14 */ int mBreed;
+    /* 0x18 */ int mDescId;
+    /* 0x1C */ UnkTexture* mIngredientIcon;
+    /* 0x20 */ UnkTexture* mIngredientRequest;
+    /* 0x24 */ const char* mIngredientName;
+    /* 0x28 */ UnkTexture* mPartIcon;
+    /* 0x2C */ UnkTexture* mPartRequest;
+    /* 0x30 */ const char* mPartName;
+    /* 0x34 */ u32 mOwned;
+    /* 0x38 */ f32 mSlot;
+};
+
+// Unit 0x8011F410 (game/unit_8011F410.cpp): the recipes of the monster breeds, by
+// type (3: all) and element (5: all), four per page.
 class Recipes : public section {
 public:
     Recipes();
@@ -174,7 +200,61 @@ public:
     virtual void vf14();
     virtual void vf18();
 
-    u8 unk[0xA68C - sizeof(section)];
+    void fn_8011FF28();
+    UnkTexture** fn_80120054();
+    void fn_8012006C(int index);
+    int fn_80120084();
+    const char* fn_80120098();
+    const char* fn_801201B4();
+    const char* fn_8012029C(int index);
+    int fn_80120390();
+    u32 fn_801203C0();
+    int fn_801203F0();
+    UnkTexture* fn_80120418();
+    UnkTexture* fn_80120444();
+    const char* fn_80120474();
+    UnkTexture* fn_801204A4();
+    const char* fn_801204D4();
+    int fn_80120504();
+    void fn_80120534(int delta);
+    void fn_801205EC(int rows);
+    int fn_801206A0(int type);
+    int fn_8012078C(int index);
+    int fn_801207B8(int index);
+    void fn_801207D0(int index);
+    void fn_801207DC(int type);
+    void fn_801208F8(u32 hash);
+    int fn_8012096C();
+    void fn_80120978(u32 topHash, u32 bottomHash);
+    void fn_80120984(u32 hash);
+    static int fn_80120990(int type, int key, int slot);
+    u8 fn_80120A84();
+
+    // Reads the member back: the DOL keeps the element in a register.
+    void UpdateTab() {
+        m4 = mElement;
+        if (mElement == 5) {
+            m4 = 1;
+        } else if (mElement < 3) {
+            m4 = mElement + 2;
+        } else {
+            m4 = mElement + 1;
+        }
+    }
+
+    /* 0x001C */ UnkRecipe mRecipes[624];
+    /* 0x925C */ int mCursor;
+    /* 0x9260 */ int mCount;
+    /* 0x9264 */ UnkRecipe* mShown[636];
+    /* 0x9C54 */ UnkTexture* mShownIcons[636];
+    /* 0xA644 */ int mShownCount;
+    /* 0xA648 */ int mPage;
+    /* 0xA64C */ int mType;
+    /* 0xA650 */ int mTypeFilter;
+    /* 0xA654 */ int mElement;
+    /* 0xA658 */ UnkProgressBar mProgress;
+    /* 0xA684 */ u32 mLoaded;
+    /* 0xA688 */ int mSelected;
 };
 
 class Journal : public book {
