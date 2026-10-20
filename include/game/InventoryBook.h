@@ -4,7 +4,7 @@
 // Class "InventoryBook" (RTTI) and its four sections "Creatures", "Ingredients",
 // "IngredientSelection" and "Parts" (RTTI names; sizes from the allocations in the
 // InventoryBook constructor). Creatures is game unit 0x80117090; the other sections'
-// functions are at 0x80117AE4-0x8011A3BC and from 0x8011A778 (units not split yet).
+// functions are at 0x80117AE4-0x8011A3BC and 0x8011A778-0x8011C460.
 // Real file names unknown.
 
 #include "game/book.h"
@@ -145,6 +145,46 @@ public:
     u8 unk[0x1C - sizeof(section)];
 };
 
+struct UnkPartRecord;
+
+// Part shown by the Parts section (0x60 bytes, real type unknown): the monster it
+// comes from, the ingredient and part of its recipe, with icons loaded in the
+// background.
+struct UnkPartItem {
+    UnkPartItem()
+        : mIcon(0), mRequest(0), mMark(0), mNewMark(0), mIngredientIcon(0), mIngredientRequest(0),
+          mIngredientName(0), mPartIcon(0), mPartRequest(0), mPartName(0), mNameHash(0), mName(0),
+          m30(0), m34(0), m38(0), mType(-1), mElement(-1), mAbilityHash(0), mAbilityName(0),
+          mAbility2Hash(0), mAbility2Name(0), mIndex(0), mBreed(-1), mHasPart(0) {}
+
+    /* 0x00 */ UnkTexture* mIcon;
+    /* 0x04 */ UnkTexture* mRequest; // icon still loading
+    /* 0x08 */ void* mMark;
+    /* 0x0C */ void* mNewMark;
+    /* 0x10 */ UnkTexture* mIngredientIcon;
+    /* 0x14 */ UnkTexture* mIngredientRequest;
+    /* 0x18 */ const char* mIngredientName;
+    /* 0x1C */ UnkTexture* mPartIcon;
+    /* 0x20 */ UnkTexture* mPartRequest;
+    /* 0x24 */ const char* mPartName;
+    /* 0x28 */ u32 mNameHash;
+    /* 0x2C */ const char* mName;
+    /* 0x30 */ int m30;
+    /* 0x34 */ int m34;
+    /* 0x38 */ int m38;
+    /* 0x3C */ int mType;
+    /* 0x40 */ int mElement;
+    /* 0x44 */ u32 mAbilityHash;
+    /* 0x48 */ const char* mAbilityName;
+    /* 0x4C */ u32 mAbility2Hash;
+    /* 0x50 */ const char* mAbility2Name;
+    /* 0x54 */ int mIndex;
+    /* 0x58 */ int mBreed;
+    /* 0x5C */ int mHasPart;
+};
+
+// Parts section (game unit 0x8011A778): the parts the player owns, filtered by type and
+// element and paged three rows of four at a time.
 class Parts : public section {
 public:
     Parts();
@@ -154,7 +194,58 @@ public:
     virtual void vf14();
     virtual void vf18();
 
-    u8 unk[0x2DE8 - sizeof(section)];
+    static u8 fn_8011AEE0();
+    const char* fn_8011AFEC();
+    static void fn_8011B060(UnkPartRecord* record, UnkPartItem* item);
+    void fn_8011B898();
+    void fn_8011BA48(int index);
+    int fn_8011BA5C();
+    void fn_8011BA6C(u32 topHash, u32 bottomHash);
+    void fn_8011BA74(u32 hash);
+    UnkTexture** fn_8011BA7C();
+    void** fn_8011BA90();
+    void** fn_8011BAA4();
+    void fn_8011BAB8(u32 hash);
+    int fn_8011BB20();
+    const char* fn_8011BB28();
+    static int fn_8011BC40(int* out, int element);
+    void fn_8011BCF8(int delta);
+    void fn_8011BDA8(int rows);
+    int fn_8011BE4C();
+    UnkTexture* fn_8011BE84();
+    const char* fn_8011BEB0();
+    UnkTexture* fn_8011BEDC();
+    const char* fn_8011BF08();
+    const char* fn_8011BF34();
+    const char* fn_8011C018(int index);
+    UnkTexture* fn_8011C108();
+    int fn_8011C130();
+    int fn_8011C168();
+    int fn_8011C1D0(int index);
+    int fn_8011C1F8(int index);
+    void fn_8011C20C(int index);
+    int fn_8011C214();
+    void fn_8011C22C();
+    int fn_8011C2B4();
+    void fn_8011C318();
+
+    void UpdateCategory();
+
+    /* 0x001C */ UnkPartItem mItems[100];
+    /* 0x259C */ int mCursor;
+    /* 0x25A0 */ int mPage;
+    /* 0x25A4 */ int mCount;
+    /* 0x25A8 */ UnkPartItem* mShown[112];
+    /* 0x2768 */ UnkTexture* mShownIcons[112];
+    /* 0x2928 */ void* mShownMarks[112];
+    /* 0x2AE8 */ void* mShownNewMarks[112];
+    /* 0x2CA8 */ int mShownCount;
+    /* 0x2CAC */ int mTypeFilter;  // 3: all
+    /* 0x2CB0 */ int mElement;     // 5: all
+    /* 0x2CB4 */ UnkProgressBar mProgress;
+    /* 0x2CE0 */ char mText[0x100];
+    /* 0x2DE0 */ u32 mLoaded;
+    /* 0x2DE4 */ int mSelected;
 };
 
 class InventoryBook : public book {

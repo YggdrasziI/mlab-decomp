@@ -498,6 +498,7 @@ config.libs = [
             Object(Matching, "game/unit_80117090.cpp"),
             Object(NonMatching, "game/unit_80117AE4.cpp", extra_cflags=["-inline auto,deferred"]),
             Object(Matching, "game/unit_8011A3BC.cpp"),
+            Object(NonMatching, "game/unit_8011A778.cpp"),
             Object(Matching, "game/unit_8011C460.cpp", extra_cflags=["-inline auto,deferred"]),
             Object(Matching, "game/unit_8011D1C0.cpp"),
             Object(NonMatching, "game/unit_8011D5C4.cpp"),

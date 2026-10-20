@@ -27,6 +27,8 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Fields of a stack copy of a struct reloaded after each call where this build keeps
   them in saved registers: the copy is passed by reference to an inline function
   (`UnkBadge::Init(const UnkBadgeInfo&)` in `unit_8011C460`).
+  A local reference to the copy does the same in place (`UnkMonsterDesc& desc = temp;`,
+  `Parts::fn_8011B060` in `unit_8011A778`).
 - A global accessed with `lis`/`@l` instead of `@sda21` is larger than 8 bytes:
   declare it as an array or struct (the texture cache `lbl_8040ADF0[8]` in
   `unit_800445E4`).
@@ -88,6 +90,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   as `!b` (`fn_80010CAC`).
 - A counted loop whose counter is not used and counts down with `subic.`: `int n = 4;
   ... do { } while (--n);`, with `n` declared at the top of the block.
+- Struct copies in the wrong stack slots: the DOL sorts them by size; when this build
+  does not, get them from an inline function that returns the struct by value
+  (`GetAbilityInfo` in `unit_8011A778`).
+- A clamp that reads the member again in each branch (`lwz` in both arms): write it
+  as a macro on the member, not an inline function taking the value
+  (`UNK_CLAMP_BETWEEN`, `Parts::fn_8011B898`).
 - A local pointer computed before the updates can change register allocation of the
   whole tail (`fn_80044634`: `u8* p = base + used;` before `free -= size; used += size;`).
 - `u8 flag = x == 1;` gives `srwi` with a register order the DOL does not use;
