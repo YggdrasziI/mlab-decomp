@@ -514,6 +514,7 @@ config.libs = [
             Object(Matching, "game/unit_801424B8.cpp"),
             Object(Matching, "game/unit_80142500.cpp"),
             Object(Matching, "game/unit_801604FC.cpp"),
+            Object(NonMatching, "game/unit_801E47D8.cpp"),
             Object(Matching, "game/unit_801F59F0.cpp", extra_cflags=["-ipa file"]),
         ],
     },
