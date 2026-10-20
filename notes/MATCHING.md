@@ -260,6 +260,10 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   group index stays in a register (`li 0` / `mullw`): not reproduced yet
   (`fn_800D8724`, `ExWorldWireTile::vfBC`).
 
+- A call whose float result is never stored, followed by a call that reads f1
+  (`GetTrack()->vf20(); GetTrack()->vf24();`), is one call passing the result of the
+  other (`vf24(vf20())`): check the callee for an f1 argument before writing a void
+  signature (`ExWorldTrack::vf1C/vf20/vf24`, `unit_800C52B4`).
 - Two copies of the same code in a switch are two separate groups of `case` labels
   (CW does not merge them; `fn_800A0FB4`).
 - A search loop returning true from inside with `li r3,0` set before the loop: a
