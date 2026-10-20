@@ -207,6 +207,16 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   register: declare `strlen` yourself (`unsigned long strlen(const char*)`) instead of
   including `<string.h>`, whose declaration lets mwcc assume the call does not
   touch memory (`fn_80121508`).
+  The same holds for `strcmp` (`unit_8011D5C4`): with `<string.h>` CW treats it as
+  pure and keeps compared values in saved registers across the calls.
+- A small struct copied through registers (no stack temporary) in a swap: give the
+  type an inline copy constructor (`UnkStatRow` in `unit_8011D5C4`); the implicit
+  copy goes through a stack temporary.
+- A value read in the condition of one loop and reused by the next one:
+  `while (less(i->mName, key = mid->mName)) i++; while (less(key, j->mName)) j--;`.
+- An array base the DOL keeps in a saved register through an inlined function
+  (instead of recomputing `r1 + offset`): copy the parameter into a local inside the
+  inline function.
 - `lis r9` then `addi r31, r9` for a global's address: the source uses the global
   directly (the compiler keeps the common address in a saved register); a local
   `T* g = &global;` gives `lis r31` (`fn_80121508`).
