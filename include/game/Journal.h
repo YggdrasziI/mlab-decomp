@@ -3,12 +3,41 @@
 
 // Class "Journal" (RTTI) and its four sections "Badges", "Statistics", "QuestLog"
 // and "Recipes" (RTTI names; sizes from the allocations in the Journal
-// constructor). The sections' functions are at 0x8011C460 and from 0x8011D5C4 (units
-// not split yet). Real file names unknown.
+// constructor). Badges is game unit 0x8011C460, QuestLog 0x8011EA20; the other
+// sections' functions are from 0x8011D5C4 (units not split yet). Real file names
+// unknown.
 
 #include "game/book.h"
 #include "game/section.h"
+#include "game/UnkProgressBar.h"
 
+// Texture returned by fn_80109330 (real type unknown; reference counted).
+struct UnkTexture {
+    /* 0x00 */ u8 unk0[0x24];
+    /* 0x24 */ int mRefCount;
+};
+
+// Owned badge shown by the Badges section (real type unknown).
+struct UnkBadge {
+    UnkBadge() : mNameHash(0), mName(0), mDescHash(0), mDesc(0), mCategory(-1), mTexture(0), mRequest(0) {}
+    void Init(const struct UnkBadgeInfo& info);
+
+    /* 0x00 */ u32 mNameHash;
+    /* 0x04 */ const char* mName;
+    /* 0x08 */ u32 mDescHash;
+    /* 0x0C */ const char* mDesc;
+    /* 0x10 */ int mCategory;
+    /* 0x14 */ UnkTexture* mTexture;
+    /* 0x18 */ UnkTexture* mRequest; // texture still loading
+};
+
+// Badges counted in a category (index 3: all categories).
+struct UnkBadgeCount {
+    /* 0x0 */ int mTotal;
+    /* 0x4 */ int mOwned;
+};
+
+// Unit 0x8011C460 (game/unit_8011C460.cpp).
 class Badges : public section {
 public:
     Badges();
@@ -18,7 +47,40 @@ public:
     virtual void vf14();
     virtual void vf18();
 
-    u8 unk[0x134C - sizeof(section)];
+    static UnkTexture* fn_8011CC5C(int index);
+    u8 fn_8011CD10();
+    void fn_8011CD18();
+    void fn_8011CDD4(int rows);
+    void fn_8011CE04(int delta);
+    int fn_8011CF64(int index);
+    UnkTexture* fn_8011CF8C(int index);
+    const char* fn_8011CFC0(int index);
+    const char* fn_8011CFF4(int index);
+    void fn_8011D028(u32 topHash, u32 bottomHash);
+    void fn_8011D030(u32 hash);
+    const char* fn_8011D038();
+    const char* fn_8011D150();
+
+    // Reads the member back: the DOL keeps the dead branch after a constant category.
+    void SetCategory(int category) {
+        mCategory = category;
+        m4 = mCategory;
+        if (mCategory == 3) {
+            m4 = 1;
+        } else {
+            m4 = mCategory + 2;
+        }
+    }
+
+    /* 0x001C */ UnkBadge mBadges[150];
+    /* 0x1084 */ int mShownCount;
+    /* 0x1088 */ UnkBadge* mShown[153];
+    /* 0x12EC */ int mCursor;
+    /* 0x12F0 */ int mCount;
+    /* 0x12F4 */ int mCategory; // 3: all
+    /* 0x12F8 */ UnkBadgeCount mCounts[4];
+    /* 0x1318 */ UnkProgressBar mProgress;
+    /* 0x1344 */ char mCountText[8];
 };
 
 class Statistics : public section {
@@ -40,12 +102,6 @@ struct UnkQuest {
     /* 0x08 */ int mState;
     /* 0x0C */ int mProgress;
     /* 0x10 */ int mGoal;
-};
-
-// Texture returned by fn_80109330 (real type unknown; reference counted).
-struct UnkTexture {
-    /* 0x00 */ u8 unk0[0x24];
-    /* 0x24 */ int mRefCount;
 };
 
 // Unit 0x8011EA20 (game/unit_8011EA20.cpp).
