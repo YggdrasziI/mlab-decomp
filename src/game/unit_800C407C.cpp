@@ -54,7 +54,7 @@ void ExWorldWireTile::vfC0() {
     ExWorldTile::vfC0();
 }
 
-f32 ExWorldWireTile::vfD0() {
+f32 ExWorldWireTile::vfD0() const {
     f32 length = 0.0f;
     for (int i = 0; i != mWire->mPointCount - 1; i++) {
         length += fn_8010B05C(mWire, i);

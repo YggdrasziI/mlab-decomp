@@ -183,7 +183,12 @@ struct UnkEntityAnimState {
 // Bone of an entity model (0xC8 bytes, real name unknown).
 struct UnkBone {
     /* 0x00 */ u32 m0;
-    /* 0x04 */ u8 unk4[0x5C - 0x4];
+    /* 0x04 */ u8 unk4[0x14 - 0x4];
+    /* 0x14 */ UnkVec3 m14; // direction (ExWorldCurvedTile)
+    /* 0x20 */ u8 unk20[0x2C - 0x20];
+    /* 0x2C */ UnkVec3 m2C; // position (ExWorldCurvedTile)
+    // 3x4 matrix whose translation is mPos (ExWorldCurvedTile reads it as a whole).
+    /* 0x38 */ f32 m38[9];
     /* 0x5C */ UnkVec3 mPos;
     /* 0x68 */ u8 unk68[0xC8 - 0x68];
 };
@@ -507,18 +512,27 @@ public:
     virtual void vfC4();
     virtual void vfC8();
     virtual void vfCC();
-    virtual f32 vfD0() = 0;
+    virtual f32 vfD0() const = 0;
 };
 
-// Functions at 0x800C4530-0x800C5100 (unit not split yet).
+// Game unit at 0x800C4530-0x800C52B4: a tile whose path is an arc between two
+// bones (mStartBone may be -1: the origin, pointing up).
 class ExWorldCurvedTile : public ExWorldTile {
 public:
     ExWorldCurvedTile(int type, EntityInfo* info, int init);
     virtual ~ExWorldCurvedTile();
     virtual void vfBC();
-    virtual f32 vfD0();
+    virtual f32 vfD0() const;
     virtual UnkVec3 vfD4(f32 t);
     virtual UnkQuat vfD8(f32 t);
+
+    /* 0x264 */ int mStartBone;
+    /* 0x268 */ int mEndBone;
+    /* 0x26C */ u8 unk26C[0x2A0 - 0x26C];
+    /* 0x2A0 */ UnkVec3 mCenter;
+    /* 0x2AC */ f32 mRadius; // -1: none
+    /* 0x2B0 */ f32 mAngle;
+    /* 0x2B4 */ f32 mRoll;
 };
 
 // Wire segment of a level element (real type unknown; 0x4C bytes).
@@ -546,7 +560,7 @@ public:
     virtual ~ExWorldWireTile();
     virtual void vfBC();
     virtual void vfC0();
-    virtual f32 vfD0();
+    virtual f32 vfD0() const;
 
     /* 0x264 */ u8 unk264[0x2A0 - 0x264]; // owner class unknown
     /* 0x2A0 */ UnkWire* mWire;
