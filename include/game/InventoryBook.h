@@ -133,6 +133,9 @@ public:
     /* 0x14DC */ u32 mLoaded;
 };
 
+// IngredientSelection section (game unit 0x801196F4): no state of its own; its static
+// functions hold the ingredient and the part chosen for a recipe, their names and
+// icons, and the monster they make.
 class IngredientSelection : public section {
 public:
     IngredientSelection();
@@ -142,7 +145,30 @@ public:
     virtual void vf14();
     virtual void vf18();
 
-    u8 unk[0x1C - sizeof(section)];
+    static void fn_80119798(int monster);
+    static void fn_80119810(UnkInventoryItem* item);
+    static void fn_80119858(UnkInventoryItem* item);
+    static void fn_801198A0(int breed, int slot);
+    static void fn_80119AE0();
+    static int fn_80119B00();
+    static int fn_80119B38();
+    static int fn_80119B78();
+    static int fn_80119B90();
+    static void fn_80119BA8();
+    static void fn_80119BFC();
+    static void fn_80119C58();
+    static void fn_80119C6C();
+    static int fn_80119FF4();
+    static u32 fn_80119FFC();
+    static u32 fn_8011A004();
+    static u32 fn_8011A00C();
+    static u32 fn_8011A014();
+    static void fn_8011A01C();
+    static void fn_8011A028();
+    static u8 fn_8011A034();
+    static void fn_8011A03C(u32 value);
+    static u32 fn_8011A044();
+    static void fn_8011A04C();
 };
 
 struct UnkPartRecord;

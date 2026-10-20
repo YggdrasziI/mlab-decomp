@@ -93,6 +93,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Struct copies in the wrong stack slots: the DOL sorts them by size; when this build
   does not, get them from an inline function that returns the struct by value
   (`GetAbilityInfo` in `unit_8011A778`).
+- A struct field copied into a local (`u8 slot = part.mSlot;`) and used for several
+  indexes gets the DOL's registers only when each use reads the field itself
+  (`part.mSlot - 1`, `IngredientSelection::fn_8011A04C`).
 - A clamp that reads the member again in each branch (`lwz` in both arms): write it
   as a macro on the member, not an inline function taking the value
   (`UNK_CLAMP_BETWEEN`, `Parts::fn_8011B898`).
