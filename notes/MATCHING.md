@@ -160,7 +160,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   on all game code it reverses the inline functions of other units.
 - The order of those destructors follows the order in which the objects are
   defined; the class definitions, `extern` declarations, template or plain classes
-  and `-inline deferred` do not change it (`unit_801088C0`, still unsolved).
+  and `-inline deferred` do not change it, nor do explicit (inlined) destructor
+  calls in an earlier function: only the out-of-line reference made for the
+  registration counts (`unit_801088C0`, still unsolved).
 - Inline functions used by a unit are emitted after the function that first needs
   them; weak functions after the `__sinit` belong to the unit before them.
 - Base-class RTTI copies emitted in a derived unit are dropped by the linker.
