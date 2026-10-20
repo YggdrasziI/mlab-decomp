@@ -3,9 +3,9 @@
 
 // Class "Journal" (RTTI) and its four sections "Badges", "Statistics", "QuestLog"
 // and "Recipes" (RTTI names; sizes from the allocations in the Journal
-// constructor). Badges is game unit 0x8011C460, QuestLog 0x8011EA20; the other
-// sections' functions are from 0x8011D5C4 (units not split yet). Real file names
-// unknown.
+// constructor). Badges is game unit 0x8011C460, Statistics 0x8011D5C4, QuestLog
+// 0x8011EA20; Recipes' functions are from 0x8011F410 (unit not split yet). Real file
+// names unknown.
 
 #include "game/book.h"
 #include "game/section.h"
@@ -83,6 +83,7 @@ public:
     /* 0x1344 */ char mCountText[8];
 };
 
+// Unit 0x8011D5C4 (game/unit_8011D5C4.cpp): four tabs of player statistics.
 class Statistics : public section {
 public:
     Statistics();
@@ -92,7 +93,35 @@ public:
     virtual void vf14();
     virtual void vf18();
 
-    u8 unk[0x50 - sizeof(section)];
+    void fn_8011D69C(int delta);
+    void fn_8011D6F4();
+    void fn_8011D708();
+    u32 fn_8011D71C();
+    u32 fn_8011D728();
+    const char* fn_8011D79C();
+    u32 fn_8011D894();
+    int fn_8011D930();
+    u32 fn_8011D97C();
+    u32 fn_8011D988();
+    u32 fn_8011D994();
+    u32 fn_8011D9A0();
+    u32 fn_8011D9A8();
+    u32 fn_8011D9B4();
+    void fn_8011D9C0();
+    void fn_8011DF20();
+    void fn_8011E440();
+    int fn_8011E94C();
+    int fn_8011E95C();
+    int fn_8011E970();
+    int fn_8011E984();
+    int fn_8011E998();
+    void fn_8011E9A8(u32 topHash, u32 bottomHash);
+    void fn_8011E9B0(u32 hash);
+    void fn_8011E9B8();
+
+    /* 0x1C */ int mTab;
+    /* 0x20 */ int mPage;
+    /* 0x24 */ UnkProgressBar mProgress;
 };
 
 // Quest of the quest manager (real type unknown).
