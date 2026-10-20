@@ -194,6 +194,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Function bodies that are identical in the DOL but use different registers when one
   of them goes through an inline helper: write the loop out in the function instead
   of calling the helper (`fn_80109A20`).
+- Two locals in the other registers: declare the one the DOL numbers higher first,
+  even uninitialized (`int page;` in `Recipes::fn_801205EC`), or split the
+  initialization (`int element = mElement; element += delta;`).
 - `a = b = x;` stores b first: swap the chain when the DOL stores the other global
   first (`fn_80109A20`).
 - String literals are pooled in parse order (small ones in .sdata, others in
@@ -309,6 +312,11 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   Include `<revolution/gx/GXHardware.h>` before the game headers (`types.h` clash).
 
 ## Unsolved patterns
+
+- A struct copied twice on the stack, first word by word then member by member
+  (`lha`/`lbz`), with both copies kept and the base pointer reloaded every iteration
+  (`Recipes::fn_80120990`): copy constructor, assignment, second type, by-value or
+  member predicate all let CW drop the copies.
 
 - An inlined member function whose stack temporaries come out in the opposite order
   of its out-of-line copy (`fn_8009875C` inlined in `fn_800988F0`): not reproduced
