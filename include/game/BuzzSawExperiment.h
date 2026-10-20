@@ -183,8 +183,7 @@ public:
     // The DOL dispatches these calls through the vtable of mTrack.
     ExWorldTrack* GetTrack() { return &mTrack; }
     UnkVec3 TrackPos() {
-        GetTrack()->vf20();
-        return GetTrack()->vf24();
+        return GetTrack()->vf24(GetTrack()->vf20());
     }
 
     void fn_800A0BAC(f32 dt);

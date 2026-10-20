@@ -463,6 +463,7 @@ config.libs = [
             Object(Matching, "game/unit_800BF654.cpp"),
             Object(NonMatching, "game/unit_800C407C.cpp"),
             Object(NonMatching, "game/unit_800C42B8.cpp"),
+            Object(NonMatching, "game/unit_800C52B4.cpp"),
             Object(Matching, "game/unit_800C5E90.cpp"),
             Object(Matching, "game/unit_800D00B4.cpp"),
             Object(NonMatching, "game/unit_800D7F24.cpp"),

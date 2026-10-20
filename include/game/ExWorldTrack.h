@@ -13,13 +13,14 @@
 struct UnkTileRing {
     // Read through a const accessor: the DOL reuses this load for the index.
     int GetHead() const { return mHead; }
+    int GetTail() const { return mTail; }
     bool IsEmpty() const { return mHead < 0 || mTail < 0; }
     bool Contains(int index) const {
         if (index < 0 || index >= mCapacity) {
             return false;
         }
-        int head = mHead;
         int tail = mTail;
+        int head = mHead;
         if (tail < head) {
             if (index <= tail) {
                 index += mCapacity;
@@ -53,6 +54,36 @@ struct UnkTileRing {
         }
         return 0;
     }
+    // Walk from the tail towards the head (ExWorldCurvedTrack).
+    ExWorldTile* Last() {
+        if (!IsEmpty()) {
+            mCurrent = At(GetTail());
+            if (mCurrent != 0) {
+                return *mCurrent;
+            }
+        }
+        return 0;
+    }
+    ExWorldTile** PrevOf(ExWorldTile** item) {
+        int index = item - mItems;
+        if (index == GetHead()) {
+            return 0;
+        }
+        int prev = index - 1;
+        if (prev < 0) {
+            prev = mCapacity - 1;
+        }
+        return At(prev);
+    }
+    ExWorldTile* Prev() {
+        if (mCurrent != 0) {
+            mCurrent = PrevOf(mCurrent);
+            if (mCurrent != 0) {
+                return *mCurrent;
+            }
+        }
+        return 0;
+    }
 
     /* 0x00 */ int mHead;
     /* 0x04 */ int mTail;
@@ -80,9 +111,9 @@ public:
     virtual void vf10();
     virtual void vf14(f32 arg);
     virtual void vf18();
-    virtual void vf1C() = 0;
-    virtual void vf20() = 0;
-    virtual UnkVec3 vf24() = 0;
+    virtual void vf1C(f32 delta) = 0;
+    virtual f32 vf20() = 0;
+    virtual UnkVec3 vf24(f32 distance) = 0;
     virtual UnkVec3 vf28() = 0;
     virtual bool vf2C(ExWorldTile* tile);
     virtual bool vf30(ExWorldTile* tile);
@@ -105,9 +136,9 @@ public:
     virtual ~ExWorldWireTrack();
     virtual void vf0C(void* owner);
     virtual void vf10();
-    virtual void vf1C();
-    virtual void vf20();
-    virtual UnkVec3 vf24();
+    virtual void vf1C(f32 delta);
+    virtual f32 vf20();
+    virtual UnkVec3 vf24(f32 distance);
     virtual UnkVec3 vf28();
     virtual void vf38(ExWorldTile* tile);
     virtual void vf34(ExWorldTile* tile, ExWorldTile* other);
@@ -115,17 +146,17 @@ public:
     /* 0xD8 */ UnkWirePath mPath;
 };
 
-// Class "ExWorldCurvedTrack" (RTTI; functions at 0x800C52B4-0x800C5xxx, unit not
-// split yet).
+// Class "ExWorldCurvedTrack" (RTTI; unit at 0x800C52B4-0x800C5E90). mD8 is the
+// distance travelled along the track's tiles.
 class ExWorldCurvedTrack : public ExWorldTrack {
 public:
     ExWorldCurvedTrack();
     virtual ~ExWorldCurvedTrack();
     virtual void vf0C(void* owner);
     virtual void vf10();
-    virtual void vf1C();
-    virtual void vf20();
-    virtual UnkVec3 vf24();
+    virtual void vf1C(f32 delta);
+    virtual f32 vf20();
+    virtual UnkVec3 vf24(f32 distance);
     virtual UnkVec3 vf28();
     virtual void vf38(ExWorldTile* tile);
 

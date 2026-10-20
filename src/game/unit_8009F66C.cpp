@@ -255,8 +255,8 @@ BuzzSawExperiment::BuzzSawExperiment()
     mPool.ExWorldTileSetPool::vf0C(lbl_803C6C08, 3);
     GetTrack()->vf0C(&mPool);
     GetTrack()->vf14(0.0f);
-    GetTrack()->vf20();
-    UnkVec3 pos = GetTrack()->vf24();
+    f32 distance = GetTrack()->vf20();
+    UnkVec3 pos = GetTrack()->vf24(distance);
     mCB0 = mCAC->mInfo->mPos - pos;
     mCF8 = -1;
     mCFC = -1;
@@ -373,8 +373,7 @@ void BuzzSawExperiment::vf54() {
     x = eye.x;
     eye.x = x * c + eye.y * -s;
     eye.y = eye.y * c + x * s;
-    GetTrack()->vf20();
-    UnkVec3 pos = GetTrack()->vf24();
+    UnkVec3 pos = GetTrack()->vf24(GetTrack()->vf20());
     target += pos;
     eye += pos;
     mC94 = eye;
@@ -408,8 +407,7 @@ void BuzzSawExperiment::fn_800A0BAC(f32 dt) {
     x = eye.x;
     eye.x = x * c + eye.y * -s;
     eye.y = eye.y * c + x * s;
-    GetTrack()->vf20();
-    UnkVec3 pos = GetTrack()->vf24();
+    UnkVec3 pos = GetTrack()->vf24(GetTrack()->vf20());
     target += pos;
     eye += pos;
     mC94 = eye;

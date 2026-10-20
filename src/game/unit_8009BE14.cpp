@@ -52,7 +52,7 @@ bool AstralTrack::vf30(ExWorldTile* tile) {
     return false;
 }
 
-extern "C" UnkVec3 fn_8009C1E8(ExWorldCurvedTrack* track) {
+extern "C" UnkQuat fn_8009C1E8(ExWorldCurvedTrack* track) {
     f32 t = fn_800C54A0(track);
     return static_cast<ExWorldCurvedTile*>(fn_800C2FF0(track))->vfD8(t);
 }

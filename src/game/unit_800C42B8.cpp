@@ -8,9 +8,9 @@
 extern "C" {
 void fn_8010B5A0(UnkWirePath* path, UnkWire* wire);
 void fn_8010BB54(UnkWirePath* path);
-void fn_8010BFB8(UnkWirePath* path);
-void fn_8010C194(UnkWirePath* path);
-UnkVec3 fn_8010C354(UnkWirePath* path);
+void fn_8010BFB8(UnkWirePath* path, f32 delta);
+f32 fn_8010C194(UnkWirePath* path);
+UnkVec3 fn_8010C354(UnkWirePath* path, f32 distance);
 UnkVec3 fn_8010B50C(UnkWirePath* path);
 void fn_8010BF6C(UnkWirePath* path, int count);
 void fn_8010BB64(UnkWirePath* path, UnkWire* wire, const UnkMtx34& mtx);
@@ -32,16 +32,16 @@ void ExWorldWireTrack::vf10() {
     fn_8010BB54(&mPath);
 }
 
-void ExWorldWireTrack::vf1C() {
-    fn_8010BFB8(&mPath);
+void ExWorldWireTrack::vf1C(f32 delta) {
+    fn_8010BFB8(&mPath, delta);
 }
 
-void ExWorldWireTrack::vf20() {
-    fn_8010C194(&mPath);
+f32 ExWorldWireTrack::vf20() {
+    return fn_8010C194(&mPath);
 }
 
-UnkVec3 ExWorldWireTrack::vf24() {
-    return fn_8010C354(&mPath);
+UnkVec3 ExWorldWireTrack::vf24(f32 distance) {
+    return fn_8010C354(&mPath, distance);
 }
 
 UnkVec3 ExWorldWireTrack::vf28() {

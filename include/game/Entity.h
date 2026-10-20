@@ -517,8 +517,8 @@ public:
     virtual ~ExWorldCurvedTile();
     virtual void vfBC();
     virtual f32 vfD0();
-    virtual void vfD4();
-    virtual UnkVec3 vfD8(f32 t);
+    virtual UnkVec3 vfD4(f32 t);
+    virtual UnkQuat vfD8(f32 t);
 };
 
 // Wire segment of a level element (real type unknown; 0x4C bytes).
