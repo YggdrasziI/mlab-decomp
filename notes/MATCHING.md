@@ -62,6 +62,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Several saved registers in the wrong order in a loop over a switch (case
   constants and vtables hoisted): declaring the loop pointer before the count and the
   index at the top of the function fixed `fn_8012FD0C`; script the permutations.
+- A value stored to a global and then compared: the DOL compares the loaded value
+  (`int id = p->mId; global = id; if (id == -1)`); comparing `p->mId` again reloads
+  it after the store (`unit_8001EE48`).
+- `if (g != 0) { delete g; g = 0; }` with the cleanup in an inline destructor gives the
+  DOL's saved registers; the same code written out before `delete` numbers them
+  differently (`fn_8001EF50`).
 - The declaration order of locals sets their register numbers (a result declared
   before the entity pointer, for example). A local declared at the top of its block
   but assigned later takes a different saved register (`flag` in `fn_800D8280`).

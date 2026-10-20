@@ -55,6 +55,7 @@ offset).
 | `game/unit_80019CC8.cpp` | 0x80019CC8-0x80019FB0 | script callbacks for props sending up to three delayed events (`"check_delayed_timer"`, `"send_delayed_event_to_zone"`, `"reset_trigger_send_delayed_events"`); timers are `Entity::m28` plus a delay (matches, linked) |
 | `game/unit_80019FB0.cpp` | 0x80019FB0-0x8001A17C | launch speed for a projectile between two points at a given angle under gravity (NonMatching, 89.8 %: the `height` / `s` registers are swapped and two stores are reordered) |
 | `game/unit_8001AFB4.cpp` | 0x8001AFB4-0x8001B20C | a stack of states: init, lookup by id, pending state, push and pop (matches, linked) |
+| `game/unit_8001EE48.cpp` | 0x8001EE48-0x8001FCA8 | creature viewer created on demand (`lbl_805FAF80`, 0x3C bytes): pages through the player's creatures, shows the current one on the stands model (same logic as the InventoryBook Creatures section, `unit_80117090`), statistic getters, name and "%d/%d" position text, selected part id and index (`lbl_805F8288`, `lbl_805FAF84`) and its icon (`lbl_805FAF88`) (matches, linked) |
 | `game/unit_8001FCA8.cpp` | 0x8001FCA8-0x80020480 | `CAbstractInputEventStage` base, the source-update function, the stage sequence and factory (matches, linked) |
 | `game/unit_80020480.cpp` | 0x80020480-0x800214D4 | the 10 `CAbstractInput*` stages (29/31 functions match) |
 | `game/unit_800214D4.cpp` | 0x800214D4-0x80021594 | the set of input sequences (8 fixed, 100 indexed, 34-entry index table) (matches, linked) |
