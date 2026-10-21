@@ -1,6 +1,6 @@
 // Game unit at 0x800D4C64-0x800D50C4 (real file name unknown): the constructor and
-// copy of a 0x1AC-byte record and the copy of a 0xDC-byte record, both kept in
-// arrays of 255 by the unit at 0x800D3428 (not split; real names unknown). The end
+// copy of a path point and the copy of a path, both kept in arrays of 255 by
+// Exploration::PathAPI (game/unit_800D3428.cpp; types in game/PathAPI.h). The end
 // is the static initializer at 0x800D50A4; the functions use its 0.0 constant, so
 // they belong to this unit and not to the one at 0x800D3428 (whose static
 // initializer at 0x800D4C44 has its own constants).
@@ -8,70 +8,10 @@
 // functions match.
 
 #include "game/unk_vec3.mch"
+#include "game/PathAPI.h"
 #include "game/unk_vec3.h"
 
 extern "C" void* memset(void* dst, int value, u32 size);
-
-class Unk800D4C64 {
-public:
-    Unk800D4C64();
-    Unk800D4C64& operator=(const Unk800D4C64& other);
-
-    /* 0x000 */ u32 m0;
-    // Set and copied column by column in the DOL (the order of the stores).
-    /* 0x004 */ u32 m4[3][4];
-    /* 0x034 */ UnkVec3 m34;
-    /* 0x040 */ int m40;
-    /* 0x044 */ u32 m44[3];
-    /* 0x050 */ u32 m50;
-    /* 0x054 */ u32 m54;
-    /* 0x058 */ u32 m58;
-    /* 0x05C */ u32 m5C;
-    /* 0x060 */ int m60;
-    /* 0x064 */ u8 m64;
-    /* 0x068 */ u32 m68[10];
-    /* 0x090 */ u32 m90;
-    /* 0x094 */ u32 m94;
-    /* 0x098 */ u32 m98;
-    /* 0x09C */ u8 m9C;
-    /* 0x0A0 */ u32 mA0;
-    // A flat word array: the 64-word loops unroll into the DOL's 2 iterations of
-    // 32 stores (constructor) and 4 iterations of 16 copies (operator=).
-    /* 0x0A4 */ u32 mA4[64];
-    /* 0x1A4 */ u32 m1A4;
-    /* 0x1A8 */ u32 m1A8;
-};
-
-// Point with a flag, 0x10 bytes (real name unknown).
-struct Unk800D5008Point {
-    /* 0x0 */ UnkVec3 mPos;
-    /* 0xC */ u8 mFlag;
-};
-
-class Unk800D5008 {
-public:
-    Unk800D5008& operator=(const Unk800D5008& other);
-
-    void Add(const Unk800D5008Point& point) {
-        if (mCount < 12) {
-            Unk800D5008Point& dst = mPoints[mCount];
-            dst.mPos.x = point.mPos.x;
-            dst.mPos.y = point.mPos.y;
-            dst.mPos.z = point.mPos.z;
-            dst.mFlag = point.mFlag;
-            mCount++;
-        }
-    }
-
-    /* 0x00 */ u32 m0;
-    /* 0x04 */ u32 m4;
-    /* 0x08 */ u32 m8;
-    /* 0x0C */ u32 mC;
-    /* 0x10 */ u32 m10;
-    /* 0x14 */ u32 m14;
-    /* 0x18 */ Unk800D5008Point mPoints[12];
-    /* 0xD8 */ int mCount;
-};
 
 Unk800D4C64::Unk800D4C64() {
     m0 = 0;
@@ -149,17 +89,16 @@ Unk800D4C64& Unk800D4C64::operator=(const Unk800D4C64& other) {
 
 // 98.6 %: the DOL keeps the loop counter in r6 and the source pointer in r7, this
 // build the other way round (pointer loop, while loop, inline accessors, by-value
-// point and member-by-member copies tried). The six words are copied in the DOL's
-// load order.
+// point and member-by-member copies tried).
 Unk800D5008& Unk800D5008::operator=(const Unk800D5008& other) {
     mCount = 0;
     for (int i = 0; i < other.mCount; i++) {
         Add(other.mPoints[i]);
     }
-    m4 = other.m4;
-    mC = other.mC;
-    m8 = other.m8;
-    m10 = other.m10;
+    for (int i = 0; i < 2; i++) {
+        m4[i] = other.m4[i];
+        mC[i] = other.mC[i];
+    }
     m0 = other.m0;
     m14 = other.m14;
     return *this;

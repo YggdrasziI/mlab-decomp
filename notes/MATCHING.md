@@ -261,6 +261,25 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Where a weak-looking function belongs: the sdata2 constants it uses. Functions
   after a unit's static initializer that load the constant of the next static
   initializer are their own unit (`unit_800D4C64`).
+- Descending loops `for (i = n - 1; i > -1; i--)`: the DOL's `cmpwi i, -1` comes
+  from `i > -1`; `i >= 0` gives `addic.`/`blt` (`unit_800D3428`).
+- Bounds-checked container accessors inlined everywhere (`PathAPI.h`): the clamp is
+  a conditional expression (`v < lo ? lo : (v > hi ? hi : v)`; the if/return form
+  numbers the registers differently), and `if (mUsed[i] == false)` gives the DOL's
+  branch order where `!mUsed[i]` inverts it.
+- The vtable pointer of a class whose base has none goes after the data members
+  only when they are declared before the first virtual function; declared after,
+  it lands at offset 0 (`Exploration::PathAPI`).
+- Member subobject destructors are called with -1, base class destructors with 0:
+  this tells a member at offset 0 from a base.
+- Small constructors and destructors that the DOL has after the last function of a
+  unit, in definition order: define them out of line at the end of the file; the
+  compiler places generated copies right after their first user instead. With
+  `-ipa file` an inline function defined last is still inlined earlier, and the
+  inline functions it needs are emitted at the end (not needed in the end for
+  `unit_800D3428`).
+- Unreferenced weak destructors of container templates emitted by the compiler are
+  stripped at link time: the unit still links byte for byte.
 - A byte loop over an image row with a pointer increment in the DOL: index the row
   (`row[x] &= mask;`); an explicit `p++` gives the same code with other registers
   (`fn_8007C50C`).
