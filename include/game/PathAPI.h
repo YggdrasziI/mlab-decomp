@@ -153,6 +153,15 @@ public:
             mCount++;
         }
     }
+    // Removes an element by moving the last one in its place.
+    void RemoveAt(int i) {
+        if (i < mCount) {
+            mCount--;
+            if (i != mCount) {
+                mData[i] = mData[mCount];
+            }
+        }
+    }
 
     T mData[N];
     int mCount;

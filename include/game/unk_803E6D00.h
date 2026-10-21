@@ -27,7 +27,9 @@ struct UnkGlobals803E6D00Sub {
     /* 0x000 */ u8 unk0[0x4];
     /* 0x004 */ int m4;
     /* 0x008 */ Entity* m8;
-    /* 0x00C */ u8 unkC[0x1A4 - 0xC];
+    /* 0x00C */ u8 unkC[0x74 - 0xC];
+    /* 0x074 */ struct UnkResource* m74; // spawn resource (unit_800D6B0C)
+    /* 0x078 */ u8 unk78[0x1A4 - 0x78];
     /* 0x1A4 */ u8* mWireGroups;
     /* 0x1A8 */ u8 unk1A8[0x1B0 - 0x1A8];
     /* 0x1B0 */ struct UnkZoneData** mZones;

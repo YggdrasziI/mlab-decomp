@@ -300,6 +300,13 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   the DOL reads the stack slot.
 - A dead test kept by the DOL (a check whose result is overwritten with the same
   value, `cntlzw`/`srwi.` then `li 1`): reproduce it as written (`IsOnPath`).
+- `if (p) delete p;` on a class without destructor tests the pointer once; the DOL's
+  two tests (`beq` twice) come from a declared, empty destructor (`unit_800D6B0C`).
+- A field of a parameter the DOL loads once before a search loop: copy it to a local
+  before the loop (`u32 id = entry->m0;`, `fn_800D70EC`).
+- Accesses the DOL makes through a reloaded global (`lwz rX, lbl@sda21` again after
+  a loop) where a local copy exists: write them through the global; the compiler
+  then shares the other loads with the local copy (`fn_800D7394`).
 - A byte loop over an image row with a pointer increment in the DOL: index the row
   (`row[x] &= mask;`); an explicit `p++` gives the same code with other registers
   (`fn_8007C50C`).
