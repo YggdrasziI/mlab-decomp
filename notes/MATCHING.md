@@ -80,6 +80,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - A pointer to a member at a non-zero offset taken with a null check: an explicit
   `if (p) q = &p->m; else q = 0;` gives the DOL's `addi`/`b`/`li 0` form; a ternary or
   an implicit base-class conversion adds a second compare (`fn_8003FC6C`).
+- `addic. r0, rX, off` / `beq` on a pointer already tested for null is the address of
+  a member struct compared with 0 (`if (&part->mLink == 0)`); a base-class
+  conversion adds a second compare (`vf0C` of `unit_8004AC68`).
 - A value returned by a function and passed by address only once can be a compiler
   temporary in the DOL (lowest stack slot, below the named locals of later blocks):
   pass it through an inline taking a `const&` (`XBaseActionSelectionCallback::Select`,
