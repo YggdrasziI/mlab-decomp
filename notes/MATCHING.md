@@ -251,6 +251,16 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   `f32 minX = mMin.x;` for a float pair copy in `unit_8007C4AC`), or split the
   initialization (`int element = mElement; element += delta;`, also for floats:
   `f32 t = x - a; t /= range;`).
+- The unroll factor tells the loop: a 64-word loop gives 2 iterations of 32 stores
+  (zeroing) or 4 iterations of 16 copies, where a loop over four 16-word structs
+  is unrolled by 2 (`unit_800D4C64`).
+- A copy whose loads all come before the stores (many saved registers, no stack):
+  straight-line member assignments let the scheduler hoist them; a loop in the
+  middle stops it, and the implicit `operator=` or copy constructor interleaves the
+  loads and stores (`Unk800D4C64::operator=`).
+- Where a weak-looking function belongs: the sdata2 constants it uses. Functions
+  after a unit's static initializer that load the constant of the next static
+  initializer are their own unit (`unit_800D4C64`).
 - A byte loop over an image row with a pointer increment in the DOL: index the row
   (`row[x] &= mask;`); an explicit `p++` gives the same code with other registers
   (`fn_8007C50C`).
