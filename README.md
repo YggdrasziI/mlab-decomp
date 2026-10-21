@@ -20,14 +20,17 @@ and the daily workflow.
 Progress
 ========
 
-![Current progress](progress/progress.svg)
+| Release | Game ID | Progress |
+|---|---|---|
+| Monster Lab (Europe) | `RM7P4F` | [![Fuzzy](progress/fuzzy.svg)](notes/PROGRESS.md) [![Perfect](progress/perfect.svg)](notes/PROGRESS.md) [![Linked](progress/linked.svg)](notes/PROGRESS.md) |
 
-![Progress over time](progress/history.svg)
+- **Fuzzy**: objdiff fuzzy match score over all code.
+- **Perfect**: code that matches byte for byte.
+- **Linked**: code linked into the matching `main.dol`.
 
-The charts are drawn from the objdiff report by `tools/progress_chart.py`. After a
-build, `python tools/progress_chart.py --record` adds the current commit to
-`progress/history.csv` and redraws the charts; commit the `progress/` folder with it.
-The game figures count every unit outside the SDK, including the ones not split yet.
+The badges are drawn from the objdiff report by `tools/progress_badges.py`. After a
+build, `python tools/progress_badges.py --record` redraws them and adds the current
+commit to `progress/history.csv`; commit the `progress/` folder with it.
 
 Dependencies
 ============

@@ -24,7 +24,7 @@ Project scripts in `tools/`:
 | `asm_compare.py <unit> <symbol>` | our compiled function next to the original disassembly, differing lines marked `*` |
 | `report_diff.py --save` / `report_diff.py` | save the objdiff report as a baseline before a change; afterwards list what improved or regressed |
 | `unit_candidates.py` | list game regions not split yet, smallest first, with float and call counts |
-| `progress_chart.py --record` | draw the progress charts of the README from the report |
+| `progress_badges.py --record` | draw the progress badges of the README from the report |
 | `decompctx.py` | build a context file for decomp.me (from the template; not used so far) |
 
 **Not used so far**, although they are common in other projects and listed in
