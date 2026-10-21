@@ -213,6 +213,11 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   its slot before the temporaries of later expressions; writing it as an
   expression (`(a - b).LengthSq()`) makes it a temporary with a lower slot
   (`fn_800B182C`).
+- Locals of an inline member function take stack slots below the temporaries of
+  its caller; when the DOL has the last vectors of a function at the lowest
+  addresses, move that code into an inline member (`UpdateBounds` in
+  `unit_8007C4AC`). One named vector assigned twice (`p = a + b; e->SetPosition(p);`)
+  gives the single shared slot the DOL uses for two such calls.
 - A unit whose .rodata cannot be split (link order cycle) can still match and link:
   its tables stay in the unsplit .rodata and the source declares them `extern`
   (`unit_800B1498`).
@@ -242,8 +247,13 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   of them goes through an inline helper: write the loop out in the function instead
   of calling the helper (`fn_80109A20`).
 - Two locals in the other registers: declare the one the DOL numbers higher first,
-  even uninitialized (`int page;` in `Recipes::fn_801205EC`), or split the
-  initialization (`int element = mElement; element += delta;`).
+  even uninitialized (`int page;` in `Recipes::fn_801205EC`, `f32 minY;` before
+  `f32 minX = mMin.x;` for a float pair copy in `unit_8007C4AC`), or split the
+  initialization (`int element = mElement; element += delta;`, also for floats:
+  `f32 t = x - a; t /= range;`).
+- A byte loop over an image row with a pointer increment in the DOL: index the row
+  (`row[x] &= mask;`); an explicit `p++` gives the same code with other registers
+  (`fn_8007C50C`).
 - `a = b = x;` stores b first: swap the chain when the DOL stores the other global
   first (`fn_80109A20`).
 - String literals are pooled in parse order (small ones in .sdata, others in
