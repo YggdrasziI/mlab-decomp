@@ -126,12 +126,12 @@ void fn_800D3D50(PathAPI* self) {
 void fn_800D3D6C(PathAPI* self) {
     for (int i = self->mPoints.Count() - 1; i > -1; i--) {
         for (int k = 0; k < 4; k++) {
-            if (self->mPoints[i].m4[1][k] == 0) {
-                self->mPoints[i].m4[0][k] = 0;
+            if (self->mPoints[i].mPathIds[k] == 0) {
+                self->mPoints[i].mPaths[k] = 0;
             } else {
                 for (int j = self->mPaths.Count() - 1; j > -1; j--) {
-                    if (self->mPoints[i].m4[1][k] == self->mPaths[j].m0) {
-                        self->mPoints[i].m4[0][k] = (u32)&self->mPaths[j];
+                    if (self->mPoints[i].mPathIds[k] == self->mPaths[j].m0) {
+                        self->mPoints[i].mPaths[k] = &self->mPaths[j];
                         for (int n = 0; n < 2; n++) {
                             if (self->mPaths[j].mC[n] == self->mPoints[i].m0) {
                                 self->mPaths[j].m4[n] = &self->mPoints[i];

@@ -11,6 +11,12 @@
 
 class Unk800D5008;
 
+// A conditional expression: an if/return version gives other registers.
+template <typename T>
+inline T UnkClampT(T value, T low, T high) {
+    return value < low ? low : (value > high ? high : value);
+}
+
 // Path point, 0x1AC bytes.
 class Unk800D4C64 {
 public:
@@ -18,8 +24,10 @@ public:
     Unk800D4C64& operator=(const Unk800D4C64& other);
 
     /* 0x000 */ u32 m0; // id
-    // Set and copied column by column in the DOL (the order of the stores).
-    /* 0x004 */ u32 m4[3][4]; // row 0: Unk800D5008* of each path, row 1: their ids
+    // Four exits, set and copied exit by exit in the DOL (the order of the stores).
+    /* 0x004 */ Unk800D5008* mPaths[4];
+    /* 0x014 */ u32 mPathIds[4];
+    /* 0x024 */ u32 mLocks[4]; // an exit is closed when set (unless asked to ignore it)
     /* 0x034 */ UnkVec3 m34; // position
     /* 0x040 */ int m40;
     /* 0x044 */ u32 m44[3];
@@ -66,6 +74,14 @@ public:
         }
     }
 
+    Unk800D5008Point& Point(int i) {
+        Unk800D5008Point* point = mPoints;
+        if (i != UnkClampT(i, 0, mCount)) {
+            return *point;
+        }
+        return point[i];
+    }
+
     /* 0x00 */ u32 m0; // id
     /* 0x04 */ Unk800D4C64* m4[2]; // end points
     /* 0x0C */ u32 mC[2]; // their ids
@@ -74,13 +90,21 @@ public:
     /* 0xD8 */ int mCount;
 };
 
-// Context given with a point to Unk800D50C4::fn_800D5110 (0x24 bytes, contents
-// unknown).
+// Cursor of a path follower, 0x24 bytes: either at a point (mPoint) or moving
+// along a path (mPath, towards the point of index mIndex; -4 and -3 stand for the
+// two end points).
 struct Unk800D50C4Ctx {
-    /* 0x00 */ u8 unk0[0x24];
+    /* 0x00 */ f32 mSpeed;
+    /* 0x04 */ bool mForward; // along the path towards end point 1
+    /* 0x08 */ int mState; // 0 moving, 1 paused, 2 stopped
+    /* 0x0C */ int mIndex;
+    /* 0x10 */ Unk800D5008* mPath;
+    /* 0x14 */ Unk800D4C64* mPoint;
+    /* 0x18 */ UnkVec3 mPos;
 };
 
-// Object built from a point (game unit at 0x800D50C4, not split; 0x404 bytes).
+// Path follower (game unit at 0x800D50C4), 0x404 bytes: its cursor and the points
+// visited by the last path search.
 class Unk800D50C4 {
 public:
     Unk800D50C4();
@@ -88,7 +112,9 @@ public:
     void fn_800D5110(Unk800D50C4Ctx* ctx, Unk800D4C64* point);
     void fn_800D5174(f32 dt);
 
-    /* 0x000 */ u8 unk0[0x404];
+    /* 0x000 */ Unk800D50C4Ctx* m0;
+    /* 0x004 */ Unk800D4C64* mVisited[255];
+    /* 0x400 */ int mVisitedCount;
 };
 
 // Pool entry of PathAPI, 0x428 bytes.
@@ -106,12 +132,6 @@ struct UnkPathLink {
     /* 0x04 */ u32 mValues[32];
     /* 0x84 */ int mCount;
 };
-
-// A conditional expression: an if/return version gives other registers.
-template <typename T>
-inline T UnkClampT(T value, T low, T high) {
-    return value < low ? low : (value > high ? high : value);
-}
 
 // Array with a count; out of range indexes give the first element.
 template <typename T, int N>

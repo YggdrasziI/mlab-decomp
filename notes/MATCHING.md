@@ -280,6 +280,26 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   `unit_800D3428`).
 - Unreferenced weak destructors of container templates emitted by the compiler are
   stripped at link time: the unit still links byte for byte.
+- A result the DOL keeps in r3 through a loop (`li r3, -1` before it, the loop end
+  falling through to the return): assign the recursive call to it, `result = f();
+  if (result != -1) return i;`, and break out of the loop rather than returning
+  inside (`fn_800D5DE4`, `fn_800D5FDC` in `unit_800D50C4`).
+- A search loop with a flag (`li r5, 0` before it, `li r5, 1` and a branch out):
+  `bool found = false; ... { found = true; break; } return found;`, not an early
+  `return true`.
+- Registers of a cached `ctx = self->m0` that differ from the DOL: drop the local and
+  write `self->m0->` each time; the compiler still loads it once (`fn_800D6A24`).
+- `x = !x` on a `u8` member masks the result (`rlwinm`); the DOL's plain `srwi` comes
+  from a `bool` member.
+- An `frsp` of a float variable right before its use as a scale: the argument goes
+  through a `double` (`Scaled(v, (double)step)`).
+- A square root with one `frsp` where `(f32)UnkSqrtf(x)` gives two: a helper that
+  returns `f32`.
+- Vector helpers written as free functions taking `const UnkVec3&`: the member
+  forms (`v.Normalized() * s`) keep a pointer to the temporary in a register where
+  the DOL reads the stack slot.
+- A dead test kept by the DOL (a check whose result is overwritten with the same
+  value, `cntlzw`/`srwi.` then `li 1`): reproduce it as written (`IsOnPath`).
 - A byte loop over an image row with a pointer increment in the DOL: index the row
   (`row[x] &= mask;`); an explicit `p++` gives the same code with other registers
   (`fn_8007C50C`).

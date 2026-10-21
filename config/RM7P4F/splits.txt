@@ -638,6 +638,12 @@ game/unit_800D4C64.cpp:
 	.bss        start:0x803C6F70 end:0x803C6F80
 	.sdata2     start:0x805FE610 end:0x805FE618
 
+game/unit_800D50C4.cpp:
+	.text       start:0x800D50C4 end:0x800D6B0C
+	.ctors      start:0x80345DA8 end:0x80345DAC
+	.bss        start:0x803C6F80 end:0x803C6F90
+	.sdata2     start:0x805FE618 end:0x805FE640
+
 game/unit_800D7F24.cpp:
 	.text       start:0x800D7F24 end:0x800D887C
 	.ctors      start:0x80345DB0 end:0x80345DB4

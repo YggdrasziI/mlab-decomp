@@ -15,10 +15,10 @@ extern "C" void* memset(void* dst, int value, u32 size);
 
 Unk800D4C64::Unk800D4C64() {
     m0 = 0;
-    for (int j = 0; j < 4; j++) {
-        for (int i = 0; i < 3; i++) {
-            m4[i][j] = 0;
-        }
+    for (int i = 0; i < 4; i++) {
+        mPaths[i] = 0;
+        mPathIds[i] = 0;
+        mLocks[i] = 0;
     }
     m34 = UnkVec3Zero();
     m40 = 1;
@@ -46,18 +46,18 @@ Unk800D4C64::Unk800D4C64() {
 // store, as in the DOL; m44 and m68 are loops.
 Unk800D4C64& Unk800D4C64::operator=(const Unk800D4C64& other) {
     m0 = other.m0;
-    m4[0][0] = other.m4[0][0];
-    m4[1][0] = other.m4[1][0];
-    m4[2][0] = other.m4[2][0];
-    m4[0][1] = other.m4[0][1];
-    m4[1][1] = other.m4[1][1];
-    m4[2][1] = other.m4[2][1];
-    m4[0][2] = other.m4[0][2];
-    m4[1][2] = other.m4[1][2];
-    m4[2][2] = other.m4[2][2];
-    m4[0][3] = other.m4[0][3];
-    m4[1][3] = other.m4[1][3];
-    m4[2][3] = other.m4[2][3];
+    mPaths[0] = other.mPaths[0];
+    mPathIds[0] = other.mPathIds[0];
+    mLocks[0] = other.mLocks[0];
+    mPaths[1] = other.mPaths[1];
+    mPathIds[1] = other.mPathIds[1];
+    mLocks[1] = other.mLocks[1];
+    mPaths[2] = other.mPaths[2];
+    mPathIds[2] = other.mPathIds[2];
+    mLocks[2] = other.mLocks[2];
+    mPaths[3] = other.mPaths[3];
+    mPathIds[3] = other.mPathIds[3];
+    mLocks[3] = other.mLocks[3];
     m34.x = other.m34.x;
     m34.y = other.m34.y;
     m34.z = other.m34.z;
