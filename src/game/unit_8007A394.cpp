@@ -2,9 +2,8 @@
 // of a sprite-like object, computed from the size of its image (real names
 // unknown). Bounds come from the static initializers of this unit and the previous
 // one.
-// NonMatching: fn_8007A3F4 (the DOL loads both floats of each pair before storing
-// them), fn_8007A4B4 and fn_8007A598 (float register numbers) differ; the other
-// functions match.
+// NonMatching: fn_8007A598 differs (float register numbers); the other functions
+// match.
 
 #include "game/unk_vec3.mch"
 #include "game/unk_vec3.h"
@@ -87,9 +86,18 @@ UnkSpriteRect::UnkSpriteRect() {
 
 UnkSpriteRect::~UnkSpriteRect() {}
 
+// minY and maxY are declared before minX and maxX for the DOL's register numbers.
 void UnkSpriteRect::fn_8007A3F4(UnkVec2* min, UnkVec2* max) {
-    *min = mMin;
-    *max = mMax;
+    f32 minY;
+    f32 minX = mMin.x;
+    minY = mMin.y;
+    min->x = minX;
+    f32 maxY;
+    f32 maxX = mMax.x;
+    min->y = minY;
+    maxY = mMax.y;
+    max->x = maxX;
+    max->y = maxY;
 }
 
 void UnkSpriteRect::fn_8007A418(f32* width, f32* height) {
@@ -119,12 +127,14 @@ void UnkSpriteRect::fn_8007A4B4(UnkImageOwner* owner) {
     f32 halfHeight = 0.5f * mHeight;
     mScaleY = (s32)info->mHeight / mHeight;
     fn_80079440(info);
-    mMax.x = halfWidth * lbl_805FD688;
     mMin.x = -halfWidth * lbl_805FD688;
     mMin.y = -halfHeight * lbl_805FD688;
+    mMax.x = halfWidth * lbl_805FD688;
     mMax.y = halfHeight * lbl_805FD688;
 }
 
+// 98.0 %: the DOL keeps lbl_805FD688 in f4 and numbers the other float registers
+// differently (statement orders, a scale local and an info pointer tried).
 void UnkSpriteRect::fn_8007A598() {
     mWidth = 80.0f;
     mHeight = 80.0f;
