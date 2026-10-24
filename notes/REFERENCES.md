@@ -53,12 +53,24 @@ GameCube:
 | `marioparty4` | [Mario Party 4](https://github.com/mariopartyrd/marioparty4) | 100 % |
 | `oot-gc` | [N64 Emulator for GameCube](https://github.com/zeldaret/oot-gc) | 100 % |
 
+The owner's own projects:
+
+| Folder | Project | State |
+|---|---|---|
+| `spyro-dotd-decomp` | The Legend of Spyro: Dawn of the Dragon (Wii, `RO8P7D`), private repository `YggdrasziI/spyro-dotd-decomp` (CC0) | partial |
+
+Same toolchain and layout as this project (dtk-template, multi-version model, progress
+card). Part of its RVL_SDK, MSL_C and Runtime units come from this project: a source
+shared with it is not independent evidence.
+
 The `doldecomp` organization hosts reusable libraries (SDK, JSystem...); check the
 version of each library against this DOL.
 
 ## Reuse permissions
 
 - CC0 references (mscharged-decomp, Petari, TP) come first.
+- `spyro-dotd-decomp` (the owner's own project, CC0): reuse allowed by the owner on
+  2026-10-25.
 - `DarkRTA/rb3` (no license file): reuse allowed by the owner on 2026-10-12 when the
   CC0 references lack a source.
 - `zeldaret/oot-vc` (no license file): reuse allowed by the owner on 2026-10-14 (close
