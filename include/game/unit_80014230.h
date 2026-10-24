@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-// Build numbers printed by fn_8001426C (519 and 142835); the constants are loaded
+// Build numbers printed by fn_8001426C (519 and 142835, 517 and 142067 in RM7E4F); the constants are loaded
 // from memory there, so they are defined in another unit. Real names unknown.
 extern const int lbl_805FC720;
 extern const int lbl_805FC724;

@@ -36,9 +36,7 @@ VERSIONS = [
 ]
 
 # Versions to disable until properly configured
-DISABLED_VERSIONS = [
-    1,  # USA
-]
+DISABLED_VERSIONS = []
 
 # Version groups for MatchingFor
 ALL_PAL = ["RM7P4F"]

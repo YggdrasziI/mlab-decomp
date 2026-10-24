@@ -1,0 +1,25 @@
+# See https://github.com/encounter/dtk-template/blob/main/config/GAMEID/config.example.yml
+object_base: orig/RM7E4F
+object: sys/main.dol
+hash: d0769d3a19ff2edee1b249361dd3e198c0c03418
+# Same code layout as RM7P4F (SPEC.md, "Other versions"): the symbols, splits and
+# linker script are shared.
+symbols: config/RM7P4F/symbols.txt
+splits: config/RM7P4F/splits.txt
+# Same as dtk's default linker script, plus FORCEFILES for units that nothing
+# references (only a local static initializer).
+ldscript_template: config/RM7P4F/ldscript.tpl
+# Written by GC 3.0a5.2 (byte 0xB of .comment), see notes/COMPILER.md.
+mw_comment_version: 15
+
+# OSInit builds the constant 0x80004000 (default MEM1 arena start) with lis/addi;
+# dtk would otherwise turn it into a relocation to __check_pad3 (same address).
+block_relocations:
+- source: .text:0x80233818
+- source: .text:0x80233890
+# A u16 character table holds 0x8056 0x58F0 side by side; dtk read it as a pointer
+# into the AXAux buffers.
+- source: .rodata:0x8034F28C
+# Image data at 0x80377938 holds the word 0x80023880; dtk read it as a pointer into
+# the static initializer of game/unit_800232A4.cpp.
+- source: .data:0x80379478

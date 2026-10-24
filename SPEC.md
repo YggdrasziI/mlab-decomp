@@ -22,13 +22,14 @@ redistribution of game files.
 
 ## Other versions
 
-The project is set up for two versions; only `RM7P4F` is enabled. `RM7E4F` stays in
-`DISABLED_VERSIONS` (`configure.py`) until the owner decides to support it.
+Both versions are enabled and checked (`main.dol: OK` for each). `RM7P4F` is the
+reference version; `RM7E4F` shares its `symbols.txt`, `splits.txt` and `ldscript.tpl`
+(`config/RM7E4F/config.yml` points to them) because the code layout is the same.
 
 | ID | Region | `main.dol` SHA-1 | Difference from `RM7P4F` | Status |
 |---|---|---|---|---|
 | `RM7P4F` | Europe (En,Fr,De,Es,It) | `50f6e9b9…` | — | enabled, reference version |
-| `RM7E4F` | USA (En,Fr,Es) | `d0769d3a19ff2edee1b249361dd3e198c0c03418` | earlier build of the same code: same size, sections and addresses, 10 bytes differ, all in the build information: date `"Jul 31 2008 (16:44)"` (`.rodata` 0x803476A8), builds 517 / 141043 (`.sdata2` 0x805FC720), region field 0 (`"NA"`) instead of 1 (`"EU"`) (`.data` 0x80354874, `game/unit_8001425C.cpp`) | disabled |
+| `RM7E4F` | USA (En,Fr,Es) | `d0769d3a19ff2edee1b249361dd3e198c0c03418` | earlier build of the same code: same size, sections and addresses, 10 bytes differ, all in the build information: date `"Jul 31 2008 (16:44)"` (`.rodata` 0x803476A8), builds 517 / 142067 (`.sdata2` 0x805FC720), region field 0 (`"NA"`) instead of 1 (`"EU"`) (`.data` 0x80354874, `game/unit_8001425C.cpp`) | enabled |
 
 Both discs are revision 0 with no RELs (`disc/header.bin`, `files/`).
 
@@ -99,7 +100,7 @@ Evidence and the full candidate analysis are in `notes/COMPILER.md`.
 configure.py              project configuration and build.ninja generator
 config/RM7P4F/            dtk config: config.yml, symbols.txt, splits.txt, build.sha1,
                           ldscript.tpl (FORCEFILES for sinit-only units)
-config/RM7E4F/            build.sha1 only while the version is disabled
+config/RM7E4F/            config.yml (shares the RM7P4F symbols, splits, ldscript), build.sha1
 orig/<ID>/                original game files (git-ignored, never committed)
 build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, runtime, MSL, TRK)

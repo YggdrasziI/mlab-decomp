@@ -9,6 +9,7 @@ copy of the game is required.
 Supported versions:
 
 - `RM7P4F`: Rev 0 (Europe)
+- `RM7E4F`: Rev 0 (USA)
 
 Learning guide
 ==============
@@ -23,7 +24,7 @@ Progress
 | Release | Game ID | Progress |
 |---|---|---|
 | Monster Lab (Europe) | `RM7P4F` | [![Fuzzy](progress/RM7P4F/fuzzy.svg)](notes/PROGRESS.md) [![Perfect](progress/RM7P4F/perfect.svg)](notes/PROGRESS.md) [![Linked](progress/RM7P4F/linked.svg)](notes/PROGRESS.md) |
-| Monster Lab (USA) | `RM7E4F` | not supported yet |
+| Monster Lab (USA) | `RM7E4F` | [![Fuzzy](progress/RM7E4F/fuzzy.svg)](notes/PROGRESS.md) [![Perfect](progress/RM7E4F/perfect.svg)](notes/PROGRESS.md) [![Linked](progress/RM7E4F/linked.svg)](notes/PROGRESS.md) |
 
 [![Progress card](progress/RM7P4F/card.svg)](notes/PROGRESS.md)
 

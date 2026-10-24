@@ -6,8 +6,13 @@
 #include "game/unit_80014230.h"
 #include "game/externs.h"
 #include "game/unk_vec3.h"
+#include "version.h"
 
+#if REGION_USA
+UnkBuildInfo lbl_80354868 = {0xA1A1A1A1, 0xA2A2A2A2, 0xA3A3A3A3, 0};
+#else
 UnkBuildInfo lbl_80354868 = {0xA1A1A1A1, 0xA2A2A2A2, 0xA3A3A3A3, 1};
+#endif
 
 s32 fn_8001425C() {
     return lbl_80354868.mRegion;
