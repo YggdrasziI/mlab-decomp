@@ -8,6 +8,7 @@ operands by eye; the objdiff report gives the real score.
 Usage:
   python tools/asm_compare.py unit_800445E4 fn_800446BC
   python tools/asm_compare.py unit_8000C478 <our symbol> [<original symbol>]
+  python tools/asm_compare.py --version RM7E4F unit_800445E4 fn_800446BC
 """
 
 import os
@@ -16,7 +17,7 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "RM7P4F"
+VERSION = "RM7P4F"  # default; --version selects another game version
 OBJDUMP = os.path.join(ROOT, "build", "binutils", "powerpc-eabi-objdump.exe")
 
 
@@ -48,10 +49,15 @@ def original(unit, name):
 
 
 def main():
-    if len(sys.argv) < 3:
+    global VERSION
+    argv = sys.argv[1:]
+    if len(argv) >= 2 and argv[0] == "--version":
+        VERSION = argv[1].upper()
+        argv = argv[2:]
+    if len(argv) < 2:
         sys.exit(__doc__)
-    unit, name = sys.argv[1], sys.argv[2]
-    orig_name = sys.argv[3] if len(sys.argv) > 3 else name
+    unit, name = argv[0], argv[1]
+    orig_name = argv[2] if len(argv) > 2 else name
     a, b = ours(unit, name), original(unit, orig_name)
     for i in range(max(len(a), len(b))):
         x = a[i] if i < len(a) else ""

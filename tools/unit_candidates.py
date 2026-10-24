@@ -9,6 +9,7 @@ described in the decomp-unit skill before splitting.
 Usage:
   python tools/unit_candidates.py           # 40 smallest candidates
   python tools/unit_candidates.py -n 100    # more
+  python tools/unit_candidates.py --version RM7E4F   # another game version (default RM7P4F)
 """
 
 import argparse
@@ -18,8 +19,13 @@ import re
 import struct
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VERSION = "RM7P4F"
-GAME_END = 0x80232AF8  # first SDK function (notes/SPLITS.md)
+DEFAULT_VERSION = "RM7P4F"
+# End of game code per version: the first SDK function (notes/SPLITS.md). RM7E4F has
+# the same code layout as RM7P4F (SPEC.md, "Other versions").
+GAME_END = {
+    "RM7P4F": 0x80232AF8,
+    "RM7E4F": 0x80232AF8,
+}
 FLOAT_PREFIXES = ("f", "lfs", "lfd", "stfs", "stfd", "psq")
 
 
@@ -41,12 +47,15 @@ def read_dol(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("-n", type=int, default=40, help="number of candidates to show")
+    parser.add_argument("--version", default=DEFAULT_VERSION, type=str.upper,
+                        choices=sorted(GAME_END), help="game version (default: %(default)s)")
     args = parser.parse_args()
+    game_end = GAME_END[args.version]
 
-    config = os.path.join(ROOT, "config", VERSION)
+    config = os.path.join(ROOT, "config", args.version)
     symbols = open(os.path.join(config, "symbols.txt"), encoding="utf-8").read()
     splits = open(os.path.join(config, "splits.txt"), encoding="utf-8").read()
-    read_word = read_dol(os.path.join(ROOT, "orig", VERSION, "sys", "main.dol"))
+    read_word = read_dol(os.path.join(ROOT, "orig", args.version, "sys", "main.dol"))
 
     funcs = {}
     for m in re.finditer(r"^(\S+) = \.text:(0x[0-9A-F]+); // type:function size:(0x[0-9A-F]+)",
@@ -58,7 +67,7 @@ def main():
     addr = min(ctors_starts)
     while True:
         prev = read_word(addr - 4)
-        if prev and 0x80004000 < prev < GAME_END:
+        if prev and 0x80004000 < prev < game_end:
             addr -= 4
         else:
             break
@@ -76,12 +85,12 @@ def main():
                                splits, re.M)]
 
     opcodes = {}
-    for path in glob.glob(os.path.join(ROOT, "build", VERSION, "asm", "**", "*.s"), recursive=True):
+    for path in glob.glob(os.path.join(ROOT, "build", args.version, "asm", "**", "*.s"), recursive=True):
         for m in re.finditer(r"^/\* ([0-9A-F]{8}) [0-9A-F]+  [0-9A-F ]+ \*/\t(\S+)",
                              open(path, encoding="utf-8").read(), re.M):
             opcodes[int(m.group(1), 16)] = m.group(2)
 
-    ends = sorted(v + funcs.get(v, ("", 0))[1] for v in entries if v < GAME_END)
+    ends = sorted(v + funcs.get(v, ("", 0))[1] for v in entries if v < game_end)
     rows = []
     start = 0x80006B40
     for end in ends:
