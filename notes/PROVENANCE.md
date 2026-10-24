@@ -969,3 +969,16 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
   `size == 0xFFFFFFFF`, frees the node through a holder used by pointer and reaches
   its first message through `__msl_error`; added `find_insert_pos_multi`,
   `insert_multi`, `equal_range`, `iterator` and `make_pair` from the DOL code.
+
+## Tooling from spyro-dotd-decomp
+
+Source: `spyro-dotd-decomp` (The Legend of Spyro: Dawn of the Dragon,
+the owner's own private project), commit `35d0baf60d7df46879015cda2fa7f45807bc5b2e`,
+license **CC0-1.0**. Taken on 2026-10-25. No game code: build scripts only.
+
+| Our file | Their change | Changes |
+|---|---|---|
+| `configure.py` | multi-version model (`DISABLED_VERSIONS`, groups, `MatchingFor` with groups), commit `57723cf` | versions `RM7P4F` / `RM7E4F`, groups `ALL_PAL` / `ALL_USA` |
+| `include/version.h` | same commit | `VERSION_EUR` / `VERSION_USA` only |
+| `tools/asm_compare.py`, `report_diff.py`, `unit_candidates.py` | `--version`, commit `d7459d2` | defaults to `RM7P4F`; `unit_candidates.py` keeps a per-version game end |
+| `tools/progress_badges.py` | per-version folders (`9469a71`) and progress card (`5b94a43`) | title `GAME_NAME`, regions from this project's `notes/SPLITS.md` |
