@@ -6,6 +6,9 @@ the DOL):
   progress/<version>/fuzzy.svg    fuzzy match percentage    (fuzzy_match_percent)
   progress/<version>/perfect.svg  perfectly matched code    (matched_code_percent)
   progress/<version>/linked.svg   code linked into main.dol (complete_code_percent)
+  progress/<version>/card.svg     progress card: code, data and functions, then code
+                                  by region (REGIONS), each as a stacked bar (fuzzy,
+                                  perfect, linked) with perfect / total counts
   progress/<version>/history.csv  one line per --record
 
 Usage:
@@ -30,6 +33,32 @@ BADGES = [
     ("perfect", "Perfect", "matched_code_percent", "#3584e4"),
     ("linked", "Linked", "complete_code_percent", "#26a269"),
 ]
+
+GAME_NAME = "Monster Lab"
+
+# Code regions of the card per version, from the .text region map of notes/SPLITS.md.
+# Each region is a list of [start, end) ranges. RM7E4F has the same code layout as
+# RM7P4F (SPEC.md, "Other versions"). A version without regions gets no "Code by
+# region" section.
+_MLAB_REGIONS = [
+    ("Game", [(0x80006B40, 0x80232AF8)]),
+    ("Wii SDK, network", [(0x80232AF8, 0x8032EEE4)]),
+    ("Runtime, MSL (+ .init)", [(0x80004000, 0x800064C4), (0x8032EEE4, 0x8033F460)]),
+    ("MetroTRK, EXI2 driver", [(0x8033F460, 0x80345AD8)]),
+]
+REGIONS = {"RM7P4F": _MLAB_REGIONS, "RM7E4F": _MLAB_REGIONS}
+
+# Card colors (light, dark): bars are stacked fuzzy > perfect > linked.
+CARD_COLORS = {
+    "bg": ("#ffffff", "#0d1117"),
+    "border": ("#d0d7de", "#30363d"),
+    "text": ("#1f2328", "#e6edf3"),
+    "muted": ("#656d76", "#8d96a0"),
+    "track": ("#eaeef2", "#21262d"),
+    "fuzzy": ("#a28c64", "#a28c64"),
+    "perfect": ("#3584e4", "#3584e4"),
+    "linked": ("#26a269", "#2ec27e"),
+}
 
 HISTORY_FIELDS = [
     "date", "commit", "code_fuzzy_pct", "code_matched_pct", "code_linked_pct",
@@ -77,6 +106,124 @@ def draw_badges(report, out_dir):
     for name, label, key, color in BADGES:
         with open(os.path.join(out_dir, name + ".svg"), "w", encoding="utf-8", newline="\n") as f:
             f.write(badge(label, "{:.2f}%".format(pct(m, key)), color))
+
+
+def region_measures(report, regions):
+    """[(label, total, fuzzy, perfect, linked)] code bytes per region, from every
+    function of the report (split or not), placed by its address."""
+    if not regions:
+        return []
+    sums = {label: [0, 0.0, 0, 0] for label, _ in regions}
+    other = [0, 0.0, 0, 0]
+    for unit in report.get("units", []):
+        linked = bool(unit.get("metadata", {}).get("complete"))
+        for fn in unit.get("functions", []):
+            addr = int(fn.get("metadata", {}).get("virtual_address", 0))
+            size = int(fn.get("size", 0))
+            score = float(fn.get("fuzzy_match_percent", 0.0) or 0.0)
+            acc = next((sums[label] for label, ranges in regions
+                        if any(s <= addr < e for s, e in ranges)), other)
+            acc[0] += size
+            acc[1] += size * score / 100
+            acc[2] += size if score == 100 else 0
+            acc[3] += size if linked else 0
+    rows = [(label, *sums[label]) for label, _ in regions]
+    if other[0]:
+        rows.append(("Other", *other))
+    return rows
+
+
+def linked_functions(report):
+    return sum(len(u.get("functions", [])) for u in report.get("units", [])
+               if u.get("metadata", {}).get("complete"))
+
+
+def card(report, version, commit):
+    """An SVG card: overall code, data and functions, then code by region; each
+    bar is stacked (fuzzy, perfect, linked) with the raw counts beside it."""
+    m = report["measures"]
+
+    def num(key):
+        return int(m.get(key, 0) or 0)
+
+    overall = [
+        ("Code", num("total_code"), pct(m, "fuzzy_match_percent") / 100 * num("total_code"),
+         num("matched_code"), num("complete_code"), "bytes"),
+        ("Data", num("total_data"), num("matched_data"), num("matched_data"),
+         num("complete_data"), "bytes"),
+        ("Functions", num("total_functions"), num("matched_functions"),
+         num("matched_functions"), linked_functions(report), ""),
+    ]
+    regions = [(*row, "bytes") for row in region_measures(report, REGIONS.get(version, []))]
+
+    width, bar_x, bar_w, row_h = 760, 186, 300, 26
+    y = 34
+    body = [f'<text class="t b" x="16" y="{y}">{GAME_NAME} ({escape(version)})</text>',
+            f'<text class="m" x="{width - 16}" y="{y}" text-anchor="end">commit {escape(commit)}</text>']
+
+    def bar_row(label, total, fuzzy, perfect, linked, unit):
+        nonlocal y
+        y += row_h
+        share = (perfect / total * 100) if total else 0.0
+        parts = [f'<text class="t" x="16" y="{y}">{escape(label)}</text>',
+                 f'<rect class="track" x="{bar_x}" y="{y - 11}" width="{bar_w}" height="12" rx="3"/>']
+        for cls, value in (("fuzzy", fuzzy), ("perfect", perfect), ("linked", linked)):
+            if value > 0 and total:
+                # At least one pixel, so any progress shows.
+                w = max(1.0, bar_w * value / total)
+                parts.append(f'<rect class="{cls}" x="{bar_x}" y="{y - 11}" width="{w:.1f}" height="12" rx="2"/>')
+        suffix = f" {unit}" if unit else ""
+        parts.append(f'<text class="t" x="{width - 86}" y="{y}" text-anchor="end">'
+                     f'{perfect:,.0f} / {total:,}{suffix}</text>')
+        parts.append(f'<text class="m" x="{width - 16}" y="{y}" text-anchor="end">{share:.2f} %</text>')
+        body.extend(parts)
+
+    for row in overall:
+        bar_row(*row)
+    if regions:
+        y += 16
+        body.append(f'<text class="t b" x="16" y="{y + row_h - 8}">Code by region</text>')
+        y += row_h - 8
+        for row in regions:
+            bar_row(*row)
+    y += 30
+    lx = 16
+    for cls, text in (("linked", "linked into main.dol"), ("perfect", "perfect match"),
+                      ("fuzzy", "fuzzy match")):
+        body.append(f'<rect class="{cls}" x="{lx}" y="{y - 10}" width="12" height="12" rx="2"/>')
+        body.append(f'<text class="m" x="{lx + 18}" y="{y}">{text}</text>')
+        lx += 18 + text_width(text) + 18
+    body.append(f'<text class="m" x="{width - 16}" y="{y}" text-anchor="end">'
+                f'counts: perfect / total; regions from notes/SPLITS.md</text>')
+    height = y + 18
+
+    def rules(i):
+        return "".join([
+            f".bg{{fill:{CARD_COLORS['bg'][i]};stroke:{CARD_COLORS['border'][i]}}}",
+            f".t{{fill:{CARD_COLORS['text'][i]}}}",
+            f".m{{fill:{CARD_COLORS['muted'][i]}}}",
+            f".track{{fill:{CARD_COLORS['track'][i]}}}",
+            *(f".{k}{{fill:{CARD_COLORS[k][i]}}}" for k in ("fuzzy", "perfect", "linked")),
+        ])
+
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="Decompilation progress of {escape(version)}">
+<title>Decompilation progress of {escape(version)}</title>
+<style>
+text{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:13px}}
+.b{{font-weight:600}}
+{rules(0)}
+@media (prefers-color-scheme: dark){{{rules(1)}}}
+</style>
+<rect class="bg" x="0.5" y="0.5" width="{width - 1}" height="{height - 1}" rx="6"/>
+{chr(10).join(body)}
+</svg>
+"""
+
+
+def draw_card(report, out_dir, version):
+    commit = git("rev-parse", "--short=7", "HEAD") or "unknown"
+    with open(os.path.join(out_dir, "card.svg"), "w", encoding="utf-8", newline="\n") as f:
+        f.write(card(report, version, commit))
 
 
 def read_history(path):
@@ -134,7 +281,8 @@ def main():
     if args.record:
         record(report, args.history)
     draw_badges(report, args.out)
-    print("wrote fuzzy.svg, perfect.svg and linked.svg to", args.out)
+    draw_card(report, args.out, args.version)
+    print("wrote fuzzy.svg, perfect.svg, linked.svg and card.svg to", args.out)
 
 
 if __name__ == "__main__":

@@ -25,12 +25,16 @@ Progress
 | Monster Lab (Europe) | `RM7P4F` | [![Fuzzy](progress/RM7P4F/fuzzy.svg)](notes/PROGRESS.md) [![Perfect](progress/RM7P4F/perfect.svg)](notes/PROGRESS.md) [![Linked](progress/RM7P4F/linked.svg)](notes/PROGRESS.md) |
 | Monster Lab (USA) | `RM7E4F` | not supported yet |
 
+[![Progress card](progress/RM7P4F/card.svg)](notes/PROGRESS.md)
+
 - **Fuzzy**: objdiff fuzzy match score over all code.
 - **Perfect**: code that matches byte for byte.
 - **Linked**: code linked into the matching `main.dol`.
 
-The badges are drawn from the objdiff report by `tools/progress_badges.py`, one folder
-per version. After a build, `python tools/progress_badges.py --version <ID> --record`
+The card counts every function of the DOL, split or not: each region total is the
+code between the `.text` region bounds of `notes/SPLITS.md`. The badges and the card
+are drawn from the objdiff report by `tools/progress_badges.py`, one folder per
+version. After a build, `python tools/progress_badges.py --version <ID> --record`
 redraws `progress/<ID>/` and adds the current commit to `progress/<ID>/history.csv`;
 commit the `progress/` folder with it.
 
