@@ -20,6 +20,28 @@ redistribution of game files.
 | `.map` / `.elf` | none | no `.map`, `.elf` or `.sym` on the disc |
 | Build date | "Aug 28 2008 (14:30)", builds 519 / 142835 | `game/unit_80014230.cpp` |
 
+## Other versions
+
+The project is set up for two versions; only `RM7P4F` is enabled. `RM7E4F` stays in
+`DISABLED_VERSIONS` (`configure.py`) until the owner decides to support it.
+
+| ID | Region | `main.dol` SHA-1 | Difference from `RM7P4F` | Status |
+|---|---|---|---|---|
+| `RM7P4F` | Europe (En,Fr,De,Es,It) | `50f6e9b9…` | — | enabled, reference version |
+| `RM7E4F` | USA (En,Fr,Es) | `d0769d3a19ff2edee1b249361dd3e198c0c03418` | earlier build of the same code: same size, sections and addresses, 10 bytes differ, all in the build information: date `"Jul 31 2008 (16:44)"` (`.rodata` 0x803476A8), builds 517 / 141043 (`.sdata2` 0x805FC720), region field 0 (`"NA"`) instead of 1 (`"EU"`) (`.data` 0x80354874, `game/unit_8001425C.cpp`) | disabled |
+
+Both discs are revision 0 with no RELs (`disc/header.bin`, `files/`).
+
+Model (after `zeldaret/tp`, as in `spyro-dotd-decomp`):
+
+- `configure.py`: `VERSIONS` (index = `BUILD_VERSION`, only append), `DISABLED_VERSIONS`,
+  groups `ALL_PAL`, `ALL_USA`, `ALL`; `MatchingFor(...)` accepts IDs and groups.
+- Source: one `src/` for all versions; differences under `#if` with the names of
+  `include/version.h` (`BUILD_VERSION == VERSION_USA`, `REGION_PAL`, `REGION_USA`),
+  never a raw number.
+- Per version: `config/<ID>/` (own `config.yml` once enabled), `orig/<ID>/`,
+  `build/<ID>/`, `progress/<ID>/`; the scripts in `tools/` take `--version <ID>`.
+
 ## Toolchain
 
 Evidence and the full candidate analysis are in `notes/COMPILER.md`.
@@ -77,7 +99,8 @@ Evidence and the full candidate analysis are in `notes/COMPILER.md`.
 configure.py              project configuration and build.ninja generator
 config/RM7P4F/            dtk config: config.yml, symbols.txt, splits.txt, build.sha1,
                           ldscript.tpl (FORCEFILES for sinit-only units)
-orig/RM7P4F/              original game files (git-ignored, never committed)
+config/RM7E4F/            build.sha1 only while the version is disabled
+orig/<ID>/                original game files (git-ignored, never committed)
 build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, runtime, MSL, TRK)
 tools/                    shared scripts (progress charts, report and asm helpers)
@@ -93,7 +116,7 @@ wiki/monster-lab-wiki/    game knowledge for naming (not evidence)
 ## Build
 
 ```
-python configure.py       # generate build.ninja (options: --version RM7P4F, --map)
+python configure.py       # generate build.ninja (options: --version <ID>, --map)
 ninja                     # split, compile, link, check main.dol, write the report
 ```
 

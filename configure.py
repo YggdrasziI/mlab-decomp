@@ -27,10 +27,23 @@ from tools.project import (
 )
 
 # Game versions
+# The index is passed to the compiler as BUILD_VERSION; keep it in sync with
+# include/version.h and only append new versions.
 DEFAULT_VERSION = 0
 VERSIONS = [
-    "RM7P4F",  # Europe
+    "RM7P4F",  # 0: Europe (En,Fr,De,Es,It)
+    "RM7E4F",  # 1: USA (En,Fr,Es)
 ]
+
+# Versions to disable until properly configured
+DISABLED_VERSIONS = [
+    1,  # USA
+]
+
+# Version groups for MatchingFor
+ALL_PAL = ["RM7P4F"]
+ALL_USA = ["RM7E4F"]
+ALL = ALL_PAL + ALL_USA
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -138,6 +151,9 @@ config = ProjectConfig()
 config.version = str(args.version)
 version_num = VERSIONS.index(config.version)
 
+if version_num in DISABLED_VERSIONS:
+    sys.exit(f"Version {config.version} is disabled until it is configured (DISABLED_VERSIONS)")
+
 # Apply arguments
 config.build_dir = args.build_dir
 config.dtk_path = args.dtk
@@ -215,7 +231,7 @@ cflags_base = [
     "-i libs/MSL_C/include",
     "-i libs/RVL_SDK/include",
     "-i libs/MetroTRK/include",
-    f"-DBUILD_VERSION={version_num}",
+    f"-DBUILD_VERSION={version_num}",  # compare with the names in include/version.h
     f"-DVERSION_{config.version}",
 ]
 
@@ -375,9 +391,16 @@ NonMatching = False               # Object does not match and should not be link
 Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
 
 
-# Object is only matching for specific versions
-def MatchingFor(*versions):
-    return config.version in versions
+# Object is only matching for specific versions (IDs or groups such as ALL_PAL)
+def MatchingFor(*versions) -> bool:
+    fullset = set()
+    for vers in versions:
+        if isinstance(vers, (list, tuple, set)):
+            fullset.update(vers)
+        else:
+            fullset.add(vers)
+
+    return config.version in fullset
 
 
 config.warn_missing_config = True
