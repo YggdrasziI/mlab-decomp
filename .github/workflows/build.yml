@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         # Add game versions here
-        version: [RM7P4F]
+        version: [RM7P4F, RM7E4F]
 
     steps:
     # Checkout the repository
