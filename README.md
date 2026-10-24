@@ -22,15 +22,17 @@ Progress
 
 | Release | Game ID | Progress |
 |---|---|---|
-| Monster Lab (Europe) | `RM7P4F` | [![Fuzzy](progress/fuzzy.svg)](notes/PROGRESS.md) [![Perfect](progress/perfect.svg)](notes/PROGRESS.md) [![Linked](progress/linked.svg)](notes/PROGRESS.md) |
+| Monster Lab (Europe) | `RM7P4F` | [![Fuzzy](progress/RM7P4F/fuzzy.svg)](notes/PROGRESS.md) [![Perfect](progress/RM7P4F/perfect.svg)](notes/PROGRESS.md) [![Linked](progress/RM7P4F/linked.svg)](notes/PROGRESS.md) |
+| Monster Lab (USA) | `RM7E4F` | not supported yet |
 
 - **Fuzzy**: objdiff fuzzy match score over all code.
 - **Perfect**: code that matches byte for byte.
 - **Linked**: code linked into the matching `main.dol`.
 
-The badges are drawn from the objdiff report by `tools/progress_badges.py`. After a
-build, `python tools/progress_badges.py --record` redraws them and adds the current
-commit to `progress/history.csv`; commit the `progress/` folder with it.
+The badges are drawn from the objdiff report by `tools/progress_badges.py`, one folder
+per version. After a build, `python tools/progress_badges.py --version <ID> --record`
+redraws `progress/<ID>/` and adds the current commit to `progress/<ID>/history.csv`;
+commit the `progress/` folder with it.
 
 Dependencies
 ============

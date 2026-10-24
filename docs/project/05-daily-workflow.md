@@ -67,7 +67,8 @@ A failed CI run is reported and fixed, never worked around.
 ## 4. Milestones
 
 At a milestone, add a dated line to [`notes/PROGRESS.md`](../../notes/PROGRESS.md),
-then `python tools/progress_badges.py --record` and commit `progress/` with it.
+then `python tools/progress_badges.py --version <ID> --record` for each enabled version
+and commit `progress/` with it.
 
 ## Habits
 
