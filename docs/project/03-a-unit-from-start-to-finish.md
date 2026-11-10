@@ -1,7 +1,7 @@
 # Project 3. A unit from start to finish
 
 A real example: game unit `0x800B1EDC`, class `Entity_GrowJuiceHeartVine`, done in one
-session (commits `061f4a2` and `6be2452`). The source is
+session (commits `c96d05d` and `d8cc61d`). The source is
 [`src/game/unit_800B1EDC.cpp`](../../src/game/unit_800B1EDC.cpp). Original assembly is
 not reproduced here (project rule: no extracted code in git); run the build and read
 `build/RM7P4F/asm/` to follow along.
