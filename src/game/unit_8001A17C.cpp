@@ -39,7 +39,7 @@ struct UnkLab {
 };
 
 // Text hashes of the two monsters' five slots (.rodata, unsplit: the .rodata of the
-// game units cannot be split yet, see TASKS.md).
+// game units cannot be split yet, see notes/SPLITS.md).
 struct UnkSlotHashes {
     u32 m[2][5];
 };

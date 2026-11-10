@@ -5,7 +5,7 @@
 //
 // Built with -ipa file: it is the only setting found that inlines the map destructors
 // as the DOL does (the recursive node destruction three levels deep, the element
-// destructor chains in full; see notes/MATCHING.md). NonMatching: see TASKS.md (five
+// destructor chains in full; see notes/MATCHING.md). NonMatching: see notes/SPLITS.md (five
 // functions, the .bss order of sUnkVec3, the order of the weak functions).
 
 // The static initializer addresses each object with its own lis.
