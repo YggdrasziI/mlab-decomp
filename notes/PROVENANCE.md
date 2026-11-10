@@ -972,8 +972,8 @@ Names corrected on the way (earlier size-alignment errors, proven by code):
 
 ## Tooling from spyro-dotd-decomp
 
-Source: `spyro-dotd-decomp` (The Legend of Spyro: Dawn of the Dragon,
-the owner's own private project), commit `35d0baf60d7df46879015cda2fa7f45807bc5b2e`,
+Source: `spyro-dotd-decomp` (The Legend of Spyro: Dawn of the Dragon, the owner's own
+project), commit `35d0baf60d7df46879015cda2fa7f45807bc5b2e`,
 license **CC0-1.0**. Taken on 2026-10-25. No game code: build scripts only.
 
 | Our file | Their change | Changes |

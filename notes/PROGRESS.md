@@ -1,6 +1,6 @@
 # Progress log
 
-Private progress history (the project is not published and not on decomp.dev yet).
+Progress history (the project is not on decomp.dev).
 One line per milestone, figures taken from `build/RM7P4F/report.json` (objdiff report,
 also uploaded as the `RM7P4F_report` artifact by CI; artifacts expire, this log does not).
 
@@ -47,5 +47,5 @@ Notes:
 - "Units" counts units in `objdiff.json`; library units are the ones split by hand in
   `config/RM7P4F/splits.txt` (progress category `sdk`, 634340 bytes of code); the rest
   are dtk `auto_*` objects.
-- Game code: see the unit table in `notes/SPLITS.md` and the NonMatching list in
-  `TASKS.md`.
+- Game code: see the unit table in `notes/SPLITS.md`, with the gap of each NonMatching
+  unit.

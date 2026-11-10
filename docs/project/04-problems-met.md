@@ -1,7 +1,7 @@
 # Project 4. Problems met
 
 Real obstacles of this project, what was understood and what is still open. Details
-live in [`TASKS.md`](../../TASKS.md), [`notes/SPLITS.md`](../../notes/SPLITS.md) and
+live in [`notes/SPLITS.md`](../../notes/SPLITS.md) and
 [`notes/MATCHING.md`](../../notes/MATCHING.md).
 
 ## Toolchain
@@ -28,7 +28,7 @@ live in [`TASKS.md`](../../TASKS.md), [`notes/SPLITS.md`](../../notes/SPLITS.md)
 
 | Problem | Status |
 |---|---|
-| Register-numbering near-misses (99 %+ functions with one or two registers swapped) | several solved with declaration order, extra locals, `void*` locals; 35 game units still NonMatching, each with its exact gap in `TASKS.md` |
+| Register-numbering near-misses (99 %+ functions with one or two registers swapped) | several solved with declaration order, extra locals, `void*` locals; 35 game units still NonMatching, each with its exact gap in `notes/SPLITS.md` |
 | Emission order of generated destructors and inline functions | solved per unit with `-ipa file` or `-inline auto,deferred`; never for all game code, because it breaks other units |
 | GameSpy library: empty debug branches keep a jump and a dead compare in the original | open; no flag or source shape reproduces it |
 | Search loops that reload their count every iteration in the original (no `ctr` loop) | open (`fn_800D8724`, `ExWorldWireTile::vfBC`) |

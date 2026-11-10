@@ -37,15 +37,12 @@ reference document disagree, the reference document wins.
 | Document | Content |
 |---|---|
 | [`SPEC.md`](../SPEC.md) | target binary, toolchain, acceptance criteria, naming |
-| [`ROADMAP.md`](../ROADMAP.md) | phases and risks |
-| [`TASKS.md`](../TASKS.md) | current work, NonMatching units and their gaps |
 | [`notes/COMPILER.md`](../notes/COMPILER.md) | compiler and SDK evidence |
-| [`notes/SPLITS.md`](../notes/SPLITS.md) | region map and every unit |
+| [`notes/SPLITS.md`](../notes/SPLITS.md) | region map and every unit, NonMatching gaps |
 | [`notes/MATCHING.md`](../notes/MATCHING.md) | catalogue of matching techniques |
 | [`notes/REFERENCES.md`](../notes/REFERENCES.md) | tools and reference projects |
 | [`notes/PROVENANCE.md`](../notes/PROVENANCE.md) | code reused from other projects |
 | [`notes/PROGRESS.md`](../notes/PROGRESS.md) | progress milestones |
-| `.claude/skills/` | the workflows as step lists |
 
 ## Glossary
 

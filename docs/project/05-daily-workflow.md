@@ -1,14 +1,12 @@
 # Project 5. Daily workflow
 
-How a work session runs in this project, step by step, with the commands. The same
-steps are written as Claude Code skills in `.claude/skills/`; a human follows exactly
-the same path.
+How a work session runs in this project, step by step, with the commands.
 
-| Phase | Human steps | Skill |
-|---|---|---|
-| plan | read `TASKS.md`, check `git status`, pick the work, save the baseline | `decomp-manager` |
-| do | split, write, compare, iterate | `decomp-unit` |
-| close | gate, docs, commit, push, CI | `unit-readiness` |
+| Phase | Steps |
+|---|---|
+| plan | read the open gaps, check `git status`, pick the work, save the baseline |
+| do | split, write, compare, iterate |
+| close | gate, docs, commit, push, CI |
 
 ## 1. Plan
 
@@ -19,9 +17,9 @@ python tools/unit_candidates.py          # if starting a new unit
 python tools/report_diff.py --save       # baseline before any change
 ```
 
-Read [`TASKS.md`](../../TASKS.md): a NonMatching unit is worth retrying when a
+Read the NonMatching rows of [`notes/SPLITS.md`](../../notes/SPLITS.md): a unit is worth retrying when a
 technique from [`notes/MATCHING.md`](../../notes/MATCHING.md) fits its written gap;
-otherwise take a new small unit, avoiding the "Set aside" list.
+otherwise take a new small unit.
 
 ## 2. Do
 
@@ -50,8 +48,8 @@ git diff --stat
 ```
 
 - A unit is `Matching` only at 100 % code and data and with the DOL still OK;
-  otherwise `NonMatching`, with the gap written above the function and in `TASKS.md`.
-- Docs in sync: the unit's row in `notes/SPLITS.md`, `TASKS.md`, new techniques in
+  otherwise `NonMatching`, with the gap written above the function and in `notes/SPLITS.md`.
+- Docs in sync: the unit's row in `notes/SPLITS.md`, new techniques in
   `notes/MATCHING.md`, reused code in `notes/PROVENANCE.md`.
 - Nothing extracted from the game in the diff (`orig/`, `build/`, assembly).
 - One subject per commit, English message, every `symbols.txt`/`splits.txt` change

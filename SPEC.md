@@ -64,7 +64,7 @@ Evidence and the full candidate analysis are in `notes/COMPILER.md`.
   `config/RM7P4F/build.sha1`), locally and in CI.
 - A unit is `Matching` in `configure.py` only when objdiff reports 100 % for all its
   functions and data and the linked DOL still matches. Anything else stays
-  `NonMatching`, with the remaining gap written in `TASKS.md`.
+  `NonMatching`, with the remaining gap written in its row of `notes/SPLITS.md`.
 - A split that builds proves the bytes, not the translation unit: a TU boundary is
   proven only once the unit is decompiled and matches (`notes/SPLITS.md`).
 - Every name, compiler fact or structure layout rests on evidence (RTTI, assertion
@@ -82,7 +82,7 @@ Evidence and the full candidate analysis are in `notes/COMPILER.md`.
   the address: `fn_<address>` (mangled as a member, e.g. `fn_801F59F0__12UnkMsgBufferFv`);
   virtual functions are `vfXX` after their vtable offset.
 - Real names only from evidence: RTTI class names, strings, symbols of other projects
-  on the same library. `wiki/monster-lab-wiki` gives candidate names, never evidence.
+  on the same library. A fan wiki gives candidate names, never evidence.
 - Code, comments, notes and commit messages are in English.
 - Game units that build the shared vector start with `#include "game/unk_vec3.mch"`
   (or `unk_vec3_rvl.mch` with Wii SDK headers): the game used a precompiled header,
@@ -106,11 +106,8 @@ build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, runtime, MSL, TRK)
 tools/                    shared scripts (progress charts, report and asm helpers)
 progress/<ID>/            progress badges and history per version (README images)
-notes/                    reference documentation (see CLAUDE.md routing table)
+notes/                    reference documentation
 docs/                     learning guide: general concepts and how this project works
-wiki/monster-lab-wiki/    game knowledge for naming (not evidence)
-.claude/skills/           project workflows (decomp-manager, decomp-unit,
-                          unit-readiness)
 .github/workflows/        CI: split, link and check main.dol in a private image
 ```
 

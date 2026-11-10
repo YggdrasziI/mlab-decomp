@@ -10,19 +10,17 @@
 - [encounter/objdiff](https://github.com/encounter/objdiff): local diff (reads
   `objdiff.json`).
 - [decomp.me](https://decomp.me): shared scratches and compiler tests.
-- [decomp.dev](https://decomp.dev): progress tracking (not used: the project stays
-  private).
+- [decomp.dev](https://decomp.dev): progress tracking (not used).
 - [decompals/wibo](https://github.com/decompals/wibo) (runs mwcc on Linux),
   [encounter/sjiswrap](https://github.com/encounter/sjiswrap) (UTF-8 to Shift-JIS).
 - Ghidra (Gekko/Broadway module) and the Dolphin debugger to understand behaviour;
   Dolphin to extract the disc.
 - Discord "GC/Wii Decompilation" (`#dtk` channel).
 
-## Reference projects (local clones)
+## Reference projects
 
-Search the local clones (Grep/Glob) before GitHub. A clone may be behind GitHub: ask
-the owner before `git pull`. When reusing code, record the clone's commit
-(`git -C <path> rev-parse HEAD`) and the license in `notes/PROVENANCE.md`.
+When reusing code, record the commit it was taken from and the license in
+`notes/PROVENANCE.md`.
 
 Wii:
 
@@ -57,7 +55,7 @@ The owner's own projects:
 
 | Folder | Project | State |
 |---|---|---|
-| `spyro-dotd-decomp` | The Legend of Spyro: Dawn of the Dragon (Wii, `RO8P7D`), private repository `YggdrasziI/spyro-dotd-decomp` (CC0) | partial |
+| `spyro-dotd-decomp` | The Legend of Spyro: Dawn of the Dragon (Wii, `RO8P7D`; CC0) | partial |
 
 Same toolchain and layout as this project (dtk-template, multi-version model, progress
 card). Part of its RVL_SDK, MSL_C and Runtime units come from this project: a source
@@ -82,10 +80,3 @@ version of each library against this DOL.
 - Any other project without a known license needs the owner's approval first.
 - Every reuse is logged in `notes/PROVENANCE.md` (file, commit, changes, license or
   its absence).
-
-## Game knowledge
-
-`wiki/monster-lab-wiki/` was written without binary access: use it for candidate
-names and subsystem prefixes only, then require binary evidence before renaming.
-Accepted names go to its `conventions/evidence-log.md`; keep its known-unknowns page in
-sync with `notes/`.
