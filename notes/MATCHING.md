@@ -323,6 +323,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Accesses the DOL makes through a reloaded global (`lwz rX, lbl@sda21` again after
   a loop) where a local copy exists: write them through the global; the compiler
   then shares the other loads with the local copy (`fn_800D7394`).
+- A loop over an array of a global and an array of `this`, with the element address
+  and the array offset in swapped saved registers (and their increments in the
+  other order): read the global's element through a static inline getter that takes
+  the global as a parameter (`GetPartRecord(lbl_805FBBE0, i)`); written inline, as
+  a getter reading the global itself, with locals or with `item++`, it does not
+  match (`Parts::vf0C`).
 - A byte loop over an image row with a pointer increment in the DOL: index the row
   (`row[x] &= mask;`); an explicit `p++` gives the same code with other registers
   (`fn_8007C50C`). In a nested loop over rows, the outer index then still took a

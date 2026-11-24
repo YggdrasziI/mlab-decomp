@@ -196,6 +196,12 @@ static inline int UnkClampBetween(int value, int a, int b) {
                  : (value < b ? b : (value > a ? a : value));
 }
 
+// Part record of the player by index (the DOL numbers the loop registers of vf0C as for
+// an inline getter).
+static inline UnkPartRecord* GetPartRecord(UnkPartsPlayer* player, int index) {
+    return player->mParts[index];
+}
+
 inline void Parts::UpdateCategory() {
     if (mElement == 5) {
         m4 = 1;
@@ -217,8 +223,8 @@ Parts::Parts() : mCursor(0), mPage(0), mCount(0), mTypeFilter(3), mElement(5), m
 
 Parts::~Parts() {}
 
-// NonMatching 99.6%: the item pointer and the record offset of the loop are in swapped
-// saved registers.
+// The record is read through an inline getter taking the player: written inline, the
+// item pointer and the record offset of the loop get swapped saved registers.
 void Parts::vf0C() {
     mTypeFilter = 3;
     m4 = 5;
@@ -227,7 +233,7 @@ void Parts::vf0C() {
     mCount = lbl_805FBBE0->mPartCount;
     mLoaded = 0;
     for (int i = 0; i < mCount; i++) {
-        fn_8011B060(lbl_805FBBE0->mParts[i], &mItems[i]);
+        fn_8011B060(GetPartRecord(lbl_805FBBE0, i), &mItems[i]);
         mItems[i].mIndex = i;
     }
     m8 = 5;
