@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
-from tools.project import (
+from tools.wii.project import (
     Object,
     ProgressCategory,
     ProjectConfig,
@@ -146,6 +146,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 config = ProjectConfig()
+config.tools_dir = Path("tools/wii")  # dtk-template helpers (wii-decomp-tools)
 config.version = str(args.version)
 version_num = VERSIONS.index(config.version)
 

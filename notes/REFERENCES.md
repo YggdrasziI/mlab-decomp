@@ -13,6 +13,11 @@
   own project, CC0-1.0): submodule `tools/common`, settings in `decomp.toml`. Report
   gate (`report_diff.py`), function compare (`asm_compare.py`, `try_unit.py`),
   progress badges (`progress_badges.py`); they replace this project's former copies.
+- [YggdrasziI/wii-decomp-tools](https://github.com/YggdrasziI/wii-decomp-tools) (the
+  owner's own project, CC0-1.0): submodule `tools/wii`. dtk-template's build
+  generator and helpers (`project.py`, `download_tool.py`, `decompctx.py`...) and
+  `unit_candidates.py` (`[wii.game_text]` of `decomp.toml`); they replace this
+  project's former copies.
 - [decomp.me](https://decomp.me): shared scratches and compiler tests.
 - [decomp.dev](https://decomp.dev): progress tracking (not used).
 - [decompals/wibo](https://github.com/decompals/wibo) (runs mwcc on Linux),

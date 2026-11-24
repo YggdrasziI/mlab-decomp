@@ -980,4 +980,4 @@ license **CC0-1.0**. Taken on 2026-10-25. No game code: build scripts only.
 |---|---|---|
 | `configure.py` | multi-version model (`DISABLED_VERSIONS`, groups, `MatchingFor` with groups), commit `57723cf` | versions `RM7P4F` / `RM7E4F`, groups `ALL_PAL` / `ALL_USA` |
 | `include/version.h` | same commit | `VERSION_EUR` / `VERSION_USA` only |
-| `tools/unit_candidates.py` | `--version`, commit `d7459d2` | defaults to `RM7P4F`; keeps a per-version game end |
+| `tools/unit_candidates.py` (now `unit_candidates.py` of wii-decomp-tools, `tools/wii`) | `--version`, commit `d7459d2` | defaults to `RM7P4F`; keeps a per-version game end (now `[wii.game_text]` of `decomp.toml`) |

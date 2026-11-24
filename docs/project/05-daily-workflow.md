@@ -13,7 +13,7 @@ How a work session runs in this project, step by step, with the commands.
 ```
 git status --short
 git log --oneline -5
-python tools/unit_candidates.py          # if starting a new unit
+python tools/wii/unit_candidates.py      # if starting a new unit
 python tools/common/report_diff.py --save  # baseline before any change
 ```
 

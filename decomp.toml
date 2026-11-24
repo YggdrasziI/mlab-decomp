@@ -52,6 +52,11 @@ target = "build/{version}/obj/{piece}.o"
 "Runtime, MSL (+ .init)" = [[0x80004000, 0x800064C4], [0x8032EEE4, 0x8033F460]]
 "MetroTRK, EXI2 driver" = [[0x8033F460, 0x80345AD8]]
 
+# tools/wii/unit_candidates.py: [start, end) of the game code (notes/SPLITS.md)
+[wii.game_text]
+RM7P4F = [0x80006B40, 0x80232AF8]
+RM7E4F = [0x80006B40, 0x80232AF8]
+
 [progress]
 # The region bounds come from notes/SPLITS.md (proven), not approximations
 region_note = "regions from notes/SPLITS.md"

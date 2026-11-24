@@ -8,27 +8,29 @@ target is `main.dol` of Monster Lab (Wii, `RM7P4F`, PAL, revision 0); details in
 
 | Tool | What it does here | Where |
 |---|---|---|
-| [dtk-template](https://github.com/encounter/dtk-template) | project skeleton: `configure.py` generates the ninja build; the template's own history is the first commits of the repository | `configure.py`, `tools/project.py` |
+| [dtk-template](https://github.com/encounter/dtk-template) | project skeleton: `configure.py` generates the ninja build; the template's own history is the first commits of the repository | `configure.py`, `tools/wii/project.py` |
 | decomp-toolkit (**dtk**) | analyses `main.dol` (functions, data, references), splits it into per-unit assembly, reads `symbols.txt` / `splits.txt`, rebuilds the DOL from the linked ELF and checks its SHA-1 | downloaded to `build/tools/dtk.exe` |
 | **mwcc** (Metrowerks CodeWarrior compiler) | compiles the C/C++; game code uses GC/3.0a5.2 (working hypothesis, see below); some MSL_C files GC/3.0a5 | downloaded to `build/compilers/` |
 | **ninja** | runs the build: split, compile, link, DOL check, objdiff report | `ninja` |
 | **objdiff** (`objdiff-cli`) | compares each compiled unit with the original, function by function, and writes `build/RM7P4F/report.json` (fuzzy % per function and section); the GUI reads `objdiff.json` | `build/tools/objdiff-cli.exe` |
 | binutils `powerpc-eabi-objdump` | disassembles our compiled objects and dumps their symbols (`-t`) to check names, sizes and sections | `build/binutils/` |
-| Python helper scripts | see below | `tools/`, `tools/common/` |
+| Python helper scripts | see below | `tools/common/`, `tools/wii/` |
 | git, GitHub Actions | one subject per commit; CI splits, links and checks `main.dol` on every push in a private image | `.github/workflows/build.yml` |
 
-Project scripts in `tools/`; the scripts that do not depend on the game come from the
-[decomp-tools](https://github.com/YggdrasziI/decomp-tools) submodule in `tools/common/`,
-set up by `decomp.toml` at the repository root:
+The scripts come from two submodules, set up by `decomp.toml` at the repository root:
+[decomp-tools](https://github.com/YggdrasziI/decomp-tools) in `tools/common/` (what
+does not depend on the platform) and
+[wii-decomp-tools](https://github.com/YggdrasziI/wii-decomp-tools) in `tools/wii/`
+(the dtk-template build generator and helpers, and the Wii / dtk scripts):
 
 | Script | Use |
 |---|---|
 | `common/asm_compare.py <unit> <symbol>` | our compiled function next to the original, from objdiff's own diff; differing lines marked (`\|` argument, `o` opcode, `<` / `>` only on one side) |
 | `common/report_diff.py --save` / `common/report_diff.py` | save the objdiff report as a baseline before a change; afterwards list what improved or regressed |
-| `unit_candidates.py` | list game regions not split yet, smallest first, with float and call counts |
+| `wii/unit_candidates.py` | list game regions not split yet, smallest first, with float and call counts |
 | `common/try_unit.py <symbol> game/unit_<start> <copy.cpp>` | compile a copy of a game source outside the build (in a scratch folder) and score one function against the original |
 | `common/progress_badges.py --record` | draw the progress badges of the README from the report |
-| `decompctx.py` | build a context file for decomp.me (from the template; not used so far) |
+| `wii/decompctx.py` (`ninja build/RM7P4F/src/game/<unit>.ctx`) | build a context file for decomp.me (from the template; not used so far) |
 
 **Not used so far**, although they are common in other projects and listed in
 [`notes/REFERENCES.md`](../../notes/REFERENCES.md): Ghidra, the Dolphin debugger,

@@ -8,7 +8,7 @@ not reproduced here (project rule: no extracted code in git); run the build and 
 
 ## 1. Choosing the unit
 
-`python tools/unit_candidates.py` lists the unsplit regions, smallest first. This one
+`python tools/wii/unit_candidates.py` lists the unsplit regions, smallest first. This one
 was 0x4A8 bytes, 8 functions, few calls, and already noted as a
 candidate. Before touching anything: `python tools/common/report_diff.py --save` (baseline).
 
