@@ -325,7 +325,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   then shares the other loads with the local copy (`fn_800D7394`).
 - A byte loop over an image row with a pointer increment in the DOL: index the row
   (`row[x] &= mask;`); an explicit `p++` gives the same code with other registers
-  (`fn_8007C50C`).
+  (`fn_8007C50C`). In a nested loop over rows, the outer index then still took a
+  higher register than the row base: declare the inner index before the outer loop
+  (`int x;` before `for (int y ...)`, then `for (x = 0; ...)`, `fn_8007D004`).
 - `a = b = x;` stores b first: swap the chain when the DOL stores the other global
   first (`fn_80109A20`).
 - String literals are pooled in parse order (small ones in .sdata, others in

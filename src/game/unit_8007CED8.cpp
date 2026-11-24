@@ -114,11 +114,9 @@ f32 UnkMeter::fn_8007CFD8() {
 
 // Counts the cells of rows [row, row + count) of the image: each byte holds two cells
 // of four bits (bit 0 clear: a cell to count, bit 1: hit), then clears bits 1 and 5.
-// NonMatching (99.0 %): register numbering only. The DOL keeps the row pointer in r6,
-// the row index in r4 and the cell pointer in r3; this build has them in r4, r5 and
-// r6. Tried: the row pointer as a separate offset, as pixels += ..., as &pixels[...],
-// declared before or after the counters, the loop variables and the cell pointer
-// declared at the top.
+// The row is indexed (p[x]) and x is declared before the row loop: with a pointer
+// increment or x declared in the inner loop, the row pointer, row index and cell
+// pointer take other registers than in the DOL.
 extern "C" void fn_8007D004(UnkMeter* meter, UnkImageInfo* info, int row, int count) {
     if (count == 0) {
         return;
@@ -129,11 +127,12 @@ extern "C" void fn_8007D004(UnkMeter* meter, UnkImageInfo* info, int row, int co
     meter->mCount = 0;
     meter->mHits = 0;
     int misses = 0;
+    int x;
     for (int y = 0; y < count; y++) {
         u8* p = rows + y * pitch;
-        for (int x = 0; x < info->mWidth / 2; x++) {
-            int high = *p >> 4;
-            int low = *p & 0xF;
+        for (x = 0; x < info->mWidth / 2; x++) {
+            int high = p[x] >> 4;
+            int low = p[x] & 0xF;
             bool highHit = (high & 2) != 0;
             if (!(high & 1)) {
                 meter->mCount++;
@@ -152,8 +151,7 @@ extern "C" void fn_8007D004(UnkMeter* meter, UnkImageInfo* info, int row, int co
                     misses++;
                 }
             }
-            *p &= 0xDD;
-            p++;
+            p[x] &= 0xDD;
         }
     }
     fn_8015A2E8(info, 0, 1);
