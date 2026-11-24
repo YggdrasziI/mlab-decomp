@@ -16,6 +16,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - A virtual whose first member load sits above the prologue (`lfs` before `stwu`):
   declare it `const` in the whole hierarchy (`ExWorldTile::vfD0() const`,
   `unit_800C4530`; mangled names become `...CFv`).
+- A member store the DOL keeps before the struct copy of an unsplit `.rodata` table
+  (`mShown = n;` then the table words loaded): declare the table `extern` without
+  `const`; with `const` the store moves after the copy (`fn_8007D2C8`).
 - In the same way a load through a const `this` can be reused where one through a
   non-const `this` is reloaded (`UnkTileRing::GetHead() const`).
 - The address of a real member of a global (`lbl_803B53A0.mD5F0`,
@@ -159,6 +162,9 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   d -= a * c;` keeps it in the register of `b * b` (`fn_800B20A4`).
 - A sized `.sdata2` symbol that covers a literal and its padding (size 0x8 for a
   float) leaves the section below 100 % in the report; give it the literal's size.
+- Three float locals set to 0.0 from one load (`lfs f30`, then `fmr f29` and
+  `fmr f28`): `f32 r = 0.0f; f32 g = r; f32 b = r;` (or three `= 0.0f`); a chained
+  `r = g = b = 0.0f` loads into the last register instead (`fn_8007D2C8`).
 - Constants are pooled in `.sdata2` in parse order: the shared `(0, 1, 0)` vector of
   `unk_vec3.h` puts 0.0 and 1.0 first when the header is included first. An unused
   static function can give the pool its DOL order (the original files likely had
@@ -423,6 +429,11 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   returns a double (`UnkClampD` in `unit_8009F66C`).
 
 ## Bit fields and hardware registers
+
+- Two bits of a nibble tested with `extrwi.` and `extrwi` + `cmpwi`, and a dead
+  `srawi` of the byte kept: `int high = *p >> 4; bool hit = (high & 2) != 0;` before
+  `if (!(high & 1)) { ... if (hit) ... }`; testing `high & 2` in place gives
+  `rlwinm.`, `(high >> 1) & 1` drops the `srawi` (`fn_8007D004`).
 
 - Header words built with `(x & ~mask) | (v << shift)` give `slwi` + `rlwinm` + `or`;
   real bit fields give `rlwimi`. Use the form the DOL shows (`UnkMsgHeader`).
