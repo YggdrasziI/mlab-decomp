@@ -1,0 +1,57 @@
+# Project settings read by the tools of tools/common (see tools/common/decomp_config.py)
+
+title = "Monster Lab"
+
+# First one is the default version; both share the same code (SPEC.md, "Other versions")
+versions = [
+    "RM7P4F",  # PAL Europe, revision 0
+    "RM7E4F",  # USA
+]
+
+[paths]
+# objdiff-cli is downloaded by the build (configure.py)
+objdiff_cli = "build/tools/objdiff-cli"
+
+# Compiler of the game code (src/game): GC/3.0a5.2, downloaded by the build (working
+# hypothesis inside the proven GC 3.0 family, notes/COMPILER.md). Code generation
+# flags of cflags_game in configure.py, without the include paths and defines. The
+# libraries use other flag sets.
+[compiler]
+path = "build/compilers/GC/3.0a5.2/mwcceppc.exe"
+flags = "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -fp_contract off -str reuse -enc SJIS -RTTI on"
+
+# tools/common/report_diff.py: units dtk makes from the code no source file
+# claims yet
+[report]
+auto_units = ["main/auto_"]
+
+# tools/common/try_unit.py: one game source compiled outside the build, scored
+# against the original object dtk split for its unit (piece = the unit name in
+# splits.txt without the extension, e.g. game/unit_80010B5C). The game sources are
+# Shift-JIS (sjiswrap, as in the build); the precompiled headers they include
+# (game/unk_vec3.mch) are built by ninja in build/{version}/include.
+[try]
+compile = "build/tools/sjiswrap.exe {cc} {flags} -i include -i build/{version}/include -i libs/Runtime/include -i libs/MSL_C/include -i libs/RVL_SDK/include -i libs/MetroTRK/include -DBUILD_VERSION={version_index} -DVERSION_{version} -DNDEBUG=1 {suffix_flags} -c {src} -o {obj}"
+target = "build/{version}/obj/{piece}.o"
+
+[try.suffix_flags]
+".cpp" = "-lang=c++"
+
+# Code regions of the progress card, from the .text region map of notes/SPLITS.md.
+# Each region is a list of [start, end) ranges. RM7E4F has the same code layout as
+# RM7P4F (SPEC.md, "Other versions").
+[regions.RM7P4F]
+"Game" = [[0x80006B40, 0x80232AF8]]
+"Wii SDK, network" = [[0x80232AF8, 0x8032EEE4]]
+"Runtime, MSL (+ .init)" = [[0x80004000, 0x800064C4], [0x8032EEE4, 0x8033F460]]
+"MetroTRK, EXI2 driver" = [[0x8033F460, 0x80345AD8]]
+
+[regions.RM7E4F]
+"Game" = [[0x80006B40, 0x80232AF8]]
+"Wii SDK, network" = [[0x80232AF8, 0x8032EEE4]]
+"Runtime, MSL (+ .init)" = [[0x80004000, 0x800064C4], [0x8032EEE4, 0x8033F460]]
+"MetroTRK, EXI2 driver" = [[0x8033F460, 0x80345AD8]]
+
+[progress]
+# The region bounds come from notes/SPLITS.md (proven), not approximations
+region_note = "regions from notes/SPLITS.md"
