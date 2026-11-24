@@ -7,6 +7,10 @@
 #include "game/unk_803E6D00.h"
 #include "game/unk_vec3.h"
 
+// Unused (not emitted): its constants put 0.0 and 1.0 first in .sdata2, as in the
+// DOL, where the static initializer's (0, 1, 0) vector comes before the functions.
+static UnkVec3 UnusedVec() { return UnkVec3(0.0f, 1.0f, 0.0f); }
+
 // Resource whose first word is the magic 0x37645F52 (real type unknown).
 struct UnkResource {
     /* 0x0 */ u32 mMagic;
@@ -76,8 +80,8 @@ inline double UnkMaxD(f32 a, f32 b) {
     return a > b ? a : b;
 }
 
-// NonMatching (99.8 %): the DOL rounds the larger time step into f0 and loads 1.0f
-// into f1; this version rounds it in place (frsp f1,f1) and loads 1.0f into f0.
+// The 1.0f numerator is a separate local declared after the time step: this rounds
+// the time step into f0 and loads 1.0f into f1, as in the DOL.
 void fn_8000C604(UnkOwner* owner, Entity* target, UnkMovingEntity* source, UnkVec3* out,
                  f32 t) {
     if (target == 0 || source == 0) {
@@ -92,7 +96,8 @@ void fn_8000C604(UnkOwner* owner, Entity* target, UnkMovingEntity* source, UnkVe
         return;
     }
     f32 dt = UnkMaxD(source->m24, 0.032f);
-    UnkVec3 dir = source->mVelocity * (1.0f / dt);
+    f32 one = 1.0f;
+    UnkVec3 dir = source->mVelocity * (one / dt);
     if (owner->mB8) {
         UnkVec3 step = dir * (10.0f * t / owner->mB8);
         *out += step;

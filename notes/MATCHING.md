@@ -175,7 +175,12 @@ function is stuck at 99 %. Unit references point to `src/game/`.
 - Constants are pooled in `.sdata2` in parse order: the shared `(0, 1, 0)` vector of
   `unk_vec3.h` puts 0.0 and 1.0 first when the header is included first. An unused
   static function can give the pool its DOL order (the original files likely had
-  dead code).
+  dead code): `UnusedVec()` returning `UnkVec3(0.0f, 1.0f, 0.0f)` after the includes
+  in `unit_8000C478`, where the header order alone did not.
+- A time step rounded by `frsp` into its own register (`frsp f0,f1`) and 1.0f loaded
+  into f1 for the reciprocal: the numerator is a local declared after the time step
+  (`f32 dt = UnkMaxD(...); f32 one = 1.0f; v * (one / dt)`, `fn_8000C604`; declared
+  before it, 96.5 %).
 
 ## Inlining and emission order
 
