@@ -1,4 +1,7 @@
-# Matching techniques (mwcc GC 3.0a5.2, game code)
+# Matching techniques (mwcc GC 3.0 family, game code)
+
+The game code is built with GC/3.0a5.2, a working hypothesis inside the proven GC 3.0
+family (`notes/COMPILER.md`); every technique below holds for that build.
 
 Lessons that made game functions match, each checked by a build. Read this when a
 function is stuck at 99 %. Unit references point to `src/game/`.

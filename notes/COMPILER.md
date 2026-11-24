@@ -131,8 +131,9 @@ functions, with the same result. GC 2.0, 2.0p1, 2.5, 2.6, 2.7 tested; GC 1.x not
 - Non-conclusive hint: the SDK tag `0x4199_60831` matches the build number of
   GC 3.0a5.2 ("Ver 4.1, build 60831" in `info.txt`).
 - `mw_comment_version`: 3.0a3 writes **14**, 3.0a5 and 3.0a5.2 write **15**
-  (byte 0xB of `.comment`, read from a compiled object). The current value **11**
-  (GC 2.7) is therefore wrong for every candidate, but 14 vs 15 depends on the version.
+  (byte 0xB of `.comment`, read from a compiled object). The value **11** (GC 2.7)
+  configured at the time was therefore wrong for every candidate; it is now **15**
+  (see above), while 14 vs 15 depends on the version.
 - The other flags (`-O4,p`, `-inline auto`, `-str reuse`…) are **compatible** with
   the 6 functions, but not proven unique.
 - The SDK compiler has not been tested.
