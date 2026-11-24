@@ -133,6 +133,13 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   member (`mFlag = mTab == 1; mTab += d;`), matches (`fn_80118FC0`). A getter
   `return a - b * 4;` with the operands in the wrong registers matches as
   `int r = a; r -= b * 4; return r;` (`fn_80119538`).
+- A byte read from a string table and used twice, with the byte in the higher
+  scratch register and the index in the lower one: a `char` local swaps them and an
+  `int` local from a signed `char` adds an `extsb`; the byte read through an
+  unsigned pointer into a word local matches
+  (`u32 c = ((const u8*)"0123456789")[key];`, `fn_80139B10`).
+- A parameter shown `Ui` in a mangled name is `unsigned int`: `u32` mangles as `Ul`
+  and the call relocates to another name (`UnkManager::fn_80209E70`, `fn_80139B10`).
 
 ## Floats
 

@@ -41,7 +41,7 @@ struct UnkSaveData {
 class UnkManager {
 public:
     UnkManager();
-    static int fn_80209E70(u32 hash, int arg1, int arg2, int arg3, int arg4, int arg5);
+    static int fn_80209E70(unsigned int hash, int arg1, int arg2, int arg3, int arg4, int arg5);
 
     static UnkManager* Instance() {
         if (sInstance == 0) {
@@ -135,9 +135,8 @@ void fn_801399EC(void) {
 
 void fn_80139B0C(void) {}
 
-// NONMATCHING: 99.7 %; in the digit branch the DOL keeps the count in r8 and the
-// character in r9, this build the other way round (local, inline and order variants
-// tried).
+// The digit is read as an unsigned byte into a u32: a char local swaps the
+// registers of the count and the digit, an int local adds an extsb.
 void fn_80139B10(u32 key) {
     UnkManager::Instance()->fn_80209E70(0xCA084594, 0, 0, 0, 0, 0);
     if (key == 10) {
@@ -150,7 +149,7 @@ void fn_80139B10(u32 key) {
         }
     } else if (key <= 9) {
         if (sDigitCount < 12) {
-            char c = "0123456789"[key];
+            u32 c = ((const u8*)"0123456789")[key];
             sDigits[sDigitCount++] = c;
             sDigits[sDigitCount] = 0;
             sText[sTextLen++] = c;
