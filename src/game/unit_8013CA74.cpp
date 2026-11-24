@@ -6,9 +6,8 @@
 // XNonInventoryMonster used for the opponent (built by the static initializer).
 // Bounds come from the static initializers of this unit and the previous one.
 //
-// NONMATCHING: every function matches but fn_8013E0EC (99.9 %, one register). The
-// precompiled header gives the DOL's .bss order (sUnkVec3 initialized first, placed
-// last).
+// The precompiled header gives the DOL's .bss order (sUnkVec3 initialized first,
+// placed last).
 
 #include "game/unk_vec3.mch"
 
@@ -209,7 +208,7 @@ void* fn_8004FFB4(void* pending, void* arg);
 void fn_8004C718(UnkStands* stands, int index, void* model);
 void fn_8004EDD0(UnkActor* model, int arg1, int arg2);
 void fn_8003DCE0(UnkActor* model);
-void fn_8004D760(UnkStands* stands);
+void fn_8004D760(UnkStands* stands, void* creature);
 s32 fn_8004DAF8(UnkStands* stands, int arg1, int arg2);
 void fn_8020EBB8(UnkFightTeam* team, void* data);
 void fn_8021C8E0(UnkFightTeam* team, const char* name);
@@ -723,9 +722,6 @@ void fn_8013DE7C(void) {
     fn_80190BC8(0x38569AA8);
 }
 
-// NONMATCHING: 99.9 %; after fn_8020EDF0 the DOL builds the monster address for the
-// m44 store in r4, this build in r3 (local, inline, member and return type variants
-// tried).
 void fn_8013E0EC(void) {
     if (sLoadRequest == 1 && !sLoading) {
         fn_80190AFC(0x4DD41D3D);
@@ -749,7 +745,7 @@ void fn_8013E0EC(void) {
             if (sStands != 0) {
                 lbl_803F20C4.fn_8020EDF0(&lbl_803F2250);
                 lbl_803F20C4.m44 = 0x39;
-                fn_8004D760(sStands);
+                fn_8004D760(sStands, &lbl_803F20C4);
                 sStandsState = fn_8004DAF8(sStands, 1, 1);
             }
         }

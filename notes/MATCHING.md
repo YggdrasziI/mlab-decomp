@@ -352,7 +352,10 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   the default label (`fn_80121B08`, also `fn_801091EC`).
 - A value kept in r4 (not r0) across a call that takes this object in r3: the
   callee takes it as a second argument (`fn_8004D760(stands, creature)` in
-  `unit_80117090`); add the parameter.
+  `unit_80117090`); add the parameter. The same call also explains a global's
+  address built in r4 instead of r3 just before it (`fn_8013E0EC`: the address of
+  the opponent monster is both the target of a store and the call's second
+  argument).
 - An array searched through a pointer to its start, with the count read at an
   offset from that pointer: the array and its count form a sub-struct with its own
   inline search method (`UnkCreatureList::IndexOf`).
