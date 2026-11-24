@@ -133,6 +133,11 @@ function is stuck at 99 %. Unit references point to `src/game/`.
   member (`mFlag = mTab == 1; mTab += d;`), matches (`fn_80118FC0`). A getter
   `return a - b * 4;` with the operands in the wrong registers matches as
   `int r = a; r -= b * 4; return r;` (`fn_80119538`).
+- A global compared with a reference parameter, the DOL loading the global first
+  and comparing `cmplw param, global`: a plain local copy of the global is folded
+  away; make the global a one-word struct and compare with a struct copy
+  (`UnkDvdHandle invalid = lbl_805F9690; return handle == invalid.mValue;`,
+  `fn_801E51AC`).
 - A byte read from a string table and used twice, with the byte in the higher
   scratch register and the index in the lower one: a `char` local swaps them and an
   `int` local from a signed `char` adds an `extsb`; the byte read through an

@@ -147,18 +147,25 @@ struct UnkDvdLoader {
     /* 0x28 */ void* mCallback28;
 };
 
-u32 lbl_805F9690 = 0xFFFFFFFF;
+// The invalid handle (real type unknown). It is a one-word struct: copied as a
+// struct, it is loaded before the handle it is compared with, as in the DOL.
+struct UnkDvdHandle {
+    u32 mValue;
+};
+
+UnkDvdHandle lbl_805F9690 = {0xFFFFFFFF};
 UnkDvdLoader lbl_8048A8B4;
 
 static inline bool IsInvalid(const u32& handle) {
-    return lbl_805F9690 == handle;
+    UnkDvdHandle invalid = lbl_805F9690;
+    return handle == invalid.mValue;
 }
 
 // Takes a request from the global loader's queue and returns its handle, or
 // lbl_805F9690 when the queue is full.
 static inline u32 NewRequest() {
     UnkDvdRequest* req = lbl_8048A8B4.mQueue.PushFront();
-    u32 handle = lbl_805F9690;
+    u32 handle = lbl_805F9690.mValue;
     if (req != 0) {
         req->mState = 1;
         req->mCancel = 0;
@@ -273,9 +280,6 @@ u32 UnkDvdLoader::fn_801E4FE0(UnkDvdSlot* slot, void* buffer, int length, int of
     return handle;
 }
 
-// 99.7 %: the DOL compares `cmplw handle, invalid` after loading the invalid handle
-// first; this build loads it first too but compares `cmplw invalid, handle` (the
-// other operand order loads the handle first).
 bool UnkDvdLoader::fn_801E51AC(const u32& handle) {
     if (IsInvalid(handle)) {
         return false;
