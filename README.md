@@ -44,8 +44,8 @@ Progress
 
 The card counts every function of the DOL, split or not: each region total is the
 code between the `.text` region bounds of `notes/SPLITS.md`. The badges and the card
-are drawn from the objdiff report by `tools/progress_badges.py`, one folder per
-version. After a build, `python tools/progress_badges.py --version <ID> --record`
+are drawn from the objdiff report by `tools/common/progress_badges.py`, one folder per
+version. After a build, `python tools/common/progress_badges.py --version <ID> --record`
 redraws `progress/<ID>/` and adds the current commit to `progress/<ID>/history.csv`;
 commit the `progress/` folder with it.
 

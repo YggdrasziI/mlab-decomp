@@ -980,5 +980,4 @@ license **CC0-1.0**. Taken on 2026-10-25. No game code: build scripts only.
 |---|---|---|
 | `configure.py` | multi-version model (`DISABLED_VERSIONS`, groups, `MatchingFor` with groups), commit `57723cf` | versions `RM7P4F` / `RM7E4F`, groups `ALL_PAL` / `ALL_USA` |
 | `include/version.h` | same commit | `VERSION_EUR` / `VERSION_USA` only |
-| `tools/asm_compare.py`, `report_diff.py`, `unit_candidates.py` | `--version`, commit `d7459d2` | defaults to `RM7P4F`; `unit_candidates.py` keeps a per-version game end |
-| `tools/progress_badges.py` | per-version folders (`9469a71`) and progress card (`5b94a43`) | title `GAME_NAME`, regions from this project's `notes/SPLITS.md` |
+| `tools/unit_candidates.py` | `--version`, commit `d7459d2` | defaults to `RM7P4F`; keeps a per-version game end |

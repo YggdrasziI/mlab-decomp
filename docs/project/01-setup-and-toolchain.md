@@ -14,17 +14,20 @@ target is `main.dol` of Monster Lab (Wii, `RM7P4F`, PAL, revision 0); details in
 | **ninja** | runs the build: split, compile, link, DOL check, objdiff report | `ninja` |
 | **objdiff** (`objdiff-cli`) | compares each compiled unit with the original, function by function, and writes `build/RM7P4F/report.json` (fuzzy % per function and section); the GUI reads `objdiff.json` | `build/tools/objdiff-cli.exe` |
 | binutils `powerpc-eabi-objdump` | disassembles our compiled objects and dumps their symbols (`-t`) to check names, sizes and sections | `build/binutils/` |
-| Python helper scripts | see below | `tools/` |
+| Python helper scripts | see below | `tools/`, `tools/common/` |
 | git, GitHub Actions | one subject per commit; CI splits, links and checks `main.dol` on every push in a private image | `.github/workflows/build.yml` |
 
-Project scripts in `tools/`:
+Project scripts in `tools/`; the scripts that do not depend on the game come from the
+[decomp-tools](https://github.com/YggdrasziI/decomp-tools) submodule in `tools/common/`,
+set up by `decomp.toml` at the repository root:
 
 | Script | Use |
 |---|---|
-| `asm_compare.py <unit> <symbol>` | our compiled function next to the original disassembly, differing lines marked `*` |
-| `report_diff.py --save` / `report_diff.py` | save the objdiff report as a baseline before a change; afterwards list what improved or regressed |
+| `common/asm_compare.py <unit> <symbol>` | our compiled function next to the original, from objdiff's own diff; differing lines marked (`\|` argument, `o` opcode, `<` / `>` only on one side) |
+| `common/report_diff.py --save` / `common/report_diff.py` | save the objdiff report as a baseline before a change; afterwards list what improved or regressed |
 | `unit_candidates.py` | list game regions not split yet, smallest first, with float and call counts |
-| `progress_badges.py --record` | draw the progress badges of the README from the report |
+| `common/try_unit.py <symbol> game/unit_<start> <copy.cpp>` | compile a copy of a game source outside the build (in a scratch folder) and score one function against the original |
+| `common/progress_badges.py --record` | draw the progress badges of the README from the report |
 | `decompctx.py` | build a context file for decomp.me (from the template; not used so far) |
 
 **Not used so far**, although they are common in other projects and listed in

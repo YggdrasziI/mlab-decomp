@@ -9,6 +9,10 @@
   DOL analysis, `symbols.txt` / `splits.txt`, final match check.
 - [encounter/objdiff](https://github.com/encounter/objdiff): local diff (reads
   `objdiff.json`).
+- [YggdrasziI/decomp-tools](https://github.com/YggdrasziI/decomp-tools) (the owner's
+  own project, CC0-1.0): submodule `tools/common`, settings in `decomp.toml`. Report
+  gate (`report_diff.py`), function compare (`asm_compare.py`, `try_unit.py`),
+  progress badges (`progress_badges.py`); they replace this project's former copies.
 - [decomp.me](https://decomp.me): shared scratches and compiler tests.
 - [decomp.dev](https://decomp.dev): progress tracking (not used).
 - [decompals/wibo](https://github.com/decompals/wibo) (runs mwcc on Linux),
