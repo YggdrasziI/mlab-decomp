@@ -41,7 +41,7 @@ Model (after `zeldaret/tp`, as in `spyro-dotd-decomp`):
   `include/version.h` (`BUILD_VERSION == VERSION_USA`, `REGION_PAL`, `REGION_USA`),
   never a raw number.
 - Per version: `config/<ID>/` (own `config.yml` once enabled), `orig/<ID>/`,
-  `build/<ID>/`, `progress/<ID>/`; the scripts in `tools/` take `--version <ID>`.
+  `build/<ID>/`, `progress/<ID>/`; the scripts in `tools/` and `tools/common/` take `--version <ID>`.
 
 ## Toolchain
 
@@ -104,7 +104,9 @@ config/RM7E4F/            config.yml (shares the RM7P4F symbols, splits, ldscrip
 orig/<ID>/                original game files (git-ignored, never committed)
 build/                    build output (git-ignored)
 src/  include/  libs/     sources and headers (game, SDK, runtime, MSL, TRK)
-tools/                    shared scripts (progress charts, report and asm helpers)
+tools/                    project scripts (dtk-template build, unit candidates)
+tools/common/             decomp-tools submodule (report gate, asm compare, try,
+                          progress badges), settings in decomp.toml
 progress/<ID>/            progress badges and history per version (README images)
 notes/                    reference documentation
 docs/                     learning guide: general concepts and how this project works
