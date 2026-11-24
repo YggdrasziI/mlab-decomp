@@ -1,3 +1,6 @@
 [submodule "tools/common"]
 	path = tools/common
 	url = https://github.com/YggdrasziI/decomp-tools.git
+[submodule "tools/wii"]
+	path = tools/wii
+	url = https://github.com/YggdrasziI/wii-decomp-tools.git
